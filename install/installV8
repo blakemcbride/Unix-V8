@@ -1,0 +1,110 @@
+#!/usr/bin/env expect
+#
+# Use a copyof the 4.1BSD system disk to bring up a V8 disk onto rp06v8_prep.
+#
+
+source common.tcl
+
+exec cp rp06bsd rp06work
+exec cp rp06bsd rp06v8_prep
+
+spawn vax780
+
+# boot disk with bootBsd file image
+simh "set noasync"
+simh "set tto 7b"
+simh "set dz lines=8"
+simh "set rp0 rp06"
+simh "at rp0 rp06work"
+simh "set rp1 rp06"
+simh "at rp1 rp06v8_prep"
+simh "set tu0 te16"
+simh "load -o bootBsd 0"
+simh "run 2"
+
+# login as root (note: need slight delay here)
+expect "login: " { after 1500 { sendline "root" } }
+
+# mount v8 disk (copy of bsd), remove bsd files and install v8 files
+bsd "cd /dev"
+bsd "MAKE hp1"
+
+bsd "fsck"
+bsd "mkdir /v8"
+bsd "mount /dev/hp1a /v8"
+bsd "cd /v8"
+bsd "rm -rf * .??*"
+bsd "mkdir usr"
+bsd "mount /dev/hp1g /v8/usr"
+bsd "cd /v8/usr"
+bsd "rm -rf * .??*"
+
+# load v8 tape and extract it to /v8
+bsd ""
+send $break
+simh "at tu0 v8.tap"
+simh "cont"
+after 500 { send "\n" }
+bsd "cd /v8"
+bsd "tar xpb 20"
+
+# load v8jerq tape and extract to /v8/usr
+bsd ""
+send $break
+simh "at tu0 v8jerq.tap"
+simh "cont"
+after 500 { send "\n" }
+bsd "cd /v8/usr"
+bsd "tar xpb 20"
+
+bsd "cd /v8"
+bsd "ls"
+bsd "mkdir dev"
+bsd "cd dev"
+bsd "mknod console c 0 0"
+bsd "chmod 644 console"
+bsd "mknod null c 3 2"
+bsd "chmod 666 null"
+bsd "mknod rp0a b 0 0"
+bsd "mknod rrp0a c 4 0"
+bsd "mknod rp0g b 0 6"
+bsd "mknod rrp0g c 4 6"
+bsd "mknod mt1 b 1 0"
+bsd "mknod rmt1 c 5 0"
+
+# launch a v8 environment
+bsd "mkdir /v8/tmp"
+bsd "chmod 777 /v8/tmp"
+bsd "cp /bin/ls /v8/bin/bls"
+bsd "/v8/usr/bin/v8"
+
+# build a v8 kernel, enabling networking first
+v8 "bls"
+v8 "cd /usr/sys/alice"
+v8 "cat >> conf"
+sendline "pseudo-device   inet    6"
+sendline "pseudo-device   uarp    1"
+sendline "pseudo-device   tcp     32"
+sendline "pseudo-device   udp     32"
+send $ctrlD
+v8 "/etc/config"
+v8 "ed makefile"
+sendline "/rm locore"
+sendline "s/rm/rm -f/"
+sendline "wq"
+v8 "make"
+v8 ""
+send $ctrlD
+
+# install the v8 kernel and exit
+bsd "cp /v8/usr/sys/alice/unix /v8/unix"
+bsd "cd /v8/usr/sys/alice"
+bsd "rm eddep *.o locore.i"
+bsd "cd /"
+bsd "umount /dev/hp1g"
+bsd "umount /dev/hp1a"
+bsd "sync; sync; sync"
+bsd "halt"
+
+simh "exit"
+expect eof

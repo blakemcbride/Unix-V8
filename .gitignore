@@ -1,0 +1,10 @@
+# simulator build products
+/bin/
+/simulator/open-simh/BIN/
+/simulator/*.log
+
+# working copy of the disk (run.sh unpacks system/rp06v8.xz here)
+/run/
+
+# rebuild-from-tape work area (rebuild.sh)
+/build/

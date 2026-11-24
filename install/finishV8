@@ -1,0 +1,41 @@
+#!/usr/bin/env expect
+#
+# Final step, added to the myv8 scripts for this repository:
+#  - date(1) accepts only two-digit years and adds 1900.  Patch it so that
+#    years 00-69 mean 20xx (the kernel and ctime(3) already handle them).
+#  - Set the clock from the host.  Each boot the kernel takes the time of
+#    year from the TODR (which SIMH sets from the host clock) and the year
+#    from the file system, so the date stays right once it has been set.
+#
+
+source common.tcl
+
+spawn vax780
+simh "set noasync"
+simh "set tto 7b"
+simh "set dz lines=8"
+simh "set rp0 rp06"
+simh "at rp0 rp06v8"
+simh "set tu0 te16"
+simh "load -o bootV8 0"
+simh "run 2"
+
+expect "login: " { after 1500 { sendline "root" } }
+
+unix "cd /usr/src/cmd"
+unix "ed date.c"
+sendline "/year += 1900;/s//year += year < 70 ? 2000 : 1900;/p"
+sendline "w"
+sendline "q"
+unix "cc -O -o /tmp/date date.c && strip /tmp/date && cp /tmp/date /bin/date && rm -f /tmp/date date.o"
+unix "ls -l /bin/date"
+
+set now [clock format [clock seconds] -format %y%m%d%H%M.%S -gmt 1]
+unix "date -u $now"
+unix "date"
+
+unix "cd /"
+unix "sync; sync; sync"
+unix "/etc/halt"
+simh "exit"
+expect eof
