@@ -20,9 +20,18 @@ More users can log in over the eight DZ11 serial lines:
 
     telnet localhost 8888
 
-To shut down, `sync` and then `/etc/halt` as root; when the simulator stops
-at `sim>` type `exit`. Ctrl-E at the console also drops to `sim>` at any
-time (`cont` resumes).
+### Shutting down
+
+As root at the console `#` prompt:
+
+    sync; sync; /etc/halt
+
+When the simulator stops at `sim>`, type `exit`.
+
+If you can't get to a root shell, press Ctrl-E at the console to get the
+`sim>` prompt (`cont` resumes), then type `exit`. Skipping `/etc/halt` may
+leave the file systems unclean; the next boot runs `fsck`, which normally
+repairs them.
 
 `./run.sh --reset` throws away `run/` and starts again from the pristine
 image.
