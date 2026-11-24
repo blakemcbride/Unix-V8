@@ -1,0 +1,54 @@
+MAN(1)                      General Commands Manual                     MAN(1)
+
+NAME
+       man - print sections of this manual
+
+SYNOPSIS
+       man [ option ... ] [ chapter ] title ...
+
+DESCRIPTION
+       Man locates and prints the section of this manual named title in the
+       specified chapter.  (In this context, the word `page' is often used as
+       a synonym for `section'.)  The title is entered in lower case.  The
+       chapter number does not have a letter suffix.  If no chapter is
+       specified, the whole manual is searched for title and all occurrences
+       of it are printed.
+
+       Options and their meanings are:
+
+       -q     Copy an already formatted manual section to the terminal or, if
+              none is available, act as -n.  If the standard output is a
+              terminal, underline(1) the output.  This is the default option.
+
+       -t     Place typesetting instructions on the standard output using
+              troff(1).
+
+       -n     Print the section on the standard output using nroff.
+
+       -w     Print the path names of the manual sections, but do not print
+              the sections themselves.
+
+       Further options, e.g. to specify the kind of terminal you have, are
+       passed on to troff(1) or nroff.  Options and chapter may be changed
+       before each title.
+
+EXAMPLE
+       man man
+              reproduces this section as well as any other sections named man
+              that may exist in other chapters of the manual, e.g.  man(7).
+
+FILES
+       /usr/man/man?/∗
+       /usr/spool/man/∗
+
+SEE ALSO
+       troff(1), eqn(1), tc(1), man(7)
+
+BUGS
+       The manual was intended to be typeset; some detail is sacrificed on
+       terminals.
+       You can't ask for manual pages named 1 through 9.
+       Certain manual pages (those that need eqn ) terminate the output under
+       option -t, causing any following pages to be lost.
+
+                                                                        MAN(1)

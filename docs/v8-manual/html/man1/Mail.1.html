@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Mail.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; Mail.1 (<a href="../../../../source/v8/usr/man/man1/Mail.1">troff source</a>)</p>
+<pre>
+<a href="../man1/Mail.1.html">Mail(1)</a>                     General Commands Manual                    <a href="../man1/Mail.1.html">Mail(1)</a>
+
+NAME
+       Mail - send and receive mail
+
+SYNOPSIS
+       Mail [ option ] ...  [ person ] ...
+
+DESCRIPTION
+       Mail with persons named reads a letter from the standard input and
+       sends it to them.
+
+       Mail otherwise presents your mail.  It responds to commands, each typed
+       on a line by itself, possibly with arguments.  A command need not be
+       typed in its entirety - the first command that matches the typed prefix
+       is used.  A missing message list is interpreted as a singleton:
+       whichever of the current message, the nearest message ahead, or the
+       nearest message back satisfies the command's requirements.
+
+       The following table describes the commands:
+
+       Command    Description
+       !          Single command escape to shell
+       -          Back up to previous message
+       Reply      Reply to author of message only
+       alias      Define an alias as a set of user names
+       alternates List other names you are known by
+       chdir      Change working directory, home by default
+       copy       Copy a message to a file or folder
+       delete     Delete a list of messages
+       dt         Delete current message, type next message
+       endif      End of conditional statement; see if
+       edit       Edit a list of messages
+       else       Start of else part of conditional; see if
+       exit       Leave mail without changing anything
+       file       Interrogate/change current mail file
+       folder     Same as file
+       folders    List the folders in your folder directory
+       from       List headers of a list of messages
+       headers    List current window of messages
+       help       Print brief summary of Mail commands
+       hold       Same as preserve
+       if         Conditional execution of Mail commands
+       ignore     Do not print listed headers
+       mail       Send mail to specified names
+       mbox       Arrange to save a list of messages in mbox
+       next       Go to next message and type it
+       preserve   Arrange to leave list of messages in mbox
+       quit       Leave Mail; update mbox as appropriate
+       reply      Compose a reply to a message
+       save       Append messages, headers included, on a file
+       set        Set binary or valued options
+       shell      Invoke an interactive shell
+       top        Print first so many (5 by default) lines of list of messages
+       type       Print messages
+       undelete   Undelete list of messages
+       unset      Undo the operation of a set
+       visual     Invoke visual editor on a list of messages
+       write      Append messages to a file, don't include headers
+       z          Scroll to next/previous screenful of headers
+
+       The following table describes the options for set.  Each option is
+       shown as being either a binary or valued option.
+
+       Option     Type      Description
+       EDITOR     valued    Pathname of editor for ~e and edit
+       SHELL      valued    Pathname of shell for shell, ~! and !
+       VISUAL     valued    Pathname of screen editor for ~v, visual
+       append     binary    Always append messages to end of mbox
+       ask        binary    Prompt user for Subject: field when sending
+       askcc      binary    Prompt user for additional Cc's at end of message
+       autoprint  binary    Print next message after delete
+       crt        valued    Minimum number of lines before using more
+       dot        binary    Accept . alone on line to terminate message input
+       escape     valued    Escape character to be used instead of ~
+       folder     valued    Directory to store folders in
+       hold       binary    Hold messages in mbox by default
+       ignore     binary    Ignore RUBOUT while sending mail
+       ignoreeof  binary    Don't terminate letters/command input with ^D
+       keep       binary    Don't unlink mbox when empty
+       keepsave   binary    Don't delete saved messages by default
+       metoo      binary    Include sending user in aliases
+       nosave     binary    Don't save partial letter in dead.letter
+       quiet      binary    Suppress printing of Mail version
+       record     valued    File to save all outgoing mail in
+       screen     valued    Size of window of message headers for z, etc.
+       sendmail   valued    Choose alternate mail delivery system
+       toplines   valued    Number of lines to print in top
+
+       The following table summarizes tilde escapes available while entering a
+       letter.
+
+       Escape     Arguments Description
+       ~!         command   Execute shell command
+       ~c         name ...  Add names to Cc: field
+       ~d                   Read dead.letter into message
+       ~e                   Invoke text editor on partial message
+       ~f         messages  Read named messages
+       ~h                   Edit the header fields
+       ~m         messages  Read named messages, right shift by tab
+       ~p                   Print message entered so far
+       ~q                   Abort entry of letter; like RUBOUT
+       ~r         filename  Read file into message
+       ~s         string    Set Subject: field to string
+       ~t         name ...  Add names to To: field
+       ~v                   Invoke screen editor on message
+       ~w         filename  Write message on file
+       ~|         command   Pipe message through command
+       ~~         string    Quote a ~ in front of string
+
+       The following table shows the command line flags.
+
+       Flag      Description
+
+       -N        Suppress the initial printing of headers
+       -T file   Article-id's of read/deleted messages to file
+       -d        Turn on debugging
+       -f file   Show messages in file or $HOME/mbox
+       -h number Pass on hop count for mail forwarding
+       -i        Ignore tty interrupt signals
+       -n        Inhibit reading of /usr/lib/Mail.rc
+       -r name   Pass on name for mail forwarding
+       -s string Use string as subject in outgoing mail
+       -u name   Read name's mail instead of your own
+
+       Notes: -T , -d , -h , and -r are not fit for human consumption.
+
+FILES
+       /usr/spool/mail/*   post office
+       $HOME/mbox          your old mail
+       $HOME/.mailrc       file giving initial mail commands
+       /tmp/R#             temporary for editor escape
+       /usr/lib/Mail.help* help files
+       /usr/lib/Mail.rc    system initialization file
+       /bin/mail           to do actual mailing
+
+SEE ALSO
+       <a href="../man1/mail.1.html">mail(1)</a>
+       `The Mail Reference Manual,' Berkeley BSD 4.1 UNIX User's Manual
+
+                                                                       <a href="../man1/Mail.1.html">Mail(1)</a>
+</pre>
+</body></html>

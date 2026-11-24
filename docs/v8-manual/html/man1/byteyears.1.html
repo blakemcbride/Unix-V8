@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>byteyears.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; byteyears.1 (<a href="../../../../source/v8/usr/man/man1/byteyears.1">troff source</a>)</p>
+<pre>
+BYTEYEARS(1)                General Commands Manual               BYTEYEARS(1)
+
+NAME
+       byteyears - time-space product for file residency
+
+SYNOPSIS
+       byteyears [ -a ] [ file ] . . .
+
+DESCRIPTION
+       Byteyears reports the product of the age of each file in years and the
+       length in bytes.  Files for which this number is large may be
+       reasonable candidates for deletion.  If the file is a directory,
+       byteyears reports (recursively) on everything in that directory.  If no
+       arguments are given, the current directory is assumed.  If the -a
+       option is given, the time since last access is used instead of the time
+       since last modification.
+
+       Each line of output contains the number of byte years (rounded to the
+       nearest integer), the size of the file in bytes, the time last
+       modified, and the name of the file.
+
+EXAMPLE
+       byteyears | sort -r | sed 10q
+              List the ten leading candidates in the current directory.
+
+                                                                  BYTEYEARS(1)
+</pre>
+</body></html>

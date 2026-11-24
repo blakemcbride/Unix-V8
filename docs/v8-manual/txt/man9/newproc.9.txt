@@ -1,0 +1,98 @@
+NEWPROC(9.2)                                                      NEWPROC(9.2)
+
+NAME
+       P, newproc, muxnewwind, newwindow, tolayer, debug, getproc, getproctab
+       - jerq process control
+
+SYNOPSIS
+       #include <jerq.h>
+
+       extern struct Proc *P;
+
+       struct Proc *newproc(f) void (*f)();
+
+       struct Proc *newwindow(f); void (*f)();
+
+       void tolayer(l) Layer *l;
+
+       void debug();
+
+       struct Proc *getproc();
+
+       struct Proc *getproctab();
+
+       #include <msgs.h>
+       void muxnewwind(p, c) struct Proc *p; int c;
+
+DESCRIPTION
+       Processes in the jerq consist of a coroutine-style process structure
+       and an associated layer (see newlayer(9.2)), allocated independently.
+       This section describes the process allocation and control primitives.
+       They are direct links to the system's own control structures, so given
+       mux's open addressing, they should be used with care.
+
+       Each process has a global variable P that points to its process
+       structure.  The only regular use of P is to check that the process has
+       been reshaped:
+
+              if(P->state & RESHAPED){
+                   do_reshape();
+                   P->state &= ~RESHAPED;
+              }
+
+       The definition of struct Proc is in the include file
+       /usr/jerq/include/jerqproc.h, which is included automatically by
+       jerq.h.
+
+       Newproc allocates a new process, returning a pointer to it, or 0 if one
+       cannot be allocated.  The argument f points to the program text to be
+       executed.  The special case f=0 creates a process running the default
+       terminal program, and is almost always how newproc should be called;
+       use 32ld(9.1) to run non-standard programs.  A process is disabled by
+       setting p->state to zero.  After calling newproc, the process must be
+       bound to a layer and Unix told of its presence, typically as:
+
+              struct Proc *p;
+              Rectangle r;
+              p = newproc((struct Proc *)0);
+              if(p == 0)
+                   error();
+              p->layer = newlayer(r);
+              if(p->layer == 0){
+                   p->state = 0;
+                   error();
+              }
+              p->rect = r;
+              muxnewwind(p, C_NEW);
+
+       The second argument to muxnewwind should be C_RESHAPE if an existing
+       process is being given a new layer.  If the process is not running the
+       default terminal program, its variables display and Drect must be set:
+
+              struct udata *u=((struct udata *)p->data);
+              u->Drect=p->rect;
+              u->Jdisplayp=p->layer;
+              This procedure works regardless of whether the process being
+              manipulated is itself.
+
+       Newwindow creates a process by the above procedure, going through the
+       standard user interface to select the rectangle for the process's
+       layer.
+
+       Tolayer takes an argument layer pointer and makes the process in that
+       layer the receiver of mouse and keyboard events.
+
+       Getproc presents the user with a gunsight cursor and returns the
+       address of the process whose layer is indicated with the mouse.
+       Getproctab simply returns the address of the base of the process table
+       array.  This is an array of NPROC process structures.  NPROC is stored
+       in the word immediately lower in address than the process table.
+
+       Debug announces to the system that the calling process is prepared to
+       handle exceptions by other processes.
+
+BUGS
+       These primitives are awkward at best, and are subject to change.
+       Creating a process without a layer or vice versa is dangerous.
+
+                                                                  NEWPROC(9.2)

@@ -1,0 +1,50 @@
+BITFILE(9.5)                                                      BITFILE(9.5)
+
+NAME
+       bitfile - format of bitmap file
+
+DESCRIPTION
+       Binary files produced by blitblt(9.1), twid(9.6) and other bitmap-
+       generating programs are formatted as follows:
+
+       Byte no.    Description
+
+       0, 1:       Zero.
+
+       2, 3:       X-coordinate of the rectangle origin (low-order byte, high-
+                   order byte).
+
+       4, 5:       Y-coordinate of the rectangle origin (low-order byte, high-
+                   order byte).
+
+       6, 7:       X-coordinate of the rectangle corner (low-order byte, high-
+                   order byte).
+
+       8, 9:       Y-coordinate of the rectangle corner (low-order byte, high-
+                   order byte).
+
+       remainder:  Compressed raster data. Each raster is exclusive-or'd with
+                   the previous one, and zero-extended (if necessary) to a
+                   16-bit boundary. It is then encoded into byte sequences,
+                   each of which consists of a control byte followed by two or
+                   more data bytes:
+
+       Control     Data
+
+       n (< 127)   2*n bytes of raster data, running from left to right.
+
+       0x80 + n    2 bytes of raster data, to be replicated from left to right
+                   n times.
+
+       There are also two ASCII formats in current use.  Textures and 16×16
+       icons, typically created by icon(9.1), are encoded as a Texture
+       declaration with initializer, to be copied unchanged into C program
+       source; see types(9.5).  Faces and other large icons are without any
+       surrounding C syntax.  In either case, each scan line of the bitmap is
+       a comma-separated list of C-style short hexadecimal constants; scan
+       lines are separated by newlines.
+
+SEE ALSO
+       blitblt(9.1), icon(9.1), twid(9.1), types(9.5), sysmon(9.1), can(1)
+
+                                                                  BITFILE(9.5)

@@ -1,0 +1,27 @@
+SEQ(1)                      General Commands Manual                     SEQ(1)
+
+NAME
+       seq  -  print sequences of numbers
+
+SYNOPSIS
+       seq [-w] [-ppicture] [ first [ incr ] ] last
+
+DESCRIPTION
+       Seq prints the sequence of numbers, one per line, from first (default
+       1) to last, inclusive, in increments of incr (default 1).  The numbers
+       are interpreted as floating point.
+
+       The default output format is to round each number to the nearest
+       integer.  This may be overridden by specifying a picture that is an
+       example of the desired format.  For example, the option -p10.00 results
+       in numbers printed to two decimal places.  Leading zeroes in the
+       picture are preserved in the output.
+
+       The option -w causes the output lines to have constant width, by
+       padding short numbers with leading zeroes, after the minus sign for
+       negative numbers.
+
+BUGS
+       Pictures involving exponents don't work.
+
+                                                                        SEQ(1)

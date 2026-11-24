@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mtab.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; mtab.5 (<a href="../../../../source/v8/usr/man/man5/mtab.5">troff source</a>)</p>
+<pre>
+MTAB(5)                       File Formats Manual                      MTAB(5)
+
+NAME
+       mtab - mounted file system table
+
+DESCRIPTION
+       Mtab resides in directory /etc and contains a table of devices mounted
+       by the mount command.  Umount removes entries.
+
+       Each entry is 64 bytes long; the first 32 are the null-padded name of
+       the place where the special file is mounted; the second 32 are the
+       null-padded name of the special file.  The special file has all its
+       directories stripped away; that is, everything through the last `/' is
+       thrown away.
+
+       This table is present only so people can look at it.  It does not
+       matter to mount if there are duplicated entries nor to umount if a name
+       cannot be found.
+
+FILES
+       /etc/mtab
+
+SEE ALSO
+       <a href="../man8/mount.8.html">mount(8)</a>
+
+                                                                       MTAB(5)
+</pre>
+</body></html>

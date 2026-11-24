@@ -1,0 +1,24 @@
+SU(8)                       System Manager's Manual                      SU(8)
+
+NAME
+       su - substitute user id temporarily
+
+SYNOPSIS
+       /etc/su [ user ]
+
+DESCRIPTION
+       Su demands the password for the login name user, and if it is given,
+       changes to that userid and invokes the Shell sh(1) without changing the
+       current directory.  The user environment is unchanged except for HOME
+       and SHELL, which are taken from the password file for the user being
+       substituted (see environ(5)).  The new userid stays in force until the
+       Shell exits.
+
+       If no user is specified, `root' is assumed.  To remind the super-user
+       of his responsibilities, the Shell substitutes `#' for its usual
+       prompt.
+
+SEE ALSO
+       sh(1)
+
+                                                                         SU(8)

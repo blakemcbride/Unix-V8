@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getuid.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; getuid.2 (<a href="../../../../source/v8/usr/man/man2/getuid.2">troff source</a>)</p>
+<pre>
+GETUID(2)                     System Calls Manual                    GETUID(2)
+
+NAME
+       getuid, getgid, geteuid, getegid, getpid, getppid - get user, group, or
+       process identity
+
+SYNOPSIS
+       getuid()
+
+       geteuid()
+
+       getgid()
+
+       getegid()
+
+       getpid()
+
+       getppid()
+
+DESCRIPTION
+       Getuid returns the real user ID of the current process, geteuid the
+       effective user ID.  The real user ID identifies the person who is
+       logged in, in contradistinction to the effective user ID, which
+       determines his access permission at the moment.  It is thus useful to
+       programs which operate using the `set user ID' mode, to find out who
+       invoked them.
+
+       Getgid returns the real group ID, getegid the effective group ID.
+
+       Getpid returns the process ID of the current process.  Most often it is
+       used to generate uniquely-named temporary files.
+
+       Getppid returns the process ID of the parent of the current process.
+
+SEE ALSO
+       <a href="../man2/setuid.2.html">setuid(2)</a>, <a href="../man3/mktemp.3.html">mktemp(3)</a>, <a href="../man3/getlogin.3.html">getlogin(3)</a>
+
+                                                                     GETUID(2)
+</pre>
+</body></html>

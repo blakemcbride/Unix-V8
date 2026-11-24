@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cons.4 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 4</a> &gt; cons.4 (<a href="../../../../source/v8/usr/man/man4/cons.4">troff source</a>)</p>
+<pre>
+CONS(4)                    Kernel Interfaces Manual                    CONS(4)
+
+NAME
+       cons - console interface
+
+DESCRIPTION
+       The console is available to the processor through the console
+       registers.  It acts like a normal terminal, except that when the local
+       functions are not disabled, control-P puts the console in local console
+       mode (where the prompt is `&gt;&gt;&gt;').  On an 11/780, you can return to the
+       conversational mode by `SE T P' if the processor is still running or
+       `CONTINUE' if it is halted.  On an 11/750, control-P always halts the
+       processor; `C' will recover.
+
+       If you hit the break key on an 11/780 console, the console may go into
+       ODT (console debugger mode).  Hit a `P' to get out of this mode.
+
+       With the above provisos the console works like any other terminal.
+
+FILES
+       /dev/console
+
+SEE ALSO
+       <a href="../man4/ttyld.4.html">ttyld(4)</a>, <a href="../man8/reboot.8.html">reboot(8)</a>
+
+                                      VAX                              CONS(4)
+</pre>
+</body></html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>rev.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; rev.1 (<a href="../../../../source/v8/usr/man/man1/rev.1">troff source</a>)</p>
+<pre>
+REV(1)                      General Commands Manual                     REV(1)
+
+NAME
+       rev, revpag - reverse lines or pages
+
+SYNOPSIS
+       rev [ file ] ...
+
+       revpag [ option ] ... [ file ] ...
+
+DESCRIPTION
+       Rev copies the standard input or the named files to the standard
+       output, reversing the order of characters in every line.
+
+       Revpag copies the standard input or the named files to the standard
+       output, reversing the order of the pages.  (The name `-' means the
+       standard input.)  Options define what constitutes a `page':
+
+       -d                                                                                                                                                                       flags
+                                                                                                                                                                                the
+                                                                                                                                                                                input
+                                                                                                                                                                                as
+                                                                                                                                                                                <a href="../man1/troff.1.html">troff(1)</a>
+                                                                                                                                                                                output;
+                                                                                                                                                                                line
+                                                                                                                                                                                counts
+                                                                                                                                                                                are
+                                                                                                                                                                                ignored.
+
+       -f                                                                                                                                                                       appends
+                                                                                                                                                                                a
+                                                                                                                                                                                new-
+                                                                                                                                                                                page
+                                                                                                                                                                                character
+                                                                                                                                                                                (014)
+                                                                                                                                                                                to
+                                                                                                                                                                                the
+                                                                                                                                                                                last
+                                                                                                                                                                                input
+                                                                                                                                                                                page
+                                                                                                                                                                                (which
+                                                                                                                                                                                is
+                                                                                                                                                                                the
+                                                                                                                                                                                first
+                                                                                                                                                                                page
+                                                                                                                                                                                on
+                                                                                                                                                                                the
+                                                                                                                                                                                output),
+                                                                                                                                                                                if
+                                                                                                                                                                                this
+                                                                                                                                                                                page
+                                                                                                                                                                                is
+                                                                                                                                                                                not
+                                                                                                                                                                                of
+                                                                                                                                                                                the
+                                                                                                                                                                                declared
+                                                                                                                                                                                length.
+
+       -l n                                                                                                                                                                     sets
+                                                                                                                                                                                the
+                                                                                                                                                                                number
+                                                                                                                                                                                of
+                                                                                                                                                                                lines
+                                                                                                                                                                                per
+                                                                                                                                                                                page
+                                                                                                                                                                                (66
+                                                                                                                                                                                by
+                                                                                                                                                                                default)
+                                                                                                                                                                                in
+                                                                                                                                                                                the
+                                                                                                                                                                                case
+                                                                                                                                                                                of
+                                                                                                                                                                                ordinary
+                                                                                                                                                                                ASCII
+                                                                                                                                                                                input.
+                                                                                                                                                                                A
+                                                                                                                                                                                new-
+                                                                                                                                                                                page
+                                                                                                                                                                                character
+                                                                                                                                                                                (014)
+                                                                                                                                                                                is
+                                                                                                                                                                                also
+                                                                                                                                                                                recognized
+                                                                                                                                                                                as
+                                                                                                                                                                                a
+                                                                                                                                                                                page
+                                                                                                                                                                                break.
+
+       -o list                                                                                                                                                                  produces
+                                                                                                                                                                                only
+                                                                                                                                                                                pages
+                                                                                                                                                                                whose
+                                                                                                                                                                                page
+                                                                                                                                                                                numbers
+                                                                                                                                                                                appear
+                                                                                                                                                                                in
+                                                                                                                                                                                the
+                                                                                                                                                                                comma-
+                                                                                                                                                                                separated
+                                                                                                                                                                                list
+                                                                                                                                                                                of
+                                                                                                                                                                                numbers
+                                                                                                                                                                                and
+                                                                                                                                                                                ranges.
+                                                                                                                                                                                A
+                                                                                                                                                                                `page
+                                                                                                                                                                                number'
+                                                                                                                                                                                means
+                                                                                                                                                                                the
+                                                                                                                                                                                ordinal
+                                                                                                                                                                                position
+                                                                                                                                                                                of
+                                                                                                                                                                                a
+                                                                                                                                                                                page
+                                                                                                                                                                                in
+                                                                                                                                                                                the
+                                                                                                                                                                                input.
+                                                                                                                                                                                A
+                                                                                                                                                                                range
+                                                                                                                                                                                n-m
+                                                                                                                                                                                means
+                                                                                                                                                                                pages
+                                                                                                                                                                                n
+                                                                                                                                                                                through
+                                                                                                                                                                                m;
+                                                                                                                                                                                a
+                                                                                                                                                                                range
+                                                                                                                                                                                -n
+                                                                                                                                                                                means
+                                                                                                                                                                                from
+                                                                                                                                                                                the
+                                                                                                                                                                                beginning
+                                                                                                                                                                                to
+                                                                                                                                                                                page
+                                                                                                                                                                                n;
+                                                                                                                                                                                a
+                                                                                                                                                                                range
+                                                                                                                                                                                n-
+                                                                                                                                                                                means
+                                                                                                                                                                                from
+                                                                                                                                                                                page
+                                                                                                                                                                                n
+                                                                                                                                                                                to
+                                                                                                                                                                                the
+                                                                                                                                                                                end.
+                                                                                                                                                                                Numbers
+                                                                                                                                                                                and
+                                                                                                                                                                                ranges
+                                                                                                                                                                                may
+                                                                                                                                                                                appear
+                                                                                                                                                                                in
+                                                                                                                                                                                any
+                                                                                                                                                                                order.
+
+SEE ALSO
+       <a href="../man1/pr.1.html">pr(1)</a>, <a href="../man1/troff.1.html">troff(1)</a>, xcan(1)
+
+                                                                        REV(1)
+</pre>
+</body></html>

@@ -1,0 +1,44 @@
+SPLIT(1)                    General Commands Manual                   SPLIT(1)
+
+NAME
+       split, fsplit - split a file into pieces
+
+SYNOPSIS
+       split [ -n | -e expression ] [ -f fileroot ] [ -x ] [ -y ] [ -s suffix
+       ] [ file ]
+
+       fsplit [ option ] ...  [ file ] ...
+
+DESCRIPTION
+       Split reads file (standard input by default) and writes it in n-line
+       pieces (default 1000), as many as necessary, onto a set of output
+       files.  The name of the first output file is fileroot (default x) with
+       aa appended, and so on lexicographically.
+
+       If one or more expressions are specified, the file divisions occur at
+       each line of file which matches an expression; line counts are
+       irrelevant.  The expressions are identical to those of grep(1).  If a
+       subexpression of expression is contained in escaped parentheses
+       \(...\), the file name for the output file is the portion of the line
+       which matches the subexpression, optionally suffixed by a string
+       specified with the -s option.
+
+       The first line of each output file is the matching input line, but it
+       may be excluded from the output file by setting the -x flag.  The -y
+       flag causes lower case letters in expression to match either case of
+       letter in the input, but any output file names (excluding the suffix)
+       will be forced to lower case.
+
+       Fsplit splits a collection of Fortran subprograms in one file into
+       separate files.  Options -f, -e, and -r set the file suffix: procedure
+       `proc' will go into file `proc.f' (default), `proc.e', or `proc.r'
+       accordingly.  Block data subprograms will go into files named
+       `BLOCKDATA1.f', etc.
+
+       Option -s strips off data beyond column 72 together with any resulting
+       trailing blanks.
+
+SEE ALSO
+       sed(1), awk(1)
+
+                                                                      SPLIT(1)

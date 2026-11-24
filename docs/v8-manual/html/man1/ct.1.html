@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ct.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; ct.1 (<a href="../../../../source/v8/usr/man/man1/ct.1">troff source</a>)</p>
+<pre>
+CT(1)                       General Commands Manual                      CT(1)
+
+NAME
+       ct - call terminal (and start a session)
+
+SYNOPSIS
+       ct [-c count ] [-w interval ] [-h] phone-number [ service-class ]
+
+DESCRIPTION
+       Ct places a telephone call to a remote terminal and allows a user to
+       log in on that terminal in the normal fashion.  The terminal must be
+       equipped with an auto-answer modem.
+
+       The phone number and service class are interpreted the same way as by
+       <a href="../man1/cu.1.html">cu(1)</a>.  If ct cannot reach the number given, it tries again the number
+       of times given by count (default 5), waiting each time for a given
+       interval (default 60 seconds).
+
+       If the -h option is given, ct tries to hang up the phone before placing
+       the call.  This is useful for a ``call me right back'' type of
+       arrangement.
+
+                                                                         CT(1)
+</pre>
+</body></html>

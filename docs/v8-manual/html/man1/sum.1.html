@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sum.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; sum.1 (<a href="../../../../source/v8/usr/man/man1/sum.1">troff source</a>)</p>
+<pre>
+SUM(1)                      General Commands Manual                     SUM(1)
+
+NAME
+       sum - sum and count blocks in a file
+
+SYNOPSIS
+       sum [ file ] ...
+
+DESCRIPTION
+       Sum calculates and prints a 16-bit checksum along with the length (in
+       blocks) and name of each file.  If no files are given, the standard
+       input is summed.  If file is `-', file names are read from standard
+       input.
+
+       Sum is typically used to look for bad spots, or to validate a file
+       communicated over some transmission line.
+
+SEE ALSO
+       <a href="../man1/wc.1.html">wc(1)</a>.
+
+DIAGNOSTICS
+       `Read error' is indistinguishable from end of file on most devices;
+       check the byte count.
+
+                                                                        SUM(1)
+</pre>
+</body></html>

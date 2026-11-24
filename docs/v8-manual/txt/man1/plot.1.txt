@@ -1,0 +1,47 @@
+PLOT(1)                     General Commands Manual                    PLOT(1)
+
+NAME
+       plot - graphics filters
+
+SYNOPSIS
+       plot [ -Tterminal ]
+
+DESCRIPTION
+       These commands read plotting instructions (see plot(5)) from the
+       standard input, and in general produce plotting instructions suitable
+       for a particular terminal on the standard output.
+
+       If no terminal type is specified, the environment parameter $TERM (see
+       environ(5)) is used.  Known terminals are:
+
+       2621   hp Hewlett-Packard screen.
+
+       4014
+       tek    Tektronix 4014 storage scope.
+
+       ramtek
+
+       202
+       troff  Mergenthaler typesetter.
+
+       5620
+       jerq   Teletype DMD display.
+
+       750
+       pen    Hewlett-Packard pen plotter.
+
+FILES
+       /usr/bin/hpplot
+       /usr/bin/ramtek
+       /usr/bin/trplot
+       /usr/bin/penplot
+       /usr/bin/tek
+       /usr/jerq/bin/jplot
+
+SEE ALSO
+       plot(3), plot(5)
+
+BUGS
+       Which plotters are known depends on which computer you are on.
+
+                                                                       PLOT(1)

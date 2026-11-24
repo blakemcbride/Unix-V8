@@ -1,0 +1,20 @@
+PICK(1)                     General Commands Manual                    PICK(1)
+
+NAME
+       pick - pick arguments
+
+SYNOPSIS
+       pick [ - | arg ... ]
+
+DESCRIPTION
+       Pick writes each argument to the standard error and reads a reply.  If
+       the reply is y, the argument is echoed to the standard output; if the
+       reply is q, pick exits without reading any more arguments; there is no
+       output for any other response.  If the first argument to pick is a -
+       the selection is for each line of the standard input, rather than
+       arguments.
+
+       Pick is useful for interactive selection of argument lists, as in
+            wc `pick *.[ch]`
+
+                                                                       PICK(1)

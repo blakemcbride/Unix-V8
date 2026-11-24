@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>clri.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; clri.8 (<a href="../../../../source/v8/usr/man/man8/clri.8">troff source</a>)</p>
+<pre>
+CLRI(8)                     System Manager's Manual                    CLRI(8)
+
+NAME
+       clri - clear i-node
+
+SYNOPSIS
+       /etc/clri filesystem i-number ...
+
+DESCRIPTION
+       Clri writes zeros on the i-nodes with the decimal i-numbers on the
+       filesystem.  After clri, any blocks in the affected file will show up
+       as `missing' in an <a href="../man8/icheck.8.html">icheck(8)</a> of the filesystem.
+
+       Read and write permission is required on the specified file system
+       device.  The i-node becomes allocatable.
+
+       The primary purpose of this routine is to remove a file which for some
+       reason appears in no directory.  If it is used to clear an i-node which
+       does appear in a directory, care should be taken to track down the
+       entry and remove it.  Otherwise, when the i-node is reallocated to some
+       new file, the old entry will still point to that file.  At that point
+       removing the old entry will destroy the new file.  The new entry will
+       again point to an unallocated i-node, so the cycle is likely to be
+       repeated.
+
+       Clri is obsoleted for normal file system repair work by <a href="../man8/fsck.8.html">fsck(8)</a>.
+
+SEE ALSO
+       <a href="../man8/fsck.8.html">fsck(8)</a>, <a href="../man8/icheck.8.html">icheck(8)</a>
+
+BUGS
+       If the file is open, clri is likely to be ineffective.
+
+                                                                       CLRI(8)
+</pre>
+</body></html>

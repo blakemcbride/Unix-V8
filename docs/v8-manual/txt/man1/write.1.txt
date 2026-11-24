@@ -1,0 +1,57 @@
+WRITE(1)                    General Commands Manual                   WRITE(1)
+
+NAME
+       write  -  write to other users
+
+SYNOPSIS
+       write person ...
+
+DESCRIPTION
+       Write copies lines from your terminal to terminals of other persons
+       designated either by login name or (to circumvent occasional
+       ambiguities) by terminal name as given by who(1).  It announces to each
+       person your login name, your terminal, and the other persons.  To
+       respond, each recipient should execute a corresponding write to the
+       persons he wants to talk to.
+
+       When you are writing to more than one person, your messages are
+       identified to the recipients.  Writing ends upon end of file or
+       interrupt, and the message `EOF' is sent to the others.
+
+       Write recognizes certain commands during a conversation:
+
+       !cmd      Execute a shell on the string cmd and then return to write.
+
+       :a person Add person to the list of people to whom you are talking, and
+                 send an appropriate announcement to all parties.  They must
+                 do :a for themselves if they want to include the new person.
+
+       :d person Drop person from your list and make appropriate
+                 announcements.
+
+       :l        Print a list of people to whom you are talking.
+
+       The following protocol is suggested for using write: when you first
+       write to another user, wait for him to write back before starting to
+       send.  Each party should end each message with a distinctive signal—(o)
+       for `over' is conventional—that the other may reply.  (oo) for `over
+       and out' is suggested when conversation is about to be terminated.
+
+       Permission to write may be denied or granted by mesg(1).  Normally
+       writing is allowed.  Certain commands, in particular nroff and pr(1)
+       disallow messages in order to prevent messy output.
+
+FILES
+       /etc/utmp to find user
+       /bin/sh        to execute `!'
+
+SEE ALSO
+       mesg(1), who(1), mail(1)
+
+BUGS
+       Messages ought to be identified when the recipient is receiving from
+       more than one writer, rather than when the writer is sending to more
+       than one recipient, but that requires cooperating processes and isn't
+       worth the effort.
+
+                                                                      WRITE(1)

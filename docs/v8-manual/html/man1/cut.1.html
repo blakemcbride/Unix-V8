@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cut.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; cut.1 (<a href="../../../../source/v8/usr/man/man1/cut.1">troff source</a>)</p>
+<pre>
+CUT(1)                      General Commands Manual                     CUT(1)
+
+NAME
+       cut, paste - rearrange columns of data
+
+SYNOPSIS
+       cut -clist [ file ... ]
+
+       cut -flist [ -dchar ] [ file ... ]
+
+       paste [ -s ] [ -dlist ] file ...
+
+DESCRIPTION
+       Cut selects fields from each line of the files (standard input
+       default).  In data base parlance, it projects a relation.  The fields
+       can be fixed length, as on a punched card (-c option), or be marked
+       with a delimiter character (-f option).
+
+       The meanings of the options follow.  A list is a comma-separated,
+       increasing list of integers with optional - to indicate ranges, for
+       example 1,3-5,7.
+
+       -clist   The list specifies character positions.
+
+       -flist   The list specifies field numbers.
+
+       -dchar   The character is the delimiter for the -f option.  Default is
+                tab.
+
+       -s       Suppress lines with no delimiter characters in case of -f
+                option.  Normally such lines pass through untouched.
+
+       Paste concatenates corresponding lines of the input files and places
+       the result on the standard output.  The file name `-' refers to the
+       standard input.  Lines are glued together with tab characters, or with
+       characters taken circularly from an optionally specified list.  The
+       list may contain the special escape sequences \n (newline), \t (tab),
+       \\ (backslash), and \0 (empty string, not a null character).
+
+       Option -s causes paste to combine successive lines from one file rather
+       than corresponding lines from multiple files.
+
+EXAMPLES
+       cut -d: -f1,3 /etc/passwd
+              mapping of login names to userids
+
+       NAME=`who am i | cut -f1 -d" "`
+              set NAME to current login name (subtly different from `getuid')
+
+       ls ⎪ paste - - - -
+
+       ls ⎪ paste -s ′-d\t\n′ -
+              4-column and 2-column file listing
+
+SEE ALSO
+       <a href="../man1/grep.1.html">grep(1)</a>, <a href="../man1/awk.1.html">awk(1)</a>, <a href="../man1/sed.1.html">sed(1)</a>, <a href="../man1/pr.1.html">pr(1)</a>, <a href="../man1/column.1.html">column(1)</a>
+
+BUGS
+       Cut should handle disordered lists.
+       In default of file names, paste should read the the standard input.
+
+                                                                        CUT(1)
+</pre>
+</body></html>

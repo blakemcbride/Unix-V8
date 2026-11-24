@@ -1,0 +1,48 @@
+WWBMAIL(1)                  General Commands Manual                 WWBMAIL(1)
+
+NAME
+       wwbmail - send mail to Writer's Workbench development group
+
+SYNOPSIS
+       wwbmail [ -p ] [ -flags ][ -ver ]
+
+DESCRIPTION
+       Wwbmail sends a user's comments or requests for help directly to the
+       Writer's Workbench (WWB) development group.
+
+       The -p option allows the user to bypass the default (inter-system mail)
+       and go directly to the procedure for obtaining a paper copy of the
+       message.
+
+       The program prints instructions if the user needs them.  The
+       instructions are written at a level a casual user can understand.
+
+       If wwbmail knows of no electronic mail link between the user's system
+       and that of the WWB group, it gives instructions on how to print a pre-
+       addressed paper copy of the message to send via regular mail.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+FILES
+       /tmp/$$*             temporary files
+
+       wwbmailtmp           output file containing address and message for
+                            paper copy
+
+SEE ALSO
+       wwbhelp(1), wwbinfo(1), wwb(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+
+                                                                    WWBMAIL(1)

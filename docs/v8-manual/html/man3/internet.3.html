@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>internet.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; internet.3 (<a href="../../../../source/v8/usr/man/man3/internet.3">troff source</a>)</p>
+<pre>
+INTERNET(3)                Library Functions Manual                INTERNET(3)
+
+NAME
+       in_host, in_ntoa, in_address, in_service - internet operations
+
+SYNOPSIS
+       #include &lt;sys/inet/in.h&gt;
+
+       char *in_host(hostaddr)
+       in_addr hostaddr;
+
+       char *in_ntoa(hostaddr)
+       in_addr hostaddr;
+
+       in_addr in_address(hostname)
+       char *hostname;
+
+       struct in_service *in_service(name, proto, port)
+       char *name, *proto;
+       unsigned int port;
+
+DESCRIPTION
+       These routines are loaded by the -lin option of <a href="../man1/ld.1.html">ld(1)</a>.
+
+       Internet addresses, type in_addr, are 32 bit quantities global to the
+       network.  The ascii representation for an in_addr can be either a host
+       name or the form b1.b2.b3.b4, where each `bx' is the value of the x'th
+       byte of the address in decimal.  The mapping of an internet address to
+       a host name is an n to m mapping.  Since host names are considered
+       local `aliases' for internet addresses, the host to address mapping is
+       subjective.
+
+       In_address maps an internet host name to an address.
+
+       In_host maps an internet address into a host name.
+
+       In_ntoa maps an internet address to its ascii numeric format.
+
+       In_service looks up an entry in the services file and returns the
+       closest match.  If either name or port are 0, they will match any name
+       or port.  If proto is 0, the ``tcp'' protocol is assumed.
+
+FILES
+       /usr/inet/lib/hosts mapping between host names and addresses
+       /usr/inet/lib/networks   mapping between network names and addresses
+       /usr/inet/lib/services   database of services
+       /usr/inet/lib/hosts.equiv     machines with common administration
+
+SEE ALSO
+       <a href="../man3/tcp.3.html">tcp(3)</a>, <a href="../man3/udp.3.html">udp(3)</a>
+
+BUGS
+       The mappings between internet addresses and names is arbitrary at best.
+       The hosts file may contain many addresses for each name and/or many
+       names for each address.  In_address and in_host each start at the
+       beginning of the file and search sequentially for a match.  Therefore,
+       in_addr(in_host(addr)) == addr is not necessarily true.
+
+                                                                   INTERNET(3)
+</pre>
+</body></html>

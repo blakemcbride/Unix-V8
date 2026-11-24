@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>utime.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; utime.2 (<a href="../../../../source/v8/usr/man/man2/utime.2">troff source</a>)</p>
+<pre>
+UTIME(2)                      System Calls Manual                     UTIME(2)
+
+NAME
+       utime - set file times
+
+SYNOPSIS
+       #include &lt;sys/types.h&gt;
+
+       utime(file, timep)
+       char *file;
+       time_t timep[2];
+
+DESCRIPTION
+       The utime call uses the `accessed' and `updated' times in that order
+       from the timep vector to set the corresponding recorded times for file.
+
+       The caller must be the owner of the file or the super-user.  The
+       `inode-changed' time of the file is set to the current time.
+
+SEE ALSO
+       <a href="../man2/stat.2.html">stat(2)</a>
+
+                                                                      UTIME(2)
+</pre>
+</body></html>

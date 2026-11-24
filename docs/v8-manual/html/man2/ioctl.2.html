@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ioctl.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; ioctl.2 (<a href="../../../../source/v8/usr/man/man2/ioctl.2">troff source</a>)</p>
+<pre>
+IOCTL(2)                      System Calls Manual                     IOCTL(2)
+
+NAME
+       ioctl, stty, gtty - miscellaneous  stream control operations
+
+SYNOPSIS
+       #include &lt;sgtty.h&gt;
+
+       ioctl(fildes, request, argp)
+       struct sgttyb *argp;
+
+       stty(fildes, argp)
+       struct sgttyb *argp;
+
+       gtty(fildes, argp)
+       struct sgttyb *argp;
+
+DESCRIPTION
+       Ioctl performs a variety of functions on special files and streams.
+       The writeups of various devices in section 4 discuss how ioctl applies
+       to them.
+
+       For certain status setting and status inquiries about terminal devices,
+       the functions stty and gtty are equivalent to
+
+              ioctl(fildes, TIOCSETP, argp);
+              ioctl(fildes, TIOCGETP, argp);
+
+       respectively; see <a href="../man4/ttyld.4.html">ttyld(4)</a>.
+
+       The following two standard calls, however, apply to any open file.  The
+       defined constant NULL has value 0.
+
+              ioctl(fildes, FIOCLEX, NULL);
+              ioctl(fildes, FIONCLEX, NULL);
+
+       The first causes the file to be closed automatically upon a successful
+       <a href="../man2/exec.2.html">exec(2)</a>; the second causes the file to be left open.
+
+       The following call applies to any stream file descriptor:
+
+              ioctl(fildes, FIONREAD, &amp;count);
+
+       It returns, in the integer count, the number of characters available
+       for reading from fildes.
+
+       The following calls provide an advisory file locking facility, and
+       apply to any open file:
+
+              ioctl(fildes, FIOALOCK, NULL);
+              ioctl(fildes, FIOAUNLOCK, NULL);
+              ioctl(fildes, FIOAISLOCK, NULL);
+
+       FIOALOCK either sets an advisory lock, or indicates that this file is
+       already locked by returning -1, with errno set to EPERM.
+
+       FIOAUNLOCK either clears an advisory lock, or indicates that the file
+       is locked by another instance of open by returning -1, with errno set
+       to EPERM.
+
+       FIOAISLOCK returns 0 for a file with no advisory lock set, 1 for a file
+       with an advisory lock set using another instance of open, or 2 for a
+       file with an advisory lock set on the current instance of open.  File
+       descriptors belong to the same instance when they are copied by <a href="../man2/dup.2.html">dup(2)</a>
+       or <a href="../man2/fork.2.html">fork(2)</a>.  Locks are detectable only through these calls, and have no
+       effect on IO or ability to open files.
+
+SEE ALSO
+       <a href="../man1/stty.1.html">stty(1)</a>, <a href="../man4/ttyld.4.html">ttyld(4)</a>, <a href="../man4/proc.4.html">proc(4)</a>, <a href="../man2/exec.2.html">exec(2)</a>
+
+DIAGNOSTICS
+       Except where otherwise stated, 0 is returned if the call is successful;
+       -1 if the file descriptor does not refer to the kind of file for which
+       it was intended, or if request attempts to modify the state of an
+       unwritable file.
+
+BUGS
+       Strictly speaking, since ioctl may be extended in different ways to
+       devices with different properties, argp should have an open-ended
+       declaration like
+
+              union { struct sgttyb ...; ...  } *argp;
+
+       The important thing is that the size is fixed by `struct sgttyb'.
+       Ioctl requests vary among UNIX systems; undisciplined use is likely to
+       compromise portability.
+
+                                                                      IOCTL(2)
+</pre>
+</body></html>

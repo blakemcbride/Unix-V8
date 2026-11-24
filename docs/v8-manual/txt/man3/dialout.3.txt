@@ -1,0 +1,52 @@
+DIALOUT(3)                 Library Functions Manual                 DIALOUT(3)
+
+NAME
+       dialout - place call on ACU
+
+SYNOPSIS
+       dialout(class, telno)
+       char *class, *telno;
+
+DESCRIPTION
+       Dialout searches for an automatic calling unit of the appropriate
+       service class and places a data call on the associated line, using the
+       given telephone number.  If successful, it returns an open file
+       descriptor for the line.  The file is in raw mode, and has exclusive-
+       use and hangup-on-close modes set.  It returns -1 if all ACUs of the
+       given class are busy, -3 if carrier could not be set, and -9 if the
+       service class is unidentifiable.
+
+       The routine consults a data file /etc/aculist that consists of lines
+       containing six blank- or tab-separated fields.
+
+       service class
+               Each line with a service class matching the one specified is
+               tried in turn until an unoccupied one is found.  Service
+               classes may be used used to specify a switching system (e.g.
+               Dimension or Centrex) and speed rate.
+
+       file    The file name of the associated special file for the telephone
+               line.
+
+       acu     The file name of the associated ACU.  If specified as none, no
+               ACU is used and the telephone number is ignored.  This is for
+               hardwired connections.
+
+       speed   The bit rate of the interface, chosen from the numbers given in
+               ttyld(4).
+
+       prefix  A string to be prefixed to the number.  This is handy for
+               shared ACUs in which the first digit specifies a line.  The
+               prefix - is taken to be an empty prefix.
+
+       postfix A string to be postfixed to the number to be dialled.  Some
+               ACUs require an `end of number' code; it should be specified
+               here.
+
+FILES
+       /etc/aculist
+
+SEE ALSO
+       ttyld(4), dn(4), cu(1)
+
+                                                                    DIALOUT(3)

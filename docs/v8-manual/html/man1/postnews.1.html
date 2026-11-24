@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>postnews.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; postnews.1 (<a href="../../../../source/v8/usr/man/man1/postnews.1">troff source</a>)</p>
+<pre>
+POSTNEWS(1)                 General Commands Manual                POSTNEWS(1)
+
+NAME
+       postnews - submit netnews articles
+
+SYNOPSIS
+       postnews [ file ]
+
+DESCRIPTION
+       Postnews submits the file as a netnews article.  It prompts for title
+       (informative, please), primary newsgroup, and other newsgroup
+       distribution (not recommended).
+
+       The names of newsgroups are relative pathnames of directories depending
+       from /usr/spool/netnews, with slashes (/) replaced by dots (.).
+
+       If no file is specified, postnews invokes an editor specified by the
+       environment variable EDITOR (default <a href="../man1/vi.1.html">vi(1)</a>).  The editor's buffer is
+       initialized with header information, which may be changed.  The text of
+       the article may be appended.
+
+       For more sophisticated uses, such as posting news from a program, see
+       the BSD manual.
+
+SEE ALSO
+       <a href="../man1/readnews.1.html">readnews(1)</a>
+
+BUGS
+       The editor default is distinctly nonclassical.
+
+                                     alice                         POSTNEWS(1)
+</pre>
+</body></html>

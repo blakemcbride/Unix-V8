@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>directory.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; directory.3 (<a href="../../../../source/v8/usr/man/man3/directory.3">troff source</a>)</p>
+<pre>
+DIRECTORY(3)               Library Functions Manual               DIRECTORY(3)
+
+NAME
+       opendir, readdir, telldir, seekdir, closedir - directory operations
+
+SYNOPSIS
+       #include &lt;sys/types.h&gt;
+       #include &lt;ndir.h&gt;
+
+       DIR *opendir(filename)
+       char *filename;
+
+       struct direct *readdir(dirp)
+       DIR *dirp;
+
+       long telldir(dirp)
+       DIR *dirp;
+
+       seekdir(dirp, loc)
+       DIR *dirp;
+       long loc;
+
+       closedir(dirp)
+       DIR *dirp;
+
+DESCRIPTION
+       Opendir opens the directory named by filename and associates a
+       `directory stream' with it.  Opendir returns a pointer to be used to
+       identify the directory stream in subsequent operations.  The pointer
+       value 0 is returned if filename cananot be accessed or is not a
+       directory.
+
+       Readdir returns a pointer to the next directory entry.  It returns 0
+       upon reaching the end of the directory or detecting an invalid seekdir
+       operation.
+
+       Telldir returns the current location associated with the named
+       directory stream.
+
+       Seekdir sets the position of the next readdir operation on the
+       directory stream.  The new position reverts to the one associated with
+       the directory stream when the telldir operation was performed.  Values
+       returned by telldir are good only for the lifetime of the DIR pointer
+       from which they are derived.
+
+       Closedir causes the named directory stream to be closed, and the
+       structure associated with the DIR pointer to be freed.
+
+       The preferred way to search the current directory is:
+            len = strlen(name);
+            dirp = opendir(".");
+            for (dp = readdir(dirp); dp != NULL; dp = readdir(dir))
+                 if (dp-&gt;d_namlen == len &amp;&amp; !strcmp(dp-&gt;d_name, name)) {
+                      closedir(dirp);
+                      return FOUND;
+                 }
+            closedir(dirp);
+            return NOT_FOUND;
+
+SEE ALSO
+       <a href="../man5/dir.5.html">dir(5)</a>, <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/close.2.html">close(2)</a>, <a href="../man2/read.2.html">read(2)</a>, <a href="../man2/lseek.2.html">lseek(2)</a>
+
+                                    3/1/82                        DIRECTORY(3)
+</pre>
+</body></html>

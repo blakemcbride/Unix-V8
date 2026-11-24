@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>wait.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; wait.2 (<a href="../../../../source/v8/usr/man/man2/wait.2">troff source</a>)</p>
+<pre>
+WAIT(2)                       System Calls Manual                      WAIT(2)
+
+NAME
+       wait - wait for process to terminate
+
+SYNOPSIS
+       wait(status)
+       int *status;
+
+       wait(0)
+
+DESCRIPTION
+       Wait causes its caller to delay until a signal is received or one of
+       its child processes terminates.  If any child has died since the last
+       wait, return is immediate; if there are no children, return is
+       immediate with the error bit set (resp. with a value of -1 returned).
+       The normal return yields the process ID of the terminated child.  In
+       the case of several children several wait calls are needed to learn of
+       all the deaths.
+
+       If (int)status is nonzero, the high byte of the short integer (sic)
+       pointed to receives the low byte of the argument of exit when the child
+       terminated.  The low byte receives the termination status of the
+       process.  If integers are wider than shorts, the higher-order bytes are
+       undefined.  See <a href="../man2/signal.2.html">signal(2)</a> for a list of termination statuses (signals);
+       0 status indicates normal termination.  A special status (0177) is
+       returned for a process which has stopped but can be restarted; see
+       <a href="../man2/signal.2.html">signal(2)</a>.  If the 0200 bit of the termination status is set, a core
+       image of the process was produced by the system.
+
+       If the parent process terminates without waiting on its children, the
+       initialization process (process ID = 1) inherits the children.
+
+SEE ALSO
+       <a href="../man2/exit.2.html">exit(2)</a>, <a href="../man2/fork.2.html">fork(2)</a>, <a href="../man2/signal.2.html">signal(2)</a>, <a href="../man1/sh.1.html">sh(1)</a>
+
+DIAGNOSTICS
+       Returns -1 if there are no children not previously waited for.
+
+BUGS
+       Status points to an integer; only the low two bytes are meaningful, but
+       all bytes are written.
+
+                                                                       WAIT(2)
+</pre>
+</body></html>

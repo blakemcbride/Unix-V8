@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>plot.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; plot.3 (<a href="../../../../source/v8/usr/man/man3/plot.3">troff source</a>)</p>
+<pre>
+PLOT(3)                    Library Functions Manual                    PLOT(3)
+
+NAME
+       vec, move, etc.  -  graphics interface
+
+SYNOPSIS
+       #include &lt;pplot.h&gt;
+       #include &lt;plot.h&gt;
+       #include &lt;iplot.h&gt;
+
+       openpl(s) char *s;
+       closepl()
+       erase()
+       move(x, y) double x, y;
+       rmove(dx, dy) double dx, dy;
+       point(x, y) double dx, dy;
+       vec(x, y) double x, y;
+       rvec(dx, dy) double dx, dy;
+       line(x1, y1, x2, y2) double x1, y1, x2, y2;
+       arc(x1, y1, x2, y2, x, y, r) double x1, y1, x2, y2, x, y, r;
+       circle(xc, yc, r) double xc, yc, r;
+       box(x1, y1, x2, y2) double x1, y1, x2, y2;
+       sbox(x1, y1, x2, y2) double x1, y1, x2, y2;
+       parabola(x1, y1, x2, y2, x3, y3) double x1, y1, x2, y2, x3, y3;
+       fill(n, arr) int n[]; double *arr[];
+       poly(n, arr) int n[]; double *arr[];
+       spline(n, arr) int n[]; double *arr[];
+       cspline(n, arr) int n[]; double *arr[];
+       fspline(n, arr) int n[]; double *arr[];
+       lspline(n, arr) int n[]; double *arr[];
+       dspline(n, arr) int n[]; double *arr[];
+       text(s) char *s;
+       color(s) char *s;
+       cfill(s) char *s;
+       pen(s) char *s;
+       range(x1, y1, x2, y2) double x1, y1, x2, y2;
+       frame(x1, y1, x2, y2) double x1, y1, x2, y2;
+       grade(x) double x;
+       save()
+       restore()
+       ppause()
+
+DESCRIPTION
+       These functions generate either a device-independent graphic stream
+       (see <a href="../man5/plot.5.html">plot(5)</a>) or device-dependent graphics commands.  For device-
+       independent graphic stream, include file &lt;plot.h&gt; for floating point
+       arguments; and file &lt;iplot.h&gt; for integer arguments.  The libraries for
+       different devices are loaded with the following <a href="../man1/ld.1.html">ld(1)</a> flags:
+
+       -lplot  general stream output
+       -l2621  HP2621 terminal
+       -l4014  Tektronix 4014 terminal
+       -lram   Ramtek 9300 display
+       -ltr    Troff input, tuned for the Mergenthaler Linotron 202
+               phototypesetter
+       -lpen   HP7580 pen plotter
+       -lblit  blit terminal running mux
+       -l5620  5620 terminal running mux
+
+       String arguments are null terminated and may not contain embedded
+       newlines.  For details on string arguments, see <a href="../man5/plot.5.html">plot(5)</a>.  Poly, fill,
+       and the various spline functions take an integer array and an array of
+       pointers to double floating point arrays.  The integers specify the
+       number of vertices (x-y pairs) in the floating point array.  The last
+       integer entry should be 0.
+
+SEE ALSO
+       <a href="../man1/plot.1.html">plot(1)</a>, <a href="../man5/plot.5.html">plot(5)</a>
+
+                                                                       PLOT(3)
+</pre>
+</body></html>

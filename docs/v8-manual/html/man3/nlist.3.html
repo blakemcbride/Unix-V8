@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>nlist.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; nlist.3 (<a href="../../../../source/v8/usr/man/man3/nlist.3">troff source</a>)</p>
+<pre>
+NLIST(3)                   Library Functions Manual                   NLIST(3)
+
+NAME
+       nlist - get entries from name list
+
+SYNOPSIS
+       #include &lt;nlist.h&gt;
+       nlist(filename, nl)
+       char *filename;
+       struct nlist nl[];
+
+DESCRIPTION
+       Nlist examines the name list in the given executable output file and
+       selectively extracts a list of values.  The name list consists of an
+       array of structures containing names, types and values.  The list is
+       terminated with a null name.  Each name is looked up in the name list
+       of the file.  If the name is found, the type and value of the name are
+       inserted in the next two fields.  If the name is not found, both
+       entries are set to 0.  See <a href="../man5/a.out.5.html">a.out(5)</a> for the structure declaration.
+
+       This subroutine is useful for examining the system name list kept in
+       `/unix' .  In this way programs can obtain system addresses that are up
+       to date.
+
+SEE ALSO
+       <a href="../man5/a.out.5.html">a.out(5)</a>
+
+DIAGNOSTICS
+       All type entries are set to 0 if the file cannot be found or if it is
+       not a valid namelist.
+
+BUGS
+       On other versions of UNIX you must include &lt;a.out.h&gt; rather than
+       &lt;nlist.h&gt;.  This is unfortunate, but &lt;a.out.h&gt; can't be used on the VAX
+       because it contains a union, which can't be initialized.
+
+                                                                      NLIST(3)
+</pre>
+</body></html>

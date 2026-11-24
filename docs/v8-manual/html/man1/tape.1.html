@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tape.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; tape.1 (<a href="../../../../source/v8/usr/man/man1/tape.1">troff source</a>)</p>
+<pre>
+TAPE(1)                     General Commands Manual                    TAPE(1)
+
+NAME
+       tape, mt - identify and manipulate magnetic tape
+
+SYNOPSIS
+       tape
+
+       mt [ -t tapename ] command [ count ]
+
+DESCRIPTION
+       Tape experiments with the magnetic tape drive and reports under which
+       device name the tape mounted there can be read, how many files and
+       records there are, and how big the records are.  Mt applies a command
+       to the named tape drive (default /dev/nrmt1) count times (default 1).
+       The commands are
+
+       eof      write end-of -file mark
+
+       fsf      forward space file
+
+       fsr      forwardspace record
+
+       bsf      backspace file
+
+       bsr      backspace record
+
+       rewind   rewind
+
+       offline  rewind and take off line
+
+FILES
+       /dev/nrmt1
+
+SEE ALSO
+       tm(4), <a href="../man1/dd.1.html">dd(1)</a>
+
+                                                                       TAPE(1)
+</pre>
+</body></html>

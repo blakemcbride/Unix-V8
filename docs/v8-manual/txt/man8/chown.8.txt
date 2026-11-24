@@ -1,0 +1,32 @@
+CHOWN(8)                    System Manager's Manual                   CHOWN(8)
+
+NAME
+       chown, chgrp - change owner or group
+
+SYNOPSIS
+       /etc/chown owner file ...
+
+       /etc/chown owner,group file ...
+
+       /etc/chgrp group file ...
+
+DESCRIPTION
+       Chown changes the owner of the files to owner and optionally changes
+       the group-ID of the files to group.
+
+       Chgrp changes the group-ID of the files to group.
+
+       The owner may be either a decimal UID or a login name found in
+       /etc/passwd.  The group may be either a decimal GID or a group name
+       found in /etc/group.
+
+       Only the super-user can change owner or group.
+
+FILES
+       /etc/passwd
+       /etc/group
+
+SEE ALSO
+       chown(2), passwd(5), group(5)
+
+                                                                      CHOWN(8)

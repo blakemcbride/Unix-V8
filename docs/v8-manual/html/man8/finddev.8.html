@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>finddev.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; finddev.8 (<a href="../../../../source/v8/usr/man/man8/finddev.8">troff source</a>)</p>
+<pre>
+FINDDEV(8)                  System Manager's Manual                 FINDDEV(8)
+
+NAME
+       finddev - find processes using a device
+
+SYNOPSIS
+       /etc/finddev [ pid ] ...  [ file ] ...
+
+DESCRIPTION
+       When invoked without arguments, finddev prints the number of every
+       process and a description of each file referred to by that process.
+       Giving one or more process numbers restricts finddev's attention to
+       those processes.
+
+       If file arguments appear, finddev prints only the process numbers of
+       those processes that refer to files in the argument list.  If an
+       argument file is an ordinary file, character special file, or
+       directory, the process must refer to that file to be counted.  If an
+       argument is a block special file containing a mounted file system, a
+       process will be counted if it refers to any file on that file system.
+
+       To see details of all processes referring to, say, the console, try:
+
+              finddev `finddev /dev/console`
+
+       Finddev has no special privileges.  To use it, the user must have
+       permission to read /dev/mem.
+
+                                                                    FINDDEV(8)
+</pre>
+</body></html>

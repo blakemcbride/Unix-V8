@@ -1,0 +1,16 @@
+DK(4)                      Kernel Interfaces Manual                      DK(4)
+
+NAME
+       dk - Datakit interface
+
+DESCRIPTION
+       A Datakit node consists of a fast digital switch and a number of line
+       modules.  Line modules are interfaced to computers, terminals, other
+       digital devices.  Certain line modules, referred to as trunks, connect
+       Datakit nodes together.  Each module may communicate with other modules
+       through the switch on up to 510 logical channels.
+
+       The directory /dev/dk consists of character special files, each one
+       associated with a logical channel.
+
+                                     local                               DK(4)

@@ -1,0 +1,28 @@
+FLOOR(3M)                                                            FLOOR(3M)
+
+NAME
+       fabs, floor, ceil - absolute value, floor, ceiling functions
+
+SYNOPSIS
+       #include <math.h>
+
+       double floor(x)
+       double x;
+
+       double ceil(x)
+       double x;
+
+       double fabs(x)
+       double x;
+
+DESCRIPTION
+       Fabs returns the absolute value |x|.
+
+       Floor returns the largest integer not greater than x.
+
+       Ceil returns the smallest integer not less than x.
+
+SEE ALSO
+       abs(3), frexp(3) for modf()
+
+                                                                     FLOOR(3M)

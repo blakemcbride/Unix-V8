@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>make.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; make.1 (<a href="../../../../source/v8/usr/man/man1/make.1">troff source</a>)</p>
+<pre>
+MAKE(1)                     General Commands Manual                    MAKE(1)
+
+NAME
+       make - maintain collections of programs
+
+SYNOPSIS
+       make [ -f makefile ] [ option ] ...  [ name ] ...
+
+DESCRIPTION
+       Make executes commands in makefile to update the target names (usually
+       programs).  If no target is specified, the targets of the first rule in
+       makefile are updated.  If no -f option is present, `makefile' and
+       `Makefile' are tried in order.  If makefile is `-', the standard input
+       is taken.  More than one -f option may appear.
+
+       Make updates a target if it depends on prerequisite files that have
+       been modified since the target was last modified, or if the target does
+       not exist.  The prerequisites are updated before the target.
+
+       The makefile comprises a sequence of rules and macro definitions.  The
+       first line of a rule is a blank-separated list of targets, then a
+       single or double colon, then a list of prerequisite files terminated by
+       semicolon or newline.  Text following a semicolon, and all following
+       lines that begin with a tab, are shell commands to be executed to
+       update the target.
+
+       If a name appears as target in more than one single-colon rule, it
+       depends on all of the prerequisites of those rules, but only one
+       command sequence may be specified among the rules.  A target in a
+       double-colon rule is updated by the following command sequence only if
+       it is out of date with respect to the prerequisites of that rule.
+
+       Two special forms of name are recognized.  A name like a(b) means the
+       file named b stored in the archive named a.  A name like a((b)) means
+       the file stored in archive a and containing the entry point b.
+
+       Sharp and newline surround comments.
+
+       In this makefile `pgm' depends on two files `a.o' and `b.o', and they
+       in turn depend on `.c' files and a common file `ab.h':
+
+                     pgm: a.o b.o
+                     cc a.o b.o -lplot -o pgm
+
+              a.o: ab.h a.c
+                     cc -c a.c
+
+              b.o: ab.h b.c
+                     cc -c b.c
+
+       Makefile lines of the form
+
+              string1 = string2
+
+       are macro definitions.  Subsequent appearances of $(string1) are
+       replaced by string2.  If string1 is a single character, the parentheses
+       are optional.  Each entry in the environment (see <a href="../man1/sh.1.html">sh(1)</a>) of the make
+       command is taken as a macro definition, as are command arguments with
+       embedded equal signs.
+
+       A target containing a single `%' introduces a pattern rule, which
+       controls the making of names that do not occur explicitly as targets.
+       The `%' matches an arbitrary string called the stem: A%B matches any
+       string that begins with A and ends with B.  A `%' in a prerequisite
+       name stands for the stem; and the special macro `$%' stands for the
+       stem in the construction commands.  A name that has no explicit rule is
+       matched against the target of each pattern rule.  The first pattern
+       rule for which the prerequisites exist specifies further dependencies.
+
+       This pattern rule maintains an object library where all the C source
+       files share a common include file `defs.h'.  The macro `CFLAGS' sets
+       compiler options.
+
+              arch.a(%.o) : %.c defs.h
+                          cc $(CFLAGS) -c $%.c
+                          ar r arch.a $%.o
+                          rm $%.o
+
+       A set of default pattern rules is built in, and effectively follows the
+       user's list of rules.  Assuming these rules, which tell, among other
+       things, how to make `.o' files from `.c' files, the first example
+       becomes:
+
+                     pgm: a.o b.o
+                     cc a.o b.o -lplot -o pgm
+
+              a.o b.o: ab.h
+
+       Here, greatly simplified, is a sample of the built-in rules:
+
+                      CC = cc
+
+                      %.o: %.c
+                          $(CC) $(CFLAGS) -c $%.c
+
+                      %.o: %.f
+                          f77 $(FFLAGS) -c $%.f
+
+                      % : %.c
+                          $(CC) $(CFLAGS) -o $% $%.c
+
+       The first rule says that a name ending in `.o' could be made if a
+       matching name ending in `.c' were present.  The second states a similar
+       rule for files ending in `.f'.  The third says that an arbitrary name
+       can be made by compiling a file with that name suffixed by `.c'.
+
+       Macros make the builtin pattern rules flexible: CC names the particular
+       C compiler, CFLAGS gives <a href="../man1/cc.1.html">cc(1)</a> options, FFLAGS for <a href="../man1/f77.1.html">f77(1)</a>, LFLAGS for
+       <a href="../man1/lex.1.html">lex(1)</a>, YFLAGS for <a href="../man1/yacc.1.html">yacc(1)</a>, and PFLAGS for <a href="../man1/pascal.1.html">pascal(1)</a>.
+
+       An older, now disparaged, means of specifying default rules is based
+       only on suffixes.  Prerequisites are inferred according to selected
+       suffixes listed as the `prerequisites' for the special name
+       `.SUFFIXES'; multiple lists accumulate; an empty list clears what came
+       before.
+
+       The rule to create a file with suffix s2 that depends on a similarly
+       named file with suffix s1 is specified as an entry for the `target'
+       s1s2.  Order is significant; the first possible name for which both a
+       file and a rule exist is inferred.  An old style rule for making
+       optimized `.o' files from `.c' files is
+
+              .c.o: ; cc -c -O -o $@ $*.c
+
+       The following two macros are defined for use in any rule:
+        $($@)     full name of target
+        $($/)     target name beginning at the last slash, if any
+
+       A number of other special macros are defined automatically in rules
+       invoked by one of the implicit mechanisms:
+        $*   target name with suffix deleted
+        $@   full target name
+        $&lt;   list of prerequisites in an implicit rule
+        $?   list of prerequisites that are out of date
+        $^   list of all prerequisites
+
+       The following are included for consistency with System V:
+        $(@D)     directory part of $@ (up to last slash)
+        $(@F)     file name part of $@ (after last slash)
+        $(*D)     directory part of $* (up to last slash)
+        $(*F)     file name part of $* (after last slash)
+        $(&lt;D)     directory part of $&lt; (up to last slash)
+        $(&lt;F)     file name part of $&lt; (after last slash)
+
+       Command lines are executed one at a time, each by its own shell.  A
+       line is printed when it is executed unless the special target `.SILENT'
+       is in the makefile, or the first character of the command is `@'.
+
+       Commands returning nonzero status (see <a href="../man1/intro.1.html">intro(1)</a>) cause make to
+       terminate unless the special target `.IGNORE' is in the makefile or the
+       command begins with &lt;tab&gt;&lt;hyphen&gt;.
+
+       Interrupt and quit cause the target to be deleted unless the target
+       depends on the special name `.PRECIOUS'.
+
+       Make includes a rudimentary parallel processing ability.  If the
+       separation string is `:&amp;' or `::&amp;', make can run the command sequences
+       to create the prerequisites simultaneously.  If two names are separated
+       by an ampersand on the right side of a colon, those two may be created
+       in parallel.
+
+       Other options:
+
+       -i     Equivalent to the special entry `.IGNORE:'.
+
+       -k     When a command returns nonzero status, abandon work on the
+              current entry, but continue on branches that do not depend on
+              the current entry.
+
+       -n     Trace and print, but do not execute the commands needed to
+              update the targets.
+
+       -t     Touch, i.e. update the modified date of targets, without
+              executing any commands.
+
+       -r     Equivalent to an initial special entry `.SUFFIXES:' with no
+              list.
+
+       -s     Equivalent to the special entry `.SILENT:'.
+
+       -e     Environment definitions override conflicting definitions in
+              arguments or in makefiles.  Ordinary precedence is argument over
+              makefile over environment.
+
+       -o     Assume old style default suffix list: .SUFFIXES: .out .o .c .e
+              .r .f .y .l .s .p
+
+       -Pn    Permit n command sequences to be done in parallel with `&amp;'.
+
+FILES
+       makefile, Makefile
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>, <a href="../man1/touch.1.html">touch(1)</a>, <a href="../man1/ar.1.html">ar(1)</a>
+       S. I. Feldman Make - A Program for Maintaining Computer Programs
+
+                                                                       MAKE(1)
+</pre>
+</body></html>

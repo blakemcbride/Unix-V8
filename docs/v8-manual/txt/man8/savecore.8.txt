@@ -1,0 +1,33 @@
+SAVECORE(8)                 System Manager's Manual                SAVECORE(8)
+
+NAME
+       savecore - save a core dump of the operating system
+
+SYNOPSIS
+       /etc/savecore dirname [ unix ]
+
+DESCRIPTION
+       Savecore saves a copy of the physical memory of the operating system,
+       saved after a system crash.  It is meant to be called from rc(8) after
+       normal filesystems are mounted.
+
+       Savecore checks the core dump to be certain it corresponds with the
+       named unix (default `/unix').  If it does it saves the core image in
+       the file dirname/core.n and its sibling, the namelist, in
+       dirname/unix.n.  The trailing `.n' in the pathnames is replaced by a
+       number stored in dirname/bounds which grows every time savecore is run
+       with the same dirname argument.
+
+       Before savecore writes out a core image, it reads a number from the
+       file dirname/minfree.  If there are fewer free kilobytes on the
+       filesystem which contains dirname than the number obtained from the
+       minfree file, the core dump is not done.  If the minfree file does not
+       exist, savecore always writes out the core file (assuming that a core
+       dump was taken).
+
+FILES
+       /unix                 current unix binary
+       dirname/bounds        numerical suffix
+       dirname/minfree       minimum free kilobytes required
+
+                                                                   SAVECORE(8)

@@ -1,0 +1,1430 @@
+# Source: http://9legacy.org/9legacy/doc/simh/v8  (David du Colombier; fetched 2026-11-24)
+
+note: when using simh version > 3.9, you have to add "set noasync" in the startup file to prevent simh from crashing
+
+wget http://sourceforge.net/projects/bsd42/files/Install%20tapes/4.1%20BSD/4.1_BSD_19810710-modified.7z
+wget http://sourceforge.net/projects/bsd42/files/Install%20tapes/4.0%20BSD/boot
+
+7za x 4.1_BSD_19810710-modified.7z
+
+cat > tboot.ini << EOF
+set tto 7b
+set rq dis
+set lpt dis
+set rl dis
+set hk dis
+set rq dis
+set rqb dis
+set rqc dis
+set rqd dis
+set ry dis
+set ts dis
+set tq dis
+set dz lines=8
+set rp0 rp06
+at rp0 rp06.disk
+set tu0 te16
+at tu0 4.1_BSD_19810710-modified.tap
+D 50000 20009FDE
+D 50004 D0512001
+D 50008 3204A101
+D 5000C C113C08F
+D 50010 A1D40424
+D 50014 008FD00C
+D 50018 C1800000
+D 5001C 8F320800
+D 50020 10A1FE00
+D 50024 00C139D0
+D 50028 04c1d004
+D 5002C 07e15004
+D 50030 0000f750
+run 50000
+run 0
+EOF
+
+cat > dboot.ini << EOF
+set tto 7b
+set rq dis
+set lpt dis
+set rl dis
+set hk dis
+set rq dis
+set rqb dis
+set rqc dis
+set rqd dis
+set ry dis
+set ts dis
+set tq dis
+set dz lines=8
+set rp0 rp06
+at rp0 rp06.disk
+set tu0 te16
+load -o boot 0
+run 2
+EOF
+
+simh-vax780 tboot.ini
+
+=mkfs
+file sys size: 7942
+file system: hp(0,0)
+isize = 5072
+m/n = 3 500
+=restor
+Tape? ht(0,1)
+Disk? hp(0,0)
+Last chance before scribbling on disk. 
+End of tape
+=boot
+
+Boot
+: hp(0,0)vmunix
+root device? hp0
+fsck /dev/rhp0a
+mkfs /dev/hp0g 145673
+
+cd /dev
+MAKE ht0
+
+/etc/mount /dev/hp0g /usr
+cd /usr
+mt rew
+mt fsf 2
+tar xpb 20
+
+dd if=/usr/mdec/uboot of=/dev/rhp0a bs=1b count=1
+
+cp /etc/fstab.rp06 /etc/fstab
+df
+
+cd /
+chmod 755 / /usr
+sync; sync; sync
+halt
+sim> exit
+
+wget http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/v8.tar.bz2
+wget http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/v8jerq.tar.bz2
+
+bunzip2 v8.tar.bz2
+bunzip2 v8jerq.tar.bz2
+
+wget http://zazie.tom-yam.or.jp/starunix/mktape.c
+gcc mktape.c -o mktape
+./mktape v8.tar > v8.tape1
+./mktape v8jerq.tar > v8.tape2
+
+cp rp06.disk v8.disk
+
+vi dboot.ini
+at rp1 v8.disk
+at tu0 v8.tape1
+
+simh-vax780 dboot.ini
+login: root
+
+cd /dev
+MAKE hp1
+
+fsck
+mkdir /v8
+mount /dev/hp1a /v8
+cd /v8
+rm -rf * .??*
+mkdir usr
+mount /dev/hp1g /v8/usr
+cd /v8/usr
+rm -rf * .??*
+cd /v8
+tar xpb 20
+ls
+
+# replace tape1 with tape2 in dboot.ini
+mount /dev/hp1a /v8
+mount /dev/hp1g /v8/usr
+cd /v8/usr
+tar xpb 20
+
+cp /bin/ls /v8/bin/bls
+
+cd /v8
+mkdir dev
+cd dev
+mknod console c 0 0
+chmod 644 console
+mknod null c 3 2
+chmod 666 null
+mknod rp0a b 0 0
+mknod rrp0a c 4 0
+mknod rp0g b 0 6
+mknod rrp0g c 4 6
+mknod mt1 b 1 0
+mknod rmt1 c 5 0
+
+mkdir /v8/tmp
+chmod 777 /v8/tmp
+cp /bin/ls /v8/bin/bls
+/v8/usr/bin/v8
+
+bls
+
+cd /usr/sys/alice
+/etc/config
+ed makefile
+/rm locore
+s/rm/rm -f/
+wq
+make
+exit
+
+mv /v8/usr/sys/alice/unix /v8/unix
+cd /v8/usr/sys/alice
+rm eddep *.o locore.i
+
+cd
+umount /dev/hp1g
+umount /dev/hp1a
+sync; sync; sync
+halt
+sim> quit
+
+mkdir v8 && cd v8 && tar xf ../v8.tar && cd .. && cp v8/boot v8boot && rm -rf v8
+
+cat > v8.ini << EOF
+set tto 7b
+set rq dis
+set lpt dis
+set rl dis
+set hk dis
+set rq dis
+set rqb dis
+set rqc dis
+set rqd dis
+set ry dis
+set ts dis
+set tq dis
+set dz lines=8
+att dz -m 8888
+set rp0 rp06
+at rp0 v8.disk
+set tu0 te16
+load -o v8boot 0
+run 2
+EOF
+
+# convert file system from 4.1bsd to v8
+
+simh-vax780 v8.ini
+
+/etc/fsck /dev/rrp0a
+FIX? y
+SALVAGE? y
+sync; sync; sync
+/etc/halt
+sim> exit
+
+# initial configuration
+
+simh-vax780 v8.ini
+
+/etc/fsck /dev/rrp0a
+cat > /etc/fstab
+/dev/rp0a:/:rw:1:1
+/dev/rp0g:/usr:rw:1:2
+^D
+mkdir /proc
+mkdir /usr/adm
+mkdir /usr/tmp
+> /tmp/dump
+# create /dev files from proto-dev
+sync; sync; sync
+/etc/halt
+sim> exit
+
+# tcp/udp/ip networking
+
+cd /usr/sys/alice
+cat >> conf
+pseudo-device   inet    6
+pseudo-device   uarp    1
+pseudo-device   tcp     32
+pseudo-device   udp     32
+^D
+/etc/config && make && cp unix / && make clean && reboot
+
+PATH=$PATH:/etc; export PATH
+cd /usr/src/cmd/inet/libin; make install
+cd ../bin && make install && make clean
+cd ../etc && make install && make clean
+
+# create /dev files from proto-dev
+
+/etc/mknod /dev/console c 0 0
+chmod 622 /dev/console
+/etc/chown root,0 /dev/console
+mkdir /dev/dk
+chmod 775 /dev/dk
+/etc/chown root,sys /dev/dk
+/etc/mknod /dev/dn0 c 19 128
+chmod 666 /dev/dn0
+/etc/chown root,bin /dev/dn0
+/etc/mknod /dev/drum c 7 0
+chmod 644 /dev/drum
+/etc/chown root,man /dev/drum
+mkdir /dev/fd
+chmod 755 /dev/fd
+/etc/chown root,other /dev/fd
+/etc/mknod /dev/ip0 c 42 0
+chmod 666 /dev/ip0
+/etc/chown root,bin /dev/ip0
+/etc/mknod /dev/ip16 c 42 16
+chmod 666 /dev/ip16
+/etc/chown root,bin /dev/ip16
+/etc/mknod /dev/ip17 c 42 17
+chmod 666 /dev/ip17
+/etc/chown root,bin /dev/ip17
+/etc/mknod /dev/ip6 c 42 6
+chmod 666 /dev/ip6
+/etc/chown root,bin /dev/ip6
+/etc/mknod /dev/kUmem c 3 3
+chmod 600 /dev/kUmem
+/etc/chown root,sys /dev/kUmem
+/etc/mknod /dev/kmc0 c 26 0
+chmod 666 /dev/kmc0
+/etc/chown root,sys /dev/kmc0
+/etc/mknod /dev/kmem c 3 1
+chmod 644 /dev/kmem
+/etc/chown root,sys /dev/kmem
+/etc/mknod /dev/kmemr c 3 4
+chmod 444 /dev/kmemr
+/etc/chown root,bin /dev/kmemr
+/etc/mknod /dev/mem c 3 0
+chmod 644 /dev/mem
+/etc/chown root,sys /dev/mem
+/etc/mknod /dev/mt1 b 8 0
+chmod 666 /dev/mt1
+/etc/chown root,sys /dev/mt1
+/etc/mknod /dev/mt2 b 8 8
+chmod 666 /dev/mt2
+/etc/chown root,sys /dev/mt2
+/etc/mknod /dev/mt5 b 8 4
+chmod 666 /dev/mt5
+/etc/chown root,sys /dev/mt5
+/etc/mknod /dev/mt6 b 8 12
+chmod 666 /dev/mt6
+/etc/chown root,sys /dev/mt6
+/etc/mknod /dev/mtpr c 3 5
+chmod 600 /dev/mtpr
+/etc/chown root,0 /dev/mtpr
+/etc/mknod /dev/nmt1 b 8 4
+chmod 666 /dev/nmt1
+/etc/chown root,sys /dev/nmt1
+/etc/mknod /dev/nmt2 b 8 12
+chmod 666 /dev/nmt2
+/etc/chown root,sys /dev/nmt2
+/etc/mknod /dev/nrmt1 c 22 4
+chmod 666 /dev/nrmt1
+/etc/chown root,sys /dev/nrmt1
+/etc/mknod /dev/nrmt2 c 22 12
+chmod 666 /dev/nrmt2
+/etc/chown root,sys /dev/nrmt2
+/etc/mknod /dev/null c 3 2
+chmod 666 /dev/null
+/etc/chown root,man /dev/null
+mkdir /dev/pt
+chmod 755 /dev/pt
+/etc/chown pjw,other /dev/pt
+/etc/mknod /dev/ra00 b 7 64
+chmod 640 /dev/ra00
+/etc/chown root,sys /dev/ra00
+/etc/mknod /dev/ra01 b 7 1
+chmod 640 /dev/ra01
+/etc/chown root,sys /dev/ra01
+/etc/mknod /dev/ra02 b 7 66
+chmod 640 /dev/ra02
+/etc/chown root,sys /dev/ra02
+/etc/mknod /dev/ra03 b 7 67
+chmod 640 /dev/ra03
+/etc/chown root,sys /dev/ra03
+/etc/mknod /dev/ra04 b 7 68
+chmod 640 /dev/ra04
+/etc/chown root,sys /dev/ra04
+/etc/mknod /dev/ra05 b 7 69
+chmod 640 /dev/ra05
+/etc/chown root,sys /dev/ra05
+/etc/mknod /dev/ra06 b 7 70
+chmod 640 /dev/ra06
+/etc/chown root,sys /dev/ra06
+/etc/mknod /dev/ra10 b 7 72
+chmod 640 /dev/ra10
+/etc/chown root,sys /dev/ra10
+/etc/mknod /dev/ra11 b 7 9
+chmod 640 /dev/ra11
+/etc/chown root,sys /dev/ra11
+/etc/mknod /dev/ra12 b 7 74
+chmod 640 /dev/ra12
+/etc/chown root,sys /dev/ra12
+/etc/mknod /dev/ra13 b 7 75
+chmod 640 /dev/ra13
+/etc/chown root,sys /dev/ra13
+/etc/mknod /dev/ra14 b 7 76
+chmod 640 /dev/ra14
+/etc/chown root,sys /dev/ra14
+/etc/mknod /dev/ra15 b 7 77
+chmod 640 /dev/ra15
+/etc/chown root,sys /dev/ra15
+/etc/mknod /dev/ra16 b 7 78
+chmod 640 /dev/ra16
+/etc/chown root,sys /dev/ra16
+/etc/mknod /dev/ra20a b 7 80
+chmod 664 /dev/ra20a
+/etc/chown root,bin /dev/ra20a
+/etc/mknod /dev/ra21 b 7 17
+chmod 640 /dev/ra21
+/etc/chown root,sys /dev/ra21
+/etc/mknod /dev/ra22 b 7 18
+chmod 664 /dev/ra22
+/etc/chown root,bin /dev/ra22
+/etc/mknod /dev/ra23 b 7 83
+chmod 640 /dev/ra23
+/etc/chown root,sys /dev/ra23
+/etc/mknod /dev/ra24 b 7 84
+chmod 640 /dev/ra24
+/etc/chown root,sys /dev/ra24
+/etc/mknod /dev/ra25 b 7 85
+chmod 640 /dev/ra25
+/etc/chown root,sys /dev/ra25
+/etc/mknod /dev/ra26 b 7 22
+chmod 640 /dev/ra26
+/etc/chown root,sys /dev/ra26
+/etc/mknod /dev/rmt1 c 22 0
+chmod 666 /dev/rmt1
+/etc/chown root,sys /dev/rmt1
+/etc/mknod /dev/rmt2 c 22 8
+chmod 666 /dev/rmt2
+/etc/chown root,sys /dev/rmt2
+/etc/mknod /dev/rmt5 c 22 4
+chmod 666 /dev/rmt5
+/etc/chown root,sys /dev/rmt5
+/etc/mknod /dev/rmt6 c 22 12
+chmod 666 /dev/rmt6
+/etc/chown root,sys /dev/rmt6
+/etc/mknod /dev/rra00 c 28 0
+chmod 640 /dev/rra00
+/etc/chown root,sys /dev/rra00
+/etc/mknod /dev/rra01 c 28 1
+chmod 640 /dev/rra01
+/etc/chown root,sys /dev/rra01
+/etc/mknod /dev/rra02 c 28 2
+chmod 640 /dev/rra02
+/etc/chown root,sys /dev/rra02
+/etc/mknod /dev/rra03 c 28 3
+chmod 640 /dev/rra03
+/etc/chown root,sys /dev/rra03
+/etc/mknod /dev/rra04 c 28 4
+chmod 640 /dev/rra04
+/etc/chown root,sys /dev/rra04
+/etc/mknod /dev/rra05 c 28 5
+chmod 640 /dev/rra05
+/etc/chown root,sys /dev/rra05
+/etc/mknod /dev/rra06 c 28 6
+chmod 640 /dev/rra06
+/etc/chown root,sys /dev/rra06
+/etc/mknod /dev/rra07 c 28 7
+chmod 640 /dev/rra07
+/etc/chown root,sys /dev/rra07
+/etc/mknod /dev/rra10 c 28 8
+chmod 660 /dev/rra10
+/etc/chown root,sys /dev/rra10
+/etc/mknod /dev/rra11 c 28 9
+chmod 640 /dev/rra11
+/etc/chown root,sys /dev/rra11
+/etc/mknod /dev/rra12 c 28 10
+chmod 640 /dev/rra12
+/etc/chown root,sys /dev/rra12
+/etc/mknod /dev/rra13 c 28 11
+chmod 640 /dev/rra13
+/etc/chown root,sys /dev/rra13
+/etc/mknod /dev/rra14 c 28 12
+chmod 640 /dev/rra14
+/etc/chown root,sys /dev/rra14
+/etc/mknod /dev/rra15 c 28 13
+chmod 640 /dev/rra15
+/etc/chown root,sys /dev/rra15
+/etc/mknod /dev/rra16 c 28 14
+chmod 660 /dev/rra16
+/etc/chown root,sys /dev/rra16
+/etc/mknod /dev/rra17 c 28 15
+chmod 640 /dev/rra17
+/etc/chown root,sys /dev/rra17
+/etc/mknod /dev/rra20 c 28 16
+chmod 640 /dev/rra20
+/etc/chown root,sys /dev/rra20
+/etc/mknod /dev/rra21 c 28 17
+chmod 640 /dev/rra21
+/etc/chown root,sys /dev/rra21
+/etc/mknod /dev/rra22 c 28 18
+chmod 640 /dev/rra22
+/etc/chown root,sys /dev/rra22
+/etc/mknod /dev/rra23 c 28 19
+chmod 640 /dev/rra23
+/etc/chown root,sys /dev/rra23
+/etc/mknod /dev/rra24 c 28 20
+chmod 640 /dev/rra24
+/etc/chown root,sys /dev/rra24
+/etc/mknod /dev/rra25 c 28 21
+chmod 640 /dev/rra25
+/etc/chown root,sys /dev/rra25
+/etc/mknod /dev/rra26 c 28 22
+chmod 640 /dev/rra26
+/etc/chown root,sys /dev/rra26
+/etc/mknod /dev/rra27 c 28 23
+chmod 640 /dev/rra27
+/etc/chown root,sys /dev/rra27
+/etc/mknod /dev/stderr c 40 2
+chmod 666 /dev/stderr
+/etc/chown root,other /dev/stderr
+/etc/mknod /dev/stdin c 40 0
+chmod 666 /dev/stdin
+/etc/chown root,other /dev/stdin
+/etc/mknod /dev/stdout c 40 1
+chmod 666 /dev/stdout
+/etc/chown root,other /dev/stdout
+/etc/mknod /dev/tcp00 c 43 0
+chmod 600 /dev/tcp00
+/etc/chown root,other /dev/tcp00
+/etc/mknod /dev/tcp01 c 43 1
+chmod 666 /dev/tcp01
+/etc/chown root,bin /dev/tcp01
+/etc/mknod /dev/tcp02 c 43 2
+chmod 600 /dev/tcp02
+/etc/chown root,other /dev/tcp02
+/etc/mknod /dev/tcp03 c 43 3
+chmod 666 /dev/tcp03
+/etc/chown root,bin /dev/tcp03
+/etc/mknod /dev/tcp04 c 43 4
+chmod 600 /dev/tcp04
+/etc/chown root,other /dev/tcp04
+/etc/mknod /dev/tcp05 c 43 5
+chmod 666 /dev/tcp05
+/etc/chown root,bin /dev/tcp05
+/etc/mknod /dev/tcp06 c 43 6
+chmod 600 /dev/tcp06
+/etc/chown root,bin /dev/tcp06
+/etc/mknod /dev/tcp07 c 43 7
+chmod 666 /dev/tcp07
+/etc/chown root,bin /dev/tcp07
+/etc/mknod /dev/tcp08 c 43 8
+chmod 600 /dev/tcp08
+/etc/chown root,bin /dev/tcp08
+/etc/mknod /dev/tcp09 c 43 9
+chmod 666 /dev/tcp09
+/etc/chown root,bin /dev/tcp09
+/etc/mknod /dev/tcp10 c 43 10
+chmod 600 /dev/tcp10
+/etc/chown root,bin /dev/tcp10
+/etc/mknod /dev/tcp11 c 43 11
+chmod 666 /dev/tcp11
+/etc/chown root,bin /dev/tcp11
+/etc/mknod /dev/tty c 40 3
+chmod 666 /dev/tty
+/etc/chown root,other /dev/tty
+/etc/mknod /dev/tty00 c 1 0
+chmod 622 /dev/tty00
+/etc/chown root,0 /dev/tty00
+/etc/mknod /dev/tty01 c 1 1
+chmod 622 /dev/tty01
+/etc/chown root,0 /dev/tty01
+/etc/mknod /dev/tty02 c 1 2
+chmod 622 /dev/tty02
+/etc/chown root,0 /dev/tty02
+/etc/mknod /dev/tty03 c 1 3
+chmod 622 /dev/tty03
+/etc/chown root,0 /dev/tty03
+/etc/mknod /dev/tty04 c 1 4
+chmod 622 /dev/tty04
+/etc/chown root,0 /dev/tty04
+/etc/mknod /dev/tty05 c 1 5
+chmod 622 /dev/tty05
+/etc/chown root,0 /dev/tty05
+/etc/mknod /dev/tty06 c 1 6
+chmod 622 /dev/tty06
+/etc/chown root,0 /dev/tty06
+/etc/mknod /dev/tty07 c 1 7
+chmod 622 /dev/tty07
+/etc/chown root,0 /dev/tty07
+/etc/mknod /dev/dk/dk01 c 31 1
+chmod 600 /dev/dk/dk01
+/etc/chown root,sys /dev/dk/dk01
+/etc/mknod /dev/dk/dk02 c 31 2
+chmod 622 /dev/dk/dk02
+/etc/chown presotto,bin /dev/dk/dk02
+/etc/mknod /dev/dk/dk03 c 31 3
+chmod 666 /dev/dk/dk03
+/etc/chown root,sys /dev/dk/dk03
+/etc/mknod /dev/dk/dk04 c 31 4
+chmod 622 /dev/dk/dk04
+/etc/chown norman,other /dev/dk/dk04
+/etc/mknod /dev/dk/dk05 c 31 5
+chmod 666 /dev/dk/dk05
+/etc/chown root,sys /dev/dk/dk05
+/etc/mknod /dev/dk/dk06 c 31 6
+chmod 644 /dev/dk/dk06
+/etc/chown uucp,other /dev/dk/dk06
+/etc/mknod /dev/dk/dk07 c 31 7
+chmod 666 /dev/dk/dk07
+/etc/chown root,sys /dev/dk/dk07
+/etc/mknod /dev/dk/dk08 c 31 8
+chmod 622 /dev/dk/dk08
+/etc/chown daemon,other /dev/dk/dk08
+/etc/mknod /dev/dk/dk09 c 31 9
+chmod 666 /dev/dk/dk09
+/etc/chown root,sys /dev/dk/dk09
+/etc/mknod /dev/dk/dk10 c 31 10
+chmod 644 /dev/dk/dk10
+/etc/chown uucp,other /dev/dk/dk10
+/etc/mknod /dev/dk/dk11 c 31 11
+chmod 666 /dev/dk/dk11
+/etc/chown root,sys /dev/dk/dk11
+/etc/mknod /dev/dk/dk12 c 31 12
+chmod 622 /dev/dk/dk12
+/etc/chown rfc,other /dev/dk/dk12
+/etc/mknod /dev/dk/dk13 c 31 13
+chmod 666 /dev/dk/dk13
+/etc/chown root,sys /dev/dk/dk13
+/etc/mknod /dev/dk/dk14 c 31 14
+chmod 622 /dev/dk/dk14
+/etc/chown daemon,other /dev/dk/dk14
+/etc/mknod /dev/dk/dk15 c 31 15
+chmod 666 /dev/dk/dk15
+/etc/chown root,sys /dev/dk/dk15
+/etc/mknod /dev/dk/dk16 c 31 16
+chmod 622 /dev/dk/dk16
+/etc/chown dmr,bin /dev/dk/dk16
+/etc/mknod /dev/dk/dk17 c 31 17
+chmod 666 /dev/dk/dk17
+/etc/chown root,sys /dev/dk/dk17
+/etc/mknod /dev/dk/dk18 c 31 18
+chmod 622 /dev/dk/dk18
+/etc/chown rje,other /dev/dk/dk18
+/etc/mknod /dev/dk/dk19 c 31 19
+chmod 666 /dev/dk/dk19
+/etc/chown root,other /dev/dk/dk19
+/etc/mknod /dev/dk/dk20 c 31 20
+chmod 622 /dev/dk/dk20
+/etc/chown dmr,bin /dev/dk/dk20
+/etc/mknod /dev/dk/dk21 c 31 21
+chmod 666 /dev/dk/dk21
+/etc/chown root,sys /dev/dk/dk21
+/etc/mknod /dev/dk/dk22 c 31 22
+chmod 722 /dev/dk/dk22
+/etc/chown reeds,other /dev/dk/dk22
+/etc/mknod /dev/dk/dk23 c 31 23
+chmod 666 /dev/dk/dk23
+/etc/chown root,sys /dev/dk/dk23
+/etc/mknod /dev/dk/dk24 c 31 24
+chmod 622 /dev/dk/dk24
+/etc/chown daemon,other /dev/dk/dk24
+/etc/mknod /dev/dk/dk25 c 31 25
+chmod 666 /dev/dk/dk25
+/etc/chown root,sys /dev/dk/dk25
+/etc/mknod /dev/dk/dk26 c 31 26
+chmod 622 /dev/dk/dk26
+/etc/chown tdk,other /dev/dk/dk26
+/etc/mknod /dev/dk/dk27 c 31 27
+chmod 666 /dev/dk/dk27
+/etc/chown root,sys /dev/dk/dk27
+/etc/mknod /dev/dk/dk28 c 31 28
+chmod 622 /dev/dk/dk28
+/etc/chown wtm,other /dev/dk/dk28
+/etc/mknod /dev/dk/dk29 c 31 29
+chmod 666 /dev/dk/dk29
+/etc/chown root,sys /dev/dk/dk29
+/etc/mknod /dev/dk/dk30 c 31 30
+chmod 622 /dev/dk/dk30
+/etc/chown reeds,other /dev/dk/dk30
+/etc/mknod /dev/dk/dk31 c 31 31
+chmod 666 /dev/dk/dk31
+/etc/chown root,sys /dev/dk/dk31
+/etc/mknod /dev/dk/dk32 c 31 32
+chmod 722 /dev/dk/dk32
+/etc/chown kahrs,other /dev/dk/dk32
+/etc/mknod /dev/dk/dk33 c 31 33
+chmod 666 /dev/dk/dk33
+/etc/chown root,sys /dev/dk/dk33
+/etc/mknod /dev/dk/dk34 c 31 34
+chmod 622 /dev/dk/dk34
+/etc/chown mat,other /dev/dk/dk34
+/etc/mknod /dev/dk/dk35 c 31 35
+chmod 666 /dev/dk/dk35
+/etc/chown root,sys /dev/dk/dk35
+/etc/mknod /dev/dk/dk36 c 31 36
+chmod 622 /dev/dk/dk36
+/etc/chown norman,other /dev/dk/dk36
+/etc/mknod /dev/dk/dk37 c 31 37
+chmod 666 /dev/dk/dk37
+/etc/chown root,other /dev/dk/dk37
+/etc/mknod /dev/dk/dk38 c 31 38
+chmod 622 /dev/dk/dk38
+/etc/chown daemon,other /dev/dk/dk38
+/etc/mknod /dev/dk/dk39 c 31 39
+chmod 666 /dev/dk/dk39
+/etc/chown root,sys /dev/dk/dk39
+/etc/mknod /dev/dk/dk40 c 31 40
+chmod 622 /dev/dk/dk40
+/etc/chown norman,other /dev/dk/dk40
+/etc/mknod /dev/dk/dk41 c 31 41
+chmod 666 /dev/dk/dk41
+/etc/chown root,sys /dev/dk/dk41
+/etc/mknod /dev/dk/dk42 c 31 42
+chmod 622 /dev/dk/dk42
+/etc/chown hsb,other /dev/dk/dk42
+/etc/mknod /dev/dk/dk43 c 31 43
+chmod 666 /dev/dk/dk43
+/etc/chown root,sys /dev/dk/dk43
+/etc/mknod /dev/dk/dk44 c 31 44
+chmod 622 /dev/dk/dk44
+/etc/chown rob,other /dev/dk/dk44
+/etc/mknod /dev/dk/dk45 c 31 45
+chmod 666 /dev/dk/dk45
+/etc/chown root,other /dev/dk/dk45
+/etc/mknod /dev/dk/dk46 c 31 46
+chmod 622 /dev/dk/dk46
+/etc/chown bin,bin /dev/dk/dk46
+/etc/mknod /dev/dk/dk47 c 31 47
+chmod 666 /dev/dk/dk47
+/etc/chown root,other /dev/dk/dk47
+/etc/mknod /dev/dk/dk48 c 31 48
+chmod 622 /dev/dk/dk48
+/etc/chown bin,bin /dev/dk/dk48
+/etc/mknod /dev/dk/dk49 c 31 49
+chmod 666 /dev/dk/dk49
+/etc/chown root,sys /dev/dk/dk49
+/etc/mknod /dev/dk/dk50 c 31 50
+chmod 622 /dev/dk/dk50
+/etc/chown pjw,bin /dev/dk/dk50
+/etc/mknod /dev/dk/dk51 c 31 51
+chmod 664 /dev/dk/dk51
+/etc/chown root,sys /dev/dk/dk51
+/etc/mknod /dev/dk/dk52 c 31 52
+chmod 622 /dev/dk/dk52
+/etc/chown presotto,bin /dev/dk/dk52
+/etc/mknod /dev/dk/dk53 c 31 53
+chmod 664 /dev/dk/dk53
+/etc/chown root,sys /dev/dk/dk53
+/etc/mknod /dev/dk/dk54 c 31 54
+chmod 622 /dev/dk/dk54
+/etc/chown daemon,other /dev/dk/dk54
+/etc/mknod /dev/dk/dk55 c 31 55
+chmod 664 /dev/dk/dk55
+/etc/chown root,sys /dev/dk/dk55
+/etc/mknod /dev/dk/dk56 c 31 56
+chmod 622 /dev/dk/dk56
+/etc/chown daemon,other /dev/dk/dk56
+/etc/mknod /dev/dk/dk57 c 31 57
+chmod 664 /dev/dk/dk57
+/etc/chown root,sys /dev/dk/dk57
+/etc/mknod /dev/dk/dk58 c 31 58
+chmod 644 /dev/dk/dk58
+/etc/chown uucp,other /dev/dk/dk58
+/etc/mknod /dev/dk/dk59 c 31 59
+chmod 664 /dev/dk/dk59
+/etc/chown root,sys /dev/dk/dk59
+/etc/mknod /dev/dk/dk60 c 31 60
+chmod 622 /dev/dk/dk60
+/etc/chown dmr,bin /dev/dk/dk60
+/etc/mknod /dev/dk/dk61 c 31 61
+chmod 664 /dev/dk/dk61
+/etc/chown root,sys /dev/dk/dk61
+/etc/mknod /dev/dk/dk62 c 31 62
+chmod 622 /dev/dk/dk62
+/etc/chown dmr,bin /dev/dk/dk62
+/etc/mknod /dev/dk/dk63 c 31 63
+chmod 664 /dev/dk/dk63
+/etc/chown root,sys /dev/dk/dk63
+/etc/mknod /dev/dk/dk64 c 31 64
+chmod 622 /dev/dk/dk64
+/etc/chown dmr,bin /dev/dk/dk64
+/etc/mknod /dev/dk/dk65 c 31 65
+chmod 664 /dev/dk/dk65
+/etc/chown root,bin /dev/dk/dk65
+/etc/mknod /dev/dk/dk66 c 31 66
+chmod 722 /dev/dk/dk66
+/etc/chown reeds,other /dev/dk/dk66
+/etc/mknod /dev/dk/dk67 c 31 67
+chmod 664 /dev/dk/dk67
+/etc/chown root,bin /dev/dk/dk67
+/etc/mknod /dev/dk/dk68 c 31 68
+chmod 622 /dev/dk/dk68
+/etc/chown daemon,other /dev/dk/dk68
+/etc/mknod /dev/dk/dk69 c 31 69
+chmod 664 /dev/dk/dk69
+/etc/chown root,bin /dev/dk/dk69
+/etc/mknod /dev/dk/dk70 c 31 70
+chmod 622 /dev/dk/dk70
+/etc/chown tac,other /dev/dk/dk70
+/etc/mknod /dev/dk/dk71 c 31 71
+chmod 664 /dev/dk/dk71
+/etc/chown root,bin /dev/dk/dk71
+/etc/mknod /dev/dk/dk72 c 31 72
+chmod 622 /dev/dk/dk72
+/etc/chown presotto,bin /dev/dk/dk72
+/etc/mknod /dev/dk/dk73 c 31 73
+chmod 664 /dev/dk/dk73
+/etc/chown root,bin /dev/dk/dk73
+/etc/mknod /dev/dk/dk74 c 31 74
+chmod 622 /dev/dk/dk74
+/etc/chown dmr,bin /dev/dk/dk74
+/etc/mknod /dev/dk/dk75 c 31 75
+chmod 664 /dev/dk/dk75
+/etc/chown root,bin /dev/dk/dk75
+/etc/mknod /dev/dk/dk76 c 31 76
+chmod 622 /dev/dk/dk76
+/etc/chown mjs,bin /dev/dk/dk76
+/etc/mknod /dev/dk/dk77 c 31 77
+chmod 664 /dev/dk/dk77
+/etc/chown root,bin /dev/dk/dk77
+/etc/mknod /dev/dk/dk78 c 31 78
+chmod 622 /dev/dk/dk78
+/etc/chown dmr,bin /dev/dk/dk78
+/etc/mknod /dev/dk/dk79 c 31 79
+chmod 664 /dev/dk/dk79
+/etc/chown root,bin /dev/dk/dk79
+/etc/mknod /dev/dk/dk80 c 31 80
+chmod 622 /dev/dk/dk80
+/etc/chown jlb,other /dev/dk/dk80
+/etc/mknod /dev/dk/dk81 c 31 81
+chmod 664 /dev/dk/dk81
+/etc/chown root,bin /dev/dk/dk81
+/etc/mknod /dev/dk/dk82 c 31 82
+chmod 622 /dev/dk/dk82
+/etc/chown norman,other /dev/dk/dk82
+/etc/mknod /dev/dk/dk83 c 31 83
+chmod 664 /dev/dk/dk83
+/etc/chown root,bin /dev/dk/dk83
+/etc/mknod /dev/dk/dk84 c 31 84
+chmod 622 /dev/dk/dk84
+/etc/chown norman,other /dev/dk/dk84
+/etc/mknod /dev/dk/dk85 c 31 85
+chmod 664 /dev/dk/dk85
+/etc/chown root,bin /dev/dk/dk85
+/etc/mknod /dev/dk/dk86 c 31 86
+chmod 622 /dev/dk/dk86
+/etc/chown srm,other /dev/dk/dk86
+/etc/mknod /dev/dk/dk87 c 31 87
+chmod 664 /dev/dk/dk87
+/etc/chown root,bin /dev/dk/dk87
+/etc/mknod /dev/dk/dk88 c 31 88
+chmod 622 /dev/dk/dk88
+/etc/chown norman,other /dev/dk/dk88
+/etc/mknod /dev/dk/dk89 c 31 89
+chmod 664 /dev/dk/dk89
+/etc/chown root,bin /dev/dk/dk89
+/etc/mknod /dev/dk/dk90 c 31 90
+chmod 622 /dev/dk/dk90
+/etc/chown kam,other /dev/dk/dk90
+/etc/mknod /dev/dk/dk91 c 31 91
+chmod 664 /dev/dk/dk91
+/etc/chown root,bin /dev/dk/dk91
+/etc/mknod /dev/dk/dk92 c 31 92
+chmod 644 /dev/dk/dk92
+/etc/chown uucp,other /dev/dk/dk92
+/etc/mknod /dev/dk/dk93 c 31 93
+chmod 664 /dev/dk/dk93
+/etc/chown root,bin /dev/dk/dk93
+/etc/mknod /dev/dk/dk94 c 31 94
+chmod 622 /dev/dk/dk94
+/etc/chown presotto,other /dev/dk/dk94
+/etc/mknod /dev/dk/dk95 c 31 95
+chmod 664 /dev/dk/dk95
+/etc/chown root,bin /dev/dk/dk95
+/etc/mknod /dev/fd/0 c 40 0
+chmod 666 /dev/fd/0
+/etc/chown root,other /dev/fd/0
+/etc/mknod /dev/fd/1 c 40 1
+chmod 666 /dev/fd/1
+/etc/chown root,other /dev/fd/1
+/etc/mknod /dev/fd/10 c 40 10
+chmod 666 /dev/fd/10
+/etc/chown root,other /dev/fd/10
+/etc/mknod /dev/fd/100 c 40 100
+chmod 666 /dev/fd/100
+/etc/chown root,other /dev/fd/100
+/etc/mknod /dev/fd/101 c 40 101
+chmod 666 /dev/fd/101
+/etc/chown root,other /dev/fd/101
+/etc/mknod /dev/fd/102 c 40 102
+chmod 666 /dev/fd/102
+/etc/chown root,other /dev/fd/102
+/etc/mknod /dev/fd/103 c 40 103
+chmod 666 /dev/fd/103
+/etc/chown root,other /dev/fd/103
+/etc/mknod /dev/fd/104 c 40 104
+chmod 666 /dev/fd/104
+/etc/chown root,other /dev/fd/104
+/etc/mknod /dev/fd/105 c 40 105
+chmod 666 /dev/fd/105
+/etc/chown root,other /dev/fd/105
+/etc/mknod /dev/fd/106 c 40 106
+chmod 666 /dev/fd/106
+/etc/chown root,other /dev/fd/106
+/etc/mknod /dev/fd/107 c 40 107
+chmod 666 /dev/fd/107
+/etc/chown root,other /dev/fd/107
+/etc/mknod /dev/fd/108 c 40 108
+chmod 666 /dev/fd/108
+/etc/chown root,other /dev/fd/108
+/etc/mknod /dev/fd/109 c 40 109
+chmod 666 /dev/fd/109
+/etc/chown root,other /dev/fd/109
+/etc/mknod /dev/fd/11 c 40 11
+chmod 666 /dev/fd/11
+/etc/chown root,other /dev/fd/11
+/etc/mknod /dev/fd/110 c 40 110
+chmod 666 /dev/fd/110
+/etc/chown root,other /dev/fd/110
+/etc/mknod /dev/fd/111 c 40 111
+chmod 666 /dev/fd/111
+/etc/chown root,other /dev/fd/111
+/etc/mknod /dev/fd/112 c 40 112
+chmod 666 /dev/fd/112
+/etc/chown root,other /dev/fd/112
+/etc/mknod /dev/fd/113 c 40 113
+chmod 666 /dev/fd/113
+/etc/chown root,other /dev/fd/113
+/etc/mknod /dev/fd/114 c 40 114
+chmod 666 /dev/fd/114
+/etc/chown root,other /dev/fd/114
+/etc/mknod /dev/fd/115 c 40 115
+chmod 666 /dev/fd/115
+/etc/chown root,other /dev/fd/115
+/etc/mknod /dev/fd/116 c 40 116
+chmod 666 /dev/fd/116
+/etc/chown root,other /dev/fd/116
+/etc/mknod /dev/fd/117 c 40 117
+chmod 666 /dev/fd/117
+/etc/chown root,other /dev/fd/117
+/etc/mknod /dev/fd/118 c 40 118
+chmod 666 /dev/fd/118
+/etc/chown root,other /dev/fd/118
+/etc/mknod /dev/fd/119 c 40 119
+chmod 666 /dev/fd/119
+/etc/chown root,other /dev/fd/119
+/etc/mknod /dev/fd/12 c 40 12
+chmod 666 /dev/fd/12
+/etc/chown root,other /dev/fd/12
+/etc/mknod /dev/fd/120 c 40 120
+chmod 666 /dev/fd/120
+/etc/chown root,other /dev/fd/120
+/etc/mknod /dev/fd/121 c 40 121
+chmod 666 /dev/fd/121
+/etc/chown root,other /dev/fd/121
+/etc/mknod /dev/fd/122 c 40 122
+chmod 666 /dev/fd/122
+/etc/chown root,other /dev/fd/122
+/etc/mknod /dev/fd/123 c 40 123
+chmod 666 /dev/fd/123
+/etc/chown root,other /dev/fd/123
+/etc/mknod /dev/fd/124 c 40 124
+chmod 666 /dev/fd/124
+/etc/chown root,other /dev/fd/124
+/etc/mknod /dev/fd/125 c 40 125
+chmod 666 /dev/fd/125
+/etc/chown root,other /dev/fd/125
+/etc/mknod /dev/fd/126 c 40 126
+chmod 666 /dev/fd/126
+/etc/chown root,other /dev/fd/126
+/etc/mknod /dev/fd/127 c 40 127
+chmod 666 /dev/fd/127
+/etc/chown root,other /dev/fd/127
+/etc/mknod /dev/fd/13 c 40 13
+chmod 666 /dev/fd/13
+/etc/chown root,other /dev/fd/13
+/etc/mknod /dev/fd/14 c 40 14
+chmod 666 /dev/fd/14
+/etc/chown root,other /dev/fd/14
+/etc/mknod /dev/fd/15 c 40 15
+chmod 666 /dev/fd/15
+/etc/chown root,other /dev/fd/15
+/etc/mknod /dev/fd/16 c 40 16
+chmod 666 /dev/fd/16
+/etc/chown root,other /dev/fd/16
+/etc/mknod /dev/fd/17 c 40 17
+chmod 666 /dev/fd/17
+/etc/chown root,other /dev/fd/17
+/etc/mknod /dev/fd/18 c 40 18
+chmod 666 /dev/fd/18
+/etc/chown root,other /dev/fd/18
+/etc/mknod /dev/fd/19 c 40 19
+chmod 666 /dev/fd/19
+/etc/chown root,other /dev/fd/19
+/etc/mknod /dev/fd/2 c 40 2
+chmod 666 /dev/fd/2
+/etc/chown root,other /dev/fd/2
+/etc/mknod /dev/fd/20 c 40 20
+chmod 666 /dev/fd/20
+/etc/chown root,other /dev/fd/20
+/etc/mknod /dev/fd/21 c 40 21
+chmod 666 /dev/fd/21
+/etc/chown root,other /dev/fd/21
+/etc/mknod /dev/fd/22 c 40 22
+chmod 666 /dev/fd/22
+/etc/chown root,other /dev/fd/22
+/etc/mknod /dev/fd/23 c 40 23
+chmod 666 /dev/fd/23
+/etc/chown root,other /dev/fd/23
+/etc/mknod /dev/fd/24 c 40 24
+chmod 666 /dev/fd/24
+/etc/chown root,other /dev/fd/24
+/etc/mknod /dev/fd/25 c 40 25
+chmod 666 /dev/fd/25
+/etc/chown root,other /dev/fd/25
+/etc/mknod /dev/fd/26 c 40 26
+chmod 666 /dev/fd/26
+/etc/chown root,other /dev/fd/26
+/etc/mknod /dev/fd/27 c 40 27
+chmod 666 /dev/fd/27
+/etc/chown root,other /dev/fd/27
+/etc/mknod /dev/fd/28 c 40 28
+chmod 666 /dev/fd/28
+/etc/chown root,other /dev/fd/28
+/etc/mknod /dev/fd/29 c 40 29
+chmod 666 /dev/fd/29
+/etc/chown root,other /dev/fd/29
+/etc/mknod /dev/fd/3 c 40 3
+chmod 666 /dev/fd/3
+/etc/chown root,other /dev/fd/3
+/etc/mknod /dev/fd/30 c 40 30
+chmod 666 /dev/fd/30
+/etc/chown root,other /dev/fd/30
+/etc/mknod /dev/fd/31 c 40 31
+chmod 666 /dev/fd/31
+/etc/chown root,other /dev/fd/31
+/etc/mknod /dev/fd/32 c 40 32
+chmod 666 /dev/fd/32
+/etc/chown root,other /dev/fd/32
+/etc/mknod /dev/fd/33 c 40 33
+chmod 666 /dev/fd/33
+/etc/chown root,other /dev/fd/33
+/etc/mknod /dev/fd/34 c 40 34
+chmod 666 /dev/fd/34
+/etc/chown root,other /dev/fd/34
+/etc/mknod /dev/fd/35 c 40 35
+chmod 666 /dev/fd/35
+/etc/chown root,other /dev/fd/35
+/etc/mknod /dev/fd/36 c 40 36
+chmod 666 /dev/fd/36
+/etc/chown root,other /dev/fd/36
+/etc/mknod /dev/fd/37 c 40 37
+chmod 666 /dev/fd/37
+/etc/chown root,other /dev/fd/37
+/etc/mknod /dev/fd/38 c 40 38
+chmod 666 /dev/fd/38
+/etc/chown root,other /dev/fd/38
+/etc/mknod /dev/fd/39 c 40 39
+chmod 666 /dev/fd/39
+/etc/chown root,other /dev/fd/39
+/etc/mknod /dev/fd/4 c 40 4
+chmod 666 /dev/fd/4
+/etc/chown root,other /dev/fd/4
+/etc/mknod /dev/fd/40 c 40 40
+chmod 666 /dev/fd/40
+/etc/chown root,other /dev/fd/40
+/etc/mknod /dev/fd/41 c 40 41
+chmod 666 /dev/fd/41
+/etc/chown root,other /dev/fd/41
+/etc/mknod /dev/fd/42 c 40 42
+chmod 666 /dev/fd/42
+/etc/chown root,other /dev/fd/42
+/etc/mknod /dev/fd/43 c 40 43
+chmod 666 /dev/fd/43
+/etc/chown root,other /dev/fd/43
+/etc/mknod /dev/fd/44 c 40 44
+chmod 666 /dev/fd/44
+/etc/chown root,other /dev/fd/44
+/etc/mknod /dev/fd/45 c 40 45
+chmod 666 /dev/fd/45
+/etc/chown root,other /dev/fd/45
+/etc/mknod /dev/fd/46 c 40 46
+chmod 666 /dev/fd/46
+/etc/chown root,other /dev/fd/46
+/etc/mknod /dev/fd/47 c 40 47
+chmod 666 /dev/fd/47
+/etc/chown root,other /dev/fd/47
+/etc/mknod /dev/fd/48 c 40 48
+chmod 666 /dev/fd/48
+/etc/chown root,other /dev/fd/48
+/etc/mknod /dev/fd/49 c 40 49
+chmod 666 /dev/fd/49
+/etc/chown root,other /dev/fd/49
+/etc/mknod /dev/fd/5 c 40 5
+chmod 666 /dev/fd/5
+/etc/chown root,other /dev/fd/5
+/etc/mknod /dev/fd/50 c 40 50
+chmod 666 /dev/fd/50
+/etc/chown root,other /dev/fd/50
+/etc/mknod /dev/fd/51 c 40 51
+chmod 666 /dev/fd/51
+/etc/chown root,other /dev/fd/51
+/etc/mknod /dev/fd/52 c 40 52
+chmod 666 /dev/fd/52
+/etc/chown root,other /dev/fd/52
+/etc/mknod /dev/fd/53 c 40 53
+chmod 666 /dev/fd/53
+/etc/chown root,other /dev/fd/53
+/etc/mknod /dev/fd/54 c 40 54
+chmod 666 /dev/fd/54
+/etc/chown root,other /dev/fd/54
+/etc/mknod /dev/fd/55 c 40 55
+chmod 666 /dev/fd/55
+/etc/chown root,other /dev/fd/55
+/etc/mknod /dev/fd/56 c 40 56
+chmod 666 /dev/fd/56
+/etc/chown root,other /dev/fd/56
+/etc/mknod /dev/fd/57 c 40 57
+chmod 666 /dev/fd/57
+/etc/chown root,other /dev/fd/57
+/etc/mknod /dev/fd/58 c 40 58
+chmod 666 /dev/fd/58
+/etc/chown root,other /dev/fd/58
+/etc/mknod /dev/fd/59 c 40 59
+chmod 666 /dev/fd/59
+/etc/chown root,other /dev/fd/59
+/etc/mknod /dev/fd/6 c 40 6
+chmod 666 /dev/fd/6
+/etc/chown root,other /dev/fd/6
+/etc/mknod /dev/fd/60 c 40 60
+chmod 666 /dev/fd/60
+/etc/chown root,other /dev/fd/60
+/etc/mknod /dev/fd/61 c 40 61
+chmod 666 /dev/fd/61
+/etc/chown root,other /dev/fd/61
+/etc/mknod /dev/fd/62 c 40 62
+chmod 666 /dev/fd/62
+/etc/chown root,other /dev/fd/62
+/etc/mknod /dev/fd/63 c 40 63
+chmod 666 /dev/fd/63
+/etc/chown root,other /dev/fd/63
+/etc/mknod /dev/fd/64 c 40 64
+chmod 666 /dev/fd/64
+/etc/chown root,other /dev/fd/64
+/etc/mknod /dev/fd/65 c 40 65
+chmod 666 /dev/fd/65
+/etc/chown root,other /dev/fd/65
+/etc/mknod /dev/fd/66 c 40 66
+chmod 666 /dev/fd/66
+/etc/chown root,other /dev/fd/66
+/etc/mknod /dev/fd/67 c 40 67
+chmod 666 /dev/fd/67
+/etc/chown root,other /dev/fd/67
+/etc/mknod /dev/fd/68 c 40 68
+chmod 666 /dev/fd/68
+/etc/chown root,other /dev/fd/68
+/etc/mknod /dev/fd/69 c 40 69
+chmod 666 /dev/fd/69
+/etc/chown root,other /dev/fd/69
+/etc/mknod /dev/fd/7 c 40 7
+chmod 666 /dev/fd/7
+/etc/chown root,other /dev/fd/7
+/etc/mknod /dev/fd/70 c 40 70
+chmod 666 /dev/fd/70
+/etc/chown root,other /dev/fd/70
+/etc/mknod /dev/fd/71 c 40 71
+chmod 666 /dev/fd/71
+/etc/chown root,other /dev/fd/71
+/etc/mknod /dev/fd/72 c 40 72
+chmod 666 /dev/fd/72
+/etc/chown root,other /dev/fd/72
+/etc/mknod /dev/fd/73 c 40 73
+chmod 666 /dev/fd/73
+/etc/chown root,other /dev/fd/73
+/etc/mknod /dev/fd/74 c 40 74
+chmod 666 /dev/fd/74
+/etc/chown root,other /dev/fd/74
+/etc/mknod /dev/fd/75 c 40 75
+chmod 666 /dev/fd/75
+/etc/chown root,other /dev/fd/75
+/etc/mknod /dev/fd/76 c 40 76
+chmod 666 /dev/fd/76
+/etc/chown root,other /dev/fd/76
+/etc/mknod /dev/fd/77 c 40 77
+chmod 666 /dev/fd/77
+/etc/chown root,other /dev/fd/77
+/etc/mknod /dev/fd/78 c 40 78
+chmod 666 /dev/fd/78
+/etc/chown root,other /dev/fd/78
+/etc/mknod /dev/fd/79 c 40 79
+chmod 666 /dev/fd/79
+/etc/chown root,other /dev/fd/79
+/etc/mknod /dev/fd/8 c 40 8
+chmod 666 /dev/fd/8
+/etc/chown root,other /dev/fd/8
+/etc/mknod /dev/fd/80 c 40 80
+chmod 666 /dev/fd/80
+/etc/chown root,other /dev/fd/80
+/etc/mknod /dev/fd/81 c 40 81
+chmod 666 /dev/fd/81
+/etc/chown root,other /dev/fd/81
+/etc/mknod /dev/fd/82 c 40 82
+chmod 666 /dev/fd/82
+/etc/chown root,other /dev/fd/82
+/etc/mknod /dev/fd/83 c 40 83
+chmod 666 /dev/fd/83
+/etc/chown root,other /dev/fd/83
+/etc/mknod /dev/fd/84 c 40 84
+chmod 666 /dev/fd/84
+/etc/chown root,other /dev/fd/84
+/etc/mknod /dev/fd/85 c 40 85
+chmod 666 /dev/fd/85
+/etc/chown root,other /dev/fd/85
+/etc/mknod /dev/fd/86 c 40 86
+chmod 666 /dev/fd/86
+/etc/chown root,other /dev/fd/86
+/etc/mknod /dev/fd/87 c 40 87
+chmod 666 /dev/fd/87
+/etc/chown root,other /dev/fd/87
+/etc/mknod /dev/fd/88 c 40 88
+chmod 666 /dev/fd/88
+/etc/chown root,other /dev/fd/88
+/etc/mknod /dev/fd/89 c 40 89
+chmod 666 /dev/fd/89
+/etc/chown root,other /dev/fd/89
+/etc/mknod /dev/fd/9 c 40 9
+chmod 666 /dev/fd/9
+/etc/chown root,other /dev/fd/9
+/etc/mknod /dev/fd/90 c 40 90
+chmod 666 /dev/fd/90
+/etc/chown root,other /dev/fd/90
+/etc/mknod /dev/fd/91 c 40 91
+chmod 666 /dev/fd/91
+/etc/chown root,other /dev/fd/91
+/etc/mknod /dev/fd/92 c 40 92
+chmod 666 /dev/fd/92
+/etc/chown root,other /dev/fd/92
+/etc/mknod /dev/fd/93 c 40 93
+chmod 666 /dev/fd/93
+/etc/chown root,other /dev/fd/93
+/etc/mknod /dev/fd/94 c 40 94
+chmod 666 /dev/fd/94
+/etc/chown root,other /dev/fd/94
+/etc/mknod /dev/fd/95 c 40 95
+chmod 666 /dev/fd/95
+/etc/chown root,other /dev/fd/95
+/etc/mknod /dev/fd/96 c 40 96
+chmod 666 /dev/fd/96
+/etc/chown root,other /dev/fd/96
+/etc/mknod /dev/fd/97 c 40 97
+chmod 666 /dev/fd/97
+/etc/chown root,other /dev/fd/97
+/etc/mknod /dev/fd/98 c 40 98
+chmod 666 /dev/fd/98
+/etc/chown root,other /dev/fd/98
+/etc/mknod /dev/fd/99 c 40 99
+chmod 666 /dev/fd/99
+/etc/chown root,other /dev/fd/99
+/etc/mknod /dev/pt/pt00 c 18 0
+chmod 666 /dev/pt/pt00
+/etc/chown root,sys /dev/pt/pt00
+/etc/mknod /dev/pt/pt01 c 18 1
+chmod 666 /dev/pt/pt01
+/etc/chown root,sys /dev/pt/pt01
+/etc/mknod /dev/pt/pt02 c 18 2
+chmod 666 /dev/pt/pt02
+/etc/chown root,other /dev/pt/pt02
+/etc/mknod /dev/pt/pt03 c 18 3
+chmod 666 /dev/pt/pt03
+/etc/chown root,other /dev/pt/pt03
+/etc/mknod /dev/pt/pt04 c 18 4
+chmod 666 /dev/pt/pt04
+/etc/chown jerq,bin /dev/pt/pt04
+/etc/mknod /dev/pt/pt05 c 18 5
+chmod 666 /dev/pt/pt05
+/etc/chown root,other /dev/pt/pt05
+/etc/mknod /dev/pt/pt06 c 18 6
+chmod 666 /dev/pt/pt06
+/etc/chown root,other /dev/pt/pt06
+/etc/mknod /dev/pt/pt07 c 18 7
+chmod 666 /dev/pt/pt07
+/etc/chown root,other /dev/pt/pt07
+/etc/mknod /dev/pt/pt08 c 18 8
+chmod 666 /dev/pt/pt08
+/etc/chown root,other /dev/pt/pt08
+/etc/mknod /dev/pt/pt09 c 18 9
+chmod 666 /dev/pt/pt09
+/etc/chown root,other /dev/pt/pt09
+/etc/mknod /dev/pt/pt10 c 18 10
+chmod 666 /dev/pt/pt10
+/etc/chown root,other /dev/pt/pt10
+/etc/mknod /dev/pt/pt11 c 18 11
+chmod 666 /dev/pt/pt11
+/etc/chown root,other /dev/pt/pt11
+/etc/mknod /dev/pt/pt12 c 18 12
+chmod 666 /dev/pt/pt12
+/etc/chown root,other /dev/pt/pt12
+/etc/mknod /dev/pt/pt13 c 18 13
+chmod 666 /dev/pt/pt13
+/etc/chown root,other /dev/pt/pt13
+/etc/mknod /dev/pt/pt14 c 18 14
+chmod 666 /dev/pt/pt14
+/etc/chown root,other /dev/pt/pt14
+/etc/mknod /dev/pt/pt15 c 18 15
+chmod 666 /dev/pt/pt15
+/etc/chown root,other /dev/pt/pt15
+/etc/mknod /dev/pt/pt16 c 18 16
+chmod 666 /dev/pt/pt16
+/etc/chown jerq,bin /dev/pt/pt16
+/etc/mknod /dev/pt/pt17 c 18 17
+chmod 666 /dev/pt/pt17
+/etc/chown root,other /dev/pt/pt17
+/etc/mknod /dev/pt/pt18 c 18 18
+chmod 666 /dev/pt/pt18
+/etc/chown root,other /dev/pt/pt18
+/etc/mknod /dev/pt/pt19 c 18 19
+chmod 666 /dev/pt/pt19
+/etc/chown root,other /dev/pt/pt19
+/etc/mknod /dev/pt/pt20 c 18 20
+chmod 666 /dev/pt/pt20
+/etc/chown root,sys /dev/pt/pt20
+/etc/mknod /dev/pt/pt21 c 18 21
+chmod 666 /dev/pt/pt21
+/etc/chown root,sys /dev/pt/pt21
+/etc/mknod /dev/pt/pt22 c 18 22
+chmod 666 /dev/pt/pt22
+/etc/chown root,sys /dev/pt/pt22
+/etc/mknod /dev/pt/pt23 c 18 23
+chmod 666 /dev/pt/pt23
+/etc/chown root,sys /dev/pt/pt23
+/etc/mknod /dev/pt/pt24 c 18 24
+chmod 666 /dev/pt/pt24
+/etc/chown root,sys /dev/pt/pt24
+/etc/mknod /dev/pt/pt25 c 18 25
+chmod 666 /dev/pt/pt25
+/etc/chown root,sys /dev/pt/pt25
+/etc/mknod /dev/pt/pt26 c 18 26
+chmod 666 /dev/pt/pt26
+/etc/chown root,sys /dev/pt/pt26
+/etc/mknod /dev/pt/pt27 c 18 27
+chmod 666 /dev/pt/pt27
+/etc/chown root,sys /dev/pt/pt27
+/etc/mknod /dev/pt/pt28 c 18 28
+chmod 666 /dev/pt/pt28
+/etc/chown root,sys /dev/pt/pt28
+/etc/mknod /dev/pt/pt29 c 18 29
+chmod 666 /dev/pt/pt29
+/etc/chown root,sys /dev/pt/pt29
+/etc/mknod /dev/pt/pt30 c 18 30
+chmod 666 /dev/pt/pt30
+/etc/chown root,sys /dev/pt/pt30
+/etc/mknod /dev/pt/pt31 c 18 31
+chmod 666 /dev/pt/pt31
+/etc/chown root,sys /dev/pt/pt31
+/etc/mknod /dev/pt/pt32 c 18 32
+chmod 666 /dev/pt/pt32
+/etc/chown root,sys /dev/pt/pt32
+/etc/mknod /dev/pt/pt33 c 18 33
+chmod 666 /dev/pt/pt33
+/etc/chown root,sys /dev/pt/pt33
+/etc/mknod /dev/pt/pt34 c 18 34
+chmod 666 /dev/pt/pt34
+/etc/chown root,sys /dev/pt/pt34
+/etc/mknod /dev/pt/pt35 c 18 35
+chmod 666 /dev/pt/pt35
+/etc/chown root,sys /dev/pt/pt35
+/etc/mknod /dev/pt/pt36 c 18 36
+chmod 666 /dev/pt/pt36
+/etc/chown root,sys /dev/pt/pt36
+/etc/mknod /dev/pt/pt37 c 18 37
+chmod 666 /dev/pt/pt37
+/etc/chown root,sys /dev/pt/pt37
+/etc/mknod /dev/pt/pt38 c 18 38
+chmod 666 /dev/pt/pt38
+/etc/chown root,sys /dev/pt/pt38
+/etc/mknod /dev/pt/pt39 c 18 39
+chmod 666 /dev/pt/pt39
+/etc/chown root,sys /dev/pt/pt39
+/etc/mknod /dev/pt/pt40 c 18 40
+chmod 666 /dev/pt/pt40
+/etc/chown root,sys /dev/pt/pt40
+/etc/mknod /dev/pt/pt41 c 18 41
+chmod 666 /dev/pt/pt41
+/etc/chown root,sys /dev/pt/pt41
+/etc/mknod /dev/pt/pt42 c 18 42
+chmod 666 /dev/pt/pt42
+/etc/chown root,sys /dev/pt/pt42
+/etc/mknod /dev/pt/pt43 c 18 43
+chmod 666 /dev/pt/pt43
+/etc/chown root,sys /dev/pt/pt43
+/etc/mknod /dev/pt/pt44 c 18 44
+chmod 666 /dev/pt/pt44
+/etc/chown root,sys /dev/pt/pt44
+/etc/mknod /dev/pt/pt45 c 18 45
+chmod 666 /dev/pt/pt45
+/etc/chown root,sys /dev/pt/pt45
+/etc/mknod /dev/pt/pt46 c 18 46
+chmod 666 /dev/pt/pt46
+/etc/chown root,sys /dev/pt/pt46
+/etc/mknod /dev/pt/pt47 c 18 47
+chmod 666 /dev/pt/pt47
+/etc/chown root,sys /dev/pt/pt47
+/etc/mknod /dev/pt/pt48 c 18 48
+chmod 666 /dev/pt/pt48
+/etc/chown root,sys /dev/pt/pt48
+/etc/mknod /dev/pt/pt49 c 18 49
+chmod 666 /dev/pt/pt49
+/etc/chown root,sys /dev/pt/pt49
+/etc/mknod /dev/pt/pt50 c 18 50
+chmod 666 /dev/pt/pt50
+/etc/chown root,sys /dev/pt/pt50
+/etc/mknod /dev/pt/pt51 c 18 51
+chmod 666 /dev/pt/pt51
+/etc/chown root,sys /dev/pt/pt51
+/etc/mknod /dev/pt/pt52 c 18 52
+chmod 666 /dev/pt/pt52
+/etc/chown root,sys /dev/pt/pt52
+/etc/mknod /dev/pt/pt53 c 18 53
+chmod 666 /dev/pt/pt53
+/etc/chown root,sys /dev/pt/pt53
+/etc/mknod /dev/pt/pt54 c 18 54
+chmod 666 /dev/pt/pt54
+/etc/chown root,sys /dev/pt/pt54
+/etc/mknod /dev/pt/pt55 c 18 55
+chmod 666 /dev/pt/pt55
+/etc/chown root,sys /dev/pt/pt55
+/etc/mknod /dev/pt/pt56 c 18 56
+chmod 666 /dev/pt/pt56
+/etc/chown root,sys /dev/pt/pt56
+/etc/mknod /dev/pt/pt57 c 18 57
+chmod 666 /dev/pt/pt57
+/etc/chown root,sys /dev/pt/pt57
+/etc/mknod /dev/pt/pt58 c 18 58
+chmod 666 /dev/pt/pt58
+/etc/chown root,sys /dev/pt/pt58
+/etc/mknod /dev/pt/pt59 c 18 59
+chmod 666 /dev/pt/pt59
+/etc/chown root,sys /dev/pt/pt59
+/etc/mknod /dev/pt/pt60 c 18 60
+chmod 666 /dev/pt/pt60
+/etc/chown root,sys /dev/pt/pt60
+/etc/mknod /dev/pt/pt61 c 18 61
+chmod 666 /dev/pt/pt61
+/etc/chown root,sys /dev/pt/pt61
+/etc/mknod /dev/pt/pt62 c 18 62
+chmod 666 /dev/pt/pt62
+/etc/chown root,sys /dev/pt/pt62
+/etc/mknod /dev/pt/pt63 c 18 63
+chmod 666 /dev/pt/pt63
+/etc/chown root,sys /dev/pt/pt63
+
+# set up ttys
+
+cat >/etc/ttys << EOF
+14console
+12tty00
+12tty01
+12tty02
+12tty03
+12tty04
+12tty05
+12tty06
+12tty07
+EOF

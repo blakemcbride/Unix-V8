@@ -1,0 +1,47 @@
+DOCGEN(1)                   General Commands Manual                  DOCGEN(1)
+
+NAME
+       docgen - generate a document from a script
+
+SYNOPSIS
+       docgen [ option ] ...  [ ofile ]
+
+DESCRIPTION
+       Docgen guides interactive preparation of standard documents according
+       to canned scripts and places the output in ofile.  The output typically
+       takes the form of troff(1) input.  These options invoke standard
+       scripts:
+
+       -mcs   Bell Labs cover sheet; output (`temp.cover' by default) may be
+              typeset thus: troff temp.cover
+
+       -ms    (default) all kinds of document known to the macro package
+              ms(7); output (`temp' by default) may be typeset thus: troff -ms
+              temp
+
+       -mm    similarly for the MM macro package of System V
+
+       Other options are:
+
+       -f file
+              take script from file
+
+       -v     (verbose) print document as it is generated
+
+       -d     (debug) print information about the script as it is read
+
+       The reference tells how to construct scripts.
+
+FILES
+       /usr/lib/docgen/*  scripts
+       temp.cover
+       temp
+
+SEE ALSO
+       troff(1), ms(7), mcs(7)
+       L. L. Cherry, Docgen, AT&T Bell Laboratories, 1980
+
+BUGS
+       Not all document types are implemented.
+
+                                                                     DOCGEN(1)

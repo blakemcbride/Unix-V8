@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>request.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; request.9 (<a href="../../../../source/v8/usr/man/man9/request.9">troff source</a>)</p>
+<pre>
+REQUEST(9.2)                                                      REQUEST(9.2)
+
+NAME
+       request, own, wait, alarm, sleep, nap, kbdchar, rcvchar, realtime,
+       sendchar, sendnchars, kill, exit - jerq I/O requests
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+
+       void request(r) int r;
+
+       int own(r) int r;
+
+       int wait(r) int r;
+
+       void alarm(t) unsigned t;
+
+       void sleep(t) unsigned t;
+
+       void nap(t) unsigned t;
+
+       void realtime();
+
+       int kbdchar();
+
+       int rcvchar();
+
+       void sendchar(c) int c;
+
+       void sendnchars(n, p) int n; char *cp;
+
+       void kill(s) int s;
+
+       void exit();
+
+DESCRIPTION
+       Request announces a program's intent to use I/O devices and resources,
+       and is usually called once early in a program.  The bit vector r
+       indicates which resources are to be used by OR'ing together one or more
+       of the elements KBD (keyboard), MOUSE, RCV (characters received by
+       terminal from Unix), SEND (characters sent from terminal to Unix) and
+       ALARM.  For example, request(MOUSE|KBD) indicates that the process
+       wants to use the mouse and keyboard.  If the keyboard is not requested,
+       characters typed will be sent to the standard input of the Unix
+       process.  If the mouse is not requested, mouse events in the process's
+       layer will be interpreted by the system rather than passed to the
+       process.  SEND and CPU (see wait below) are always implicitly
+       requested.  Request sleeps for one clock tick to synchronize mouse
+       control with the kernel.
+
+       Own returns a bit vector of which I/O resources have data available.
+       For example, own()&amp;KBD indicates whether a character is available to be
+       read by kbdchar() (see below), own()&amp;MOUSE tells if the process's mouse
+       structure (see <a href="../man9/button.9.html">button(9.2)</a>) is current, and own()&amp;ALARM indicates
+       whether the alarm timer has fired.
+
+       Wait's argument r is a bit vector composed as for request.  Wait
+       suspends the process, enabling others, until at least one of the
+       requested resources is available.  The return value is a bit vector
+       indicating which of the requested resources are available — the same as
+       own()&amp;r.  For example, if a process wants to read from the keyboard or
+       the host, the following fragment illustrates how to use request and
+       wait:
+
+              request(KBD|RCV);
+              for(;;){
+                   r=wait(KBD|RCV);
+                   if(r&amp;KBD)
+                        keyboard(kbdchar());
+                   if(r&amp;RCV)
+                        receive(rcvchar());
+              }
+
+       Processes wishing to give up the processor to enable other processes to
+       run may call wait(CPU); it will return as soon as all other active
+       processes have had a chance to run.  CPU is a fake resource which is
+       always requested.  The SEND pseudo-resource is unused; wait(SEND)
+       always succeeds.
+
+       Alarm starts a timer which will ``fire'' t ticks (60ths of a second) in
+       the future.  A pseudo-resource ALARM can be used to check the status of
+       the timer with own or wait.  Calling alarm implicitly requests the
+       ALARM pseudo-resource.
+
+       Nap busy loops for t ticks of the 60Hz internal clock.  To avoid
+       beating with the display, programs drawing rapidly changing scenes
+       should nap for two ticks between updates, to synchronize the display
+       and memory.  Nap busy loops until the time is up; sleep is identical
+       except that it gives up the processor for the interval.  Except when
+       unwilling to give up the mouse, a program should call sleep in
+       preference to nap.  Sleep does not interfere with alarm, and vice
+       versa.
+
+       Realtime returns the number of 60Hz clock ticks since mux started.
+
+       Kbdchar returns the next keyboard character typed to the process.  If
+       no characters have been typed, or KBD has not been requested, kbdchar
+       returns -1.
+
+       Rcvchar returns the next character received from the host, typically
+       written on the standard output of a Unix process.  If there are no
+       characters available, or RCV has not been requested, rcvchar returns
+       -1.
+
+       Sendchar sends a single byte to the host, which will normally be read
+       on the standard input of the Unix process.  Sendnchars sends to the
+       host n characters pointed to by p.  Sent by either routine, the
+       characters are passed to the Unix teletype input routine, and will be
+       processed as though they were typed on the keyboard by a user.
+
+       Kill sends the Unix process associated with the terminal process the
+       Unix signal (<a href="../man2/signal.2.html">signal(2)</a>) s, typically SIGINT=2.
+
+       Exit terminates the process.  Unlike on Unix, exit does not return an
+       exit status to a parent.  Calling exit replaces the running process by
+       the default terminal program.  Any associated Unix process must arrange
+       for its own demise — exit is a purely local function.  When a process
+       calls exit, all local resources: keyboard, mouse, storage, etc., are
+       deallocated automatically.
+
+                                                                  REQUEST(9.2)
+</pre>
+</body></html>

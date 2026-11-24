@@ -1,0 +1,29 @@
+EXIT(2)                       System Calls Manual                      EXIT(2)
+
+NAME
+       exit - terminate process
+
+SYNOPSIS
+       exit(status)
+       int status;
+
+       _exit(status)
+       int status;
+
+DESCRIPTION
+       Exit is the normal means of terminating a process.  Exit closes all the
+       process's files and notifies the parent process if it is executing a
+       wait.  The low-order 8 bits of status are available to the parent
+       process.
+
+       This call can never return.
+
+       The C function exit may cause cleanup actions before the final `sys
+       exit'.  The function _exit circumvents all cleanup, and should be used
+       to terminate a child process after a fork(2) to avoid flushing buffered
+       output twice.
+
+SEE ALSO
+       fork(2), wait(2)
+
+                                                                       EXIT(2)

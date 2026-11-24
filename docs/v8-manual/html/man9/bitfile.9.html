@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>bitfile.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; bitfile.9 (<a href="../../../../source/v8/usr/man/man9/bitfile.9">troff source</a>)</p>
+<pre>
+BITFILE(9.5)                                                      BITFILE(9.5)
+
+NAME
+       bitfile - format of bitmap file
+
+DESCRIPTION
+       Binary files produced by <a href="../man9/blitblt.9.html">blitblt(9.1)</a>, <a href="../man9/twid.9.html">twid(9.6)</a> and other bitmap-
+       generating programs are formatted as follows:
+
+       Byte no.    Description
+
+       0, 1:       Zero.
+
+       2, 3:       X-coordinate of the rectangle origin (low-order byte, high-
+                   order byte).
+
+       4, 5:       Y-coordinate of the rectangle origin (low-order byte, high-
+                   order byte).
+
+       6, 7:       X-coordinate of the rectangle corner (low-order byte, high-
+                   order byte).
+
+       8, 9:       Y-coordinate of the rectangle corner (low-order byte, high-
+                   order byte).
+
+       remainder:  Compressed raster data. Each raster is exclusive-or'd with
+                   the previous one, and zero-extended (if necessary) to a
+                   16-bit boundary. It is then encoded into byte sequences,
+                   each of which consists of a control byte followed by two or
+                   more data bytes:
+
+       Control     Data
+
+       n (&lt; 127)   2*n bytes of raster data, running from left to right.
+
+       0x80 + n    2 bytes of raster data, to be replicated from left to right
+                   n times.
+
+       There are also two ASCII formats in current use.  Textures and 16×16
+       icons, typically created by <a href="../man9/icon.9.html">icon(9.1)</a>, are encoded as a Texture
+       declaration with initializer, to be copied unchanged into C program
+       source; see <a href="../man9/types.9.html">types(9.5)</a>.  Faces and other large icons are without any
+       surrounding C syntax.  In either case, each scan line of the bitmap is
+       a comma-separated list of C-style short hexadecimal constants; scan
+       lines are separated by newlines.
+
+SEE ALSO
+       <a href="../man9/blitblt.9.html">blitblt(9.1)</a>, <a href="../man9/icon.9.html">icon(9.1)</a>, <a href="../man9/twid.9.html">twid(9.1)</a>, <a href="../man9/types.9.html">types(9.5)</a>, <a href="../man9/sysmon.9.html">sysmon(9.1)</a>, <a href="../man1/can.1.html">can(1)</a>
+
+                                                                  BITFILE(9.5)
+</pre>
+</body></html>

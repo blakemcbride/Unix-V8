@@ -1,0 +1,82 @@
+DD(1)                       General Commands Manual                      DD(1)
+
+NAME
+       dd - convert and copy a file
+
+SYNOPSIS
+       dd [option=value] ...
+
+DESCRIPTION
+       Dd copies the specified input file to the specified output with
+       possible conversions.  The standard input and output are used by
+       default.  The input and output block size may be specified to take
+       advantage of raw physical I/O.
+
+       option          values
+       if=file         input file name; standard input is default
+       of=file         output file name; standard output is default
+       ibs=n           input block size n bytes (default 512)
+       obs=n           output block size (default 512)
+       bs=n            set both input and output block size, superseding ibs
+                       and obs; also, if no conversion is specified, preserve
+                       the input block size instead of packing short blocks
+                       into the output buffer.  This is particularly efficient
+                       since no in-core copy need be done.
+       cbs=n           conversion buffer size
+       skip=n          skip n input records before starting copy
+       files=n         copy and concatenate n input files before terminating
+                       (makes sense only where input is a magtape or similar
+                       device).
+       seek=n          seek n records from beginning of output file before
+                       copying
+       count=n         copy only n input records
+       conv=ascii      convert EBCDIC to ASCII
+            ebcdic     convert ASCII to EBCDIC
+            ibm        slightly different map of ASCII to EBCDIC
+            block      convert variable length ASCII records to fixed length
+            unblock    convert fixed length ASCII records to variable length
+            lcase      map alphabetics to lower case
+            ucase      map alphabetics to upper case
+            swab       swap every pair of bytes
+            noerror    do not stop processing on an error
+            sync       pad every input record to ibs
+            ... , ...  several comma-separated conversions
+
+       Where sizes are specified, a number of bytes is expected.  A number may
+       end with k, b, or w to specify multiplication by 1024, 512, or 2
+       respectively; a pair of numbers may be separated by x to indicate a
+       product.
+
+       Cbs is used only if ascii, unblock, ebcdic, ibm, or block conversion is
+       specified.  In the first two cases, cbs characters are copied into the
+       conversion buffer, any specified character mapping is done, trailing
+       blanks are trimmed and new-line is added before sending the line to the
+       output.  In the latter three cases, characters are read into the
+       conversion buffer and blanks are added to make up an output record of
+       size cbs.  If cbs is unspecified or zero, the ascii, ebcdic, and ibm
+       options convert the character set without changing the block structure
+       of the input file; the unblock and block options become a simple file
+       copy.
+
+       After completion, dd reports the number of whole and partial input and
+       output blocks.
+
+EXAMPLE
+       dd  if=/dev/rmt0  of=x  ibs=800  cbs=80  conv=ascii,lcase
+              Read an EBCDIC tape blocked ten 80-byte EBCDIC card images per
+              record into an ASCII file.  Note the use of raw magtape to
+              handle arbitrary record sizes.
+
+SEE ALSO
+       cp(1), tar(1), cpio(1)
+
+DIAGNOSTICS
+       f+p records in(out) numbers of full and partial records read(written)
+
+BUGS
+       The ASCII/EBCDIC conversion tables are taken from the 256 character
+       standard in the CACM Nov, 1968.  The ibm conversion, while less blessed
+       as a standard, corresponds better to certain IBM print train
+       conventions.  There is no universal solution.
+
+                                                                         DD(1)

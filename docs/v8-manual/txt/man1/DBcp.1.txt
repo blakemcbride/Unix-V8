@@ -1,0 +1,20 @@
+DBCP(1)                     General Commands Manual                    DBCP(1)
+
+NAME
+       DBcp - database copy
+
+SYNOPSIS
+       DBcp source dest
+
+DESCRIPTION
+       DBcp copies a database created with either DB(1) or the DB(3) routines.
+       DBcp performs the copy by iterating through the keys using the routines
+       DBkey0 and DBkeyn, found in the DB library.
+
+       This is a separate command because of the high probability of empty
+       blocks in the database; these blocks are not copied.
+
+SEE ALSO
+       DB(1), DB(3), DBcvt(1).
+
+                                                                       DBCP(1)

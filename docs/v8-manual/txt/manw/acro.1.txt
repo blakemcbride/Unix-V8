@@ -1,0 +1,43 @@
+ACRO(1)                     General Commands Manual                    ACRO(1)
+
+NAME
+       acro - find acronyms in a text file
+
+SYNOPSIS
+       acro [ -flags ][ -ver ] file ...
+
+DESCRIPTION
+       Acro searches for acronyms in a text file.  It prints each sentence
+       containing an acronym.  Acro also prints a frequency count of all
+       acronyms used in the text.
+
+       Acro skips lines that begin with a dot, "."; so text files that contain
+       standard nroff(1) and mm(1) macros are acceptable input.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+USES
+       Acro can be used to locate acronyms in a text.  The user can then check
+       to see that an acronym is fully defined when it is first used.
+
+FILES
+       /tmp/$$*             temporary files
+
+SEE ALSO
+       nroff(1), mm(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                       ACRO(1)

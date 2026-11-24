@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mkdir.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; mkdir.2 (<a href="../../../../source/v8/usr/man/man2/mkdir.2">troff source</a>)</p>
+<pre>
+MKDIR(2)                      System Calls Manual                     MKDIR(2)
+
+NAME
+       mkdir, rmdir - make or remove a directory
+
+SYNOPSIS
+       mkdir(name, mode)
+       char *name;
+
+       rmdir(name)
+       char *name;
+
+DESCRIPTION
+       Mkdir creates a new directory whose name is the null-terminated string
+       pointed to by name.  The mode of the directory is initialized from
+       mode, modified by the current mode mask (<a href="../man2/umask.2.html">umask(2)</a>).  The directory is
+       initialized with two entries: .  points to the directory itself, ..  to
+       its parent.
+
+       Rmdir removes the directory name, which must be empty.
+
+SEE ALSO
+       <a href="../man1/mkdir.1.html">mkdir(1)</a>, rmdir(1), <a href="../man2/mknod.2.html">mknod(2)</a>
+
+DIAGNOSTICS
+       Mkdir returns 0 on success, -1 if the directory already exists or if
+       the user has no write permissions in the parent directory.
+
+       Rmdir returns 0 on success, -1 if the directory doesn't exist, isn't
+       empty, isn't a directory, or is the root of a filesystem.
+
+BUGS
+       Rmdir will happily remove a non-empty directory, leaving any files
+       therein orphaned.  This is easy to fix, but nobody has bothered.
+
+                                                                      MKDIR(2)
+</pre>
+</body></html>

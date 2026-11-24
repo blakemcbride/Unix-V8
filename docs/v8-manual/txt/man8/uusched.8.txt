@@ -1,0 +1,34 @@
+UUSCHED(8)                  System Manager's Manual                 UUSCHED(8)
+
+NAME
+       uusched  - uucp file transport scheduler
+
+SYNOPSIS
+       /usr/lib/uucp/uusched [ -x debug_level ] [ -u debug_level ]
+
+DESCRIPTION
+       Uusched examines the uucp spool directories, and invokes uucico (8) for
+       each system with work pending.  It is called by uucp and uux(1) after
+       work is queued, and should be invoked regularly (usually hourly) by
+       cron(8).
+
+       A limited number of copies of uusched are permitted at any time.  The
+       number is kept in the file /usr/lib/uucp/Maxuuscheds.
+
+       The two options are for debugging purposes only.  -x requests debugging
+       output; debug_level is a single digit, larger numbers producing more
+       detailed output.  -u debug_level causes -x debug_level to be passed to
+       uucico.
+
+FILES
+       /usr/lib/uucp/Systems
+       /usr/lib/uucp/Permissions
+       /usr/lib/uucp/Devices
+       /usr/spool/uucp/*
+       /usr/spool/uucp/LCK*
+       /usr/spool/uucppublic/*
+
+SEE ALSO
+       uucp(1), uux(1), uucico(8)
+
+                                                                    UUSCHED(8)

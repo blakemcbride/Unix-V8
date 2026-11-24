@@ -1,0 +1,60 @@
+TSET(1)                     General Commands Manual                    TSET(1)
+
+NAME
+       tset - set terminal modes
+
+SYNOPSIS
+       tset [ options ] [ -m test:type ] ... [ type ]
+
+DESCRIPTION
+       Tset conditionally sets erase and kill characters, tabs, delays, etc.
+       for terminals.  It is typically used in startup profiles; see sh(1).
+       In default of a specified terminal type (listed in the file
+       `/etc/termcap') the type is taken from the environment variable TERM.
+       Option -m determines the type based on source and baud rate:
+
+              -m [source][>baud]:type
+
+       No sources are distinguished at present.  The test `>' may be replaced
+       by `<', `=', or `@' (same as `=').  The test may be preceded by `!' for
+       negation.  A type may be preceded by `?' to cause tset to query whether
+       the guess is right.  Tests are performed left-to-right until one is
+       satisfied.  A final default type prevails when all tests fail.  Thus
+
+              tset -m  ´>1200:5620´  ´?hp´
+
+       assumes the terminal is a 5620 if the line speed exceeds 1200 baud.
+       Otherwise it assumes an hp terminal but asks for confirmation, giving
+       you a chance to name another type.
+
+       The -s option causes tset to place on the standard output shell
+       commands for setting the environment variables TERM and TERMCAP.  Use
+       this feature thus:
+
+              eval `tset -s options...`
+
+       On terminals that can backspace but not overstrike and when the erase
+       character is the default erase character (`#' on standard systems), the
+       erase character is changed to a Control-H (backspace).
+
+       Other options are:
+
+       -e c   set the erase character to c, or backspace if c is missing
+
+       -k c   set the kill character similarly; use ^X if c is missing
+
+       -I     supress outputting terminal initialization strings
+
+       -Q     supress printing `Erase set to' and `Kill set to' messages
+
+       -S     Outputs TERM and TERMCAP in the environment rather than in shell
+              commands
+
+FILES
+       /etc/ttytype  terminal id to type map database
+       /etc/termcap  terminal capability database
+
+SEE ALSO
+       sh(1), stty(1), environ(5), termcap(5)
+
+                                                                       TSET(1)

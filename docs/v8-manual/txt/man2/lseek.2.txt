@@ -1,0 +1,42 @@
+LSEEK(2)                      System Calls Manual                     LSEEK(2)
+
+NAME
+       lseek, tell - move read/write pointer
+
+SYNOPSIS
+       long lseek(fildes, offset, whence)
+       long offset;
+
+       long tell(fildes)
+
+DESCRIPTION
+       The file descriptor refers to a file open for reading or writing.  The
+       read (resp. write) pointer for the file is set as follows:
+
+              If whence is 0, the pointer is set to offset bytes.
+
+              If whence is 1, the pointer is set to its current location plus
+              offset.
+
+              If whence is 2, the pointer is set to the size of the file plus
+              offset.
+
+       The returned value is the resulting pointer location.
+
+       The obsolete function tell(fildes) is identical to lseek(fildes, 0L, 1
+       ).
+
+       Seeking far beyond the end of a file, then writing, creates a gap or
+       `hole', which occupies no physical space and reads as zeros.
+
+SEE ALSO
+       open(2), creat(2), fseek(3)
+
+DIAGNOSTICS
+       -1 is returned for an undefined file descriptor, seek on a pipe, or
+       seek to a position before the beginning of file.
+
+BUGS
+       Lseek is a no-op on character special files.
+
+                                                                      LSEEK(2)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; mp.3 (<a href="../../../../source/v8/usr/man/man3/mp.3">troff source</a>)</p>
+<pre>
+MP(3X)                                                                  MP(3X)
+
+NAME
+       itom, madd, msub, mmul, mdiv, msqrt, mgcd, mget, mput, mmov, mcmp,
+       mexp, mpow - multiple precision integer arithmetic
+
+SYNOPSIS
+       #include &lt;mp.h&gt;
+
+       mint *itom(n)
+       int n;
+
+       madd(a, b, c)
+       msub(a, b, c)
+       mmul(a, b, c)
+       mgcd(a, b, c)
+       mdiv(a, b, q, r)
+       msqrt(a, b, r)
+       mexp(a, b, c)
+       mpow(a, b, m, c)
+       mmov(a, b)
+       mcmp(a, b)
+       mget(a)
+       mput(a)
+       mint *a, *b, *c, *m, *q, *r;
+
+       sdiv(a, n, q, r)
+       mint *a, *q;
+       int n;
+       short *r;
+
+DESCRIPTION
+       These routines perform arithmetic on arbitrary-length integers of
+       defined type mint.  The functions are obtained with <a href="../man1/ld.1.html">ld(1)</a> option -lmp.
+
+       Pointers to mint must be initialized using the function itom, which
+       sets the initial value to n.  Thereafter space is managed automatically
+       by the routines.
+
+       Madd, msub, mmul, and mgcd assign to their third arguments the sum,
+       difference, product, and greatest common divisor, respectively, of
+       their first two arguments.
+
+       Mdiv assigns the quotient and remainder, respectively, to its third and
+       fourth arguments.  Sdiv is like mdiv except that the divisor is an
+       ordinary integer.
+
+       Msqrt assigns to its second and third arguments the square root and
+       remainder, repsectively, of its first argument.
+
+       Mexp calculates a raised to the power b; mpow calculates this reduced
+       modulo m.
+
+       Mmov assigns the value of its first argument to its second argument.
+
+       Mcmp returns a negative, zero, or positive integer if the value of its
+       first argument is less than, equal to, or greater than, respectively,
+       the value of its second argument.
+
+       Mget and mput do decimal conversion from `stdin' and to `stdout',
+       respectively, of <a href="../man3/stdio.3.html">stdio(3)</a>.
+
+DIAGNOSTICS
+       Illegal operations and running out of memory produce messages and core
+       images.
+
+                                                                        MP(3X)
+</pre>
+</body></html>

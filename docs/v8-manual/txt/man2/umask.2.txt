@@ -1,0 +1,24 @@
+UMASK(2)                      System Calls Manual                     UMASK(2)
+
+NAME
+       umask - set file creation mode mask
+
+SYNOPSIS
+       umask(complmode)
+
+DESCRIPTION
+       Umask sets a mask used whenever a file is created by creat(2) or
+       mknod(2): the actual mode (see chmod(2)) of the newly-created file is
+       the logical and of the given mode and the complement of the argument.
+       Only the low-order 9 bits of the mask (the protection bits)
+       participate.  In other words, the mask shows the bits to be turned off
+       when files are created.
+
+       The previous value of the mask is returned by the call.  The value is
+       initially 022 (write access for owner only).  The mask is inherited by
+       child processes.
+
+SEE ALSO
+       creat(2), mknod(2), chmod(2)
+
+                                                                      UMASK(2)

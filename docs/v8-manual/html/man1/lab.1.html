@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>lab.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; lab.1 (<a href="../../../../source/v8/usr/man/man1/lab.1">troff source</a>)</p>
+<pre>
+LAB(1)                      General Commands Manual                     LAB(1)
+
+NAME
+       lab - label maker
+
+SYNOPSIS
+       lab [ -m ] [ name ... ]
+
+DESCRIPTION
+       Lab causes the named files to be queued for printing as mailing labels.
+       If no files are named, the standard input is read.  The option -m
+       causes notification via <a href="../man1/mail.1.html">mail(1)</a> to be sent when the job completes.
+
+       The last line of each label is identified by ending it with one or more
+       spaces and a hyphen.  The hyphen must be the last character in the
+       line; no white space may follow it.
+
+FILES
+       /usr/spool/lab/*    spool area
+       /usr/lib/lab        printer daemon
+
+SEE ALSO
+       <a href="../man1/pr.1.html">pr(1)</a>
+
+BUGS
+       Queued jobs print in directory (seemingly random) order.
+
+                                     alice                              LAB(1)
+</pre>
+</body></html>

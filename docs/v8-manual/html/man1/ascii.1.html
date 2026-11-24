@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ascii.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; ascii.1 (<a href="../../../../source/v8/usr/man/man1/ascii.1">troff source</a>)</p>
+<pre>
+ASCII(1)                    General Commands Manual                   ASCII(1)
+
+NAME
+       ascii - interpret ASCII characters
+
+SYNOPSIS
+       ascii [ -oxd | -bn ] [ -nct ] [ -e ] [ text ]
+
+DESCRIPTION
+       Ascii prints the ASCII values corresponding to characters and vice
+       versa.  The values are interpreted in a settable numeric base; -o
+       specifies octal (the default), -d decimal, -x hexadecimal, and -bn base
+       n .
+
+       With no arguments, ascii reproduces /usr/pub/ascii in the specified
+       base.  Any given characters of text are converted to their ASCII
+       values, one per line.  If, however, the first argument of text is a
+       valid number in the specified base, it is printed as plain text
+       (control characters are printed as they appear in /usr/pub/ascii).  The
+       option -n forces the output to numeric form and -c forces the output to
+       printable characters.  The option -t converts, without interpretation,
+       from numbers to text.  Finally, -e forces the following arguments to be
+       interpreted as text .
+
+EXAMPLES
+       ascii -d
+              Print the ASCII table base 10.
+
+       ascii p
+              Print the octal value of `p'.
+
+       ascii 160
+              Show which character is octal 160.
+
+SEE ALSO
+       <a href="../man7/ascii.7.html">ascii(7)</a>
+
+                                                                      ASCII(1)
+</pre>
+</body></html>

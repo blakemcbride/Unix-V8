@@ -1,0 +1,38 @@
+LN(1)                       General Commands Manual                      LN(1)
+
+NAME
+       ln - make links
+
+SYNOPSIS
+       ln [ -s ] name1 [ name2 ]
+       ln name ... directory
+
+DESCRIPTION
+       A link is a directory entry referring to a file; the same file
+       (together with its size, all its protection information, etc.)  may
+       have several links to it.  There are two kinds of links: hard links and
+       symbolic links.
+
+       By default ln makes hard links.  A hard link to a file is
+       indistinguishable from the original directory entry; changes to the
+       file are effective regardless of the name used to reference the file.
+       Hard links may not span file systems and may not refer to directories.
+
+       The -s option makes symbolic links.  A symbolic link contains the name
+       of the file to which it is linked.  Except in special cases, such as
+       rm(1), unlink(2), lstat, and readlink, the contents of a symbolic link
+       is taken as the pathname of the file.  Symbolic links may span file
+       systems and may refer to directories.
+
+       Given one or two nondirectory arguments, the second not being a
+       directory, ln makes a link to an existing file name1.  If name2 is
+       given, the link has that name, otherwise name2 is understood to be the
+       same as the last component of name1.
+
+       Given two or more arguments, the last being a directory, ln makes
+       therein links to all the named files.
+
+SEE ALSO
+       rm(1), cp(1), mv(1), link(2), stat(2)
+
+                                                                         LN(1)

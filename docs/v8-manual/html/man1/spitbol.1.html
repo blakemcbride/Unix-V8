@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>spitbol.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; spitbol.1 (<a href="../../../../source/v8/usr/man/man1/spitbol.1">troff source</a>)</p>
+<pre>
+SPITBOL(1)                  General Commands Manual                 SPITBOL(1)
+
+NAME
+       spitbol - Snobol language compiler
+
+SYNOPSIS
+       spitbol [ options ] ifile ...
+
+DESCRIPTION
+       Spitbol is an upward compatible dialect of SNOBOL4.
+
+       All names used in a program are normally mapped to UPPER CASE during
+       compilation and execution.  For strict compatibility with SNOBOL4, use
+       the -f option or -CASE control statement.
+
+       All ifiles are read in order before the standard input.  Standard
+       output comes only from assignments to OUTPUT and from error messages.
+
+       Compiler options:
+
+       -f         don't fold lower case names to UPPER CASE
+
+       -e         don't send error messages to the terminal
+
+       -l         generate source listing
+
+       -c         generate compilation statistics
+
+       -x         generate execution statistics
+
+       -a         like -lcx
+
+       -p         long listing format; generates form feeds
+
+       -z         use standard listing format
+
+       -h         write spitbol header to standard output
+
+       -n         suppress execution
+
+       -mdd       max size (words) of created object (default 8192)
+
+       -sdd       maximum size (words) of stack space (default 2048)
+
+       -idd       size (words) of increment by which dynamic area is increased
+                  (default 4096)
+
+       -ddd       size (words) of maximum allocated dynamic area (default
+                  256K)
+
+       -u string  executing program may retrieve string with HOST(0)
+
+       -o ofile   write listing, statistics and dump to ofile and OUTPUT to
+                  standard output
+
+       Note: dd can be followed by a k to indicate units of 1024.
+
+       Spitbol has two input-output modes, line mode, where records are
+       delimited by new-line characters, and raw mode where a predetermined
+       number of bytes is transferred.  Modes are specified in INPUT or OUTPUT
+       function calls.  The maximum length of an input record is set by the -l
+       or -r argument.  The form of the INPUT/OUTPUT function call is
+
+              INPUT/OUTPUT(.name,channel,file_name args)
+
+       where name is the variable name to be input/output associated and
+       channel is an integer or string that identifies the association to be
+       used in subsequent calls for EJECT, ENDFILE, INPUT, OUTPUT, REWIND, and
+       SET.  If the channel is omitted or the null string, the association is
+       made to the system's standard input or output stream.  file_name args
+       specifies the source/destination of the input/output and any IO
+       processing arguments. The file_name can be either a path name to a file
+       or a command string. Command strings are distinguished from file names
+       by a leading "!". The character following the "!" is the delimiter used
+       to separate the command string from any IO processing arguments. The
+       ending delimiter may be omitted if there are no IO processing
+       arguments.  There must always be at least one space between the
+       file_name and args, even if the file_name is null.
+
+       Input/output arguments are:
+
+       -a     Append output to existing file. If file doesn't exist then it is
+              created.  If -a is not specified then file is created.
+
+       -bdd   Set internal buffer size to dd characters. This value is the
+              byte count used on all input/output transfers except for the
+              last write to an output file (default 1024).
+
+       -c     Like -r1
+
+       -fdd   Use dd as file desciptor for IO.  spitbol assumes that dd has
+              been opened by the shell. File names and -fdd arguments are
+              mutually exclusive.  File descriptors 0, 1, and 2 may be
+              accessed in this manner.
+
+       -ldd   Line mode: maximum input record length is dd characters (default
+              1024).
+
+       -rdd   Raw mode: input record length is dd characters.
+
+       -w     On output, each record is directly written to the file without
+              any intermediate buffering (default for terminals).  On input,
+              each input operation uses exactly one <a href="../man2/read.2.html">read(2)</a>, and fails if read
+              returns 0.
+
+       More than one type of transfer may be associated with a channel.  This
+       is accomplished by calling INPUT/OUTPUT after the initial call with the
+       name, channel, and file arguments. The file name or -f argument must
+       not be specified on calls subsequent to the first.
+
+       Standard functions: SET(channel,integer,integer) The arguments are same
+       as those to the <a href="../man2/lseek.2.html">lseek(2)</a>, escept that the first argument identifies a
+       spitbol channel instead of a file descriptor.
+
+       EXIT(command-string)
+              causes the value of command-string to be handed to the Shell to
+              be executed after spitbol terminates.
+
+       EXIT(n)
+              If n is greater than 0, a load module will be written in a.out
+              before termination.  Executing this load module will restore the
+              state of the spitbol system to what it was when EXIT was called,
+              except that any files other than the standard input, output, and
+              error will have been closed.  To the SNOBOL4 program, it will
+              appear as if EXIT had returned a null string.  If n is exactly
+              1, the generated load module will identify the version of
+              spitbol that created it in a message when it begins execution.
+              If n is greater than 1, it will resume quietly.
+
+       HOST() returns the host string read from /usr/lib/spithost.
+
+       HOST(0)
+              returns the string specified with the -u option on the command
+              line.  If -u was not specified the null string is returned.
+
+       HOST(1,"command string")
+              executes the command string and continues.
+
+       HOST(2,n)
+              returns argument number n from the command line.  It fails if n
+              is out of range or not an integer.
+
+       HOST(3)
+              returns the index of the first command line argument that was
+              not examined by spitbol.
+
+       HOST(4,"var")
+              returns the value of the environment variable var.  If the value
+              is too long for an internal buffer (presently 512 bytes) it is
+              quietly truncated.
+
+MISCELLANY
+       A file is not actually opened until the first attempt to read, write,
+       SET, or REWIND it.
+
+       Folding of names to UPPER CASE can be controlled during compilation by
+       the -CASE control statement and during execution by the &amp;CASE keyword.
+       A value of 0 prevents folding to UPPER CASE and a value of 1 forces
+       folding to UPPER CASE.
+
+       Integers are represented by 32-bit quantities.  Real numbers are
+       implemented in single precision.
+
+       Setting &amp;STLIMIT = -1 inhibits statement limit checking and provides a
+       way to execute arbitrarily many statements.
+
+       The name TERMINAL is available with default associations for input and
+       output to the terminal.
+
+       If the first line of the first input file begins with #!  then that
+       line is ignored.  This meshes with the way that <a href="../man2/exec.2.html">exec(2)</a> treats files
+       beginning with #!.
+
+       Setting &amp;PROFILE = 1 causes spitbol to accumulate profile information
+       during program execution and print this information after the program
+       terminates.
+
+FILES
+       /usr/lib/vaxspitv35.err  - Error text.
+       /usr/lib/spithost - Host computer and operating system identifier.
+
+SEE ALSO
+       Macro SPITBOL Program Reference Manual by R. B. K. Dewar, A. P. McCann,
+       R. E. Goldberg, and Steven G. Duff
+       The SNOBOL4 Programming Language, Second Edition by R. E. Griswold, J.
+       F. Poage and I. P. Polonsky
+       <a href="../man1/sno.1.html">sno(1)</a>, <a href="../man1/snocone.1.html">snocone(1)</a>
+
+                                                                    SPITBOL(1)
+</pre>
+</body></html>

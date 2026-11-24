@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Unix Eighth Edition</title></head><body>
+<p><em>Saved from <a href="https://gunkies.org/wiki/Unix_Eighth_Edition">https://gunkies.org/wiki/Unix_Eighth_Edition</a> on 2026-11-24 (MediaWiki render view).</em></p>
+<h1>Unix Eighth Edition</h1>
+<div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr"><p><br>
+</p>
+<table class="infobox bordered" style="width: 25em; text-align: left; font-size: 90%" align="right">
+
+<tbody><tr>
+<td colspan="2" style="text-align:center; font-size: large;"><b>Unix V8</b>
+</td></tr>
+<tr>
+<td colspan="2" style="text-align:center;"><span typeof="mw:File"><a href="https://gunkies.org/wiki/File:Eigth_edition_unix_v8.png" class="mw-file-description"><img alt="" src="images/250px-Eigth_edition_unix_v8.png" decoding="async" width="250" height="129" class="mw-file-element"></a></span><br>Logging onto v8
+</td></tr>
+
+<tr>
+<th>Type:
+</th>
+<td><a href="https://gunkies.org/wiki/Multi-tasking" title="Multi-tasking">Multi-tasking</a>, <a href="https://gunkies.org/wiki/Multi-user" title="Multi-user">multi-user</a>
+</td></tr>
+
+<tr>
+<th>Creator:
+</th>
+<td>Bell Labs
+</td></tr>
+
+
+
+
+<tr>
+<th>Architecture:
+</th>
+<td><a href="https://gunkies.org/wiki/VAX" title="VAX">VAX</a>
+</td></tr>
+
+<tr>
+<th>Previous Version:
+</th>
+<td><a href="https://gunkies.org/wiki/Unix_Seventh_Edition" title="Unix Seventh Edition">V7</a>
+</td></tr>
+
+<tr>
+<th>This Version:
+</th>
+<td>V8
+</td></tr>
+
+<tr>
+<th>Next Version:
+</th>
+<td><a href="https://gunkies.org/wiki/Unix_Ninth_Edition" title="Unix Ninth Edition">V9</a>
+</td></tr>
+
+
+
+
+<tr>
+<th>Date Released:
+</th>
+<td>1985
+</td></tr>
+
+
+
+
+<tr>
+<td colspan="2" style="font-size: smaller;">
+</td></tr></tbody></table>
+<p><br>
+A version of <b>8th Edition Unix</b> was recently released by Alcatel-Lucent and is available <a rel="nofollow" class="external text" href="http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/">here</a> for download. It is not a complete distribution tape, just a tar file of a running system, made by Dan Cross.
+</p><p>Actually, "released" is too strong a word. They just signed a letter saying that they won't sue for the release of V8-V10 <a href="https://gunkies.org/wiki/UNIX" title="UNIX">UNIX</a>. The letter can be read <a rel="nofollow" class="external text" href="http://www.tuhs.org/Archive/Distributions/Research/Dan_Cross_v8/statement_regarding_Unix_3-7-17.pdf">here</a> (PDF).
+</p>
+<h2><span class="mw-headline" id="Notable_features">Notable features</span></h2>
+<p>Unix v8 includes the stream interface (in /usr/include/sys/stream.h), as opposed to the socket interface, for doing network programming, included are <a href="https://gunkies.org/wiki/PDP-11" title="PDP-11">PDP-11</a> cross-compilers and associated tools (assembler, linker, etc) as /usr/bin/{11cc,11as,...}, there is also a <a href="https://gunkies.org/wiki/Graphical_user_interface" title="Graphical user interface">GUI</a>, included with the TUHS files as a separate tape.
+</p><p>The GUI can be loaded with the <a href="https://gunkies.org/w/index.php?title=Blit&amp;action=edit&amp;redlink=1" class="new" title="Blit (page does not exist)">blit</a> <a href="https://gunkies.org/wiki/Emulator" title="Emulator">emulator</a> in 9front or compiled on <a href="https://gunkies.org/wiki/Linux" title="Linux">Linux</a> with plan9port. It's better to use an older version of <a href="https://gunkies.org/w/index.php?title=SimH&amp;action=edit&amp;redlink=1" class="new" title="SimH (page does not exist)">SimH</a> because accurate <a href="https://gunkies.org/wiki/Telnet" title="Telnet">telnet</a> timings make loading the blit gui take 17 minutes, along with a similar wait for most other applications.
+</p><p>Unix V8 has support for <a href="https://gunkies.org/wiki/Massachusetts_Institute_of_Technology" title="Massachusetts Institute of Technology">MIT</a>'s local-area networking <a href="https://gunkies.org/wiki/Chaosnet" title="Chaosnet">Chaos</a> <a href="https://gunkies.org/wiki/Protocol" title="Protocol">protocol</a> (presumably to communicate with <a href="https://gunkies.org/wiki/LISP_machine" title="LISP machine">LISP machines</a>).
+</p>
+<h2><span class="mw-headline" id="Getting_it_to_run_on_SimH">Getting it to run on SimH</span></h2>
+<p><a rel="nofollow" class="external text" href="http://9legacy.org/9legacy/doc/simh/v8">Here</a> are some instructions. Some things must be done slightly different or in a different order though. For example you either need an old(er) version of SimH to run it, like 3.8, or use "set noasync" in your configs, otherwise you <i>will</i> get I/O errors.
+</p><p>Or you can use <a rel="nofollow" class="external autonumber" href="https://github.com/timnewsham/myv8.git">[1]</a> which does the process automatically.
+</p><p>Boot messages of a v8 system running in SimH:
+</p>
+<pre>Boot
+: hp(0,0)unix
+159316+54592+381508 start 0xf48
+Unix 8th Edition Mon Mar 29 08:20:14 EST 1976
+real mem = 8322048 nbuf = 254 nswbuf = 126
+avail mem = 6316032
+mcr0 at tr1
+mcr1 at tr2
+uba0 at tr3
+dz0 at uba0 csr 160100 vec 0300 ipl x15
+mba0 at tr8
+hp0 at mba0 drive 0
+hp1 at mba0 drive 1
+mba1 at tr9
+ht0 at mba1 drive 0
+Mon Mar 29 08:20:56 EST 1976
+Autoboot:
+/dev/rp0a: 531 files 2316 blocks 5307 free
+/dev/rrp0g: 8753 files 50554 blocks 91024 free
+Mon Mar 29 08:20:59 EST 1976
+not a VAX-11/750
+Mounted /dev/rp0g on /usr
+/tmp/dump: No such file or directory
+fstyp = 2 mounted on /proc
+
+v8generi
+login: root
+
+Welcome to Eighth Edition Unix. You may be sure that it is suitably protected by ironclad licences, contractual agreements, living wills, and trade secret laws of every sort. A trolley car is certain to grow in your stomach if you violate the conditions under which you got this tape. Consult your lawyer in case of any doubt. If doubt persists, consult our lawyers.
+
+Please commit this message to memory. If this is a hardcopy terminal, tear off the paper and affix it to your machine.  Otherwise take a photo of your screen. Then delete /etc/motd.
+
+Thank you for choosing Eighth Edition Unix. Have a nice day.
+#
+</pre>
+<h2><span class="mw-headline" id="Games">Games</span></h2>
+<p>The following games are included in the v8 distribution mentioned above:
+</p>
+<pre>arithmetic
+atc
+back
+banner
+bcd
+bigp
+canfield
+cbrogue
+festoon
+fish
+fortune
+hack
+hangman
+hanoi
+mille
+ogre
+ppt
+quiz
+rogomatic
+rogue
+rogue52
+rogue53
+sail
+say
+scapegoat
+snake
+sread
+thanks
+tictactoe
+tso
+worm
+zork
+</pre>
+<p><br>
+</p>
+<table class="navbox" style="margin: auto;">
+
+<tbody><tr>
+<th><a href="https://gunkies.org/wiki/Template:Nav_Unix" title="Template:Nav Unix"><span title="View this template">v</span></a>&nbsp;<span style="font-size:80%;">•</span>&nbsp;<a href="https://gunkies.org/wiki/Template_talk:Nav_Unix" title="Template talk:Nav Unix"><span title="Discussion about this template">d</span></a>&nbsp;<span style="font-size:80%;">•</span>&nbsp;<a rel="nofollow" class="external text" href="https://gunkies.org/w/index.php?title=Template:Nav_Unix&amp;action=edit"><span style="color: #002bb8;" title="You can edit this template. Please use the preview button before saving.">e</span></a> <a href="https://gunkies.org/wiki/UNIX" title="UNIX">UNIX</a> Versions, Vendors and Related
+</th></tr>
+<tr>
+<td><b>Research Unix</b> <a href="https://gunkies.org/wiki/PDP-7_UNIX" title="PDP-7 UNIX">PDP-7 UNIX</a> • <a href="https://gunkies.org/wiki/UNIX_First_Edition" title="UNIX First Edition">V1</a> • <a href="https://gunkies.org/wiki/UNIX_Second_Edition" title="UNIX Second Edition">V2</a> • <a href="https://gunkies.org/wiki/UNIX_Third_Edition" title="UNIX Third Edition">V3</a> • <a href="https://gunkies.org/wiki/UNIX_Fourth_Edition" title="UNIX Fourth Edition">V4</a> • <a href="https://gunkies.org/wiki/UNIX_Fifth_Edition" title="UNIX Fifth Edition">V5</a> • <a href="https://gunkies.org/wiki/UNIX_Sixth_Edition" title="UNIX Sixth Edition">V6</a> • <a href="https://gunkies.org/wiki/Unix_Seventh_Edition" title="Unix Seventh Edition">V7</a> • <a class="mw-selflink selflink">V8</a> • <a href="https://gunkies.org/wiki/Unix_Ninth_Edition" title="Unix Ninth Edition">V9</a> • <a href="https://gunkies.org/wiki/Unix_Tenth_Edition" title="Unix Tenth Edition">V10</a> • <a href="https://gunkies.org/wiki/LSX" title="LSX">LSX</a> • <a href="https://gunkies.org/wiki/MINI-UNIX" title="MINI-UNIX">MINI-UNIX</a> • <a href="https://gunkies.org/wiki/Unix/32V" title="Unix/32V">Unix/32V</a>
+<p><b>AT&amp;T and others</b> - <a href="https://gunkies.org/wiki/CB-UNIX" title="CB-UNIX">CB-UNIX</a> • <a href="https://gunkies.org/wiki/PWB/UNIX" title="PWB/UNIX">PWB/UNIX</a> • <a href="https://gunkies.org/wiki/USG_UNIX" title="USG UNIX">USG UNIX</a> • <a href="https://gunkies.org/wiki/UNIX_System_III" title="UNIX System III">System III</a> • <a href="https://gunkies.org/wiki/UNIX_System_IV" title="UNIX System IV">System IV</a> • <a href="https://gunkies.org/wiki/UNIX_System_V" title="UNIX System V">System V</a> • <a href="https://gunkies.org/wiki/UNIX_V7M-11" title="UNIX V7M-11">V7M</a> • <a href="https://gunkies.org/wiki/ULTRIX" title="ULTRIX">ULTRIX</a>
+</p><p><b>BSD</b> - <a href="https://gunkies.org/wiki/1BSD" title="1BSD">1BSD</a> • <a href="https://gunkies.org/wiki/2.9BSD" title="2.9BSD">2.9BSD</a> • <a href="https://gunkies.org/wiki/2.10BSD" title="2.10BSD">2.10BSD</a> • <a href="https://gunkies.org/wiki/2.11BSD" title="2.11BSD">2.11BSD</a> • <a href="https://gunkies.org/wiki/3BSD" title="3BSD">3BSD</a> • <a href="https://gunkies.org/wiki/4BSD" title="4BSD">4BSD</a> • <a href="https://gunkies.org/wiki/4.1BSD" class="mw-redirect" title="4.1BSD">4.1BSD</a> • <a href="https://gunkies.org/wiki/4.2BSD" class="mw-redirect" title="4.2BSD">4.2BSD</a> • <a href="https://gunkies.org/wiki/4.3BSD" class="mw-redirect" title="4.3BSD">4.3BSD</a> • <a href="https://gunkies.org/wiki/4.4BSD" title="4.4BSD">4.4BSD</a>
+</p><p><b>BSD Descendants</b> <a href="https://gunkies.org/wiki/386BSD" title="386BSD">386BSD</a> • <a href="https://gunkies.org/wiki/NetBSD" title="NetBSD">NetBSD</a> • <a href="https://gunkies.org/wiki/FreeBSD" title="FreeBSD">FreeBSD</a> • <a href="https://gunkies.org/wiki/OpenBSD" title="OpenBSD">OpenBSD</a> • <a href="https://gunkies.org/wiki/NeXTSTEP" title="NeXTSTEP">NeXTSTEP</a> • <a href="https://gunkies.org/wiki/Darwin" title="Darwin">Darwin</a>
+</p>
+</td></tr></tbody></table>
+<table class="navbox mw-collapsible mw-collapsed" style="margin: auto;">
+
+<tbody><tr>
+<th>
+</th></tr>
+<tr>
+<td><b>Other</b> - <a href="https://gunkies.org/wiki/Xv6" title="Xv6">xv6</a> • <a href="https://gunkies.org/wiki/AMIX" title="AMIX">AMIX</a> • <a href="https://gunkies.org/wiki/SunOS" title="SunOS">SunOS</a> • <a href="https://gunkies.org/wiki/Solaris" title="Solaris">Solaris</a> • <a href="https://gunkies.org/wiki/A/UX" title="A/UX">A/UX</a> •  <a href="https://gunkies.org/wiki/XENIX" title="XENIX">XENIX</a> • <a href="https://gunkies.org/wiki/AIX" title="AIX">AIX</a> • <a href="https://gunkies.org/wiki/Dell_UNIX" title="Dell UNIX">Dell UNIX</a>
+<p><b>Clones</b> - <a href="https://gunkies.org/wiki/DEMOS" title="DEMOS">DEMOS</a> • <a href="https://gunkies.org/wiki/Coherent" title="Coherent">Coherent</a>
+</p>
+</td></tr></tbody></table>
+<!-- 
+NewPP limit report
+Cached time: 20261120035424
+Cache expiry: 2592000
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.024 seconds
+Real time usage: 0.029 seconds
+Preprocessor visited node count: 180/1000000
+Post‐expand include size: 5641/2097152 bytes
+Template argument size: 1410/2097152 bytes
+Highest expansion depth: 9/100
+Expensive parser function count: 1/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 1453/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    7.489      1 -total
+ 69.40%    5.197      1 Template:Nav_Unix
+ 52.12%    3.903      1 Template:PartiallyCollapsibleNavBox
+ 35.54%    2.662      1 Template:Tnavbar
+ 27.63%    2.069      1 Template:Infobox_OS
+-->
+
+<!-- Saved in parser cache with key mediawiki-wiki_:pcache:idhash:3256-0!canonical and timestamp 20261120035424 and revision id 36104. Rendering was triggered because: page-view
+ -->
+</div></body></html>

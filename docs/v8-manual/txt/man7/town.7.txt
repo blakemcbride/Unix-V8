@@ -1,0 +1,25 @@
+TOWN(7)                Miscellaneous Information Manual                TOWN(7)
+
+NAME
+       town /- gazetteer of US places
+
+SYNOPSIS
+       town [ place ]
+
+DESCRIPTION
+       Town produces information about the place, which is the name of a US
+       town, possibly followed by a comma and a two-letter state abbreviation.
+       If no place is given, place names are read one per line from the
+       standard input.
+
+       The information produced is latitude, longitude, approximate
+       population, a forecast from weather(7), and a recent item from
+       apnews(1).
+
+FILES
+       /usr/spool/town/ustown* gazetteer in cbt(1) format
+
+SEE ALSO
+       apnews(1), weather(1)
+
+                                     alice                             TOWN(7)

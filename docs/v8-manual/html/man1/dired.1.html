@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dired.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; dired.1 (<a href="../../../../source/v8/usr/man/man1/dired.1">troff source</a>)</p>
+<pre>
+DIRED(1)                    General Commands Manual                   DIRED(1)
+
+NAME
+       dired - directory editor
+
+SYNOPSIS
+       dired [ option ... ] [ dir-name | file-list ]
+
+DESCRIPTION
+       Dired displays a directory listing like `ls -l' (see <a href="../man1/ls.1.html">ls(1)</a>) and allows
+       you to prowl around the listed entries, deleting, editing, and
+       displaying them.  Dired must know what kind of terminal you are using;
+       the environment variable TERM should be set (see <a href="../man7/term.7.html">term(7)</a>).
+
+       With no argument, the current directory is listed.  With only one
+       argument, the argument is interpreted as a directory and it is listed.
+       With multiple arguments, the arguments are interpreted as filenames.
+
+       Options are:
+
+       -[sr][nsrw]
+              Sort or reverse sort by Name, Size, Read date, or Write date
+              respectively.
+
+       -wn    If n is f, use the full screen; if h, use half the screen
+              (default); if a number, use n lines for the directory listing ,
+              reserving the rest of the screen for quick file display.
+
+       The fields of a dired listing are: mode, link count, owner, size, write
+       date and name.  A cursor shows the current entry.
+
+       Commands consist of single characters; arguments are prompted for, and
+       echoed, in the bottom line of the screen.  The commands are:
+
+       &lt;cr&gt;
+       &lt;lf&gt;
+       ^N     Step to the next file.
+
+       ^
+       -
+       &lt;backspace&gt;
+       ^P     Step to previous file.
+
+       !      Prompt for a shell command.  The command is executed, and
+              confirmation is required before returning to the display.  All
+              `%' characters in the command are replaced with the pathname of
+              the current entry, and all `#' characters are replaced with the
+              trailing filename component (what you see on the screen).
+
+       .      Repeats the previous !  shell command, substituting the current
+              entry for any special characters (%#) in the original command.
+
+       a      Abort this directory level of dired without deleting any files.
+
+       b      Step one page backward in the directory listing.
+
+       c      Refresh the current line.
+
+       d      Mark the current entry for deletion.  Deletion of a directory is
+              recursive.
+
+       e      If the current entry is a file, edit it with the editor `e', or
+              another editor named by the environment variable EDITOR.  If the
+              current entry is a directory, descend (by forking) to list that
+              directory.
+
+       f      Step one page forward in the directory listing.
+
+       h
+       ?      Display a help file.
+
+       l
+       ^L     Refresh the display.
+
+       m      Display the current file with the pager <a href="../man1/p.1.html">p(1)</a>, or another pager
+              named by the environment variable PAGER.  (Supply your own
+              etymology for `m'.)
+
+       p      Print the current file on the line printer.
+
+       q      Quit this directory level of dired.  List the files marked for
+              deletion and request confirmation before deleting them.
+
+       r
+       s      Sort the file list by various fields: name, read date, size,
+              write date, denoted `n', `r', `s', and `w'.  Default sort is by
+              name.  Ordering for s is increasing if by name, decreasing if by
+              size or date.  Ordering for r is opposite.  A sort can be
+              stopped with ^G.
+
+       t      Type.  Display the current file.  In two-window mode pause after
+              each screenfull until you type a carriage return.  The display
+              may be interrupted by ^C or `q'.
+
+       T      Same as t but without any pauses.
+
+       u      Unmark the current entry if it was marked for deletion.
+
+FILES
+       /usr/lib/dired  help file for `?' and `h'
+       <a href="../man1/lpr.1.html">lpr(1)</a>          line printer
+
+SEE ALSO
+       <a href="../man1/ls.1.html">ls(1)</a>
+
+DIAGNOSTICS
+       While dired is preparing a listing it reports, `Reading,' and types a
+       dot for each 10 files.
+
+BUGS
+       Long lines and diagnostics can foul up the display.
+       Needs a command to search for a given file.
+
+                                                                      DIRED(1)
+</pre>
+</body></html>

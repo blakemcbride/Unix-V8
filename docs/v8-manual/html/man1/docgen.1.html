@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>docgen.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; docgen.1 (<a href="../../../../source/v8/usr/man/man1/docgen.1">troff source</a>)</p>
+<pre>
+DOCGEN(1)                   General Commands Manual                  DOCGEN(1)
+
+NAME
+       docgen - generate a document from a script
+
+SYNOPSIS
+       docgen [ option ] ...  [ ofile ]
+
+DESCRIPTION
+       Docgen guides interactive preparation of standard documents according
+       to canned scripts and places the output in ofile.  The output typically
+       takes the form of <a href="../man1/troff.1.html">troff(1)</a> input.  These options invoke standard
+       scripts:
+
+       -mcs   Bell Labs cover sheet; output (`temp.cover' by default) may be
+              typeset thus: troff temp.cover
+
+       -ms    (default) all kinds of document known to the macro package
+              <a href="../man7/ms.7.html">ms(7)</a>; output (`temp' by default) may be typeset thus: troff -ms
+              temp
+
+       -mm    similarly for the MM macro package of System V
+
+       Other options are:
+
+       -f file
+              take script from file
+
+       -v     (verbose) print document as it is generated
+
+       -d     (debug) print information about the script as it is read
+
+       The reference tells how to construct scripts.
+
+FILES
+       /usr/lib/docgen/*  scripts
+       temp.cover
+       temp
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man7/ms.7.html">ms(7)</a>, <a href="../man7/mcs.7.html">mcs(7)</a>
+       L. L. Cherry, Docgen, AT&amp;T Bell Laboratories, 1980
+
+BUGS
+       Not all document types are implemented.
+
+                                                                     DOCGEN(1)
+</pre>
+</body></html>

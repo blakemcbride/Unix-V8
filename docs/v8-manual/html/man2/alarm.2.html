@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>alarm.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; alarm.2 (<a href="../../../../source/v8/usr/man/man2/alarm.2">troff source</a>)</p>
+<pre>
+ALARM(2)                      System Calls Manual                     ALARM(2)
+
+NAME
+       alarm - schedule signal after specified time
+
+SYNOPSIS
+       alarm(seconds)
+       unsigned seconds;
+
+DESCRIPTION
+       Alarm causes signal SIGALRM, see <a href="../man2/signal.2.html">signal(2)</a>, to be sent to the invoking
+       process in a number of seconds given by the argument.  Unless caught or
+       ignored, the signal terminates the process.
+
+       Alarm requests are not stacked; successive calls reset the alarm clock.
+       If the argument is 0, any alarm request is canceled.  Because the clock
+       has a 1-second resolution, the signal may occur up to one second early;
+       because of scheduling delays, resumption of execution of when the
+       signal is caught may be delayed an arbitrary amount.  The longest
+       specifiable delay time is 2147483647 seconds.
+
+       The return value is the amount of time previously remaining in the
+       alarm clock.
+
+SEE ALSO
+       <a href="../man2/pause.2.html">pause(2)</a>, <a href="../man2/signal.2.html">signal(2)</a>, <a href="../man3/sleep.3.html">sleep(3)</a>
+
+                                                                      ALARM(2)
+</pre>
+</body></html>

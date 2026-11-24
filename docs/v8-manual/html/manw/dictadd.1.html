@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dictadd.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section w</a> &gt; dictadd.1 (<a href="../../../../source/v8/usr/man/manw/dictadd.1">troff source</a>)</p>
+<pre>
+DICTADD(1)                  General Commands Manual                 DICTADD(1)
+
+NAME
+       dictadd - add phrases to user's diction or sexist dictionary
+
+SYNOPSIS
+       dictadd [ -flags ][ -ver ]
+
+DESCRIPTION
+       Dictadd adds words and/or phrases to the user's dictionaries for use by
+       the <a href="../man1/wwb.1.html">wwb(1)</a>, <a href="../manw/proofr.1.html">proofr(1)</a>, <a href="../manw/dictplus.1.html">dictplus(1)</a>,  diction (1), and <a href="../manw/sexist.1.html">sexist(1)</a>
+       programs.  Sexist searches a text for sexist phrases, while the other
+       programs search a text for wordy or misused diction.  These programs
+       allow the user to have dictionary files containing additional words
+       and/or phrases for the programs to locate or ignore.  Dictadd
+       automatically sets up these dictionary files.
+
+       Dictadd asks users whether they want to add words to $HOME/lib/ddict,
+       $HOME/lib/sexdict, or some other file.  The results depend on the
+       user's response, as shown below.
+
+            User's request    Dictadd's action
+
+         $HOME/lib/ddict      adds words and/or phrases to the user's
+                              dictionary, $HOME/lib/ddict.  This file is
+                              checked automatically by wwb and proofr and can
+                              be specified for use by dictplus and diction.
+                              (See diction(1).)
+
+         $HOME/lib/sexdict    adds words and/or phrases to the user's
+                              dictionary, $HOME/lib/sexdict.  This file is
+                              checked automatically by sexist.
+
+         filename             adds words to filename, to be used with diction,
+                              dictplus, or sexist.
+
+       In all cases, dictadd questions whether the user wants instructions,
+       and prompts with "&gt;" for more words or phrases.  If the dictionary is
+       not in existence when dictadd is invoked, it is created.  If the
+       dictionary already exists, dictadd adds to it.  To quit, type "q" after
+       the prompt.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+EXAMPLE
+       1. The sequence:
+
+            dictadd (carriage return)
+            (program asks if the user wants the words to be added to
+            $HOME/lib/ddict)
+            y (user responds yes)
+            (program asks if the user wants instructions)
+            [~]phrase 1 (carriage return)
+            [~]phrase 2 (carriage return)
+            [~]phrase n (carriage return)
+
+       will add phrases to $HOME/lib/ddict.  Phrases to be ignored must be
+       preceded by a tilde(~), phrases to be located require no special
+       symbol.  When finished, type "q" on a line by itself.
+
+SEE ALSO
+       diction(1), <a href="../manw/dictplus.1.html">dictplus(1)</a>, <a href="../manw/proofr.1.html">proofr(1)</a>, <a href="../manw/sexist.1.html">sexist(1)</a>, suggest(1), <a href="../man1/wwb.1.html">wwb(1)</a>.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                    DICTADD(1)
+</pre>
+</body></html>

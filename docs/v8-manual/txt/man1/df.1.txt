@@ -1,0 +1,32 @@
+DF(1)                       General Commands Manual                      DF(1)
+
+NAME
+       df - disk free
+
+SYNOPSIS
+       df [ -i ] [ -l ] [ filesystem ... ] [ directory ... ]
+
+DESCRIPTION
+       Df prints out the amount of free space on filesystem, e.g.
+       ``/dev/rp0a'', or on the filesystem in which the specified directory,
+       e.g. ``$HOME'', is contained.  If no file system is specified, the free
+       space on all of the normally mounted file systems is printed.
+
+       The reported numbers are in kilobytes, independent of the blocksize
+       actually used on the filesystem.
+
+       Other options are:
+
+       -i     Report also the number of inodes which are used and free.
+
+       -l     examines also the free list, double checking that the summary
+              number in the filesystem superblock is correct.
+
+FILES
+       /etc/fstab     list of normally mounted filesystems
+       /etc/mtab list of currently mounted filesystems
+
+SEE ALSO
+       fstab(5), mtab(5), icheck(8), quot(8)
+
+                                                                         DF(1)

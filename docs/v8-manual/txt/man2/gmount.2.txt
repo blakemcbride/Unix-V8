@@ -1,0 +1,45 @@
+GMOUNT(2)                     System Calls Manual                    GMOUNT(2)
+
+NAME
+       gmount - mount or remove non-standard file system
+
+SYNOPSIS
+       gmount(fstype, dev, flag [, more])
+       int fstype, flag;
+       dev_t dev;
+
+DESCRIPTION
+       Gmount mounts or unmounts a non-standard file system of type fstype.
+       Dev is a device number identifying the object mounted; the minor part
+       should be zero.  Device numbers are not shared by different filesystem
+       types.  The filesystem is mounted if flag is zero, dismounted if it is
+       1.
+
+       Different types of filesystems may require additional arguments when
+       mounting.  Only fstype, dev, and flag need be given to unmount.
+
+       The possible calls are:
+
+              gmount(1, dev, 0, fildes, name);
+
+       Mount a network filesystem on directory name; fildes is the file
+       descriptor of a stream connected to an appropriate server.
+
+              gmount(2, dev, 0);
+
+       Mount the process filesystem.  Dev is (stupidly) really a character
+       pointer, and denotes the directory on which to mount.
+
+              gmount(3, dev, 0, fildes, name);
+
+       Mount a process on file name; fildes is the file descriptor of a
+       stream.
+
+DIAGNOSTICS
+       Gmount returns 0 if the action occurred; -1 otherwise.
+
+BUGS
+       Filesystem type 0 (the standard one) should work; it doesn't.
+       The process filesystem should work like everything else.
+
+                                                                     GMOUNT(2)

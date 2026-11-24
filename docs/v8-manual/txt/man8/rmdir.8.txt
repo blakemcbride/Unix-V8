@@ -1,0 +1,14 @@
+RMDIR(8)                    System Manager's Manual                   RMDIR(8)
+
+NAME
+       rmdir - unlink directory
+
+SYNOPSIS
+       rmdir name . . .
+
+DESCRIPTION
+       Rmdir removes the named directories, which must be empty.  Doing so
+       requires super-user privilege.  Rmdir is separate from, but called by
+       rm(1).
+
+                                                                      RMDIR(8)

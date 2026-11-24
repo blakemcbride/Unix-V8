@@ -8,3 +8,6 @@
 
 # rebuild-from-tape work area (rebuild.sh)
 /build/
+
+# typesetting log (tools/typeset-manual.sh)
+/docs/typeset/groff-warnings.log

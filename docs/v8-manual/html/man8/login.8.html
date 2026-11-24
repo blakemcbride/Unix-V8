@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>login.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; login.8 (<a href="../../../../source/v8/usr/man/man8/login.8">troff source</a>)</p>
+<pre>
+LOGIN(8)                    System Manager's Manual                   LOGIN(8)
+
+NAME
+       login - sign on
+
+SYNOPSIS
+       /etc/login name
+       /etc/login -f name
+       /etc/login -p passwd-line
+
+DESCRIPTION
+       Login is executed by <a href="../man8/getty.8.html">getty(8)</a>.  See `How to Get Started' for how to
+       dial up initially.
+
+       Login asks for a password if appropriate.  Echoing is turned off during
+       the typing of the password.  The -f option forces login of the named
+       user, without a password.  -p is similar to -f but uses the supplied
+       line of the password file instead of the appropriate one in
+       /etc/passwd.  Both of these options will demand a typed password if the
+       named user is the super-user.
+
+       After a successful login, accounting files are updated, the message of
+       the day is printed, and the user is informed of the existence of mail.
+       Login initializes the user and group IDs and the working directory,
+       then executes a command interpreter (usually <a href="../man1/sh.1.html">sh(1)</a>) according to
+       specifications found in /etc/passwd.  Argument 0 of the command
+       interpreter is the name of the command interpreter with a leading dash
+       (`-') prepended.
+
+       Login also initializes the environment with information specifying home
+       directory, search path, and an indication of the source of the login if
+       appropriate.
+
+       Only the super-user may execute login.
+
+FILES
+       /etc/utmp          accounting
+       /usr/adm/wtmp      accounting
+       /usr/spool/mail/*  mail
+       /etc/motd          message-of-the-day
+       /etc/passwd        password file
+
+SEE ALSO
+       <a href="../man8/init.8.html">init(8)</a>, <a href="../man1/newgrp.1.html">newgrp(1)</a>, <a href="../man8/getty.8.html">getty(8)</a>, <a href="../man8/su.8.html">su(8)</a>, <a href="../man1/passwd.1.html">passwd(1)</a>
+
+DIAGNOSTICS
+       `Login incorrect,' if the name or the password is bad.
+       `No Shell', `cannot open password file', `no directory': seek
+       knowledgeable assistance.
+
+                                                                      LOGIN(8)
+</pre>
+</body></html>

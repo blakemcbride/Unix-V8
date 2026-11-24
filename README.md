@@ -55,7 +55,8 @@ graphical terminal, see Tim Newsham's Blit emulator,
 | `install/` | Tim Newsham's [myv8](https://github.com/timnewsham/myv8) install scripts and tape images (4.1BSD, V8, V8 jerq), with a reference transcript |
 | `dist/tuhs/` | The original V8 archives from TUHS (`v8.tar.bz2`, `v8jerq.tar.bz2`) and the Nokia statement |
 | `source/v8/`, `source/v8jerq/` | The two archives unpacked, for browsing (a few names differ only in case; on macOS or Windows use the tarballs) |
-| `docs/` | Documentation archive; see `docs/README.md` |
+| `docs/` | Documentation archive (manuals, papers, Blit/5620 terminal docs, install notes); see `docs/README.md` |
+| `docs/v8-manual/` | All 515 V8 manual pages as plain text and browsable HTML |
 | `docs/typeset/` | The V8 Programmer's Manual (Volume 1) and the `/usr/doc` papers, typeset from the troff sources in `source/` by `tools/typeset-manual.sh` |
 | `tools/` | `typeset-manual.sh` (regenerate `docs/typeset/`), `smoke-test.sh` (boot a scratch copy, log in, compile and run a C program, halt; needs `expect`) |
 | `licenses/` | License texts and statements |

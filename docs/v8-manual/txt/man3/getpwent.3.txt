@@ -1,0 +1,72 @@
+GETPWENT(3)                Library Functions Manual                GETPWENT(3)
+
+NAME
+       getpw, getpwent, getpwuid, getpwnam, setpwent, endpwent, pwdecode - get
+       password file entry
+
+SYNOPSIS
+       getpw(uid, buf)
+       char *buf;
+
+       #include <pwd.h>
+
+       struct passwd *getpwent()
+
+       struct passwd *getpwuid(uid) int uid;
+
+       struct passwd *getpwnam(name) char *name;
+
+       int setpwent()
+
+       int endpwent()
+
+       struct passwd *pwdecode(p) char *p;
+
+DESCRIPTION
+       Getpw searches the password file for the (numerical) uid and fills in
+       buf with a corresponding line.  The line is null-terminated.
+
+       Getpwent, getpwuid and getpwnam each return a pointer to an object with
+       the following structure containing the broken-out fields of a line in
+       the password file.
+
+              struct    passwd { /* see getpwent(3) */
+                   char *pw_name;
+                   char *pw_passwd;
+                   int  pw_uid;
+                   int  pw_gid;
+                   int  pw_quota;
+                   char *pw_comment;
+                   char *pw_gecos;
+                   char *pw_dir;
+                   char *pw_shell;
+              };
+
+       The fields pw_quota and pw_comment are unused; the others have meanings
+       described in passwd(5).
+
+       Getpwent  reads the next line (opening the file if necessary); setpwent
+       rewinds the file; endpwent closes it.
+
+       Getpwuid and getpwnam search from the beginning until a matching uid or
+       name is found (or until EOF is encountered).
+
+       Pwdecode breaks out a null-terminated character string p  containing  a
+       password  file entry.  The input string is modified by the call and the
+       output structure contains pointers into it.
+
+FILES
+       /etc/passwd
+
+SEE ALSO
+       getlogin(3), getgrent(3), passwd(5)
+
+DIAGNOSTICS
+       Getpw returns nonzero for error; other routines return  0  for  end  of
+       file or error.
+
+BUGS
+       All  information  is contained in a static area so it must be copied if
+       it is to be saved.
+
+                                                                   GETPWENT(3)

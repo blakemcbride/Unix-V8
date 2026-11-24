@@ -1,0 +1,32 @@
+BASENAME(1)                 General Commands Manual                BASENAME(1)
+
+NAME
+       basename, dirname - strip filename affixes
+
+SYNOPSIS
+       basename string [ suffix ]
+
+       dirname string
+
+DESCRIPTION
+       These functions split off useful parts of a pathname; they are
+       typically used inside substitution marks ` ` in shell scripts.
+
+       Basename deletes any prefix ending in `/' and the suffix, if present in
+       string, from string, and prints the result on the standard output.
+
+       Dirname deletes the last `/' and all following characters from the
+       string and prints the result on the standard output.  If there is no
+       `/', dirname prints `.'.
+
+EXAMPLES
+       cc $1 -o `basename $1`
+              compile `dir/file.c' into `file'
+
+       cc $1 -o `dirname $1`/`basename $1`
+              compile into `dir/file'
+
+SEE ALSO
+       sh(1)
+
+                                                                   BASENAME(1)

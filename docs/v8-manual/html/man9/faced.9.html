@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>faced.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; faced.9 (<a href="../../../../source/v8/usr/man/man9/faced.9">troff source</a>)</p>
+<pre>
+FACED(9.5)                                                          FACED(9.5)
+
+NAME
+       faced - network face server
+
+SYNOPSIS
+       /usr/net/face.go
+
+DESCRIPTION
+       The network face server provides a database of 48×48 bit icons and
+       other facial representations.  It is implemented as a network file
+       system similar to <a href="../man8/netfs.8.html">netfs(8)</a>.
+
+       The file system, conventionally mounted on /n/face, has a fixed three-
+       level hierarchy.  The first level is a machine name, the second level a
+       user name, and the third level a resolution.  Thus the file
+       /n/face/kwee/pjw/48x48x1 is the standard face icon (for user pjw) on
+       machine kwee: ..........................................
+       Many local users also have 512×512 byte high-resolution faces, named
+       512x512x8.  Other resolutions may also be present for a particular
+       face.  One-bit images are stored in the format used by <a href="../man9/icon.9.html">icon(9.1)</a>;
+       eight-bit images are arrays of bytes.  The directories for machines
+       sharing a user community, such as those on a Datakit node, are linked
+       together and given a name appropriate to the community.  For example,
+       /n/face/kwee is a link to /n/face/astro.
+
+       To access the face for a mail name machine!uid take the result of the
+       first successful open from the following list of files:
+
+              /n/face/machine/uid/48x48x1
+              /n/face/misc./uid/48x48x1
+              /n/face/machine/unknown/48x48x1
+              /n/face/misc./unknown/48x48x1
+
+       The directory misc.  holds faces for generic users such as root and
+       uucp.  The face server is made available on a machine by running
+       /usr/net/face.go from <a href="../man8/rc.8.html">rc(8)</a>.
+
+       The face server data is kept on kwee, and is administered by a pair of
+       ASCII files that associate related machines and faces.  The machine
+       table machine.tab attaches machines to communities; the line
+
+              kwee=astro
+
+       puts the machine kwee in community astro.  The people table associates
+       a machine/user pair in the face server with a file on kwee;
+
+              astro/pjw=pjweinberger
+
+       causes the images stored in disk files named pjweinberger to be
+       available in the face server in directory /n/face/astro/pjw.  As well,
+       each disk file used by the face server is linked (by its original name)
+       into the directory /n/face/48x48x1 or /n/face/512x512x8 for easy access
+       to all the images.
+
+FILES
+       /n/kwee/usr/jerq/icon/face48      directory of low resolution faces
+       /n/kwee/t0/face/512x512x8         directory of high resolution faces
+       /n/kwee/usr/net/face/people.tab   people/file equivalences
+       /n/kwee/usr/net/face/machine.tab  machine/community equivalences
+
+SEE ALSO
+       <a href="../man8/netfs.8.html">netfs(8)</a>, <a href="../man9/face.9.html">face(9.1)</a>, <a href="../man9/icon.9.html">icon(9.1)</a>, <a href="../man9/sysmon.9.html">sysmon(9.1)</a>
+
+BUGS
+       After updating the tables, an indeterminate time may pass before the
+       new faces are available.
+       All face server files are unwritable.
+
+                                                                    FACED(9.5)
+</pre>
+</body></html>

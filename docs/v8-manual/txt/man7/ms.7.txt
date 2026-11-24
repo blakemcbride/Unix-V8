@@ -1,0 +1,154 @@
+MS(7)                  Miscellaneous Information Manual                  MS(7)
+
+NAME
+       ms - macros for formatting manuscripts
+
+SYNOPSIS
+       nroff -ms [ options ] file ...
+       troff -ms [ options ] file ...
+
+DESCRIPTION
+       This package of nroff and troff macro definitions provides a canned
+       formatting facility for technical papers in various formats.  When
+       producing 2-column output on a terminal, filter the output through
+       col(1).
+
+       The macro requests are defined below.  Many nroff and troff requests
+       are unsafe in conjunction with this package, but these requests may be
+       used with impunity after the first .PP:
+
+              .bp   begin new page
+              .br   break output line here
+              .sp n insert n spacing lines
+              .ls n (line spacing) n=1 single, n=2 double space
+              .na   no alignment of right margin
+
+       Output of the eqn, neqn, tbl, and refer(1) preprocessors for equations,
+       tables and references is acceptable as input.
+
+       Diacritical marks may be applied to letters, as in these examples:
+
+              \*`e \*`a \*´e \*^e \*^o \*:u \*~n \*,c \*vc
+              e    a    e    e    o    u    n    c    c
+
+FILES
+       /usr/lib/tmac/tmac.s
+
+SEE ALSO
+       eqn(1), troff(1), refer(1), tbl(1)
+
+REQUESTS
+                        Request   Initial Cause Explanation
+                                  Value   Break
+                        .1C       yes     yes   One column format on a new
+                        page.  .2C       no      yes   Two column format.
+                        .AB       no      yes   Begin abstract.
+                        .AE       -       yes   End abstract.
+                        .AI       no      yes   Author's institution follows.
+                        Suppressed in TM.  .AT       no      yes   Print
+                        `Attached' and turn off line filling.  .AU x
+                        y   no      yes   Author's name follows.  x is
+                        location and y is extension, ignored except in TM.  .B
+                        x y     no      no    Print x in boldface and append
+                        y; if no argument switch to boldface.
+.B1       no      yes   Begin text to be enclosed in a box.
+                        .B2       no      yes   End boxed text.
+                        .BT       date    no    Bottom title, automatically
+                        invoked at foot of page.  May be redefined.  .BX
+                        x     no      no    Print x in a box.  .CS
+                        x...  -       yes   Cover sheet info if TM format,
+                        suppressed otherwise.  Arguments are number of text
+                        pages, other pages, total pages, figures, tables,
+                        references.  .CT       no      yes   Print `Copies to'
+                        and turn off line filling.  .DA
+                        x     nroff   no    `Date line' at bottom of page is
+                        x.  Default is today.  .DE       -       yes   End
+                        displayed text.  Implies .KE.  .DS
+                        x     no      yes   Start of displayed text, to appear
+                        verbatim line-by-line.  x=I for indented display
+                        (default), x=L for left-justified on the page, x=C for
+                        centered, x=B (block) for centered with straight left
+                        margin.  Implies .KS.  .EG       no      -     Print
+                        document in BTL format for `Engineer's Notes.'  Must
+                        be first.  .EN       -       yes   Space after
+                        equation produced by eqn or neqn.  .EQ x
+                        y   -       yes   Display equation.  Equation number
+                        is y.  Optional argument x=I, L, C as in .DS.
+                        .FE       -       yes   End footnote.
+                        .FP       -       no    Set font positions for a
+                        family, e.g., ".FP palatino"
+                        .FS       no      no    Start footnote.  The note will
+                        be moved to the bottom of the page.
+                        .HO       -       no    `Bell Laboratories, Holmdel,
+                        New Jersey 07733'.  .I x y    no      no    Italicize
+                        x and append y; if no argument switch to Italic.
+                        .IH       no      no    `Bell Laboratories,
+                        Naperville, Illinois 60540'
+                        .IM       no      no    Print document in BTL format
+                        for an internal memorandum.  Must be first.  .IP x
+                        y   no      yes   Start indented paragraph, with
+                        hanging tag x.  Indentation is y ens (default 5).
+                        .KE       -       yes   End keep.  Put kept text on
+                        next page if not enough room.
+                        .KF       no      yes   Start floating keep.  If the
+                        kept text must be moved to the next page, float later
+                        text back to this page.  .KS       no      yes   Start
+                        keeping following text.  .LG       no      no    Make
+                        letters larger.  .LP       yes     yes   Start left-
+                        blocked paragraph.  .LT       no      yes   Start a
+                        letter with today's date; address follows.
+                        .MF       -       -     Print document in BTL format
+                        for `Memorandum for File.'  Must be first.
+                        .MH       -       no    `Bell Laboratories, Murray
+                        Hill, New Jersey 07974'.
+                        .MR       -       -     Print document in BTL format
+                        for `Memorandum for Record.'  Must be first.  .ND
+                        date  troff   no    Use date supplied (if any) only in
+                        special BTL format positions; omit from page footer.
+                        .NH n       -       yes   Same as .SH, with section
+                        number supplied automatically.  Numbers are
+                        multilevel, like 1.2.3, where n tells what level is
+                        wanted (default is 1).  .NL       yes     no    Make
+                        letters normal size.  .OK       -       yes   `Other
+                        keywords' for TM cover sheet follow.
+                        .PP       no      yes   Begin paragraph.  First line
+                        indented.  .PT       pg #    -     Page title,
+                        automatically invoked at top of page.  May be
+                        redefined.  .PY       -       no    `Bell
+                        Laboratories, Piscataway, New Jersey 08854'
+                        .QE       -       yes   End quoted material.
+                        .QP       -       yes   Begin single quoted paragraph
+                        (indent both margins).  .QS       -       yes   Begin
+                        quoted material (indent both margins).
+                        .R        yes     no    Roman text follows.
+                        .RE       -       yes   End relative indent level.
+                        .RP       no      -     Cover sheet and first page for
+                        released paper.  Must precede other requests.
+                        .RS       -       yes   Start level of relative
+                        indentation from which subsequent indentation is
+                        measured.  .SG x     no      yes   Insert signature(s)
+                        of author(s), ignored except in TM.  x is the
+                        reference line (initials of author and typist).
+                        .SH       -       yes   Section head follows, font
+                        automatically bold.  .SM       no      no    Make
+                        letters smaller.  .TA x...  5...    no    Set tabs in
+                        ens.  Default is 5 10 15 ...
+                        .TE       -       yes   End table.
+                        .TH       -       yes   End heading section of table.
+                        .TL       no      yes   Title follows.  .TM
+                        x...  no      -     Print document in BTL technical
+                        memorandum format.  Arguments are TM number, (quoted
+                        list of) case number(s), and file number.  Must
+                        precede other requests.  .TR x     -       -     Print
+                        in BTL technical report format; report number is x.
+                        Must be first.  .TS x     -       yes   Begin table;
+                        if x is H table heading is repeated on new pages.  .UL
+                        x     -       no    Underline argument (even in
+                        troff).  .UX       -       no    `UNIX'; first time
+                        used, add footnote `UNIX is a trademark of Bell
+                        Laboratories.'  .WH       -       no    `Bell
+                        Laboratories, Whippany, New Jersey 07981'.
+                        .[        -       no    Begin reference; see refer(1)
+                        .]        -       no    End reference
+
+                                                                         MS(7)

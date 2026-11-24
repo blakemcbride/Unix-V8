@@ -1,0 +1,27 @@
+NEWGRP(1)                   General Commands Manual                  NEWGRP(1)
+
+NAME
+       newgrp - log in to a new group
+
+SYNOPSIS
+       newgrp group
+
+DESCRIPTION
+       Newgrp changes the group identification of its caller.  The same person
+       remains logged in, and the current directory is unchanged, but
+       calculations of access permissions to files are performed with respect
+       to the new group ID.
+
+       A password is demanded if the group has a password and the user himself
+       does not.
+
+       Newgrp is known to the shell, which executes it directly without a
+       fork.
+
+FILES
+       /etc/group, /etc/passwd
+
+SEE ALSO
+       login(8), group(5)
+
+                                                                     NEWGRP(1)

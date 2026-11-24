@@ -1,0 +1,84 @@
+SPELLWWB(1)                 General Commands Manual                SPELLWWB(1)
+
+NAME
+       spellwwb - find spelling errors
+       spelladd - add words to user spelling dictionary
+
+SYNOPSIS
+       spellwwb [ -flags ][ -ver ] [ -f pfile ][ -b ][ -v ][ -x ][file ...]
+
+       spelladd [ -flags ][ -ver ] word1 word2 ...
+
+DESCRIPTION
+       Spellwwb is a modified version of spell(1).  Spellwwb allows the user
+       to have his/her own file of additional legitimate spellings, by default
+       $HOME/lib/spelldict.  Before reporting words not found in spell's
+       dictionary, spellwwb compares them with words in the specified file
+       ($HOME/lib/spelldict by default).
+
+       When a text is run through spellwwb for the first time, words such as
+       names, acronyms, and unusual words will be listed as errors.  Words
+       like these that are spelled correctly can then be added to
+       $HOME/lib/spelldict, and future spellwwb lists will contain only real
+       spelling errors.
+
+       The following options are available:
+
+            -f pfile Use pfile instead of $HOME/lib/spelldict as the
+                     additional file of legitimate spellings.
+
+            -b       Check British spelling.
+
+            -v       Print all words not literally in the spelling list, and
+                     show plausible derivations from the words in the spelling
+                     list.
+
+            -x       For each word, print every plausible stem with =.
+
+       Two options, which apply to both spellwwb and spelladd, give
+       information about the programs:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+       Spelladd adds words, specified by the user, to $HOME/lib/spelldict, and
+       maintains it in sorted order.  It can be used in two ways.
+
+            1.  Type:
+
+                 spelladd word1 word2 word3 ...
+
+            2.  NOTE:  Use this method when there are many words from one file
+                to be added to spelldict.
+
+                First, correct all real spelling errors found by spellwwb.
+
+                Then, type the following command to have all the remaining
+                words listed by spell (correct words) added to
+                $HOME/lib/spelldict:
+
+            spell corrected-file >> $HOME/lib/spelldict; spelladd
+
+       Spellwwb is one of the programs run under the proofr(1) and wwb(1)
+       commands.
+
+FILES
+       $HOME/lib/spelldict  produced by spelladd
+
+       /tmp/$$*             temporary files used by spellwwb and spelladd
+
+SEE ALSO
+       proofr(1), spell(1), wwb(1), deroff(1), spelltell(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                   SPELLWWB(1)

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pascal.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; pascal.1 (<a href="../../../../source/v8/usr/man/man1/pascal.1">troff source</a>)</p>
+<pre>
+PASCAL(1)                   General Commands Manual                  PASCAL(1)
+
+NAME
+       pascal - language interpreter
+
+SYNOPSIS
+       pascal [ options ] [ -i name ... ] [ name.p ] [ obj [ argument ... ] ]
+
+       pmerge name.p ...
+
+DESCRIPTION
+       Pascal translates Pascal source programs to interpretable form,
+       executes them, or both.  Under option -c the programs are translated
+       but not executed.  The translated code appears in file `obj'.  Under
+       option -x pascal interprets the previously translated code in file obj
+       (default `obj').  Arguments are made available through the built-ins
+       `argc' and `argv'.
+
+       Options is a string chosen from the following letters:
+
+       c      Translate only.  This option must be first if it appears at all.
+              It is inconsistent with -x.
+
+       b      Buffer the runtime file `output'.
+
+       l      Make a program listing during translation.
+
+       n      List each included file on a new page with a banner line.
+
+       p      Suppress the post-mortem control flow backtrace if an error
+              occurs; override execution limit of 500,000 statements.
+
+       s      Accept standard Pascal only; non-standard constructs cause
+              warning diagnostics.
+
+       t      Suppress runtime tests of subrange variables and treat assert
+              statements as comments.
+
+       u      Card image mode; only the first 72 characters of input lines are
+              used.
+
+       w      Suppress warning diagnostics.
+
+       x      Execute only.  If this option appears, it must be first.  It is
+              inconsistent with the -c option.
+
+       z      Cause the interpreter to gather profiling data for later
+              analysis by <a href="../man1/pxp.1.html">pxp(1)</a>.
+
+       Option -i causes the named procedures and include files to be listed.
+
+       Pmerge combines the named source files into a singlesource files  on
+       the standard output.
+
+FILES
+       *.p                    input file
+       *.i                    include file(s)
+       /usr/lib/pi2.0strings  error messages
+       /usr/lib/how_pi*       basic usage explanation
+       /usr/lib/pascal/*      interpreter passes
+       obj                    interpreter code output
+       /tmp/pix*              obj file used by pix
+       pmon.out               profile data file
+
+SEE ALSO
+       Berkeley Pascal User's Manual (there pascal is called pi, px, and pix)
+       pc(1), <a href="../man1/pxp.1.html">pxp(1)</a>
+
+DIAGNOSTICS
+       The first character of an error message indicates its class:
+
+            E    Fatal error; no code will be generated.
+            e    Non-fatal error.
+            w    Warning - a potential problem.
+            s    Warning - nonstandard Pascal construct.
+
+BUGS
+       The keyword `packed' is recognized but has no effect.
+       Diagnostics relating to the last procedure in an included file may
+       appear after the beginning of the listing of the next.
+       If both source files and arguments are specified, obj is a dummy.
+
+                                                                     PASCAL(1)
+</pre>
+</body></html>

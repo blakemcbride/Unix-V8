@@ -1,0 +1,54 @@
+FSTAB(5)                      File Formats Manual                     FSTAB(5)
+
+NAME
+       fstab - static information about the filesystems
+
+SYNOPSIS
+       #include <fstab.h>
+
+DESCRIPTION
+       The file /etc/fstab contains descriptive information about the various
+       file systems.  /etc/fstab is only read by programs, and not written; it
+       is the duty of the system administrator to properly create and maintain
+       this file.
+
+       These programs use /etc/fstab: dump, mount, umount, swapon, fsck and
+       df.  The order of records in /etc/fstab is important; fsck, mount, and
+       umount depend on it.
+
+       The special file name is the block special file name, and not the
+       character special file name.  If a program needs the character special
+       file name, the program must create it by inserting an `r' after the
+       last `/' in the special file name.
+
+       #define FSTAB                  "/etc/fstab"
+       #define FSNMLG                 16
+
+       #define FSTABFMT    "%16s:%16s:%2s:%d:%d\n"
+       #define FSTABARG(p) (p)->fs_spec, (p)->fs_file, \
+                           (p)->fs_type, &(p)->fs_freq, &(p)->fs_passno
+       #define FSTABNARGS  5
+
+       #define FSTAB_RW    "rw"       /* read write device */
+       #define FSTAB_RO    "ro"       /* read only device */
+       #define FSTAB_SW    "sw"       /* swap device */
+       #define FSTAB_XX    "xx"       /* ignore totally */
+
+       struct fstab {
+               char  fs_spec[FSNMLG]; /* block special device name */
+               char  fs_file[FSNMLG]; /* file system path prefix */
+               char  fs_type[3];      /* rw,ro,sw or xx */
+               int   fs_freq;         /* dump frequency, in days */
+               int   fs_passno;       /* pass number on parallel dump */
+       };
+
+       The proper way to read records from /etc/fstab is to use the routines
+       getfsent(), getfsspec() or getfsfile().
+
+FILES
+       /etc/fstab
+
+SEE ALSO
+       getfsent(3)
+
+                                                                      FSTAB(5)

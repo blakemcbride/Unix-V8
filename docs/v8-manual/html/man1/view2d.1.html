@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>view2d.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; view2d.1 (<a href="../../../../source/v8/usr/man/man1/view2d.1">troff source</a>)</p>
+<pre>
+VIEW2D(1)                   General Commands Manual                  VIEW2D(1)
+
+NAME
+       view2d - movie of a function f(x, y, t)
+
+SYNOPSIS
+       view2d [ option ...  ] file
+
+       regrid [ option ...  ] file
+
+       vdata [ option ...  ] file
+
+DESCRIPTION
+       View2d displays a sequence of functional surfaces on a 5620 or color
+       display.  On the 5620, the surface is ruled with a square mesh and
+       projected isometrically; on a color display, the surface is viewed from
+       above, with height indicated by color.  The options are:
+
+       -T5   output on the 5620; -T5 is the default when TERM (see environ(7))
+             is 5620.
+
+       -Tc   output on color display; -Tc is the default when TERM is not
+             5620.
+
+       -Tp   produces input for <a href="../man1/plot.1.html">plot(1)</a> to produce contour plots.
+
+       -cn   use n colors (n=32 by default) or contours (6 by default).
+
+       -ps   run movie for s seconds (s=5 by default).
+
+       There are two supported ways to generate input for view2d.  Vdata takes
+       ASCII input and allows scattered data; <a href="../man3/view2d.3.html">view2d(3)</a> can be called from a
+       program that already has data on a grid.
+
+       Regrid changes the grid sizes in view2d binary files, with options:
+
+       -b        adds a bar at the bottom of the image indicating time.
+
+       -nNX[,NY] output grid is NX by NY.
+
+       -fNF      output will have NF frames.
+
+       -r        the plane of closest fit to the first frame is subtracted
+                 from all the frames.
+
+       -mfmin,fmax
+                 clips the data to the range fmin,fmax.
+
+       One option applies to both view2d and regrid:
+
+       -tTS[,TE]
+               displays frames from TS (default first frame time) to TE
+               (default last frame time).
+
+       Vdata takes input in the following format and converts to input for
+       view2d.  The first line of each frame has the number of data points in
+       the frame (an integer) and the time (a floating point value).  The rest
+       of the lines in the frame consist of x y z triples.  The order of
+       points is irrelevant.  Every (floating point or integer) number must be
+       white space separated.  The options are:
+
+       -nNX[,NY]
+               output grid is NX by NY.
+
+       -c      use piecewise constant rather than linear interpolation.
+
+       -s      scatterplot the data on a black background.
+
+       -i      the data is already on a square grid, in the order x and y
+               ascending with x varying fastest.
+
+SEE ALSO
+       <a href="../man3/view2d.3.html">view2d(3)</a>, <a href="../man5/view2d.5.html">view2d(5)</a>
+       Exotic options for photography, color maps, and halftone are described
+       in /usr/lib/view2d/howto.
+
+                                                                     VIEW2D(1)
+</pre>
+</body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>calendar.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; calendar.1 (<a href="../../../../source/v8/usr/man/man1/calendar.1">troff source</a>)</p>
+<pre>
+CALENDAR(1)                 General Commands Manual                CALENDAR(1)
+
+NAME
+       calendar - reminder service
+
+SYNOPSIS
+       calendar [ - ] [ n ]
+
+DESCRIPTION
+       Calendar consults calendar files and prints out lines that contain
+       today's date or any date up through the nth working day hence (n=1 by
+       default).  Most American-style month-day dates such as `Dec. 7,'
+       `december 7,' `12/7,' etc., are recognized, but not `7/12'.  The symbol
+       `*' denotes every month as in `* 7' or `*/7'.  A year may follow the
+       day, as in `Dec 7, 84', `Dec 7 1984', or `12/7/84'.
+
+       By default, the program consults the file `calendar' in the $HOME
+       directory (see <a href="../man1/sh.1.html">sh(1)</a>), or in the current directory if a home directory
+       is not known.  Other calendar files to be consulted may be specified by
+       lines of the form
+
+              #include "file"
+
+       in the calendar file.  Includes do not nest.
+
+       When the `-' argument is present, calendar reminds all users of their
+       calendar engagements by <a href="../man1/mail.1.html">mail(1)</a>.  Normally this happens daily in the
+       wee hours under control of <a href="../man8/cron.8.html">cron(8)</a>.  Calendars not in home directories,
+       or recipients not registered as users, may be registered for reminder
+       service by placing lines of the form `pathname mailname' in file
+       /usr/lib/calendar.
+
+FILES
+       calendar files
+       /usr/lib/calendar
+       /etc/passwd
+       /tmp/cal*
+       egrep, echo, join, sort, sed, mail, /usr/lib/calendar? subprocesses
+
+SEE ALSO
+       <a href="../man1/at.1.html">at(1)</a>
+
+BUGS
+       The mail reminder service doesn't work when it finds less than two
+       calendars.
+       Your calendar must be public information for you to get reminder
+       service.
+       Holidays are what the program says they are.
+
+                                                                   CALENDAR(1)
+</pre>
+</body></html>

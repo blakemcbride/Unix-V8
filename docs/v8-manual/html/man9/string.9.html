@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>string.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; string.9 (<a href="../../../../source/v8/usr/man/man9/string.9">troff source</a>)</p>
+<pre>
+STRING(9.3)                                                        STRING(9.3)
+
+NAME
+       string, defont, strwidth, infont, outfont, getfont - jerq text and font
+       operations
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+       #include &lt;font.h&gt;
+
+       Point string(ft, s, b, p, f) Font *ft; char *s; Bitmap *b; Point p;
+       Code f;
+
+       extern Font defont;
+
+       int strwidth(ft, s) Font *ft; char *s;
+
+       Font *infont(inch) int (*inch)();
+
+       int outfont(ft, ouch) Font *ft; int (*ouch)();
+
+       void ffree(ft) Font *ft;
+
+       #include &lt;jerqio.h&gt;
+
+       Font *getfont(file) char *file;
+
+DESCRIPTION
+       String draws the null-terminated string s using characters from font ft
+       in Bitmap b at Point p, with Code f.  The return value is the location
+       of the first character after s; passed to another call to string, the
+       two strings will be concatenated.  The characters are drawn such that
+       the origin point of the bounding rectangle of a maximum height
+       character lies at p.  Therefore, a character drawn on the screen at
+       (0, 0) will occupy the upper-leftmost character position on the screen.
+       String draws characters as they are in the font.  No special action is
+       taken for control characters such as tabs or newlines.
+
+       The global defont is the name of the standard font (not a pointer to
+       it).
+
+       Strwidth returns the width in pixels of the null-terminated string s,
+       interpreted in the Font *ft.  The height of a character string is
+       simply ft-&gt;height.
+
+       Infont creates a font by reading the byte-wise binary representation
+       returned by successive calls to inch.  It returns 0 on error.  Inch
+       must return successive bytes of the Unix file representation of the
+       font, and -1 at end-of-file.  Outfont calls the routine ouch to write
+       successive bytes of the binary representation of font ft.  It returns
+       -1 on error, as must ouch .  For programs running under jx, getfont
+       returns a pointer to a font read from the named file, essentially by
+       calling infont with argument routine getc.  It returns 0 on error.
+       Ffree frees a font allocated by infont or getfont.
+
+                                                                   STRING(9.3)
+</pre>
+</body></html>

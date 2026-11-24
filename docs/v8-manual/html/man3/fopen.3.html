@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fopen.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; fopen.3 (<a href="../../../../source/v8/usr/man/man3/fopen.3">troff source</a>)</p>
+<pre>
+FOPEN(3S)                                                            FOPEN(3S)
+
+NAME
+       fopen, freopen, fdopen - open a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       FILE *fopen(filename, type)
+       char *filename, *type;
+
+       FILE *freopen(filename, type, stream)
+       char *filename, *type;
+       FILE *stream;
+
+       FILE *fdopen(fildes, type)
+       char *type;
+
+DESCRIPTION
+       Fopen opens the file named by filename and associates a stream with it.
+       Fopen returns a pointer to be used to identify the stream in subsequent
+       operations.
+
+       Type is a character string having one of the following values:
+
+       "r"  open for reading
+
+       "w"  create for writing
+
+       "a"  append: open for writing at end of file, or create for writing
+
+       Freopen substitutes the named file in place of the open stream.  It
+       returns the original value of stream.  The original stream is closed.
+       Freopen is typically used to attach the preopened constant names,
+       `stdin', `stdout', `stderr', to specified files.
+
+       Fdopen associates a stream with a file descriptor obtained from open,
+       dup, creat, or <a href="../man2/pipe.2.html">pipe(2)</a>.  The type of the stream must agree with the
+       mode of the open file.
+
+SEE ALSO
+       <a href="../man2/open.2.html">open(2)</a>, <a href="../man3/fclose.3.html">fclose(3)</a>
+
+DIAGNOSTICS
+       Fopen and freopen return the pointer NULL if filename cannot be
+       accessed.
+
+BUGS
+       Fdopen is not portable to systems other than UNIX.
+
+                                                                     FOPEN(3S)
+</pre>
+</body></html>

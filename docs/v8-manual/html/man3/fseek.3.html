@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fseek.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; fseek.3 (<a href="../../../../source/v8/usr/man/man3/fseek.3">troff source</a>)</p>
+<pre>
+FSEEK(3S)                                                            FSEEK(3S)
+
+NAME
+       fseek, ftell, rewind - reposition a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       fseek(stream, offset, ptrname)
+       FILE *stream;
+       long offset;
+
+       long ftell(stream)
+       FILE *stream;
+
+       rewind(stream)
+
+DESCRIPTION
+       Fseek sets the position of the next input or output operation on the
+       stream.  The new position is at the signed distance offset bytes from
+       the beginning, the current position, or the end of the file, according
+       as ptrname has the value 0, 1, or 2.
+
+       Fseek undoes any effects of <a href="../man3/ungetc.3.html">ungetc(3)</a>.
+
+       Ftell returns the current value of the offset relative to the beginning
+       of the file associated with the named stream.  It is measured in bytes
+       on UNIX; on some other systems it is a magic cookie, and the only
+       foolproof way to obtain an offset for fseek.
+
+       Rewind(stream) is equivalent to fseek(stream, 0L, 0).
+
+SEE ALSO
+       <a href="../man2/lseek.2.html">lseek(2)</a>, <a href="../man3/fopen.3.html">fopen(3)</a>
+
+DIAGNOSTICS
+       Fseek returns -1 for improper seeks.
+
+                                                                     FSEEK(3S)
+</pre>
+</body></html>

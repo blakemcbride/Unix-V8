@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cards.6 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 6</a> &gt; cards.6 (<a href="../../../../source/v8/usr/man/man6/cards.6">troff source</a>)</p>
+<pre>
+CARDS(6)                         Games Manual                         CARDS(6)
+
+NAME
+       canfield, cribbage, fish - card games
+
+SYNOPSIS
+       /usr/games/cribbage [ -req ] name ...
+
+       /usr/games/fish
+
+DESCRIPTION
+       Cribbage plays the card game.  The program may print the rules
+       according to Hoyle using more; see <a href="../man1/p.1.html">p(1)</a>.
+
+       The options are:
+
+       -e     When the player makes a mistakes scoring his hand or crib,
+              provide an explanation of the correct score.
+
+       -q     Print a shorter form of all messages.
+
+       -r     Instead of asking the player to cut the deck, the program will
+              randomly cut the deck.
+
+       When asked to cut the deck, answer with a number indicating how many
+       cards down the deck is to be cut.  A carriage return when numeric input
+       is expected means the lowest legal value; when cutting the deck this is
+       equivalent to choosing the top card.
+
+       Cards are specified as rank followed by suit, either spelled out, or
+       abbreviated as in `ac', `8d', `th', `js'.
+
+       The object of the children's card game fish is to accumulate `books' of
+       4 cards of equal rank.  At each turn one player selects a card from his
+       hand, and asks the other player for all cards of that rank.  If the
+       other player has some, he hands them all over and the first player
+       makes another request.  The turn ends when the second player has no
+       card of the rank requested; he replies `GO FISH!'  The first player
+       then draws a card from the `pool' of undealt cards.  If this is the
+       card he had last requested, he draws again.
+
+       The ranks are called `a', `2', ..., `10', `j', `q', `k'.  Hitting
+       return requests information about the state of the game.  Typing `p' as
+       a first guess gets `pro' level play.
+
+       Canfield is a solitaire game.  It requires a cursor-addressed terminal.
+
+                                                                      CARDS(6)
+</pre>
+</body></html>

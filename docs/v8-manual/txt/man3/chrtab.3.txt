@@ -1,0 +1,17 @@
+CHRTAB(3)                  Library Functions Manual                  CHRTAB(3)
+
+NAME
+       chrtab - simple character bitmaps
+
+SYNOPSIS
+       extern char chrtab[95][16];
+
+DESCRIPTION
+       Chrtab contains 8-by-16 bitmaps for ASCII printing characters.  The 16
+       bytes pointed to by chrtab[c - ´ ´] are the 16 rows of character c from
+       top to bottom.  The bottom row is always empty (has all bits 0).
+
+SEE ALSO
+       plot(3), font(9.5)
+
+                                                                     CHRTAB(3)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>wall.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; wall.8 (<a href="../../../../source/v8/usr/man/man8/wall.8">troff source</a>)</p>
+<pre>
+WALL(8)                     System Manager's Manual                    WALL(8)
+
+NAME
+       wall - write to all users
+
+SYNOPSIS
+       /etc/wall
+
+DESCRIPTION
+       Wall reads its standard input until an end-of-file.  It then sends this
+       message, preceded by `Broadcast Message ...', to all logged in users.
+
+       The sender should be super-user to override any protections the users
+       may have invoked.
+
+FILES
+       /dev/tty?
+       /etc/utmp
+
+SEE ALSO
+       <a href="../man1/mesg.1.html">mesg(1)</a>, <a href="../man1/write.1.html">write(1)</a>
+
+DIAGNOSTICS
+       `Cannot send to ...' when the open on a user's tty file fails.
+
+                                                                       WALL(8)
+</pre>
+</body></html>

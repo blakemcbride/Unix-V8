@@ -1,0 +1,19 @@
+DBCVT(1)                    General Commands Manual                   DBCVT(1)
+
+NAME
+       DBcvt - convert a database file between 3B and VAX formats
+
+SYNOPSIS
+       DBcvt source
+
+DESCRIPTION
+       DBcvt converts a database file between 3B and VAX formats.  Although
+       the conversion is performed `in place,' if the process is interrupted
+       or fails for some other reason, the source file is unaffected, and in
+       rare cases, a file named source.cvt may remain.  The exit code is 0 on
+       success, 1 in other cases.
+
+SEE ALSO
+       DB(1), DBcp(1), DB(3).
+
+                                                                      DBCVT(1)

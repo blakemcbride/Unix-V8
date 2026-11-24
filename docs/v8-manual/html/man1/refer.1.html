@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>refer.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; refer.1 (<a href="../../../../source/v8/usr/man/man1/refer.1">troff source</a>)</p>
+<pre>
+REFER(1)                    General Commands Manual                   REFER(1)
+
+NAME
+       refer, lookbib, pubindex - find and insert literature references in
+       documents
+
+SYNOPSIS
+       refer [ option ] ...
+
+       lookbib [ file ] ...
+
+       pubindex file ...
+
+DESCRIPTION
+       Lookbib accepts keywords from the standard input and searches a
+       bibliographic data base for references that contain those keywords
+       anywhere in title, author, journal name, etc.  Matching references are
+       printed on the standard output.  Blank lines are taken as delimiters
+       between queries.
+
+       Refer is a preprocessor for nroff or <a href="../man1/troff.1.html">troff(1)</a> that finds and formats
+       references.  The input files (standard input default) are copied to the
+       standard output, except for lines between .[ and .]  which are assumed
+       to contain keywords and are replaced by information from the
+       bibliographic data base.  The user may avoid the search, override
+       fields from it, or add new fields.  The reference data, from whatever
+       source, are assigned to a set of troff strings.  Macro packages such as
+       <a href="../man7/ms.7.html">ms(7)</a> print the finished reference text from these strings.  A flag is
+       placed in the text at the point of reference; by default the references
+       are indicated by numbers.
+
+       The following options are available:
+
+       -ar    Reverse the first r author names (Jones, J. A. instead of J. A.
+              Jones).  If r is omitted all author names are reversed.
+
+       -b     Bare mode: do not put any flags in text (neither numbers nor
+              labels).
+
+       -cstring
+              Capitalize (with CAPS SMALL CAPS) the fields whose key-letters
+              are in string.
+
+       -e     Instead of leaving the references where encountered, accumulate
+              them until a sequence of the form
+                        .[
+                        $LIST$
+                        .]
+              is encountered, and then write out all references collected so
+              far.  Collapse references to the same source.
+
+       -kx    Instead of numbering references, use labels as specified in a
+              reference data line beginning %x; by default x is L.
+
+       -lm,n  Instead of numbering references, use labels made from the senior
+              author's last name and the year of publication.  Only the first
+              m letters of the last name and the last n digits of the date are
+              used.  If either m or n is omitted the entire name or date
+              respectively is used.
+
+       -p     Take the next argument as a file of references to be searched.
+              The default file is searched last.
+
+       -n     Do not search the default file.
+
+       -skeys Sort references by fields whose key-letters are in the keys
+              string; permute reference numbers in text accordingly.  Implies
+              -e.  The key-letters in keys may be followed by a number to
+              indicate how many such fields are used, with + taken as a very
+              large number.  The default is AD which sorts on the senior
+              author and then date; to sort, for example, on all authors and
+              then title use -sA+T.
+
+       A bibliographic reference in a -p file is a set of lines that contain
+       bibliographic information fields.  Empty lines separate references.
+       Each field starts on a line beginning with a `%', followed by a key-
+       letter, followed by a blank, and followed by the contents of the field,
+       which continues until the next line starting with `%'.  The most common
+       key-letters and the corresponding fields are:
+
+              A    Author name
+              B    Title of book containing article referenced
+              C    City
+              D    Date
+              d    Alternate date
+              E    Editor of book containing article referenced
+              G    Government (CFSTI) order number
+              I    Issuer (publisher)
+              J    Journal
+              K    Other keywords to use in locating reference
+              M    Technical memorandum number
+              N    Issue number within volume
+              O    Other commentary to be printed at end of reference
+              P    Page numbers
+              R    Report number
+              r    Alternate report number
+              T    Title of article, book, etc.
+              V    Volume number
+              X    Commentary unused by pubindex
+
+       Except for `A', each field should only be given once.  Only relevant
+       fields should be supplied.  An example is:
+
+              %T 5-by-5 Palindromic Word Squares
+              %A M. D. McIlroy
+              %J Word Ways
+              %V 9
+              %P 199-202
+              %D 1976
+
+       When refer is used with eqn, neqn or tbl, refer should be first, to
+       minimize the volume of data passed through pipes.
+
+       Pubindex makes a hashed inverted index to the named files for use by
+       refer.  The files contain bibliographic references.
+
+FILES
+       /usr/dict/papers  directory of default publication lists and indexes
+       /usr/lib/refer    directory of programs
+       x.ia, x.ib, x.ic  where x is the first argument to pubindex
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/doctype.1.html">doctype(1)</a>
+
+                                     alice                            REFER(1)
+</pre>
+</body></html>

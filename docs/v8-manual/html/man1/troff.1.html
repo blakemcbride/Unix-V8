@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>troff.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; troff.1 (<a href="../../../../source/v8/usr/man/man1/troff.1">troff source</a>)</p>
+<pre>
+TROFF(1)                    General Commands Manual                   TROFF(1)
+
+NAME
+       troff, nroff - text formatting and typesetting
+
+SYNOPSIS
+       troff [ option ] ...  [ file ] ...
+
+       nroff [ option ] ...  [ file ] ...
+
+DESCRIPTION
+       Troff formats text in the named files for printing on a
+       phototypesetter; nroff for typewriter-like devices.  Their capabilities
+       are described in the Nroff/Troff user's manual.
+
+       If no file argument is present, the standard input is read.  An
+       argument consisting of a single minus (-) is taken to be a file name
+       corresponding to the standard input.  The options, which may appear in
+       any order so long as they appear before the files, are:
+
+       -olist Print only pages whose page numbers appear in the comma-
+              separated list of numbers and ranges.  A range N-M means pages N
+              through M; an initial -N means from the beginning to page N; and
+              a final N- means from N to the end.
+
+       -nN    Number first generated page N.
+
+       -mname Prepend the macro file /usr/lib/tmac/tmac.name to the input
+              files.
+
+       -raN   Set register a (one character name) to N.
+
+       -i     Read standard input after the input files are exhausted.
+
+       -q     Invoke the simultaneous input-output mode of the rd request.
+
+       -z     produce no output: diagnostics and .tm messages only
+
+       Troff only
+
+       -a     Send a printable ASCII approximation of the results to the
+              standard output.
+
+       -Tdest Prepare output for typesetter dest.  -T202 = Mergenthaler
+              Linotron 202 (default), -Tcat = Graphic Systems C/A/T, -Taps =
+              Autologic APS-5.
+
+       -Fdir  take font information from directory dir
+
+       Nroff only
+
+       -sN    Nroff will halt prior to every N pages (default N=1) to allow
+              paper loading or changing, and will resume upon receipt of a
+              newline.
+
+       -Tname Prepare output for specified terminal.  Known names include 37
+              for the (default) Teletype Corporation Model 37 terminal, lp
+              (`line-printer') for any terminal without half-line capability,
+              450 for the DASI-450 (Diablo Hyterm), and think (HP ThinkJet,
+              see think(9)).
+
+       -e     Produce equally-spaced words in adjusted lines, using full
+              terminal resolution.
+
+       -h     Use output tabs during horizontal spacing to speed output and
+              reduce output character count.  Tab settings are assumed to be
+              every 8 nominal character widths.
+
+       If the file /usr/adm/tracct is writable, troff writes phototypesetter
+       accounting records there.  The integrity of that file may be secured by
+       making troff a `set user-id' program.
+
+FILES
+       /tmp/trtmp*           temporary file
+       /usr/lib/tmac/tmac.*  standard macro files
+       /usr/lib/term/*       terminal driving tables for nroff
+       /usr/lib/font/*       font width tables for troff
+       /usr/adm/tracct       accounting statistics for troff
+
+SEE ALSO
+       J. F. Ossanna, Nroff/Troff user's manual
+       B. W. Kernighan, A TROFF Tutorial
+       <a href="../man1/d202.1.html">d202(1)</a>, <a href="../man9/proof.9.html">proof(9.1)</a>, <a href="../man1/apsend.1.html">apsend(1)</a>, <a href="../man1/eqn.1.html">eqn(1)</a>, <a href="../man1/tbl.1.html">tbl(1)</a>, <a href="../man1/refer.1.html">refer(1)</a>, <a href="../man1/pic.1.html">pic(1)</a>,
+       <a href="../man1/ideal.1.html">ideal(1)</a>, <a href="../man9/ped.9.html">ped(9.1)</a>, <a href="../man1/doctype.1.html">doctype(1)</a>, <a href="../man7/ms.7.html">ms(7)</a>
+
+                                                                      TROFF(1)
+</pre>
+</body></html>

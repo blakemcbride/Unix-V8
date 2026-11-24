@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>rarepl.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; rarepl.8 (<a href="../../../../source/v8/usr/man/man8/rarepl.8">troff source</a>)</p>
+<pre>
+RAREPL(8)                   System Manager's Manual                  RAREPL(8)
+
+NAME
+       rarepl, rarct - replace bad blocks on MSCP disks
+
+SYNOPSIS
+       /etc/rarct [ -c ] [ -h ] special ...
+       /etc/rarepl special lbn ...
+
+DESCRIPTION
+       Rarct prints status information about MSCP disk drives (drives such as
+       the RA60 and RA81 on controllers like the UDA50).  Normally the
+       replacement table (RCT) is listed, as lines of the form
+
+              rbn: flags: lbn
+
+       where rbn is the replacement block number, lbn is the logical block
+       number replaced by rbn, and flags are constructed from the following
+       bits:
+
+       01     alternate (not primary) replacement block
+       02     normal, allocated replacement block
+       04     this replacement block is bad
+       010    this replacement block does not exist
+
+       Entries whose flags are zero, indicating a good, unused replacement
+       block, are not listed.
+
+       The -h option prints some header data from the first block of the RCT.
+       UNIX makes no use of this info.  -c prints geometry info for the drive.
+       Either option suppresses the RCT listing.
+
+       Rarepl causes logical block lbn on device dev to be marked as bad and
+       replaced.  The nearest available replacement block is used.  The
+       contents of lbn are copied into the replacement block if possible; if
+       lbn is unreadable, the replacement block is initialized with zeroes.
+
+       Both programs work only on the raw devices.  Rarepl should be used only
+       on a device which covers the entire drive (usually partition 7).
+
+SEE ALSO
+       <a href="../man4/ra.4.html">ra(4)</a>
+
+BUGS
+       On the UDA50, the RCT exists only so programs in the host can look at
+       it; the controller ignores its contents.  There is no way to read the
+       controller's `real' forwarding data, only a way to set it for a
+       particular block.  Hence if the RCT is corrupted, the disk may still be
+       used, but must be reformatted before additional bad blocks are
+       remapped.
+
+                                                                     RAREPL(8)
+</pre>
+</body></html>

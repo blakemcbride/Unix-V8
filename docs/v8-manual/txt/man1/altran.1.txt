@@ -1,0 +1,43 @@
+ALTRAN(1)                   General Commands Manual                  ALTRAN(1)
+
+NAME
+       altran - language for algebraic manipulation
+
+SYNOPSIS
+       altran [ option ] ... file ...
+
+DESCRIPTION
+       Altran compiles the language described in the reference via Fortran as
+       an intermediate language.  The files may have names ending in .al, for
+       Altran source, .f, for Fortan source, or .o for binary object files.
+       The output normally includes a .f file for each .al file, a .o file for
+       each old or new .f file, an executable file a.out, and a listing file
+       whose name ends in .list for each .al file.
+
+       All the options of f77(1) and ld(1) are accepted with the same
+       meanings.
+
+       The executable a.out file accepts two parameters.  One is of the form
+       p=n where n is the number of decimal digits of precision to be used for
+       long integers, 18<=n<=900, default 18.  The other parameter is of the
+       form w=n where n is the workspace size in thousands of words,
+       10<=n<=800, default 50.
+
+FILES
+       /usr/lib/altran    the compiler proper
+       /usr/lib/libal.a   library
+       fort.[789]         intermediate files
+       *.al
+       *.f
+       *.o
+       *.list
+
+SEE ALSO
+       f77(1), ld(1)
+       W. S Brown, ALTRAN User's Manual, Bell Laboratories, Murray Hill, NJ,
+       1977
+
+BUGS
+       Run-time output is voluminous.
+
+                                     alice                           ALTRAN(1)

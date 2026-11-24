@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>time.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; time.1 (<a href="../../../../source/v8/usr/man/man1/time.1">troff source</a>)</p>
+<pre>
+TIME(1)                     General Commands Manual                    TIME(1)
+
+NAME
+       time - time a command
+
+SYNOPSIS
+       time [ -usrtdmfio ] [ -v ] command
+
+DESCRIPTION
+       The given command is executed; after it is complete, time reports
+       statistics about the program on its standard error output.  The
+       statistics printed are controlled by the options; the default is -usr
+       and -v reports everything.  The statistics are:
+
+       u      User cpu time consumed by the command
+
+       s      System cpu time attributed to the command
+
+       r      Real (clock) time taken by the command
+
+       t      Average resident text size, in Kb.
+
+       d      Average resident data size, in Kb.
+
+       m      Maximum total resident size, in Kb.
+
+       f      Number of page faults resulting in disk i/o.
+
+       i      Number of disk blocks read.
+
+       o      Number of disk blocks written.
+
+       After the statistics, time prints a tab and the command, up to the
+       fifth argument.  Times are reported in seconds.
+
+BUGS
+       Elapsed time is accurate to the second, while the CPU times are
+       measured to the 60th second.  Thus the sum of the CPU times can be up
+       to a second larger than the elapsed time.
+
+                                                                       TIME(1)
+</pre>
+</body></html>

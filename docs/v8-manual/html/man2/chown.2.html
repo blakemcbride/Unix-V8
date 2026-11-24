@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>chown.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; chown.2 (<a href="../../../../source/v8/usr/man/man2/chown.2">troff source</a>)</p>
+<pre>
+CHOWN(2)                      System Calls Manual                     CHOWN(2)
+
+NAME
+       chown, fchown - change owner and group of a file
+
+SYNOPSIS
+       chown(name, owner, group)
+       char *name;
+
+       fchown(fd, owner, group)
+
+DESCRIPTION
+       Chown changes the owner and group of the file specified by the null-
+       terminated string name.  Fchown changes the owner and group of an open
+       file specified by file descriptor.  Only the super-user may execute
+       these calls.
+
+SEE ALSO
+       chown(1), <a href="../man2/chmod.2.html">chmod(2)</a>, <a href="../man5/passwd.5.html">passwd(5)</a>
+
+DIAGNOSTICS
+       Zero is returned if the owner is changed; -1 is returned on illegal
+       owner changes.
+
+                                                                      CHOWN(2)
+</pre>
+</body></html>

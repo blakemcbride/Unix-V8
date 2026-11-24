@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>stime.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; stime.2 (<a href="../../../../source/v8/usr/man/man2/stime.2">troff source</a>)</p>
+<pre>
+STIME(2)                      System Calls Manual                     STIME(2)
+
+NAME
+       stime, settod - set time
+
+SYNOPSIS
+       stime(tp)
+       long *tp;
+
+       long settod(toy)
+       long toy;
+
+DESCRIPTION
+       Stime sets the system's idea of the time and date.  Time, pointed to by
+       tp, is measured in seconds from 0000 GMT Jan 1, 1970.
+
+       Settod sets the VAX hardware time-of-year clock to toy, and returns the
+       previous value.  When the system is booted, the system's time is set
+       from the time-of-year clock; while the system is running, the time-of-
+       year clock is examined periodically, and the system's time adjusted
+       slowly if necessary to make the two agree.
+
+       Only the super-user may use these calls.
+
+SEE ALSO
+       <a href="../man1/date.1.html">date(1)</a>, <a href="../man2/time.2.html">time(2)</a>, <a href="../man3/ctime.3.html">ctime(3)</a>
+
+DIAGNOSTICS
+       Zero is returned if the time was set; -1 if user is not the super-user.
+
+                                                                      STIME(2)
+</pre>
+</body></html>

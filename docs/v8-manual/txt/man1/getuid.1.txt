@@ -1,0 +1,51 @@
+GETUID(1)                   General Commands Manual                  GETUID(1)
+
+NAME
+       getuid, id - get user identity
+
+SYNOPSIS
+       getuid [ - ] [ arguments ]
+
+       id
+
+DESCRIPTION
+       Getuid prints on its standard output information about its invoker,
+       based on the effective user id, as presented in the password file.
+       With no arguments, getuid prints the login id of its invoker.
+       Arguments select which information to print:
+
+              user    login id
+              group   group id
+              passwd  encrypted password
+              uid     numerical user id
+              gid     numerical group id
+              acct    GCOS account number
+              bin     GCOS output bin
+              home    home directory
+              shell   default shell
+
+       If the optional - or more than one argument is present, the information
+       is displayed in the form
+
+              user=name
+
+       as suitable for setting environment variables in the shell.
+
+       Id prints the effective userid and groupid numerically, and, if
+       possible, textually
+
+FILES
+       /etc/passwd
+       /etc/group
+
+SEE ALSO
+       who(1), getuid(2), passwd(5), sh(1)
+
+BUGS
+       Getuid reports the default group for the user, not the current
+       effective group id.
+       The login id reported is the first one in the password file with the
+       correct numerical user id, not necessarily the login for the current
+       session.
+
+                                                                     GETUID(1)

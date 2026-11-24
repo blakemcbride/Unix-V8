@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>alloc.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; alloc.9 (<a href="../../../../source/v8/usr/man/man9/alloc.9">troff source</a>)</p>
+<pre>
+ALLOC(9.3)                                                          ALLOC(9.3)
+
+NAME
+       alloc, free, balloc, bfree, gcalloc, gcfree - allocate memory
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+
+       char *alloc(nbytes) unsigned nbytes;
+
+       void free(s) char *s;
+
+       Bitmap *balloc(r) Rectangle r;
+
+       void bfree(b) Bitmap *b;
+
+       char *gcalloc(nbytes, where) unsigned long nbytes; char **where;
+
+       void gcfree(s) char *s;
+
+DESCRIPTION
+       Alloc corresponds to the standard C function malloc.  It returns a
+       pointer to a block of nbytes contiguous bytes of storage, or 0 if
+       unavailable.  The storage is aligned on 4-byte boundaries.  Unlike
+       malloc, alloc clears the storage to zeros.  Free frees storage
+       allocated by alloc.
+
+       Balloc returns a pointer to a Bitmap large enough to contain the
+       Rectangle r, or 0 for failure.  The coordinate system inside the Bitmap
+       is set by r: the origin and corner of the Bitmap are those of r.  Bfree
+       frees the storage associated with a Bitmap allocated by balloc.
+
+       Gcalloc provides a simple garbage-compacting allocator.  It returns a
+       pointer to a block of nbytes contiguous bytes of storage, or 0 if
+       unavailable.  The storage is initialized to zeros.  Where is a pointer
+       to the user's data where the location of the block is to be saved.  The
+       return value of gcalloc is stored in *where and will be updated after
+       each compaction.  Therefore, a program using gcalloc should never store
+       the location of gcallocated memory anywhere other than the location
+       handed to the allocator.  Typically, this location is contained in a
+       structure, such as a Bitmap (balloc uses gcalloc).  Gcfree frees the
+       storage block at p.  Gcalloc is not for novices.
+
+SEE ALSO
+       <a href="../man9/types.9.html">types(9.5)</a>
+
+                                                                    ALLOC(9.3)
+</pre>
+</body></html>

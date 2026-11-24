@@ -1,0 +1,31 @@
+SETJMP(3)                  Library Functions Manual                  SETJMP(3)
+
+NAME
+       setjmp, longjmp - non-local goto
+
+SYNOPSIS
+       #include <setjmp.h>
+
+       setjmp(env)
+       jmp_buf env;
+
+       longjmp(env, val)
+       jmp_buf env;
+
+DESCRIPTION
+       These routines are useful for dealing with errors and interrupts
+       encountered in a low-level subroutine of a program.
+
+       Setjmp saves its stack environment in env for later use by longjmp.  It
+       returns value 0.
+
+       Longjmp restores the environment saved by the last call of setjmp.  It
+       then returns in such a way that execution continues as if the call of
+       setjmp had just returned the value val to the function that invoked
+       setjmp, which must not itself have returned in the interim.  All
+       accessible data have values as of the time longjmp was called.
+
+SEE ALSO
+       signal(2)
+
+                                                                     SETJMP(3)

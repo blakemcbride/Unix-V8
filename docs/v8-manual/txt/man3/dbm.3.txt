@@ -1,0 +1,76 @@
+DBM(3X)                                                                DBM(3X)
+
+NAME
+       dbminit, fetch, store, delete, firstkey, nextkey - database subroutines
+
+SYNOPSIS
+       typedef struct {
+            char *dptr;
+            int dsize;
+       } datum;
+
+       dbminit(file)
+       char *file;
+
+       datum fetch(key)
+       datum key;
+
+       store(key, value)
+       datum key, value;
+
+       delete(key)
+       datum key;
+
+       datum firstkey()
+
+       datum nextkey(key)
+       datum key;
+
+DESCRIPTION
+       These functions maintain key/value pairs in a data base.  The functions
+       will handle very large databases in one or two file system accesses per
+       key.  The functions are loaded with ld(1) option -ldbm.
+
+       Keys and values are described by the datum typedef.  A datum specifies
+       a string of dsize bytes pointed to by dptr.  Arbitrary binary data, as
+       well as normal ASCII strings, are allowed.  The data base is stored in
+       two files.  One file is a directory containing a bit map and has `.dir'
+       as its suffix.  The second file contains all data and has `.pag' as its
+       suffix.
+
+       Before a database can be accessed, it must be opened by dbminit.  At
+       the time of this call, the files file.dir and file.pag must exist.  (An
+       empty database is created by creating zero-length `.dir' and `.pag'
+       files.)
+
+       Once open, the data stored under a key is accessed by fetch and data is
+       placed under a key by store.  A key and its associated value are
+       deleted by delete.  A linear pass through all keys in a database may be
+       made, in random order, by use of firstkey and nextkey.  Firstkey will
+       return the first key in the database.  With any key nextkey will return
+       the next key in the database.  This code will traverse the data base:
+
+              for(key = firstkey(); key.dptr != NULL; key = nextkey(key))
+
+DIAGNOSTICS
+       All functions that return an int indicate errors with negative values.
+       A zero return indicates success.  Routines that return a datum indicate
+       errors with a null (0) dptr.
+
+SEE ALSO
+       cbt(3)
+
+BUGS
+       The `.pag' file will contain holes so that its apparent size is about
+       four times its actual content.  These files cannot be copied by normal
+       means (cp, cat, tp, tar, ar) without filling in the holes.
+       Dptr pointers returned by these subroutines point into static storage
+       that is changed by subsequent calls.
+       The sum of the sizes of a key/value pair must not exceed a fixed
+       internal block size.  Moreover all key/value pairs that hash together
+       must fit on a single block.  Store will return an error in the event
+       that a disk block fills with inseparable data.
+       Delete does not physically reclaim file space, although it does make it
+       available for reuse.
+
+                                                                       DBM(3X)

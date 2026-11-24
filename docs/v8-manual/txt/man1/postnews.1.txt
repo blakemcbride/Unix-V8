@@ -1,0 +1,31 @@
+POSTNEWS(1)                 General Commands Manual                POSTNEWS(1)
+
+NAME
+       postnews - submit netnews articles
+
+SYNOPSIS
+       postnews [ file ]
+
+DESCRIPTION
+       Postnews submits the file as a netnews article.  It prompts for title
+       (informative, please), primary newsgroup, and other newsgroup
+       distribution (not recommended).
+
+       The names of newsgroups are relative pathnames of directories depending
+       from /usr/spool/netnews, with slashes (/) replaced by dots (.).
+
+       If no file is specified, postnews invokes an editor specified by the
+       environment variable EDITOR (default vi(1)).  The editor's buffer is
+       initialized with header information, which may be changed.  The text of
+       the article may be appended.
+
+       For more sophisticated uses, such as posting news from a program, see
+       the BSD manual.
+
+SEE ALSO
+       readnews(1)
+
+BUGS
+       The editor default is distinctly nonclassical.
+
+                                     alice                         POSTNEWS(1)

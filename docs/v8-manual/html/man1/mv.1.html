@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mv.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; mv.1 (<a href="../../../../source/v8/usr/man/man1/mv.1">troff source</a>)</p>
+<pre>
+MV(1)                       General Commands Manual                      MV(1)
+
+NAME
+       mv  -  move or rename files and directories
+
+SYNOPSIS
+       mv file1 file2
+
+       mv file ... directory
+
+DESCRIPTION
+       Mv moves (changes the name of) file1 to file2.
+
+       If file2 already exists, it is removed before file1 is moved.  If file2
+       has a mode which forbids writing, mv prints the mode (see <a href="../man2/chmod.2.html">chmod(2)</a>) and
+       reads the standard input to obtain a line; the move is done only if the
+       line begins with y.
+
+       In the second form, one or more files are moved to the directory with
+       their original file-names.
+
+       Mv refuses to move a file onto itself.
+
+SEE ALSO
+       <a href="../man1/cp.1.html">cp(1)</a>, <a href="../man2/chmod.2.html">chmod(2)</a>
+
+BUGS
+       If file1 and file2 lie on different file systems, mv must copy the file
+       and delete the original.  In this case the owner name becomes that of
+       the copying process and any linking relationship with other files is
+       lost.
+       Mv should have a -f option, like rm.
+
+                                                                         MV(1)
+</pre>
+</body></html>

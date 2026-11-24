@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ftw.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; ftw.3 (<a href="../../../../source/v8/usr/man/man3/ftw.3">troff source</a>)</p>
+<pre>
+FTW(3)                     Library Functions Manual                     FTW(3)
+
+NAME
+       ftw - file tree walk
+
+SYNOPSIS
+       #include &lt;ftw.h&gt;
+
+       int ftw(path, fn, depth)
+       char *path;
+       int (*fn) ( );
+       int depth;
+
+       #include &lt;sys/types.h&gt;
+       #include &lt;sys/stat.h&gt;
+       fn(name, statb, code) char *name; struct stat statb;
+
+DESCRIPTION
+       Ftw recursively descends the directory hierarchy rooted in path.  For
+       each object in the hierarchy, ftw calls fn, passing it a pointer to a
+       null-terminated character string containing the name of the object, a
+       pointer to a stat structure (see <a href="../man2/stat.2.html">stat(2)</a>) containing information about
+       the object, and an integer.  Possible values of the integer, defined in
+       &lt;ftw.h&gt;, are FTW_F for a file, FTW_D for a directory, FTW_DNR for a
+       directory that cannot be read, and FTW_NS for an object on which stat
+       failed.  If the integer is FTW_DNR, descendents of that directory will
+       not be processed.  If the integer is FTW_NS, the stat structure will
+       contain garbage.
+
+       Ftw visits a directory before visiting any of its descendents.
+
+       The tree traversal continues until the tree is exhausted, an invocation
+       of fn returns a nonzero value, or some error is detected within ftw
+       (such as an I/O error).  If the tree is exhausted, ftw returns zero.
+       If fn returns a nonzero value, ftw stops its tree traversal and returns
+       whatever value was returned by fn.  If ftw detects an error, it returns
+       -1, and indicates the error type in errno.
+
+       Ftw uses one file descriptor for each level in the tree.  The depth
+       argument limits the number of file descriptors so used.  If depth is
+       zero or negative, the effect is the same as if it were 1.  Depth must
+       not be greater than the number of file descriptors currently available
+       for use.  Ftw will run more quickly if depth is at least as large as
+       the number of levels in the tree.
+
+BUGS
+       Ftw doesn't recognize symbolic links, which can cause infinite
+       recursion.
+
+                                                                        FTW(3)
+</pre>
+</body></html>

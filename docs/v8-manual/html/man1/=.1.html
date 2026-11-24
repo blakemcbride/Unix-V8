@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>=.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; =.1 (<a href="../../../../source/v8/usr/man/man1/%3D.1">troff source</a>)</p>
+<pre>
+<a href="../man1/%3D.1.html">=(1)</a>                        General Commands Manual                       <a href="../man1/%3D.1.html">=(1)</a>
+
+NAME
+       =, == - redo previous shell command
+
+SYNOPSIS
+       = [ pattern ] [ substitutions ]
+       == [ pattern ] [ substitutions ]
+
+DESCRIPTION
+       The = command provides a simple history mechanism for the shell, <a href="../man1/sh.1.html">sh(1)</a>.
+       If the environment variable HISTORY is set, it names a file to which
+       the shell appends the text of each command before execution.  = reads
+       the HISTORY file for the first previous command matching the pattern,
+       performs the substitutions, and executes it.  If no pattern is
+       specified, the most recent command is selected.  If no substitution is
+       specified, the command is executed without modification.
+
+       The pattern matching works for literal text, and is anchored to the
+       beginning of the command line.  Adjacent arguments in the pattern are
+       treated as one argument formed of the original argument strings
+       separated by spaces.
+
+       Substitutions are of the form
+            old=new
+       specifying that the string `old' in the command is to be replaced by
+       `new.'  Substitutions are performed in the order given, and operate on
+       the single leftmost match in the command line.
+
+       The == command is identical to the = command, but before running the
+       command (and after substitutions) allows it to be edited.  The command
+       is typed out, and a modification request is read from the terminal.
+       Generally each character in the request specifies how to modify the
+       character immediately above it, in the original command, as described
+       in the following table.
+
+       #    Delete the above character.
+       %    Replace the above character with a space.
+       ^    Insert the rest of the request line before the above character.
+       $    Delete the characters in the command from this position on;
+            replace them with the rest of the request line.
+       space or tab
+            Leave above character(s) unchanged.
+       =    as the first and only edit character. Back up to the prior
+            occurrence of the pattern in the history file; this may be
+            iterated, and the displayed lines will be unique.
+       any other
+            This character replaces the one above it.
+
+       If the request line is longer than the command, the overhang is added
+       to the end of the command without interpretation, that is, without
+       treating `#', `%', `^' or `$' specially.  Any characters after a `^' or
+       `$' request are not interpreted either.
+
+       While correlating character positions, the editor will not process
+       control characters other than tab and newline.
+
+       The tab character prints as a sequence of spaces, and may be modified
+       as if it were that sequence.  As long as the last space is unmodified,
+       it and the remaining contiguous spaces will represent a tab.
+
+       The history mechanism performs best if each login terminal uses a
+       different HISTORY file.  The following commands accomplish this.
+
+              HISTORY=$HOME/hist/`basename \`tty\``
+              &gt;$HISTORY
+              export HISTORY
+
+                                                                          <a href="../man1/%3D.1.html">=(1)</a>
+</pre>
+</body></html>

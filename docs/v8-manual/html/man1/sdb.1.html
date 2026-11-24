@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sdb.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; sdb.1 (<a href="../../../../source/v8/usr/man/man1/sdb.1">troff source</a>)</p>
+<pre>
+SDB(1)                      General Commands Manual                     SDB(1)
+
+NAME
+       sdb - symbolic debugger
+
+SYNOPSIS
+       sdb [ objfil [ corfil [ directory ] ] ]
+
+DESCRIPTION
+       Sdb is a symbolic debugger.  It may examine source and/or object files
+       and provide a controlled environment for execution.
+
+       Objfil is an executable program file which has been compiled with the
+       -g (debug) option of cc, pascal, or <a href="../man1/f77.1.html">f77(1)</a>.  The default for objfil is
+       a.out.  Corfil is assumed to be a core image file produced after
+       executing objfil; the default for corfil is core.  Directory names the
+       location of source files, by default the current directory.
+
+       Sdb maintains a current line and a current file.  If corfil exists then
+       they are initially set to the line and file containing the source
+       statement at which the process terminated or stopped.  Otherwise, they
+       are set to the first line in function main.
+
+       Names of variables are written just as they are in C, Pascal, or
+       Fortran.  Variables local to a procedure may be accessed using the form
+       `procedure:variable'.  If no procedure name is given, the procedure
+       containing the current line is used by default.  A member of a
+       structure may be referred to as `variable.member' or
+       `variable-&gt;member'; an array element as `variable[number]'.
+       Combinations of these forms may be used.
+
+       It is also possible to specify a variable by address.  All forms of
+       integer constants which are valid in C may be used.
+
+       Line numbers in the source program are referred to as `filename:number'
+       or `procedure:number'.  In either case the number is relative to the
+       beginning of the file.  If no procedure or file name is given, the
+       current file is used by default.  If no number is given, the first line
+       of the named procedure or file is used.
+
+       The commands for examining data are:
+
+       t    Print a stack trace of the terminated or stopped program.
+
+       T    Print the top line of the stack trace.
+
+       variable/lm
+            Print the value of variable according to length l and format m.
+            If l and m are omitted, sdb chooses a length and format suitable
+            for the variable's type as declared in the program.  The length
+            specifiers are:
+
+            b      one byte
+            h      two bytes (half word)
+            l      four bytes (long word)
+            number string length for formats s and a
+
+            Legal values for m are:
+
+            c      character
+            d      decimal
+            u      decimal, unsigned
+            o      octal
+            x      hexadecimal
+            f      32 bit single precision floating point
+            g      64 bit double precision floating point
+            s      Assume variable is a string pointer and print characters
+                   until a null is reached.
+            a      Print characters starting at the variable's address until a
+                   null is reached.
+            p      pointer to procedure
+
+            The length specifiers are only effective with the formats d, u, o
+            and x.  If one of these formats is specified and l is omitted, the
+            length defaults to the word length of the host machine: 4 for the
+            VAX.  The last variable may be redisplayed with the command `./'.
+            The <a href="../man1/sh.1.html">sh(1)</a> metacharacters * and ?  may be used within procedure and
+            variable names, providing a limited form of pattern matching.  If
+            no procedure name is given, both variables local to the current
+            procedure and global (common for f77) variables are matched.  If a
+            procedure name is specified, only variables local to that
+            procedure are matched.  The form `:pattern' matches only global
+            variables (blank common for f77),.  The name of a common block may
+            be specified instead of a procedure name for f77 programs.
+
+       variable=lm
+       linenumber=lm
+       number=lm
+            Print the address of the variable or line number or the value of
+            the number in the specified format.  If no format is given, then
+            `lx' is used.  The last variant of this command provides a
+            convenient way to convert between decimal, octal and hexadecimal.
+
+       variable!value
+            Set the variable to the given value.  The value may be a number,
+            character constant or a variable.  If the variable is of type
+            float or double, the value may also be a floating constant.
+
+       The commands for examining source files are
+
+       e procedure
+       e filename.c
+            Set the current file to the file containing the named procedure or
+            the named filename.  Set the current line to the first line in the
+            named procedure or file.  If no procedure or file name is given,
+            the current procedure and file names are reported.
+
+       /regular expression/
+            Search forward from the current line for a line containing a
+            string matching the regular expression as in <a href="../man1/ed.1.html">ed(1)</a>.  The trailing
+            `/' may be elided.
+
+       ?regular expression?
+            Search backward from the current line for a line containing a
+            string matching the regular expression as in <a href="../man1/ed.1.html">ed(1)</a>.  The trailing
+            `?' may be elided.
+
+       p    Print the current line.
+
+       z    Print the current line followed by the next 9 lines.  Set the
+            current line to the last line printed.
+
+       control-D
+            Scroll.  Print the next 10 lines.  Set the current line to the
+            last line printed.
+
+       w    Window.  Print the 10 lines around the current line.
+
+       number
+            Set the current line to the given line number.  Print the new
+            current line.
+
+       count +
+            Advance the current line by count lines.  Print the new current
+            line.
+
+       count −
+            Retreat the current line by count lines.  Print the new current
+            line.
+
+       The commands for controlling the execution of the source program are:
+
+       count r args
+       count R
+            Run the program with the given arguments.  The r command with no
+            arguments reuses the previous arguments to the program while the R
+            command runs the program with no arguments.  An argument beginning
+            with `&lt;' or `&gt;' causes redirection for the standard input or
+            output respectively.  If count is given, it specifies the number
+            of breakpoints to be ignored.
+
+       linenumber c count
+       linenumber C count
+            Continue after a breakpoint or interrupt.  If count is given, it
+            specifies the number of breakpoints to be ignored.  C continues
+            with the signal which caused the program to stop and c ignores it.
+            If a linenumber is given then a temporary breakpoint is placed at
+            the line and execution is continued.  The breakpoint is deleted
+            when the command finishes.
+
+       count s
+            Single step.  Run the program through count lines.  If no count is
+            given then the program is run for one line.
+
+       count S
+            Single step, but step through subroutine calls.
+
+       k    Kill the debugged program.
+
+       procedure(arg1,arg2,...)
+       procedure(arg1,arg2,...)/m
+            Execute the named procedure with the given arguments.  Arguments
+            can be integer, character or string constants or names of
+            variables accessible from the current procedure.  The second form
+            causes the value returned by the procedure to be printed according
+            to format m.  If no format is given, it defaults to `d'.
+
+       linenumber b commands
+            Set a breakpoint at the given line.  If a procedure name without a
+            line number is given (e.g. `proc:'), a breakpoint is placed at the
+            first line in the procedure even if it was not compiled with the
+            debug flag.  If no linenumber is given, a breakpoint is placed at
+            the current line.
+            If no commands are given then execution stops just before the
+            breakpoint and control is returned to sdb.  Otherwise the
+            semicolon-separated commands are executed when the breakpoint is
+            encountered and execution continues.
+
+       linenumber d
+            Delete a breakpoint at the given line.  If no linenumber is given,
+            each breakpoint location is printed and a line is read from the
+            standard input.  If the line begins with a `y' or `d' then the
+            breakpoint is deleted.
+
+       B    Print a list of the currently active breakpoints.
+
+       D    Delete all breakpoints.
+
+       l    Print the last executed line.
+
+       linenumber a
+            Announce.  If linenumber is of the form `proc:number', the command
+            does a `linenumber b l'.  If linenumber is of the form `proc:',
+            the command does a `proc: b T'.
+
+       Miscellaneous commands.
+
+       ! command
+            The command is interpreted by <a href="../man1/sh.1.html">sh(1)</a>.
+
+       newline
+            If the previous command printed a source line then advance the
+            current line by 1 line and print the new current line.  If the
+            previous command displayed a core location then display the next
+            core location.
+
+       " string
+            Print the given string.
+
+       q    Exit the debugger.
+
+       The following commands are intended for debugging the debugger.
+
+       V    Print the version number.
+
+       X    Print a list of procedures and files being debugged.
+
+       Y    Toggle debug output.
+
+FILES
+       a.out
+       core
+
+DIAGNOSTICS
+       Error reports are either identical to those of <a href="../man1/adb.1.html">adb(1)</a> or are self-
+       explanatory.
+
+SEE ALSO
+       <a href="../man1/adb.1.html">adb(1)</a>, <a href="../man9/pi.9.html">pi(9.1)</a>, <a href="../man1/coreid.1.html">coreid(1)</a>
+
+BUGS
+       If a procedure is called when the program is not stopped at a
+       breakpoint (such as when a core image is being debugged), all variables
+       are initialized before the procedure is started.  This makes it
+       impossible to use a procedure to extract data from a core image.
+
+       Arrays must be of one dimension and of zero origin to be correctly
+       addressed.
+
+       The default type for printing Fortran parameters is incorrect: address
+       instead of value.
+
+       Tracebacks containing Fortran subprograms with multiple entry points
+       may print too many arguments in the wrong order, but their values are
+       correct.
+
+       Sdb understands Pascal, but not its types.
+
+       The meaning of control-D is nonstandard
+
+                                                                        SDB(1)
+</pre>
+</body></html>

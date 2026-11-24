@@ -1,0 +1,31 @@
+GETLOGIN(3)                Library Functions Manual                GETLOGIN(3)
+
+NAME
+       getlogin - get login name
+
+SYNOPSIS
+       char *getlogin()
+
+DESCRIPTION
+       Getlogin returns a pointer to the login name as found in /etc/utmp.  It
+       may be used in conjunction with getpwnam to locate the correct password
+       file entry when the same userid is shared by several login names.
+
+       If getlogin is called within a process that is not attached to a
+       typewriter, it returns NULL.  The correct procedure for determining the
+       login name is to first call getlogin and if it fails, to call getpwuid.
+
+FILES
+       /etc/utmp
+
+SEE ALSO
+       getpwent(3), getgrent(3), utmp(5), getuid(2)
+
+DIAGNOSTICS
+       Returns NULL (0) if name not found.
+
+BUGS
+       The return values point to static data whose content is overwritten by
+       each call.
+
+                                                                   GETLOGIN(3)

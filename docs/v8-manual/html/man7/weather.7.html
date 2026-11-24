@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>weather.7 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 7</a> &gt; weather.7 (<a href="../../../../source/v8/usr/man/man7/weather.7">troff source</a>)</p>
+<pre>
+WEATHER(7)             Miscellaneous Information Manual             WEATHER(7)
+
+NAME
+       weather - conditions and forecast by town
+
+SYNOPSIS
+       weather [ -h ] [ -m ]
+
+DESCRIPTION
+       Weather reports current weather conditions and a forecast for towns in
+       the contiguous United States.  It reads town names from the standard
+       input, one per line.  Each input line should be of the form
+
+              walla walla, wa
+
+       where the state is given as the 2-letter Post Office abbreviation.
+
+       The information provided is the temperature, humidity, whether or not
+       it is raining or snowing, and an indication of cloudiness and
+       visibility if it is not.  If the wind is above 10 knots the wind speed
+       and direction are given.  Up to three forecasts are given (assuming
+       they can be found within a 4x4 degree latitude-longitude square): a
+       forecast of high and low temperatures plus probability of precipitation
+       taken from some numerical model of the atmosphere, a general area
+       forecast and a marine forecast (if near the coast and if the -m
+       argument is given).
+
+       To just get a local forecast, the command weather -h is equivalent to
+       weather followed by a single input line of Murray Hill, NJ.
+
+BUGS
+       Not all the available information is used yet: we hope cumulative
+       precipitation will be added, and additional forecasts will be included.
+
+                                     alice                          WEATHER(7)
+</pre>
+</body></html>

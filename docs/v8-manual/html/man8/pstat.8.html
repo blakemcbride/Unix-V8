@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pstat.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; pstat.8 (<a href="../../../../source/v8/usr/man/man8/pstat.8">troff source</a>)</p>
+<pre>
+PSTAT(8)                    System Manager's Manual                   PSTAT(8)
+
+NAME
+       pstat - print system facts
+
+SYNOPSIS
+       /etc/pstat [ -acfipstuxT ] [ suboptions ] [ file ] [ namelist ]
+
+DESCRIPTION
+       Pstat interprets the contents of certain system tables.  If file is
+       given, the tables are sought there, otherwise in /dev/kmem.  The
+       required namelist is taken from namelist, default /unix.  Options are
+
+       -a    Under -p, describe all process slots rather than just active
+             ones.
+
+       -i    Print the inode table with the these headings:
+
+       LOC   The core location of this table entry.
+       FLAGS Miscellaneous state variables encoded thus:
+             L      locked
+             U      update time (<a href="../man5/filsys.5.html">filsys(5)</a>) must be corrected
+             A      access time must be corrected
+             M      file system is mounted here
+             W      wanted by another process (L flag is on)
+             T      contains a text file
+             C      changed time must be corrected
+       CNT   Number of open file table entries for this inode.
+       DEV   Major and minor device number of file system in which this inode
+             resides.
+       INO   I-number within the device.
+       MODE  Mode bits, see <a href="../man2/chmod.2.html">chmod(2)</a>.
+       NLK   Number of links to this inode.
+       UID   User ID of owner.
+       SIZ/DEV
+             Number of bytes in an ordinary file, or major and minor device of
+             special file.
+
+       -x    Print the text table with these headings:
+
+       LOC   The core location of this table entry.
+       FLAGS Miscellaneous state variables encoded thus:
+             T      Traced through <a href="../man4/proc.4.html">proc(4)</a>
+             W      text not yet written on swap device
+             L      loading in progress
+             K      locked
+             w      wanted (L flag is on)
+             P      resulted from demand-page-from-inode exec format (see
+                    <a href="../man2/exec.2.html">exec(2)</a>)
+
+       DADDR Disk address in swap, measured in multiples of 512 bytes.
+
+       CADDR Head of a linked list of loaded processes using this text
+             segment.
+
+       SIZE  Size of text segment, measured in multiples of 512 bytes.
+
+       IPTR  Core location of corresponding inode.
+
+       CNT   Number of processes using this text segment.
+
+       CCNT  Number of processes in core using this text segment.
+
+       -p    Print process table for active processes with these headings:
+
+       LOC   The core location of this table entry.
+       S     Run state encoded thus:
+             0      no process
+             1      waiting for some event
+             3      runnable
+             4      being created
+             5      being terminated
+             6      stopped under trace
+       F     Miscellaneous state variables, or-ed together (hexadecimal):
+             000001   loaded
+             000002   the scheduler process
+             000004   locked for swap out
+             000008   swapped out
+             000010   traced
+             000020   used in tracing
+             000080   in page-wait
+             000100   prevented from swapping during <a href="../man2/fork.2.html">fork(2)</a>
+             000200   gathering pages for raw i/o
+             000400   exiting
+             008000   process is demand paging data pages from its text inode.
+             030000   process has warned of anomalous paging behavior with
+                      vlimit(2).
+             040000   process is in a sleep which will timeout.
+             080000   a parent of this process has exited and this process is
+                      now considered detached.
+       POIP  number of pages currently being pushed out from this process.
+       PRI   Scheduling priority, see <a href="../man2/nice.2.html">nice(2)</a>.
+       SIGNAL
+             Signals received (signals 1-32 coded in bits 0-31),
+       UID   Real user ID.
+       SLP   Amount of time process has been blocked.
+       TIM   Time resident in seconds; times over 127 coded as 127.
+       CPU   Weighted integral of CPU time, for scheduler.
+       NI    Nice level, see <a href="../man2/nice.2.html">nice(2)</a>.
+       PGRP  Process number of root of process group (the opener of the
+             controlling terminal).
+       PID   The process ID number.
+       PPID  The process ID of parent process.
+       ADDR  If in core, the page frame number of the first page of the `u-
+             area' of the process.  If swapped out, the position in the swap
+             area measured in multiples of 512 bytes.
+       RSS   Resident set size - the number of physical page frames allocated
+             to this process.
+       SRSS  RSS at last swap (0 if never swapped).
+       SIZE  Virtual size of process image (data+stack) in multiples of 512
+             bytes.
+       WCHAN Wait channel number of a waiting process.
+       LINK  Link pointer in list of runnable processes.
+       TEXTP If text is pure, pointer to location of text table entry.
+       CLKT  Countdown for <a href="../man2/alarm.2.html">alarm(2)</a> measured in seconds.
+
+       -u    print information about a user process; the next argument is its
+             address as given by <a href="../man8/oops.8.html">oops(8)</a>.  The process must be in main memory,
+             or the file used can be a core image and the address 0.
+
+       -f    Print the open file table with these headings:
+
+       LOC   The core location of this table entry.
+       FLG   Miscellaneous state variables encoded thus:
+             R      open for reading
+             W      open for writing
+             P      pipe
+       CNT   Number of processes that know this open file.
+       INO   The location of the inode table entry for this file.
+       OFFS  The file offset, see <a href="../man2/lseek.2.html">lseek(2)</a>.
+
+       -s print information about swap space usage: the number of (1k byte)
+       pages used and free is given as well as the number of used pages which
+       belong to text images.
+
+       -T prints the number of used and free slots in the several system
+       tables and is useful for checking to see how full system tables have
+       become if the system is under heavy load.
+
+FILES
+       /unix      namelist
+       /dev/kmem  default source of tables
+
+SEE ALSO
+       <a href="../man8/oops.8.html">oops(8)</a>, <a href="../man2/stat.2.html">stat(2)</a>, <a href="../man5/filsys.5.html">filsys(5)</a>
+       K. Thompson, UNIX Implementation
+
+BUGS
+       This program is never up to date.
+
+                                                                      PSTAT(8)
+</pre>
+</body></html>

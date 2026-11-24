@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>map.7 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 7</a> &gt; map.7 (<a href="../../../../source/v8/usr/man/man7/map.7">troff source</a>)</p>
+<pre>
+MAP(7)                 Miscellaneous Information Manual                 MAP(7)
+
+NAME
+       map - draw maps on various projections
+
+SYNOPSIS
+       map projection [ param ... ] [ option ... ]
+
+DESCRIPTION
+       Map prepares on the standard output a map suitable for display by any
+       plotting filter described in <a href="../man1/plot.1.html">plot(1)</a>.  A menu of projections is
+       produced in response to an unknown projection.  For the meanings of
+       params pertinent to particular projections see <a href="../man3/map.3.html">map(3)</a>.
+
+       The default data for map are world shorelines.  Option -f accesses more
+       detailed data classified by feature.
+
+       -f [ feature ] ...
+              Known features are ranked 1 to 4 from major to minor, with a
+              higher-numbered rank including all lower-numbered ones.  A
+              missing rank is taken to be 1.  Features are
+              shore[1-4]    seacoasts, lakes, and islands; option -f always shows shore1
+              ilake[1-2]    intermittent lakes
+              river[1-4]    rivers
+              iriver[1-3]   intermittent rivers
+              canal[1-3]    (canal3 = irrigation canals)
+              glacier
+              iceshelf[12]
+              reef
+              saltpan[12]
+              country[123]  (country[23] = disputed and indefinite boundaries)
+              state         states and provinces (US and Canada only)
+
+       In the following list of other options all coordinates are in degrees,
+       with north latitude and west longitude counted as positive.
+
+       -l S N E W
+              the southern and northern latitude and the eastern and western
+              longitude limits of the desired map.  Missing arguments are
+              filled out from the list -90, 90, -180, 180, or lesser limits
+              suitable to the projection in question.
+
+       -o lat lon rot
+              Orient the map in a nonstandard position.  Imagine a transparent
+              gridded sphere around the globe.  First turn the overlay about
+              the North Pole so that the Prime Meridian (longitude 0) of the
+              overlay coincides with meridian lon on the globe.  Then tilt the
+              North Pole of the overlay along its Prime Meridian to latitude
+              lat on the globe.  Finally again turn the overlay about its
+              `North Pole' so that its Prime Meridian coincides with the
+              previous position of meridian rot.  Project the desired map in
+              the standard form appropriate to the overlay, but presenting
+              information from the underlying globe.  Missing arguments are
+              filled out from the list 90, 0, 0.  Default orientation is 90,
+              0, m, where m is the middle of the longitude range.
+
+       -w S N E W
+              Window the map by the specified latitudes and longitudes in the
+              tilted, rotated coordinate system.  (It is wise to give an
+              encompassing -l option with -w.  Otherwise for small windows
+              computing time varies inversely with area!)
+
+       -d n   Alter the density of points by plotting only every nth one.
+
+       -r     Reverse left and right side of map, for star charts and inside-
+              out views.
+
+       -s     Save the screen, don't erase before drawing.
+
+       -g dlat dlon res
+              Grid spacings are dlat, dlon (10 degrees by default).  Zero
+              spacing means no grid.  Missing dlat is taken to be zero.
+              Missing dlon is taken the same as dlat.  Grid lines are drawn to
+              a resolution of res (2 degrees by default).
+
+       -p lat lon extent
+              Position the point lat, lon at the center of the plotting area,
+              and scale so that the height (and width) of the nominal plotting
+              area is extent times the size of one degree of latitude at the
+              center.  For example, a standard schoolroom-wall Mercator map
+              comes out as if positioned and scaled with -p 0 0 360.
+
+       -c x y After all other positioning and scaling operations have been
+              performed, move the center of the map to position x, y, where
+              the nominal plotting area is -1≤x≤1, -1≤y≤1.
+
+       -m [ file ] ...
+              Use map data from named files instead of the defaults.  If no
+              files are named, plot grid only.  Names not the pathname of real
+              files are looked up in a standard directory, which contains, in
+              addition to the data for -f,
+
+              world    World Data Bank I from CIA (the default map)
+              states   US map from Census Bureau
+              counties US map from Census Bureau
+
+       -b     Suppress border around map.
+
+       -t [ file ] ...
+              The following arguments name ASCII files that contain lists of
+              points, given as latitude-longitude pairs in degrees.  If the
+              first file is named `-', the standard input is taken instead.
+              The points of each list are plotted as connected `tracks', i.e.
+              dot-dashed lines superimposed on the map.  A nonnumeric field
+              optionally preceded by `"' ends a track.  The field together
+              with everything up to the next newline is placed as a label at
+              the last point of the track, positioned so that a leading
+              character such as `+' or `X' will fall on the point.
+
+       -u [ file ] ...
+              Same as -t, except the tracks are unbroken lines.
+
+       The environment variables MAP and MAPDIR change the default map and
+       default directory.
+
+EXAMPLES
+       A `polar' map centered on New York (actually a low-orbit view): map
+       perspective 1.025 -o 40.75 74.  The job can be done faster by limiting
+       the map so as not to `plot' the invisible part of the world: map
+       perspective 1.025 -o 40.75 74 -l 20 60 30 100.
+       An `equatorial' map of the earth centered on New York: map mercator -o
+       49.25 -106 180.  The pole of the map is placed 90 degrees away on the
+       other side of the earth.  A 180-degree twist around the pole of the map
+       arranges that the `Prime Meridian' of the map runs from the pole of the
+       map over the North Pole to New York instead of down the back side of
+       the earth.  The same effect can be had from: map mercator -o 130.75 74.
+       A customary curved-latitude map of the United States: map albers 28 45
+       -l 20 50 60 130.
+
+FILES
+       /n/bowell/usr1/maps default directory, contains following files
+       101,102,...,403     World Data Bank II
+       world               World Data Bank I
+       states
+       counties
+
+SEE ALSO
+       <a href="../man5/map.5.html">map(5)</a>, <a href="../man3/map.3.html">map(3)</a>, <a href="../man1/plot.1.html">plot(1)</a>
+
+DIAGNOSTICS
+       `map seems to be empty'—the intersection of the limits and the window
+       seems to be null; for very local maps, the grid resolution res may have
+       to be refined.
+
+BUGS
+       Border lines appear only along boundaries that arise from -l and -w
+       options.
+       Segments that cross a map border are dropped.
+
+                                    bowell                              MAP(7)
+</pre>
+</body></html>

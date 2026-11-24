@@ -1,0 +1,14 @@
+NUMBER(1)                   General Commands Manual                  NUMBER(1)
+
+NAME
+       number - convert Arabic numerals to English
+
+SYNOPSIS
+       number
+
+DESCRIPTION
+       Number copies the standard input to the standard output, replacing all
+       decimal numbers by their spelled-out equivalent.  Punctuation is added
+       to make the output sound well when played through voice synthesizers.
+
+                                                                     NUMBER(1)

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>readnews.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; readnews.1 (<a href="../../../../source/v8/usr/man/man1/readnews.1">troff source</a>)</p>
+<pre>
+READNEWS(1)                 General Commands Manual                READNEWS(1)
+
+NAME
+       checknews, readnews - read news articles
+
+SYNOPSIS
+       checknews [ ynqve ] [ readnews-options ]
+
+       readnews [ -a date ] [ -n newsgroup ] [ -t titles ] [ -lprxhfuM ] [ -c
+       [ mailer ] ]
+
+       readnews -s
+
+DESCRIPTION
+       Checknews reports whether there is news present.
+
+       y      report only if news is present
+
+       n      report only if news is absent
+
+       q      turn off reports; nonzero exit status indicates news.
+
+       v      alters the y message to show the name of the first newsgroup
+              containing unread news.  Doubling v (e.g.  vv) causes an
+              explanation of any claim of new news, and is useful if checknews
+              and readnews disagree.
+
+       e      executes <a href="../man1/readnews.1.html">readnews(1)</a> if there is news
+
+       If there are no options, y is the default.
+
+       Readnews without arguments prints unread articles.  There are several
+       interfaces available besides the default:
+
+       Flag      Interface
+
+       -M        An interface to <a href="../man1/Mail.1.html">Mail(1)</a>.
+
+       -c        A /bin/<a href="../man1/mail.1.html">mail(1)</a>-like interface.
+
+       -c `mailer'
+                 All selected articles written to a temporary file.  Then the
+                 mailer is invoked.  The name of the temporary file is
+                 referenced with a `%'.  Thus, `mail -f %' will invoke mail on
+                 a temporary file consisting of all selected messages.
+
+       -p        All selected articles are sent to the standard output.  No
+                 questions asked.
+
+       -l        Only the titles output.  The .newsrc file will not be
+                 updated.
+
+       The -r flag causes the articles to be printed in reverse order.  The -f
+       flag prevents any followup articles from being printed.  The -h flag
+       causes articles to be printed in a less verbose format, and is intended
+       for terminals running at 300 baud.  the -u flag causes the .newsrc file
+       to be updated every 5 minutes, in case of an unreliable system.  (Note
+       that if the newsrc file is updated, the x command will not restore it
+       to its original contents.)
+
+       The following flags determine the selection of articles.
+
+       -n newsgroups
+                 Select all articles that belong to newsgroups.
+
+       -t titles Select all articles whose titles contain one of the strings
+                 specified by titles.
+
+       -a [ date ]
+                 Select all articles that were posted past the given date.
+
+       -x        Ignore .newsrc file.  That is, select articles that have
+                 already been read as well as new ones.
+
+       readnews maintains a .newsrc file in the user's home directory that
+       specifies all news articles already read.  It is updated at the end of
+       each reading session in which the -x or -l options weren't specified.
+       If the environment variable NEWSRC is present, it should be the path
+       name of a file to be used in place of .newsrc.
+
+       If the user wishes, an options line may be placed in the .newsrc file.
+       This line starts with the word options (left justified) followed by the
+       list of standard options just as they would be typed on the command
+       line.  Such a list may include: the -n flag along with a newsgroup
+       list; a favorite interface; and/or the -r or -t flag.  Continuation
+       lines are specified by following lines beginning with a space or tab
+       character.  Similarly, options can be specified in the NEWSOPTS
+       environment parameter.  Where conflicts exist, option on the command
+       line take precedence, followed by the .newsrc options line, and lastly
+       the NEWSOPTS parameter.
+
+       readnews -s will print the newsgroup subscription list.
+
+       When  user uses the reply command of the default or mail interfaces,
+       the environment parameter MAILER will be used to determine which mailer
+       to use.  The default is usually /bin/mail.
+
+       If the user so desires, he may specify a specific paging progam for
+       articles.  The environment parameter PAGER should be set to the paging
+       program.  The name of the article is referenced with a `%', as in the
+       -c option.  If no `%' is present, the article will be piped to the
+       program.  Paging may be disabled by setting PAGER to a null value.
+
+COMMANDS
+       This section lists the commands you can type to the msgs and /bin/mail
+       interface prompts.  The msgs interface will suggest some common
+       commands in brackets.  Just hitting return is the same as typing the
+       first command.  For example, `[ynq]' means that the commands ``y''
+       (yes), ``n'' (no), and `q' (quit) are common responses, and that ``y''
+       is the default.  Command                  Meaning
+
+       y      Yes.  Prints current article and goes on to next.
+
+       n      No.  Goes on to next article without printing current one.  In
+              the /bin/mail interface, this means `go on to the next article',
+              which will have the same effect as `y' or just hitting return.
+
+       q      Quit.  The .newsrc file will be updated if -l or -x were not on
+              the command line.
+
+       c      Cancel the article.  Only the author or the super user can do
+              this.
+
+       r      Reply.  Reply to article's author via mail.  You are placed in
+              your EDITOR with a header specifying To, Subject, and References
+              lines taken from the message.  You may change or add headers, as
+              appropriate.  You add the text of the reply after the blank
+              line, and then exit the editor.  The resulting message is mailed
+              to the author of the article.
+
+       rd     Reply directly.  You are placed in $MAILER (`mail' by default)
+              in reply to the author.  Type the text of the reply and then
+              control-D.
+
+       f [title]
+              Submit a follow up article.  Normally you should leave off the
+              title, since the system will generate one for you.  You will be
+              placed in your EDITOR to compose the text of the followup.
+
+       fd     Followup directly, without edited headers.  This is like f, but
+              the headers of the article are not included in the editor
+              buffer.
+
+       N [newsgroup]
+              Go to the next newsgroup or named newsgroup.
+
+       s [file]
+              Save.  The article is appended to the named file.  The default
+              is `Articles'.  If the first character of the file name is `|',
+              the rest of the file name is taken as the name of a program,
+              which is executed with the text of the article as standard
+              input.  If the first character of the file name is `/', it is
+              taken as a full path name of a file.  If $NEWSBOX (in the
+              environment) is set to a full path name, and the file contains
+              no `/', the file is saved in $NEWSBOX.  Otherwise, it is saved
+              relative to $HOME.
+
+       #      Report the name and size of the newsgroup.
+
+       e      Erase.  Forget that this article was read.
+
+       h      Print a more verbose header.
+
+       H      Print a very verbose header, containing all known information
+              about the article.
+
+       U      Unsubscribe from this newsgroup.  Also goes on to the next
+              newsgroup.
+
+       d      Read a digest.  Breaks up a digest into separate articles and
+              permits you to read and reply to each piece.
+
+       D [number]
+              Decrypt.  Invokes a Caesar decoding program on the body of the
+              message.  This is used to decrypt rotated jokes posted to
+              net.jokes, to avoid possible offense to uninterested readers.
+              The title of the joke should indicate the nature of the problem,
+              enabling people to decide whether to decrypt it or not.
+
+       Normally the Caesar program does a character frequency count on each
+       line of the article separately, so that lines which are not rotated
+       will be shown in plain text.  This works well unless the line is short,
+       in which case it sometimes gets the wrong rotation.  An explicit number
+       rotation (usually 13) may be given to force a particular shift.
+
+       v      Print the current version of the news software.
+
+       !      Shell escape.
+
+       number Go to number.
+
+       +[n]   Skip n articles.  The articles skipped are recorded as `unread'
+              and will be offered to you again the next time you read news.
+
+       -      Go back to last article.  This is a toggle, typing it twice
+              returns you to the original article.
+
+       x      Exit.  Like quit except that .newsrc is not updated.
+
+       X [system]
+              Transmit article to the named system.
+
+       The commands c, f, fd, r, rd, e, h, H, and s can be followed by -'s to
+       refer to the previous article.  Thus, when replying to an article using
+       the msgs interface, you should normally type `r-' (or ``re-'') since by
+       the time you enter a command, you are being offerred the next article.
+
+EXAMPLES
+       readnews  Read all unread articles using the msgs interface.  The
+                 .newsrc file is updated at the end of the session.
+
+       readnews -c ``ed %'' -l
+                 Invoke the <a href="../man1/ed.1.html">ed(1)</a> text editor on a file containing the titles
+                 of all unread articles.  The .newsrc file is not updated at
+                 the end of the session.
+
+       readnews -n all !fa.all -M -r
+                 Read all unread articles except articles whose newsgroups
+                 begin with "fa." via <a href="../man1/Mail.1.html">Mail(1)</a> in reverse order.  The .newsrc
+                 file is updated at the end of the session.
+
+       readnews -p -n all -a last thursday
+                 Print every unread article since last Thursday.  The .newsrc
+                 file is updated at the end of the session.
+
+       readnews -p &gt; /dev/null &amp;
+                 Discard all unread news.  This is useful after returning from
+                 a long trip.
+
+FILES
+       /usr/spool/news/newsgroup/number
+                                News articles
+       /usr/lib/news/active     Active newsgroups and numbers of articles
+       /usr/lib/news/help       Help file for msgs interface
+       ~/.newsrc                Options and list of previously read articles
+
+SEE ALSO
+       <a href="../man1/postnews.1.html">postnews(1)</a> <a href="../man1/mail.1.html">mail(1)</a>,
+
+BUGS
+       Netnews and readnews use the same text in different churches.
+
+                                                                   READNEWS(1)
+</pre>
+</body></html>

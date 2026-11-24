@@ -1,0 +1,50 @@
+GRAM((1))                                                            GRAM((1))
+
+NAME
+       gram - find split infinitives and incorrect indefinite articles
+       splitrules - print information about split infinitives
+
+SYNOPSIS
+       gram [ -flags ][ -ver ] [file ...]
+
+       splitrules [ -flags ][ -ver ]
+
+DESCRIPTION
+       Gram uses the parts(1) (part of speech assignment) program to look for
+       infinitives that are split by one or more adverbs.  It also checks for
+       incorrect indefinite articles.
+
+       Grammatical information about split infinitives can be obtained by
+       typing: splitrules.
+
+       Two options, which apply to both programs, give information about the
+       programs:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+       Gram is one of the programs run under the proofr(1) and wwb(1)
+       commands.
+
+FILES
+       /tmp/$$              temporary files
+
+SEE ALSO
+       proofr(1), wwb(1), deroff(1), parts(1).
+
+BUGS
+       Because parts is not always correct in its assignments, gram also makes
+       errors.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                     GRAM((1))

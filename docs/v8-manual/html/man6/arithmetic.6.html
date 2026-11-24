@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>arithmetic.6 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 6</a> &gt; arithmetic.6 (<a href="../../../../source/v8/usr/man/man6/arithmetic.6">troff source</a>)</p>
+<pre>
+ARITHMETIC(6)                    Games Manual                    ARITHMETIC(6)
+
+NAME
+       arithmetic - drill in number facts
+
+SYNOPSIS
+       /usr/games/arithmetic [ +-x/ ] [ range ]
+
+DESCRIPTION
+       Arithmetic types out simple arithmetic problems, and waits for an
+       answer to be typed in.  If the answer is correct, it types back
+       `Right!', and a new problem.  If the answer is wrong, it replies
+       `What?', and waits for another answer.  Every twenty problems, it
+       publishes statistics on correctness and the time required to answer.
+
+       To quit the program, type an interrupt (delete).
+
+       The first optional argument determines the kind of problem to be
+       generated; +-x/ respectively cause addition, subtraction,
+       multiplication, and division problems to be generated.  One or more
+       characters can be given; if more than one is given, the different types
+       of problems will be mixed in random order; default is +-
+
+       Range is a decimal number; all addends, subtrahends, differences,
+       multiplicands, divisors, and quotients will be less than or equal to
+       the value of range.  Default range is 10.
+
+       At the start, all numbers less than or equal to range are equally
+       likely to appear.  If the respondent makes a mistake, the numbers in
+       the problem which was missed become more likely to reappear.
+
+       As a matter of educational philosophy, the program will not give
+       correct answers, since the learner should, in principle, be able to
+       calculate them.  Thus the program is intended to provide drill for
+       someone just past the first learning stage, not to teach number facts
+       de novo.  For almost all users, the relevant statistic should be time
+       per problem, not percent correct.
+
+                                                                 ARITHMETIC(6)
+</pre>
+</body></html>

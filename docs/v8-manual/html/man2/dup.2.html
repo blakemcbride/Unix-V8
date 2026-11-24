@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dup.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; dup.2 (<a href="../../../../source/v8/usr/man/man2/dup.2">troff source</a>)</p>
+<pre>
+DUP(2)                        System Calls Manual                       DUP(2)
+
+NAME
+       dup, dup2 - duplicate an open file descriptor
+
+SYNOPSIS
+       dup(fildes)
+       int fildes;
+
+       dup2(fildes, fildes2)
+       int fildes, fildes2;
+
+DESCRIPTION
+       Given a file descriptor dup allocates another file descriptor
+       synonymous with the original.  The new file descriptor is returned.
+
+       In the second form of the call, fildes is a file descriptor referring
+       to an open file, and fildes2 is a non-negative integer less than the
+       maximum value allowed for file descriptors (currently 127).  Dup2
+       causes fildes2 to refer to the same file as fildes.  If fildes2 already
+       referred to an open file, it is closed first.
+
+SEE ALSO
+       <a href="../man2/creat.2.html">creat(2)</a>, <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/close.2.html">close(2)</a>, <a href="../man2/pipe.2.html">pipe(2)</a>
+
+DIAGNOSTICS
+       The value -1 is returned if: the given file descriptor is invalid;
+       there are already too many open files.
+
+                                                                        DUP(2)
+</pre>
+</body></html>

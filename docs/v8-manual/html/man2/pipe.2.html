@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pipe.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; pipe.2 (<a href="../../../../source/v8/usr/man/man2/pipe.2">troff source</a>)</p>
+<pre>
+PIPE(2)                       System Calls Manual                      PIPE(2)
+
+NAME
+       pipe - create an interprocess channel
+
+SYNOPSIS
+       pipe(fildes)
+       int fildes[2];
+
+DESCRIPTION
+       The returned file descriptors are the ends of pair of cross-connected
+       streams (See <a href="../man4/stream.4.html">stream(4)</a>).  Data written via fildes[1] is available for
+       reading via fildes[0] and vice versa.
+
+       It is assumed that after the pipe has been set up, two (or more)
+       cooperating processes (created by subsequent fork calls) will pass data
+       through the pipe with read and write calls.  The record structure
+       induced by write calls is maintained by a pipe and is visible to a
+       reader, provided no line disciplines modules have been pushed into the
+       pipe stream; see <a href="../man2/write.2.html">write(2)</a>.
+
+       The Shell has a syntax to set up a linear array of processes connected
+       by pipes.
+
+       Write calls on a one-ended pipe raise signal SIGPIPE.  Read calls on a
+       one-ended pipe with no data in it return an end-of-file for the first
+       several attempts, then raise SIGPIPE.
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>, <a href="../man2/read.2.html">read(2)</a>, <a href="../man2/write.2.html">write(2)</a>, <a href="../man2/fork.2.html">fork(2)</a>
+
+DIAGNOSTICS
+       The function value zero is returned if the pipe was created; -1 if too
+       many files are already open.
+
+BUGS
+       Should too much buffering be necessary in any pipeline among a loop of
+       processes, deadlock will occur.
+
+                                                                       PIPE(2)
+</pre>
+</body></html>

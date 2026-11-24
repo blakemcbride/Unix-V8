@@ -1,0 +1,89 @@
+CBT(3X)                                                                CBT(3X)
+
+NAME
+       bopen, bclose, bseek, bfirst, bkey, breclen, bread, bdelete, bwrite -
+       compressed B-tree subroutines
+
+SYNOPSIS
+       #include <cbt.h>
+
+       bfile *bopen(name, typ) char *name;
+
+       void bclose(b) bfile *b;
+
+       bseek(b, key) bfile *b; mbuf key;
+
+       bfirst(b) bfile *b;
+
+       mbuf bkey(b) bfile *b;
+
+       breclen(b) bfile *b;
+
+       bread(b, key, val) bfile *b; mbuf *key, *val;
+
+       bdelete(b, key) bfile *b; mbuf key;
+
+       bwrite(b, key, val) bfile *b; mbuf key, val;
+
+DESCRIPTION
+       These functions manipulate files of key/value records.  Such files are
+       created by cbt(1).  To load the functions use ld(1) option -lcbt.
+
+       The records occur sorted by their keys, which must be distinct.  Both
+       keys and values are arrays of characters accessed through the data type
+       `mbuf':
+
+              typedef struct {
+                   char *mdata;   /* pointer to the data */
+                   short mlen;    /* number of bytes in the data */
+              } mbuf;
+
+       Bopen attempts to open a named B-tree, and if successful establishes a
+       read pointer pointing to the beginning of the file and returns a
+       pointer to be used in calling the other routines.  Typ is 0 for read-
+       only or 2 for read-write.  Bopen returns a descriptor that identifies
+       the file to the other functions.
+
+       Bclose closes a B-tree.
+
+       Bseek positions the read pointer of the file to the record whose key is
+       the first not less than key.  The routine returns 1 if key is in the
+       file, EOF if key is greater than any key in the file, and 0 otherwise.
+
+       Bfirst sets the read pointer to the beginning of the file.  It has the
+       same error return as bseek.
+
+       Bkey returns the current key.  The element mdata of the returned
+       structure is 0 on errors, otherwise it points to a critical static
+       buffer.
+
+       Breclen returns the length of the value part of the current record.
+
+       Bread reads the value at the read pointer into the space pointed to by
+       val->mdata, places its length in val->mlen, and advances the read
+       pointer to the record with the next greater key.  If key is not 0 the
+       key of the record is read into the space pointed to by key->mdata and
+       its length is placed in key->mlen.  Bread returns 0 if successful.
+
+       Bdelete removes the record with the given key, returning 1 if the
+       record was found, -1 if there was an error, and 0 otherwise, The read
+       pointer is left undefined.
+
+       Bwrite writes the given value with the given key, returning 0 if there
+       was no error.  An existing record with that key will be replaced.  The
+       read pointer is left undefined.
+
+FILES
+       The btree name is stored in files name.T and name.F.
+
+SEE ALSO
+       cbt(1), dbm(3)
+
+DIAGNOSTICS
+       Routines which return pointers return 0 on errors, routines which
+       return integers return -1.
+
+BUGS
+       The lengths of keys and values are limited.
+
+                                                                       CBT(3X)

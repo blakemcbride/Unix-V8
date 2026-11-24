@@ -1,0 +1,51 @@
+FOPEN(3S)                                                            FOPEN(3S)
+
+NAME
+       fopen, freopen, fdopen - open a stream
+
+SYNOPSIS
+       #include <stdio.h>
+
+       FILE *fopen(filename, type)
+       char *filename, *type;
+
+       FILE *freopen(filename, type, stream)
+       char *filename, *type;
+       FILE *stream;
+
+       FILE *fdopen(fildes, type)
+       char *type;
+
+DESCRIPTION
+       Fopen opens the file named by filename and associates a stream with it.
+       Fopen returns a pointer to be used to identify the stream in subsequent
+       operations.
+
+       Type is a character string having one of the following values:
+
+       "r"  open for reading
+
+       "w"  create for writing
+
+       "a"  append: open for writing at end of file, or create for writing
+
+       Freopen substitutes the named file in place of the open stream.  It
+       returns the original value of stream.  The original stream is closed.
+       Freopen is typically used to attach the preopened constant names,
+       `stdin', `stdout', `stderr', to specified files.
+
+       Fdopen associates a stream with a file descriptor obtained from open,
+       dup, creat, or pipe(2).  The type of the stream must agree with the
+       mode of the open file.
+
+SEE ALSO
+       open(2), fclose(3)
+
+DIAGNOSTICS
+       Fopen and freopen return the pointer NULL if filename cannot be
+       accessed.
+
+BUGS
+       Fdopen is not portable to systems other than UNIX.
+
+                                                                     FOPEN(3S)

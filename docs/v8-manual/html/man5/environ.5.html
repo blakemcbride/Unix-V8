@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>environ.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; environ.5 (<a href="../../../../source/v8/usr/man/man5/environ.5">troff source</a>)</p>
+<pre>
+ENVIRON(5)                    File Formats Manual                   ENVIRON(5)
+
+NAME
+       environ - user environment
+
+SYNOPSIS
+       extern char **environ;
+
+DESCRIPTION
+       An array of strings called the `environment' is made available by
+       <a href="../man2/exec.2.html">exec(2)</a> when a process begins.  By convention these strings have either
+       the form `name=value', defining a variable, or `name(){value}',
+       defining a function (see <a href="../man1/sh.1.html">sh(1)</a>).  The following variables are used by
+       various commands:
+
+       PATH    The sequence of directory prefixes that sh, time, <a href="../man1/nice.1.html">nice(1)</a>,
+               etc., apply in searching for a file known by an incomplete path
+               name.  The prefixes are separated by `:'.  Login(1) sets
+               PATH=:/bin:/usr/bin.
+
+       HOME    A user's login directory, set by <a href="../man8/login.8.html">login(8)</a> from the password
+               file <a href="../man5/passwd.5.html">passwd(5)</a>.
+
+       TERM    The kind of terminal for which output is to be prepared.  This
+               information is used by commands, such as nroff or <a href="../man1/plot.1.html">plot(1)</a>,
+               which may exploit special terminal capabilities.  See
+               /etc/termcap for a list of terminal types.
+
+       SHELL   The name of the login shell.
+
+       The environment may be queried by <a href="../man3/getenv.3.html">getenv(3)</a> or by the set or whatis
+       commands of <a href="../man1/sh.1.html">sh(1)</a>.  Names may be placed in the environment by the
+       export command by and `name=value' arguments in <a href="../man1/sh.1.html">sh(1)</a>.  Names may also
+       be placed in the environment at the point of an <a href="../man2/exec.2.html">exec(2)</a>.  It is unwise
+       to conflict with certain <a href="../man1/sh.1.html">sh(1)</a> variables that are frequently exported
+       by `.profile' files: MAIL, PS1, PS2, IFS.
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>, <a href="../man2/exec.2.html">exec(2)</a>, <a href="../man3/getenv.3.html">getenv(3)</a>, <a href="../man7/term.7.html">term(7)</a>
+
+                                                                    ENVIRON(5)
+</pre>
+</body></html>

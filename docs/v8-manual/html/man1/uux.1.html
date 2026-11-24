@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uux.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; uux.1 (<a href="../../../../source/v8/usr/man/man1/uux.1">troff source</a>)</p>
+<pre>
+UUX(1)                      General Commands Manual                     UUX(1)
+
+NAME
+       uux - unix to unix command execution
+
+SYNOPSIS
+       uux [ options ] command-string
+
+DESCRIPTION
+       Uux will gather zero or more files from various systems, execute a
+       command on a specified system and then send standard output to a file
+       on a specified system.  Note that, for security reasons, many
+       installations will limit the list of commands executable on behalf of
+       an incoming request from uux.  Many sites will permit little more than
+       the receipt of mail (see <a href="../man1/mail.1.html">mail(1)</a>) via uux.
+
+       The command-string is made up of one or more arguments that look like a
+       Shell command line, except that the command and file names may be
+       prefixed by system-name!.  A null system-name is interpreted as the
+       local system.
+
+       File names may be one of
+
+              (1) a full path name;
+
+              (2) a path name preceded by ~xxx where xxx is a login name on
+              the specified system and is replaced by that user's login
+              directory;
+
+              (3) anything else is prefixed by the current directory.
+
+       As an example, the command
+
+              uux "!diff usg!/usr/dan/file1 pwba!/a4/dan/file2 &gt;
+              !~/dan/file.diff"
+
+       will get file1 and file2 from the `usg' and `pwba' machines, execute a
+       diff command and put the results in file.diff in the local ~/dan/
+       directory.
+
+       Any special shell characters such as &lt;&gt;;⎪ should be quoted either by
+       quoting the entire command-string, or quoting the special characters as
+       individual arguments.
+
+       Uux will attempt to get all files to the execution system.  For files
+       that are output files, the file name must be escaped using parentheses.
+       For example, the command
+
+              uux a!cut -f1 b!/usr/file \(c!/usr/file\)
+
+       gets /usr/file from system `b' and send it to system `a', performs a
+       cut command on that file and send the result of the cut command to
+       system `c'.
+
+       Uux will notify you by mail if the requested command on the remote
+       system was disallowed.  This notification can be turned off by the -n
+       option.
+
+       The following options are interpreted by uux:
+
+       -    The standard input to uux is made the standard input to the
+            command-string.
+
+       -aname
+            Use name as the user identification replacing the initiator user-
+            id.  (Notification will be returned to the user.)
+
+       -b   Return standard input to the command if the exit status is non-
+            zero.
+
+       -c   Don't copy local file to the spool directory for transfer to the
+            remote machine (default).
+
+       -C   Force the copy of local files to the spool directory for transfer.
+
+       -ggrade
+            Grade is a single letter/number; lower ASCII sequence characters
+            will cause the job to be transmitted earlier during a particular
+            conversation.
+
+       -j   Output the jobid ASCII string on the standard output which is the
+            job identification.  This job identification can be used by uustat
+            to obtain the status or terminate a job.
+
+       -n   Do not notify the user if the comand fails.
+
+       -p   Same as -: The standard input to uux is made the standard input to
+            the command-string.
+
+       -r   Don't start the file transfer, just queue the job.
+
+       -sfile
+            Report status of the transfer in file.
+
+       -xdebug-level
+            Produce debugging output on stdout.  The debug_level is a number
+            between 0 and 9; higher numbers give more detailed information.
+
+       -z   Notify the user if the command succeeds.
+
+FILES
+       /usr/lib/uucp/spool   spool directories
+       /usr/lib/uucp/∗       other data and programs
+
+SEE ALSO
+       <a href="../man1/uucp.1.html">uucp(1)</a>
+
+WARNINGS
+       Only the first command of a shell pipeline may have a system-name!.
+       All other commands are executed on the system of the first command.
+       The use of the shell metacharacter ∗ will probably not do what you want
+       it to do.  The shell tokens &lt;&lt; and &gt;&gt; are not implemented.
+
+       The execution of commands on remote systems takes place in an execution
+       directory known to the uucp system.  All files required for the
+       execution will be put into this directory unless they already reside on
+       that machine.  Therefore, the simple file name (without path or machine
+       reference) must be unique within the uux request.  The following
+       command will NOT work:
+
+              uux "a!diff  b!/usr/dan/xyz c!/usr/dan/xyz &gt; !xyz.diff"
+
+       but the command
+
+              uux "a!diff  a!/usr/dan/xyz c!/usr/dan/xyz &gt; !xyz.diff"
+
+       will work.  (If diff is a permitted command.)
+
+BUGS
+       Protected files and files that are in protected directories that are
+       owned by the requester can be sent in commands using uux.  However, if
+       the requester is root, and the directory is not searchable by "other"
+       or the file is not readable by "other", the request will fail due to a
+       bug in setuid().
+
+                                                                        UUX(1)
+</pre>
+</body></html>

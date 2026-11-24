@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>umask.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; umask.2 (<a href="../../../../source/v8/usr/man/man2/umask.2">troff source</a>)</p>
+<pre>
+UMASK(2)                      System Calls Manual                     UMASK(2)
+
+NAME
+       umask - set file creation mode mask
+
+SYNOPSIS
+       umask(complmode)
+
+DESCRIPTION
+       Umask sets a mask used whenever a file is created by <a href="../man2/creat.2.html">creat(2)</a> or
+       <a href="../man2/mknod.2.html">mknod(2)</a>: the actual mode (see <a href="../man2/chmod.2.html">chmod(2)</a>) of the newly-created file is
+       the logical and of the given mode and the complement of the argument.
+       Only the low-order 9 bits of the mask (the protection bits)
+       participate.  In other words, the mask shows the bits to be turned off
+       when files are created.
+
+       The previous value of the mask is returned by the call.  The value is
+       initially 022 (write access for owner only).  The mask is inherited by
+       child processes.
+
+SEE ALSO
+       <a href="../man2/creat.2.html">creat(2)</a>, <a href="../man2/mknod.2.html">mknod(2)</a>, <a href="../man2/chmod.2.html">chmod(2)</a>
+
+                                                                      UMASK(2)
+</pre>
+</body></html>

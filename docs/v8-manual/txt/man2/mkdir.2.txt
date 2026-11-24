@@ -1,0 +1,36 @@
+MKDIR(2)                      System Calls Manual                     MKDIR(2)
+
+NAME
+       mkdir, rmdir - make or remove a directory
+
+SYNOPSIS
+       mkdir(name, mode)
+       char *name;
+
+       rmdir(name)
+       char *name;
+
+DESCRIPTION
+       Mkdir creates a new directory whose name is the null-terminated string
+       pointed to by name.  The mode of the directory is initialized from
+       mode, modified by the current mode mask (umask(2)).  The directory is
+       initialized with two entries: .  points to the directory itself, ..  to
+       its parent.
+
+       Rmdir removes the directory name, which must be empty.
+
+SEE ALSO
+       mkdir(1), rmdir(1), mknod(2)
+
+DIAGNOSTICS
+       Mkdir returns 0 on success, -1 if the directory already exists or if
+       the user has no write permissions in the parent directory.
+
+       Rmdir returns 0 on success, -1 if the directory doesn't exist, isn't
+       empty, isn't a directory, or is the root of a filesystem.
+
+BUGS
+       Rmdir will happily remove a non-empty directory, leaving any files
+       therein orphaned.  This is easy to fix, but nobody has bothered.
+
+                                                                      MKDIR(2)

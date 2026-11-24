@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>spell.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; spell.1 (<a href="../../../../source/v8/usr/man/man1/spell.1">troff source</a>)</p>
+<pre>
+SPELL(1)                    General Commands Manual                   SPELL(1)
+
+NAME
+       spell - find spelling errors
+
+SYNOPSIS
+       spell [ option ] ...  [ file ] ...
+
+DESCRIPTION
+       Spell looks up words from the named files (standard input default) in a
+       public spelling list and in a private list.  Words that occur in
+       neither and are not plausibly derivable from words in the public list
+       are placed on the standard output.
+
+       Spell ignores most troff, tbl, pic, and <a href="../man1/eqn.1.html">eqn(1)</a> constructions.  It
+       understands these options:
+
+       -b     check British spelling
+
+       -v     print all words not literally in the spelling list, with
+              derivations
+
+       -x     print, marked with `=', every stem tried in both stop list and
+              spelling list
+
+       The private list, by default $HOME/lib/spelldict, is arranged one word
+       per line.
+
+       Pertinent auxiliary files may be specified by environment variables,
+       indicated below with their default settings.  Copies of all output are
+       accumulated in the history file, if it is writable.  The stop list
+       filters out misspellings (e.g. thier=thy-y+ier) that would otherwise
+       pass.
+
+FILES
+       D_SPELL=/usr/dict/hlist[ab]: hashed public lists, American &amp; British
+       S_SPELL=/usr/dict/hstop: hashed stop list
+       H_SPELL=/usr/dict/spellhist: history file
+       A_SPELL=$HOME/lib/spelldict: private list
+       P_SPELL=/usr/lib/spell: the main routine
+       <a href="../man1/deroff.1.html">deroff(1)</a>, <a href="../man1/sort.1.html">sort(1)</a>, <a href="../man1/tee.1.html">tee(1)</a>, <a href="../man1/comm.1.html">comm(1)</a>
+
+SEE ALSO
+       <a href="../man7/dict.7.html">dict(7)</a>
+
+BUGS
+       A malicious opponent can defeat spell's heuristics for word derivation,
+       but this rarely happens in practice.
+       The spelling list's coverage is uneven; in particular biology,
+       medicine, and chemistry are covered very lightly.  New installations
+       will probably wish to monitor the output for several months to gather
+       local additions.
+       British spelling was done by an American.
+
+                                                                      SPELL(1)
+</pre>
+</body></html>

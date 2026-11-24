@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>exit.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; exit.2 (<a href="../../../../source/v8/usr/man/man2/exit.2">troff source</a>)</p>
+<pre>
+EXIT(2)                       System Calls Manual                      EXIT(2)
+
+NAME
+       exit - terminate process
+
+SYNOPSIS
+       exit(status)
+       int status;
+
+       _exit(status)
+       int status;
+
+DESCRIPTION
+       Exit is the normal means of terminating a process.  Exit closes all the
+       process's files and notifies the parent process if it is executing a
+       wait.  The low-order 8 bits of status are available to the parent
+       process.
+
+       This call can never return.
+
+       The C function exit may cause cleanup actions before the final `sys
+       exit'.  The function _exit circumvents all cleanup, and should be used
+       to terminate a child process after a <a href="../man2/fork.2.html">fork(2)</a> to avoid flushing buffered
+       output twice.
+
+SEE ALSO
+       <a href="../man2/fork.2.html">fork(2)</a>, <a href="../man2/wait.2.html">wait(2)</a>
+
+                                                                       EXIT(2)
+</pre>
+</body></html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>lseek.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; lseek.2 (<a href="../../../../source/v8/usr/man/man2/lseek.2">troff source</a>)</p>
+<pre>
+LSEEK(2)                      System Calls Manual                     LSEEK(2)
+
+NAME
+       lseek, tell - move read/write pointer
+
+SYNOPSIS
+       long lseek(fildes, offset, whence)
+       long offset;
+
+       long tell(fildes)
+
+DESCRIPTION
+       The file descriptor refers to a file open for reading or writing.  The
+       read (resp. write) pointer for the file is set as follows:
+
+              If whence is 0, the pointer is set to offset bytes.
+
+              If whence is 1, the pointer is set to its current location plus
+              offset.
+
+              If whence is 2, the pointer is set to the size of the file plus
+              offset.
+
+       The returned value is the resulting pointer location.
+
+       The obsolete function tell(fildes) is identical to lseek(fildes, 0L, 1
+       ).
+
+       Seeking far beyond the end of a file, then writing, creates a gap or
+       `hole', which occupies no physical space and reads as zeros.
+
+SEE ALSO
+       <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/creat.2.html">creat(2)</a>, <a href="../man3/fseek.3.html">fseek(3)</a>
+
+DIAGNOSTICS
+       -1 is returned for an undefined file descriptor, seek on a pipe, or
+       seek to a position before the beginning of file.
+
+BUGS
+       Lseek is a no-op on character special files.
+
+                                                                      LSEEK(2)
+</pre>
+</body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>puts.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; puts.3 (<a href="../../../../source/v8/usr/man/man3/puts.3">troff source</a>)</p>
+<pre>
+PUTS(3S)                                                              PUTS(3S)
+
+NAME
+       puts, fputs - put a string on a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       puts(s)
+       char *s;
+
+       fputs(s, stream)
+       char *s;
+       FILE *stream;
+
+DESCRIPTION
+       Puts copies the null-terminated string s to the standard output stream
+       stdout and appends a newline character.
+
+       Fputs copies the null-terminated string s to the named output stream.
+
+       Neither routine copies the terminal null character.
+
+SEE ALSO
+       <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/gets.3.html">gets(3)</a>, <a href="../man3/putc.3.html">putc(3)</a>, <a href="../man3/printf.3.html">printf(3)</a>, <a href="../man3/ferror.3.html">ferror(3)</a>
+       <a href="../man3/fread.3.html">fread(3)</a> for fwrite
+
+BUGS
+       Puts appends a newline, fputs does not, all in the name of backward
+       compatibility.
+
+                                                                      PUTS(3S)
+</pre>
+</body></html>

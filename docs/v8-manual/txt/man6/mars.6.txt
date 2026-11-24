@@ -1,0 +1,87 @@
+MARS(6)                          Games Manual                          MARS(6)
+
+NAME
+       mars - memory array redcode simulator
+
+SYNOPSIS
+       mars [-dfhmp] [-cqs<value>] file1 file2 ...
+
+DESCRIPTION
+       Mars is a simulator for the Redcode machine specified by Dr. Kee
+       Dewdney in the "Computer Recreations" column in the May 1984 issue of
+       Scientific American.  The command line contains any arguments followed
+       by a list of object code file names.  The easiest way to create an
+       object file is to use the redcode(6) command to a assemble the object
+       file from a redcode source file.
+
+OBJECT FILES
+       An object file contains three header lines indicating the name of the
+       program, the length of the program, and the offset from the beginning
+       of the starting location.  Here is a sample redcode object file, for
+       the Dwarf program:
+
+            name dwarf
+            length 4
+            start 1
+            00000007999
+            20000517999
+            10000027998
+            41799800000
+
+INSTRUCTION FORMAT
+       The instruction format is an 11 digit decimal string, as follows:
+
+            0    1    2-5  6    7-10
+            +-------+-------+-------+-------+-------+
+            |opcode |mode1 |arg1     |mode2    |arg2     |
+            +-------+-------+-------+-------+-------+
+
+OPTIONS
+       Options allow for tracing execution, for graphically displaying the
+       progress of each program, and for analyzing and dumping memory before
+       and after execution.  For example, the following command:
+
+            mars -s1234 -f -c20000 dwarf.obj gemini.obj imp.obj
+
+       specifies that imp, dwarf, and gemini are to be run together, with a
+       fullscreen display for 20000 cycles using a random number seed of 1234.
+
+       -cN    cycles option, determines the maximum number of cycles for this
+              run.  The default is 10000.
+
+       -d     debug option, causes the execution to be traced in excrutiating
+              detail.
+
+       -f     fullscreen option, causes the execution to be displayed
+              graphically on any terminal supported by curses(3).
+
+       -h     holes option, causes a description of memory usage to be printed
+              after execution terminates.
+
+       -m     memory dump option, causes memory to be dumped before and after
+              execution terminates.
+
+       -p     procedure dump option, similar to -m option, except only memory
+              near each program counter is dumped.
+
+       -qN    quit option, indicates the minimum number of programs required
+              to be alive.  For example, if -q3 is specified, execution
+              terminates as soon as there are fewer than three programs still
+              alive.  -q1 specifies that execution continues as long as any
+              program is alive.  The default is to quit when there is but one
+              program still running.
+
+       -sN    random seed option, specifies a random seed for this run.  The
+              default is 0 (i.e.  a random seed based on the time).
+
+SEE ALSO
+       redcode(6)
+
+BUGS
+       None known.
+
+HISTORY
+       20-May-84 Michael Mauldin (mlm) at CMU
+              Created.
+
+                                    5/20/84                            MARS(6)

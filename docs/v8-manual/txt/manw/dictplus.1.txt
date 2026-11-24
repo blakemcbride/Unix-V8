@@ -1,0 +1,62 @@
+DICTPLUS(1)                 General Commands Manual                DICTPLUS(1)
+
+NAME
+       dictplus - automatic combination of diction and suggest
+
+SYNOPSIS
+       dictplus [ -flags ][ -ver ][ -f pfile [ -n ] ][ file ...]
+
+DESCRIPTION
+       Dictplus automatically combines diction and suggest.  Options are:
+
+            -f pfile Use the user's phrase file, pfile, in addition to the
+                     default file of bad or wordy diction.  Dictadd(1) can be
+                     used to set up this file.
+
+            -n       Locate the phrases in pfile instead of the default phrase
+                     file.  -n cannot be used without -f pfile.
+       Dictplus is one of the programs run under the proofr(1) and wwb(1)
+       commands.
+
+       Dictadd(1) adds words and/or phrases that are to be located or ignored
+       by diction or dictplus to the user's dictionary, $HOME/lib/ddict .
+       Dictadd gives instructions on the necessary format for phrases to be
+       located or ignored by diction or dictplus.  $HOME/lib/ddict is only
+       used by diction and dictplus when it is specified by the -f flag.
+       Proofr(1) checks $HOME/lib/ddict automatically when it runs dictplus.
+
+       All programs can take the following two options that give information
+       on the programs:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+EXAMPLES
+       1. The command:
+
+            dictplus -f patfile filename
+
+       will print sentences from filename that contain bad or wordy diction,
+       including or suppressing phrases as specified in patfile.  Suggested
+       replacements for bad phrases will also be printed.  (The patfile can be
+       $HOME/lib/ddict.)
+
+FILES
+       /tmp/$$*             temporary files used by dictplus
+
+SEE ALSO
+       diction(1), suggest(1), proofr(1), wwb(1), worduse(1), sexist(1),
+       dictadd(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                   DICTPLUS(1)

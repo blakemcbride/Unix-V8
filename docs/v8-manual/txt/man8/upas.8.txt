@@ -1,0 +1,55 @@
+UPAS(8)                     System Manager's Manual                    UPAS(8)
+
+NAME
+       upas - address driven mailer
+
+SYNOPSIS
+       mail person ...
+       rmail -N network person ...
+       cmail -N network person ...
+
+DESCRIPTION
+       Upas is a mail delivery system that disposes of messages in a way
+       determined by the destination address and a set of rewriting rules.  It
+       can be used to recognize many address formats and route remote mail to
+       different network mail interfaces.
+
+       mail   is used by a user to send or read mail.  See mail(1).
+
+       rmail  is used to inject mail coming from other machines into the mail
+              system.  No message conversion is performed.
+
+       cmail  is used to inject mail formatted according to ARPA RFC 822 into
+              the mail system.  The mail is converted into a form
+              understandable to upas.
+
+       Upas's rewriting rules (mail(7)) contain ed(1) style substitutions that
+       allow addresses to be transformed into the commands used to inject mail
+       to the networks.
+
+       The -N option causes the `network' indicates the name of the network
+       from which the message is coming.  This network name is prepended to
+       the return address.
+
+       Each message submitted using rmail or cmail is checked against a
+       forwarding list.  Unless the name of all machines in the source path or
+       all machines in the destination path are in the forwarding list, the
+       message is refused.
+
+FILES
+       /usr/lib/upas/rewrite     the rewriting rules
+       /usr/lib/upas/forwardlist the forwarding list
+       /usr/lib/upas/forwardlist.lolocal forwarding list
+       /bin/mail                 the mailer program
+       /bin/rmail                linked to /bin/mail
+       /bin/cmail                linked to /bin/mail
+       /usr/spool/mail/*         mailboxes
+       /etc/passwd               authentication
+       /tmp/ma*                  temp file
+       /tmp/ml*                  lock file
+       $HOME/dead.letter         unmailable text
+
+SEE ALSO
+       xsend(1), write(1), uucp(1), mail(1), mail(7)
+
+                                                                       UPAS(8)

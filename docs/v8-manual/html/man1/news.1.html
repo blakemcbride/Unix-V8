@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>news.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; news.1 (<a href="../../../../source/v8/usr/man/man1/news.1">troff source</a>)</p>
+<pre>
+NEWS(1)                     General Commands Manual                    NEWS(1)
+
+NAME
+       news - print news items
+
+SYNOPSIS
+       news [ -a ] [ -n ] [ -s ] [ item ... ]
+
+DESCRIPTION
+       When invoked without options, this simple local news service prints
+       files that have appeared in /usr/news since last reading, most recent
+       first, with each preceded by an appropriate header.  The time of
+       reading is recorded.  The options are
+
+       -a     print all items, regardless of currency.  The recorded time is
+              not changed.
+
+       -n     report the names of the current items without printing their
+              contents, and without changing the recorded time.
+
+       -s     report the number of current items.
+
+       Other arguments select particular news items.
+
+       If a delete is typed during the printing of a news item, printing stops
+       and the next item is started.  A second delete within a second of the
+       first causes the program to terminate.
+
+       To post a news item, simply create a file in /usr/news.
+
+FILES
+       /usr/news/∗
+       $HOME.news_time     date of last read news
+
+SEE ALSO
+       <a href="../man1/calendar.1.html">calendar(1)</a>, <a href="../man1/netnews.1.html">netnews(1)</a>
+
+                                                                       NEWS(1)
+</pre>
+</body></html>

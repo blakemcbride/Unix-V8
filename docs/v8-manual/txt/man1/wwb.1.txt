@@ -1,0 +1,65 @@
+WWB(1)                      General Commands Manual                     WWB(1)
+
+NAME
+       wwb, style, diction, punct - writers workbench
+
+SYNOPSIS
+       wwb style [ option ] ...  file ...
+
+       wwb diction [ option ] ...  file ...
+
+       wwb suggest
+
+       wwb punct file ...
+
+       wwb wwb [ -ms ] [ -mm ] file ...
+
+DESCRIPTION
+       Wwb controls many subprograms documented in the references.  For the
+       full treatment use `wwb wwb', but for quick use the following
+       subprograms are recommended.
+
+       Style reports on readability, sentence length and structure, word
+       length and usage, verb type, and sentence openers in the named
+       documents.
+
+       Diction prints all sentences that contain phrases from a list of bad or
+       verbose word patterns.  Option -p pfile supplies an additional private
+       pattern file; option -n skips the standard one.
+
+       Suggest reads, from the standard input, phrases deprecated by diction
+       and proposes alternatives.
+
+       Punct reports sentences that appear to violate standard punctuation
+       rules and sentences that contain doubled words.
+
+       Style and diction expect documents prepared for nroff/troff(1) and the
+       preprocessors pic, ideal, grap, eqn, refer, and tbl(1).  Option -mm
+       overrides the default macro package, -ms.  The related option -ml skips
+       mm-style lists, and should be used if there are many lists of non-
+       sentences.
+
+       Other options for style are:
+
+       -a     print all sentences with their length and readability index.
+
+       -e     print all sentences that begin with an expletive.
+
+       -p     print all sentences that contain a passive verb.
+
+       -lnum  print all sentences longer than num.
+
+       -rnum  print all sentences whose readability index is greater than num.
+
+       -P     print parts of speech of the words in the document.
+
+SEE ALSO
+       deroff(1), spell(1)
+       Writer's Workbench User's Manual, /usr/man/manw/*
+
+BUGS
+       Use of non-standard formatting macros may cause incorrect sentence
+       breaks.
+       Imperatives cannot be recognized.
+
+                                                                        WWB(1)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>nice.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; nice.2 (<a href="../../../../source/v8/usr/man/man2/nice.2">troff source</a>)</p>
+<pre>
+NICE(2)                       System Calls Manual                      NICE(2)
+
+NAME
+       nice - set program priority
+
+SYNOPSIS
+       nice(incr)
+
+DESCRIPTION
+       The scheduling priority of the process is augmented by incr.  Positive
+       priorities get less service than normal.  Priority 10 is recommended to
+       users who wish to execute long-running programs without flak from the
+       administration.
+
+       Negative increments are ignored except on behalf of the super-user.
+       The priority is limited to the range -20 (most urgent) to 20 (least).
+
+       The priority of a process is passed to a child process by <a href="../man2/fork.2.html">fork(2)</a>.  For
+       a privileged process to return to normal priority from an unknown
+       state, nice should be called successively with arguments -40 (goes to
+       priority -20 because of truncation), 20 (to get to 0), then 0 (to
+       maintain compatibility with previous versions of this call).
+
+SEE ALSO
+       <a href="../man1/nice.1.html">nice(1)</a>
+
+                                                                       NICE(2)
+</pre>
+</body></html>

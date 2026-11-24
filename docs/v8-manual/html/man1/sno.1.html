@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sno.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; sno.1 (<a href="../../../../source/v8/usr/man/man1/sno.1">troff source</a>)</p>
+<pre>
+SNO(1)                      General Commands Manual                     SNO(1)
+
+NAME
+       sno - Snobol language interpreter
+
+SYNOPSIS
+       sno [ files ]
+
+DESCRIPTION
+       Sno is a SNOBOL3 (with slight differences) compiler and interpreter.
+       Sno obtains input from the concatenation of the named files and the
+       standard input.  All input through a statement containing the label end
+       is considered program and is compiled.  The rest is available to
+       syspit.
+
+       Sno differs from SNOBOL3 in the following ways:
+
+              There are no unanchored searches.  To get the same effect:
+
+                     a ∗∗ b      unanchored search for b.
+                     a ∗x∗ b = x cunanchored assignment
+
+              There is no back referencing.
+
+                     x = "abc"
+                     a ∗x∗ x     is an unanchored search for abc.
+
+              Function declaration is done at compile time by the use of the
+              (non-unique) label define.  Execution of a function call begins
+              at the statement following the define.  Functions cannot be
+              defined at run time, and the use of the name define is
+              preempted.  There is no provision for automatic variables other
+              than parameters.  Examples:
+
+                     define f( )
+                     define f(a, b, c)
+
+              All labels except define (even end) must have a non-empty
+              statement.
+
+              Labels, functions and variables must all have distinct names.
+              In particular, the non-empty statement on end cannot merely name
+              a label.
+
+              If start is a label in the program, program execution will start
+              there.  If not, execution begins with the first executable
+              statement; define is not an executable statement.
+
+              There are no builtin functions.
+
+              Parentheses for arithmetic are not needed.  Normal precedence
+              applies.  Because of this, the arithmetic operators / and ∗ must
+              be set off by spaces.
+
+              The right side of assignments must be non-empty.
+
+              Either ′ or " may be used for literal quotes.
+
+              The pseudo-variable sysppt is not available.
+
+SEE ALSO
+       <a href="../man1/spitbol.1.html">spitbol(1)</a>, <a href="../man1/snocone.1.html">snocone(1)</a>, <a href="../man1/awk.1.html">awk(1)</a>
+       ``SNOBOL, a String Manipulation Language,'' by D. J. Farber, R. E.
+       Griswold, and I. P. Polonsky, JACM 11 (1964), pp. 21-30.
+
+                                                                        SNO(1)
+</pre>
+</body></html>

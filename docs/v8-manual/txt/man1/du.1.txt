@@ -1,0 +1,31 @@
+DU(1)                       General Commands Manual                      DU(1)
+
+NAME
+       du - summarize disk usage
+
+SYNOPSIS
+       du [ -s ] [ -a ] [ name ... ]
+
+DESCRIPTION
+       Du gives the number of kilobytes (kilo=1024) allocated to data blocks
+       of named files and of named directories including (recursively) their
+       contents.  If name is missing, `.'  is used.
+
+       Option -s causes only the grand total to be given.  Option -a causes an
+       entry to be generated for each file.  Absence of either causes an entry
+       to be generated for each directory only.
+
+       A file which has two links to it is counted only once.
+
+SEE ALSO
+       df(1), quot(8)
+
+BUGS
+       In the absence of option -a non-directories given as arguments are not
+       listed.
+       If there are too many distinct linked files, du counts the excess files
+       multiply.
+       Unwritten holes in files count as if real data were present, and
+       indirect blocks are not counted.
+
+                                                                         DU(1)

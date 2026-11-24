@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tsort.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; tsort.1 (<a href="../../../../source/v8/usr/man/man1/tsort.1">troff source</a>)</p>
+<pre>
+TSORT(1)                    General Commands Manual                   TSORT(1)
+
+NAME
+       tsort - topological sort
+
+SYNOPSIS
+       tsort [ file ]
+
+DESCRIPTION
+       Tsort produces on the standard output a totally ordered list of items
+       consistent with a partial ordering of items mentioned in the input
+       file.  If no file is specified, the standard input is understood.
+
+       The input consists of pairs of items (nonempty strings) separated by
+       blanks.  Pairs of different items indicate ordering.  Pairs of
+       identical items indicate presence, but not ordering.
+
+DIAGNOSTICS
+       Odd data: there is an odd number of fields in the input file.
+
+BUGS
+       Uses a quadratic algorithm; not worth fixing for the typical use of
+       ordering a library archive file.
+
+                                                                      TSORT(1)
+</pre>
+</body></html>

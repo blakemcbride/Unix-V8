@@ -1,0 +1,22 @@
+SYSTEM(3)                  Library Functions Manual                  SYSTEM(3)
+
+NAME
+       system - issue a shell command
+
+SYNOPSIS
+       system(string)
+       char *string;
+
+DESCRIPTION
+       System causes the string to be given to sh(1) as input as if the string
+       had been typed as a command at a terminal.  The current process waits
+       until the shell has completed, then returns the exit status of the
+       shell.
+
+SEE ALSO
+       popen(3), exec(2), wait(2)
+
+DIAGNOSTICS
+       Exit status 127 indicates the shell couldn't be executed.
+
+                                                                     SYSTEM(3)

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>as.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; as.1 (<a href="../../../../source/v8/usr/man/man1/as.1">troff source</a>)</p>
+<pre>
+AS(1)                       General Commands Manual                      AS(1)
+
+NAME
+       as - assembler
+
+SYNOPSIS
+       as [option ] ... [ name ] ...
+
+DESCRIPTION
+       As assembles the named files, or the standard input if no file name is
+       specified.  The options are:
+
+       -dn    Specifies the number of bytes n (1, 2, or 4) to be assembled for
+              offsets which involve forward or external references, and which
+              have sizes unspecified in the assembly language.  Default is
+              -d4.
+
+       -L     Save defined labels beginning with a `L', which are normally
+              discarded to save space in the resultant symbol table.  The
+              compilers generate such temporary labels.
+
+       -V     Use virtual memory for intermediate storage, rather than a
+              temporary file.
+
+       -W     Do not complain about errors.
+
+       -J     Use long branches to resolve jumps when byte-displacement
+              branches are insufficient.  This must be used when a compiler-
+              generated assembly contains branches of more than 32k bytes.
+
+       -R     Make initialized data segments read-only, by concatenating them
+              to the text segments.  This obviates the need to run editor
+              scripts on assembly code to make initialized data read-only and
+              shared.
+
+       -t     Specifies a directory to receive the temporary file, other than
+              the default /tmp.
+
+       -oobj  Place output in file obj.  Default is `a.out'.
+
+       All undefined symbols in the assembly are treated as global.
+
+FILES
+       /tmp/as∗       default temporary file
+       a.out          default object file
+
+SEE ALSO
+       <a href="../man1/ld.1.html">ld(1)</a>, <a href="../man1/nm.1.html">nm(1)</a>, <a href="../man1/adb.1.html">adb(1)</a>, <a href="../man9/pi.9.html">pi(9.1)</a>, <a href="../man5/a.out.5.html">a.out(5)</a>
+       Auxiliary documentation Assembler Reference Manual.
+
+BUGS
+       -J should be eliminated; the assembler should automatically choose
+       among byte, word and long branches.
+
+                                                                         AS(1)
+</pre>
+</body></html>

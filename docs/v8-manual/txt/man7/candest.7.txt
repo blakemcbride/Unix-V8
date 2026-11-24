@@ -1,0 +1,18 @@
+CANDEST(7)             Miscellaneous Information Manual             CANDEST(7)
+
+NAME
+       candest - canon laser printers
+
+DESCRIPTION
+       The names of Canon laser printers, usable in the -d option of can(1) or
+       as the value of environment variable CANDEST are:
+
+       3    3rd floor, end of 9S corridor (mrkos)
+       4    4th floor, stair 8 (ikeya)
+       8    3rd floor, stair 8 (tukey)
+       9    4th floor, stair 9 (wild)
+       j    jones room (jones)
+       u    unix room (panther)
+       /[name]   printer on Datakit machine path (name)
+
+                                                                    CANDEST(7)

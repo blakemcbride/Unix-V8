@@ -1,0 +1,19 @@
+TOUCH(1)                    General Commands Manual                   TOUCH(1)
+
+NAME
+       touch - set file modification date
+
+SYNOPSIS
+       touch [ -c ] file ...
+
+DESCRIPTION
+       Touch attempts to set the modified date of each file.  This is done by
+       reading a character from the file and writing it back.
+
+       If a file does not exist, an attempt will be made to create it unless
+       the -c option is specified.
+
+SEE ALSO
+       utime(2)
+
+                                                                      TOUCH(1)

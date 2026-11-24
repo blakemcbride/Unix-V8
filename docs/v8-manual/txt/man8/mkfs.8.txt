@@ -1,0 +1,39 @@
+MKFS(8)                     System Manager's Manual                    MKFS(8)
+
+NAME
+       mkfs, mkbitfs, mklost+found - construct a file system
+
+SYNOPSIS
+       /etc/mkfs special size
+
+       /etc/mkbitfs special size
+
+       /etc/mklost+found
+
+DESCRIPTION
+       Mkfs (mkbitfs) constructs a regular (bitmapped) file system by writing
+       on the special file special.  Size is the number of 1K (4K) blocks on
+       the special file.  The resulting file system has a single empty
+       directory.  The number of i-nodes is calculated as a function of the
+       filesystem size.
+
+       Immediately after creating a file system, mklost+found should be run to
+       create a repository for disconnected files recovered by fsck(8).  If
+       the special file is /dev/disk and its mount point /mnt, mklost+found
+       works as follows:
+
+              /etc/mount /dev/disk /mnt
+              cd /mnt
+              /etc/mklost+found
+
+       Mkfs (only) also has capabilities for assembling a prototype file
+       system, but this code has not been exercised in years.
+
+SEE ALSO
+       filsys(5), fsck(8)
+
+BUGS
+       There should be some way to specify bad blocks.
+       Mkfs and mkbitfs should make lost+found automatically.
+
+                                                                       MKFS(8)

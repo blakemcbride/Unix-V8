@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>stat.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; stat.2 (<a href="../../../../source/v8/usr/man/man2/stat.2">troff source</a>)</p>
+<pre>
+STAT(2)                       System Calls Manual                      STAT(2)
+
+NAME
+       stat, lstat, fstat - get file status
+
+SYNOPSIS
+       #include &lt;sys/types.h&gt;
+       #include &lt;sys/stat.h&gt;
+
+       stat(name, buf)
+       char *name;
+       struct stat *buf;
+
+       lstat(name, buf)
+       char *name;
+       struct stat *buf;
+
+       fstat(fildes, buf)
+       struct stat *buf;
+
+DESCRIPTION
+       Stat obtains detailed information about a named file.  Lstat obtains
+       the same information, but in the case of a symbolic link (see <a href="../man2/link.2.html">link(2)</a>),
+       supplies information about the link itself.  Fstat obtains the same
+       information about an open file known by a file descriptor.
+
+       Name points to a null-terminated string naming a file; buf is the
+       address of a buffer into which information is placed concerning the
+       file.  It is unnecessary to have any permissions at all with respect to
+       the file, but all directories leading to the file must be searchable.
+       The layout of the structure pointed to by buf is given below; st_mode
+       is encoded according to the `#define' statements.
+
+       struct    stat
+       {
+            dev_t     st_dev;
+            ino_t     st_ino;
+            unsigned short st_mode;
+            short     st_nlink;
+            short     st_uid;
+            short     st_gid;
+            dev_t     st_rdev;
+            off_t     st_size;
+            time_t    st_atime;
+            time_t    st_mtime;
+            time_t    st_ctime;
+       };
+
+       #define   S_IFMT    0170000        /* type of file */
+       #define        S_IFDIR   0040000   /* directory */
+       #define        S_IFCHR   0020000   /* character special */
+       #define        S_IFBLK   0060000   /* block special */
+       #define        S_IFREG   0100000   /* regular */
+       #define        S_IFLNK 0120000     /* symbolic link */
+       #define   S_ISUID   0004000        /* set user id on execution */
+       #define   S_ISGID   0002000        /* set group id on execution */
+       #define   S_ISVTX   0001000        /* save swapped text even after use */
+       #define   S_IREAD   0000400        /* read permission, owner */
+       #define   S_IWRITE 0000200    /* write permission, owner */
+       #define   S_IEXEC   0000100        /* execute/search permission, owner */
+
+       The mode bits 0000070 and 0000007 encode group and others permissions
+       (see <a href="../man2/chmod.2.html">chmod(2)</a>).  The defined types, ino_t, off_t, time_t, name various
+       width integer values; dev_t encodes major and minor device numbers;
+       their exact definitions are in the include file &lt;sys/types.h&gt; (see
+       <a href="../man5/types.5.html">types(5)</a>).
+
+       St_atime is the time the file was last read.  For reasons of
+       efficiency, it is not set when a directory is searched, although this
+       would be more logical.  St_mtime is the time the file was last written
+       or created.  It is not set by changes of owner, group, link count, or
+       mode.  St_ctime is set both by writing and and by changing the i-node.
+
+SEE ALSO
+       <a href="../man1/ls.1.html">ls(1)</a>, <a href="../man2/chmod.2.html">chmod(2)</a>, <a href="../man5/filsys.5.html">filsys(5)</a>
+
+DIAGNOSTICS
+       Zero is returned if a status is available; -1 if the file cannot be
+       found.
+
+                                                                       STAT(2)
+</pre>
+</body></html>

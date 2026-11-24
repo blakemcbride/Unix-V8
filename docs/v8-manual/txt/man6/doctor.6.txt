@@ -1,0 +1,17 @@
+DOCTOR(6)                        Games Manual                        DOCTOR(6)
+
+NAME
+       doctor, tso - psychiatric consultation
+
+SYNOPSIS
+       /usr/games/doctor
+
+       /usr/games/tso
+
+DESCRIPTION
+       Doctor will understandingly explore most anything with you.  Just type
+       your thoughts followed by double carriage returns.
+
+       Tso, on the other hand, has a will of its own.
+
+                                                                     DOCTOR(6)

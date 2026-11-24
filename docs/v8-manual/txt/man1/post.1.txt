@@ -1,0 +1,61 @@
+POST(1)                     General Commands Manual                    POST(1)
+
+NAME
+       post - send mail to users by name
+
+SYNOPSIS
+       post [ -w ] person ...
+
+       post
+
+DESCRIPTION
+       Post translates people's real names to addresses and sends mail.  If
+       used with person arguments, it collects the standard input up to EOT or
+       a line containing only a single `.' character.  It expects each person
+       argument to be either a form recognized by mail(1) or
+
+              [firstname.[middlename.]]lastname[:location][:department]
+
+       where every part except lastname may be abbreviated to a prefix.  If
+       the person identified is known to have a computer address, the
+       collected input is sent there; otherwise paper mail is printed and
+       routed to a clerk for forwarding.
+
+       From most computers post routes mail through a central post office;
+       diagnostic messages will be returned by mail.
+
+       If the person argument is ambiguous, a list of possibilities is printed
+       and you are asked to choose the desired person.  The -w option gives
+       the address, but sends nothing.
+
+       To maintain mailing lists or avoid typing long addresses, you may keep
+       an address book in $HOME/lib/post.addr.  Each line in the file begins
+       with an alias or mailing list name which is followed by one or more
+       person arguments.
+
+       Post with no person arguments invokes mail to read your mail.  The
+       environment parameter MAILP may be used to specify the mail invoked;
+       otherwise it is /bin/mail.  To update post's directory with a new or
+       secondary address mail the following statement to alice!mailroom.
+
+       UPDATE:   computer!uid   cmd  first.init.last:loc:dept
+
+       cmd may be IS, ANOTHER or WAS.  IS makes the computer id the home
+       address, ANOTHER, a secondary address, and WAS deletes it.  It expects
+       the name to be identical to that in the BTL phone book.
+
+FILES
+       /usr/spool/mail/*        mailboxes
+       /tmp/ma*                 temp file
+       dead.letter              unmailable text
+       $HOME/lib/post.addr      user address book
+       /crp/post/tmail.?        address lists
+       /crp/post/tuid.?         userid lists
+       /usr/lib/post/genpost    general postoffice
+       /usr/lib/post/post.test  test "no run" program
+
+SEE ALSO
+       mail(1)
+       `Electronic Mail Without Aliases,' by R. J. Elliott and M. E. Lesk
+
+                                                                       POST(1)

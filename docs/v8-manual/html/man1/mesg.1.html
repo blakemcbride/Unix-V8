@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mesg.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; mesg.1 (<a href="../../../../source/v8/usr/man/man1/mesg.1">troff source</a>)</p>
+<pre>
+MESG(1)                     General Commands Manual                    MESG(1)
+
+NAME
+       mesg - permit or deny messages
+
+SYNOPSIS
+       mesg [ n ] [ y ]
+
+DESCRIPTION
+       Mesg with argument n forbids messages via <a href="../man1/write.1.html">write(1)</a> by revoking non-user
+       write permission on the user's terminal.  Mesg with argument y
+       reinstates permission.  All by itself, mesg reports the current state
+       without changing it.
+
+FILES
+       /dev/tty*
+
+SEE ALSO
+       <a href="../man1/write.1.html">write(1)</a>
+
+DIAGNOSTICS
+       Exit status is 0 if messages are receivable, 1 if not, 2 on error.
+
+                                                                       MESG(1)
+</pre>
+</body></html>

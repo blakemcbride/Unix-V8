@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tr.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; tr.1 (<a href="../../../../source/v8/usr/man/man1/tr.1">troff source</a>)</p>
+<pre>
+TR(1)                       General Commands Manual                      TR(1)
+
+NAME
+       tr - translate characters
+
+SYNOPSIS
+       tr [ -cds ] [ string1 [ string2 ] ]
+
+DESCRIPTION
+       Tr copies the standard input to the standard output with substitution
+       or deletion of selected characters.  Input characters found in string1
+       are mapped into the corresponding characters of string2.  When string2
+       is short it is padded to the length of string1 by duplicating its last
+       character.  Any combination of the options -cds may be used:
+
+       -c     complement the set of characters in string1 with respect to the
+              universe of characters whose ASCII codes are 01 through 0377
+
+       -d     delete all input characters in string1
+
+       -s     squeeze all strings of repeated output characters that are in
+              string2 to single characters
+
+       In either string the notation a-b means a range of characters from a to
+       b in increasing ASCII order.  The character `\' followed by 1, 2 or 3
+       octal digits stands for the character whose ASCII code is given by
+       those digits.  A `\' followed by any other character stands for that
+       character.
+
+       The following example creates a list of all the words in `file1' one
+       per line in `file2', where a word is taken to be a maximal string of
+       alphabetics.  The second string is quoted to protect `\' from the
+       Shell.  012 is the ASCII code for newline.
+
+              tr -cs A-Za-z ´\012´ &lt;file1 &gt;file2
+
+SEE ALSO
+       <a href="../man1/ed.1.html">ed(1)</a>, <a href="../man7/ascii.7.html">ascii(7)</a>
+
+BUGS
+       Won't handle ASCII NUL in string1 or string2; always deletes NUL from
+       input.
+
+                                                                         TR(1)
+</pre>
+</body></html>

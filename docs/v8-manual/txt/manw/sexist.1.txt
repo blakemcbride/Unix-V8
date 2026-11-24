@@ -1,0 +1,88 @@
+SEXIST(1)                   General Commands Manual                  SEXIST(1)
+
+NAME
+       sexist - print sexist terms and suggest alternatives
+
+SYNOPSIS
+       sexist [ -flags ][ -ver ][ -f pfile ][file ...]
+
+DESCRIPTION
+       Sexist locates and prints all sentences in a document that contain
+       possibly sexist words or phrases.  The word or phrase in each sentence
+       is surrounded with stars and brackets, e.g. *[girl]*.  The line numbers
+       of the sentences are also printed.
+
+       Following that, sexist prints alternatives to the sexist phrases found
+       in the document.  The alternatives encourage:
+
+          1. describing men and women in parallel terms.  For example, "men
+             and girls" should probably be changed to "men and women."
+
+          2. using neutral terms instead of sex-related terms.  For example
+             "business executive" could easily replace the stereotypic
+             "businessman."
+
+          3. using new, non-sexist Bell System job titles.
+
+       If the user has a file named $HOME/lib/sexdict, sexist locates or
+       ignores phrases contained in that file.  Dictadd(1) can be used to set
+       up $HOME/lib/sexdict.  Dictadd gives instructions on the necessary
+       format for phrases to be located or ignored by sexist.
+
+       Options are:
+
+            -f pfile Use the user's phrase file, pfile, in addition to the
+                     default file of sexist phrases.  When the -f pfile option
+                     is used, sexist does not check $HOME/lib/sexdict for
+                     phrases.  The format instructions given by dictadd should
+                     be followed in setting up pfile.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+EXAMPLE
+       1. The command:
+
+            sexist -f patfile filename
+
+       will print sentences from filename that contain sexist words or
+       phrases, including or suppressing phrases as specified in patfile.
+       Suggested replacements for sexist phrases will also be printed.  Sexist
+       will not locate or ignore phrases in $HOME/lib/sexdict when the -f
+       option is used.
+
+FILES
+       /tmp/$$*             temporary files
+
+SEE ALSO
+       dictadd(1)
+
+BUGS
+       Because sexist does not consider context, it may bracket phrases that
+       are used appropriately and may recommend inappropriate alternatives.
+       It is up to the user to determine which changes should be made.
+
+       If formatting macros are included in the input text, the beginning line
+       number of a sentence containing a sexist phrase may be a line
+       containing a macro preceding the sentence.
+
+       Sexist makes no attempt to segment text into sentences accurately,
+       e.g., it does not know any abbreviations.
+
+       Sexist will not find the second of two consecutive sexist phrases, nor
+       will it find a sexist phrase at the end of a sentence.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                     SEXIST(1)

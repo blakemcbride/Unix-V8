@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ptopen.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; ptopen.3 (<a href="../../../../source/v8/usr/man/man3/ptopen.3">troff source</a>)</p>
+<pre>
+PTOPEN(3)                  Library Functions Manual                  PTOPEN(3)
+
+NAME
+       ptopen - find and open a pseudo-terminal file
+
+SYNOPSIS
+       int ptopen (name)
+       char ∗name;
+
+DESCRIPTION
+       Ptopen searches for a pseudo-terminal file pair it can open.  If
+       successful, it returns a file descriptor for the odd-numbered member of
+       the pair, and places the name of the even-numbered member in name.
+       There must be enough room in name to contain the full pathname.  If
+       unsuccessful, ptopen returns a negative value.
+
+SEE ALSO
+       <a href="../man4/pt.4.html">pt(4)</a>
+
+                                                                     PTOPEN(3)
+</pre>
+</body></html>

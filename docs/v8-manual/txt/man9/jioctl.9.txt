@@ -1,0 +1,122 @@
+JIOCTL(9.4)                                                        JIOCTL(9.4)
+
+NAME
+       jioctl - jerq ioctl requests
+
+SYNOPSIS
+       #include /usr/jerq/include/jioctl.h
+
+       ioctl(fd, JMUX, 0)
+
+       ioctl(fd, request, win)
+       struct winsize *win;
+
+DESCRIPTION
+       Mux(9.1) supports several jerq-specific ioctl(2) requests for Unix
+       programs attached to layers.  The requests are:
+
+       JMUX                                                                                                                                            returns
+                                                                                                                                                       0
+                                                                                                                                                       if
+                                                                                                                                                       file
+                                                                                                                                                       descriptor
+                                                                                                                                                       fd
+                                                                                                                                                       is
+                                                                                                                                                       connected
+                                                                                                                                                       to
+                                                                                                                                                       a
+                                                                                                                                                       mux
+                                                                                                                                                       layer,
+                                                                                                                                                       -1
+                                                                                                                                                       otherwise.
+
+       JTERM                                                                                                                                           resets
+                                                                                                                                                       the
+                                                                                                                                                       layer
+                                                                                                                                                       connected
+                                                                                                                                                       to
+                                                                                                                                                       fd
+                                                                                                                                                       to
+                                                                                                                                                       the
+                                                                                                                                                       default
+                                                                                                                                                       terminal
+                                                                                                                                                       program.
+
+       JBOOT                                                                                                                                           initiates
+                                                                                                                                                       the
+                                                                                                                                                       down-
+                                                                                                                                                       load
+                                                                                                                                                       protocol
+                                                                                                                                                       to
+                                                                                                                                                       replace
+                                                                                                                                                       the
+                                                                                                                                                       layer's
+                                                                                                                                                       terminal
+                                                                                                                                                       program.
+                                                                                                                                                       Usually
+                                                                                                                                                       called
+                                                                                                                                                       by
+                                                                                                                                                       32ld(9.1).
+
+       JZOMBOOT                                                                                                                                        is
+                                                                                                                                                       the
+                                                                                                                                                       same
+                                                                                                                                                       as
+                                                                                                                                                       JBOOT,
+                                                                                                                                                       but
+                                                                                                                                                       disables
+                                                                                                                                                       execution
+                                                                                                                                                       of
+                                                                                                                                                       the
+                                                                                                                                                       program
+                                                                                                                                                       when
+                                                                                                                                                       the
+                                                                                                                                                       download
+                                                                                                                                                       is
+                                                                                                                                                       complete
+                                                                                                                                                       (see
+                                                                                                                                                       the
+                                                                                                                                                       -z
+                                                                                                                                                       flag
+                                                                                                                                                       of
+                                                                                                                                                       32ld).
+
+       JWINSIZE                                                                                                                                        returns,
+                                                                                                                                                       in
+                                                                                                                                                       the
+                                                                                                                                                       location
+                                                                                                                                                       pointed
+                                                                                                                                                       to
+                                                                                                                                                       by
+                                                                                                                                                       the
+                                                                                                                                                       third
+                                                                                                                                                       argument,
+                                                                                                                                                       a
+                                                                                                                                                       structure
+                                                                                                                                                       describing
+                                                                                                                                                       the
+                                                                                                                                                       size
+                                                                                                                                                       of
+                                                                                                                                                       the
+                                                                                                                                                       layer
+                                                                                                                                                       connected
+                                                                                                                                                       to
+                                                                                                                                                       fd.
+                                                                                                                                                       The
+                                                                                                                                                       structure
+                                                                                                                                                       is:
+
+                                                                                                                                                       struct winsize {
+                                                                                                                                                              char   bytesx, bytesy;  /* size in characters */
+                                                                                                                                                              short  bitsx, bitsy;    /* size in pixels */
+                                                                                                                                                       };
+
+       JEXIT                                                                                                                                           causes
+                                                                                                                                                       mux
+                                                                                                                                                       to
+                                                                                                                                                       exit.
+
+SEE ALSO
+       32ld(9.1), mux(9.1), ioctl(2)
+
+                                                                   JIOCTL(9.4)

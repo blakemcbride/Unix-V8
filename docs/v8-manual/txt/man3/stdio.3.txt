@@ -1,0 +1,61 @@
+STDIO(3S)                                                            STDIO(3S)
+
+NAME
+       stdio - standard buffered input/output package
+
+SYNOPSIS
+       #include <stdio.h>
+
+       FILE *stdin;
+       FILE *stdout;
+       FILE *stderr;
+
+DESCRIPTION
+       The functions described in Sections 3S constitute an efficient user-
+       level buffering scheme.  The in-line macros getc and putc(3) handle
+       characters quickly.  The higher level routines gets, fgets, scanf,
+       fscanf, fread, puts, fputs, printf, fprintf, fwrite all use getc and
+       putc; they can be freely intermixed.
+
+       A file with associated buffering is called a stream, and is declared to
+       be a pointer to a defined type FILE.  Fopen(3) creates certain
+       descriptive data for a stream and returns a pointer to designate the
+       stream in all further transactions.  There are three normally open
+       streams with constant pointers declared in the include file and
+       associated with the standard open files:
+
+       stdin     standard input file
+       stdout    standard output file
+       stderr    standard error file
+
+       A constant `pointer' NULL (0) designates no stream at all.
+
+       An integer constant EOF (-1) is returned upon end of file or error by
+       integer functions that deal with streams.
+
+       Any routine that uses the standard input/output package must include
+       the header file <stdio.h> of pertinent macro definitions.  The
+       functions and constants mentioned in sections labeled 3S are declared
+       in the include file and need no further declaration.  The constants,
+       and the following `functions' are implemented as macros; redeclaration
+       of these names is perilous: getc, getchar, putc, putchar, feof, ferror,
+       fileno.
+
+SEE ALSO
+       open(2), close(2), read(2), write(2)
+
+DIAGNOSTICS
+       The value EOF is returned uniformly to indicate that a FILE pointer has
+       not been initialized with fopen, input (output) has been attempted on
+       an output (input) stream, or a FILE pointer designates corrupt or
+       otherwise unintelligible FILE data.
+
+BUGS
+       Buffering of output can prevent output data from being seen until long
+       after it is computed - perhaps never, as when an abort occurs between
+       buffer filling and flushing.
+       Buffering of input can cause a process to consume more input than it
+       actually uses.  This can cause trouble across exec (2) or system (3)
+       calls.
+
+                                                                     STDIO(3S)

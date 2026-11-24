@@ -1,0 +1,33 @@
+TELNO(7)               Miscellaneous Information Manual               TELNO(7)
+
+NAME
+       telno - retrieve from Bell Labs phone book
+
+SYNOPSIS
+       telno [ datum ... datum ]
+
+DESCRIPTION
+       If there are no arguments on the command line, telno reads its
+       arguments, one to a line, from the standard input.  Arguments are
+       names, phone numbers, or organization numbers, possibly preceded by a
+       keyword and an equal sign.  The first character of a name must be a
+       letter, of a phone number or organization number a digit.  Otherwise
+       regular expressions a la grep(1) are accepted.  Names are prefixes of
+       last names, or the last name followed by a comma and one initial.
+
+       Giving a name, a phone number, or an organization number (org=127)
+       produces white pages information.
+
+SEE ALSO
+       tel(7)
+
+DIAGNOSTICS
+       too long means that the given name has more letters than any name in
+       the phone book.  (All the names are truncated to 8 characters before
+       the data arrives on the machine.)  None is printed when there are no
+       matches.
+
+BUGS
+       The phone book is badly out of date.
+
+                                                                      TELNO(7)

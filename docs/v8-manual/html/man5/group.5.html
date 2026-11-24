@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>group.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; group.5 (<a href="../../../../source/v8/usr/man/man5/group.5">troff source</a>)</p>
+<pre>
+GROUP(5)                      File Formats Manual                     GROUP(5)
+
+NAME
+       group - group file
+
+DESCRIPTION
+       Group contains for each group the following information:
+
+       group name
+
+       encrypted password
+
+       numerical group ID
+
+       a comma separated list of all users allowed in the group
+
+       This is an ASCII file.  The fields are separated by colons; Each group
+       is separated from the next by a new-line.  If the password field is
+       null, no password is demanded.
+
+       This file resides in directory /etc.  Because of the encrypted
+       passwords, it can and does have general read permission and can be
+       used, for example, to map numerical group ID's to names.
+
+FILES
+       /etc/group
+
+SEE ALSO
+       <a href="../man1/newgrp.1.html">newgrp(1)</a>, <a href="../man3/crypt.3.html">crypt(3)</a>, <a href="../man1/passwd.1.html">passwd(1)</a>, <a href="../man5/passwd.5.html">passwd(5)</a>
+
+BUGS
+       The <a href="../man1/passwd.1.html">passwd(1)</a> command won't change the passwords.
+
+                                                                      GROUP(5)
+</pre>
+</body></html>

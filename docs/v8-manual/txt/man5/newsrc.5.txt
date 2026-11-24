@@ -1,0 +1,41 @@
+NEWSRC(5)                     File Formats Manual                    NEWSRC(5)
+
+NAME
+       newsrc - information file for readnews
+
+DESCRIPTION
+       The .newsrc file contains the list of previously read articles and an
+       optional options line for readnews(1).  Each newsgroup that articles
+       have been read from has a line of the form:
+
+       newsgroup: range
+
+       The range is a list of the articles read.  It is basically a list of
+       no.'s separated by commas with sequential no.'s collapsed with hyphens.
+       For instance:
+
+       general: 1-78,80,85-90
+       fa.info-cpm: 1-7
+       net.news: 1
+       fa.info-vax! 1-5
+
+       If the : is replaced with an ! (as in info-vax above) the newsgroup is
+       not subscribed to and will not be shown to the user.
+
+       An options line starts with the word options (left-justified).  Then
+       there are the list of options just as they would be on the command
+       line.  For instance:
+
+       options -n all !fa.sf-lovers !fa.human-nets -r
+       options -c -r
+
+       A string of lines beginning with a space or tab after the initial
+       options line will be considered continuation lines.
+
+FILES
+       ~/.newsrc                options and list of previously read articles
+
+SEE ALSO
+       readnews(1), checknews(1)
+
+                                                                     NEWSRC(5)

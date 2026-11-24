@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>syscall.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; syscall.2 (<a href="../../../../source/v8/usr/man/man2/syscall.2">troff source</a>)</p>
+<pre>
+SYSCALL(2)                    System Calls Manual                   SYSCALL(2)
+
+NAME
+       syscall - indirect system call
+
+SYNOPSIS
+       syscall(number, arg, ... )  (VAX)
+
+       syscall(number, r0, r1, arg ... )  (PDP11)
+
+DESCRIPTION
+       Syscall performs the system call whose assembly language interface has
+       the specified number and arguments.
+
+       On a PDP11 the first two arguments correspond to registers r0 and r1,
+       regardless of whether the entry point really uses them.
+
+       The r0 value of the system call is returned.
+
+DIAGNOSTICS
+       When the C-bit is set, syscall returns -1 and sets the external
+       variable errno (see <a href="../man2/intro.2.html">intro(2)</a>).
+
+BUGS
+       There is no way to simulate system calls such as <a href="../man2/pipe.2.html">pipe(2)</a>, which return
+       values in register r1.
+
+                                                                    SYSCALL(2)
+</pre>
+</body></html>

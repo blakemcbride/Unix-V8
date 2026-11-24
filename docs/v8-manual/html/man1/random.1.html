@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>random.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; random.1 (<a href="../../../../source/v8/usr/man/man1/random.1">troff source</a>)</p>
+<pre>
+RANDOM(1)                   General Commands Manual                  RANDOM(1)
+
+NAME
+       random - sample lines from a file or provide random exit code
+
+SYNOPSIS
+       random [ -e ] [ n ]
+
+DESCRIPTION
+       Random reads the standard input and copies each line to the standard
+       output with probability 1/n.
+
+       Option -e writes no output and returns a random exit code in the range
+       [0,n-1].
+
+       The default value of n is 2.
+
+       To select just one line randomly from a file use <a href="../man6/fortune.6.html">fortune(6)</a>.
+
+BUGS
+       Successive results of option -e are highly correlated if random is
+       called more than once per second.
+
+                                                                     RANDOM(1)
+</pre>
+</body></html>

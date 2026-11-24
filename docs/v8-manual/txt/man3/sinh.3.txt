@@ -1,0 +1,26 @@
+SINH(3M)                                                              SINH(3M)
+
+NAME
+       sinh, cosh, tanh - hyperbolic functions
+
+SYNOPSIS
+       #include <math.h>
+
+       double sinh(x)
+       double x;
+
+       double cosh(x)
+       double x;
+
+       double tanh(x)
+       double x;
+
+DESCRIPTION
+       These functions compute the designated hyperbolic functions for real
+       arguments.
+
+DIAGNOSTICS
+       Sinh and cosh return a huge value of appropriate sign when the correct
+       value would overflow.
+
+                                                                      SINH(3M)

@@ -1,0 +1,16 @@
+SWAB(3)                    Library Functions Manual                    SWAB(3)
+
+NAME
+       swab - swap bytes
+
+SYNOPSIS
+       swab(from, to, nbytes)
+       char *from, *to;
+
+DESCRIPTION
+       Swab copies nbytes bytes pointed to by from to the position pointed to
+       by to, exchanging adjacent even and odd bytes.  It is useful for
+       carrying binary data between PDP11's and other machines.  Nbytes should
+       be even.
+
+                                                                       SWAB(3)

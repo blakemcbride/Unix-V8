@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>apply.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; apply.1 (<a href="../../../../source/v8/usr/man/man1/apply.1">troff source</a>)</p>
+<pre>
+APPLY(1)                    General Commands Manual                   APPLY(1)
+
+NAME
+       apply - apply a command to a set of arguments
+
+SYNOPSIS
+       apply [ -ac ] [ -n ] command args ...
+
+DESCRIPTION
+       Apply runs the named command on each argument arg in turn.  Normally
+       arguments are chosen singly; the optional number n specifies the number
+       of arguments to be passed to command.  If n is zero, command is run
+       without arguments once for each arg.  Character sequences of the form
+       %d in command, where d is a digit from 1 to 9, are replaced by the d'th
+       following unused arg.  If any such sequences occur, n is ignored, and
+       the number of arguments passed to command is the maximum value of d in
+       command.  The character `%' may be changed by the -a option.
+
+EXAMPLES
+       apply echo *
+              is a time-consuming way to do `ls -1'
+
+       apply -2 cmp a1 b1 a2 b2 ...
+              compares the `a' files to the `b' files
+
+       apply -0 date `seq 20`
+              runs date 20 times; like `for i in `seq 20`; do date; done'
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>
+
+BUGS
+       Shell metacharacters in command may have bizarre effects; it is best to
+       enclose complicated commands in single quotes ´ ´.
+       There is no way to pass a literal `%2' if `%' is the argument expansion
+       character.
+
+                                                                      APPLY(1)
+</pre>
+</body></html>

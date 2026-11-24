@@ -1,0 +1,31 @@
+FREAD(3S)                                                            FREAD(3S)
+
+NAME
+       fread, fwrite - buffered binary input/output
+
+SYNOPSIS
+       #include <stdio.h>
+
+       fread(ptr, sizeof(*ptr), nitems, stream)
+       FILE *stream;
+
+       fwrite(ptr, sizeof(*ptr), nitems, stream)
+       FILE *stream;
+
+DESCRIPTION
+       Fread reads, into a block beginning at ptr, nitems of data of the type
+       of *ptr from the named input stream.  It returns the number of items
+       actually read.
+
+       Fwrite appends at most nitems of data of the type of *ptr beginning at
+       ptr to the named output stream.  It returns the number of items
+       actually written.
+
+SEE ALSO
+       read(2), write(2), fopen(3), getc(3), putc(3), gets(3), puts(3),
+       printf(3), scanf(3)
+
+DIAGNOSTICS
+       Fread and fwrite return 0 upon end of file or error.
+
+                                                                     FREAD(3S)

@@ -1,0 +1,107 @@
+MAIL(1)                     General Commands Manual                    MAIL(1)
+
+NAME
+       mail  -  send or receive mail
+
+SYNOPSIS
+       mail [ -r ] [ -p ] [ -m ] [ -f file ]
+       mail person ...
+       mail -n
+
+DESCRIPTION
+       Mail with no argument prints a user's mail, message-by-message, in
+       last-in, first-out order, prompting between messages.  The options are:
+
+       -r     Print mail in first-in, first-out order.
+       -p     Print entire mailbox without pause between messages.
+       -m     Only print messages explicitly requested by the user.
+       -f file
+              Use file, e.g. `mbox', as if it were the mailbox.
+
+       After printing a prompt mail reads a line from the standard input to
+       direct disposition of the message.  Commands are of the form `[range]
+       command [arguments]'.  The command is applied to each message in the
+       specified range.  The optional range can be:
+       .      current message
+       +      next message
+       -      previous message
+       a number
+              the correspondingly numbered message
+       number1,number2
+              the range of messages between number1 and number2 inclusive
+
+       The commands are:
+       d      Mark message for deletion on exiting mail.
+       u      remove mark for deletion.
+       h      Print the disposition, size in characters, and header line for
+              each message in the mailbox.
+       p      Print message.
+       s [ file ] ...
+              Save the message in the named files (`mbox' default, in HOME
+              directory if known, see environ(5)).
+       m [ person ] ...
+              Mail the message to the named persons (yourself by default).
+       r      Reply to the sender of the last message printed.
+       EOT (control-D)
+              Put unexamined mail back in the mailbox and stop.
+       q      Same as EOT.
+       x      Exit, without changing the mailbox file.
+       !command
+              Escape to the Shell to do command.
+       ?      Print a command summary.
+       =      Print the number of the current message.
+
+       An interrupt stops the printing of the current letter.
+
+       When persons are named, mail takes the standard input up to an end-of-
+       file, or to a line consisting of a single `.'.  and adds it to each
+       person's mailbox.  The message is automatically postmarked with the
+       sender's name and date.  Lines that look like postmarks are prefixed
+       with `>'.
+
+       Person is usually a login name.  To denote a recipient on a remote
+       system, a network name must be used instead of a simple login name; see
+       uucp(1), mail(7).
+
+       If a person's mailbox contains the sole line
+
+              Forward to name
+
+       the mail is sent to name instead of person.  Name may be a list of
+       names.
+
+       If a person's mailbox contains the sole line
+
+              Pipe to command
+
+       the mail is piped to command instead of being appended to person's
+       mailbox.  The command is run with the user and group id of the
+       mailbox's owner.
+
+       Each user owns his own mailbox, which is by default generally readable
+       but not writable.  Mail does not delete an empty mailbox nor change its
+       mode, so a user may make it unreadable if desired.
+
+       Option -n causes notice to be given on your terminal whenever mail is
+       delivered to your mail box.  The option is reversed at each occurrence.
+       See also sysmon(9.1) and the MAIL variable of sh(1).
+
+       When a user logs in he is informed of the presence of mail.
+
+FILES
+       /usr/spool/mail/mail.log mail log file
+       /usr/spool/mail/*        mailboxes
+       /etc/passwd              to identify sender and locate persons
+       mbox                     saved mail
+       /tmp/ma*                 temp file
+       $HOME/dead.letter        unmailable text
+       /usr/lib/upas/printmail  the program to peruse the mail
+       uux(1)
+
+SEE ALSO
+       xsend(1), write(1), sysmon(9.1), uucp(1), mail(7), upas(8)
+
+BUGS
+       Option -n doesn't work in a mux(9.1) layer.
+
+                                                                       MAIL(1)

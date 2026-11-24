@@ -1,0 +1,31 @@
+INTRO(1)                    General Commands Manual                   INTRO(1)
+
+NAME
+       intro - introduction to commands
+
+DESCRIPTION
+       This section describes publicly accessible commands in alphabetic
+       order.
+
+       The name of a particular machine at the foot of the page means that the
+       command is there and not necessarily elsewhere.  `Local' means the
+       same, without being specific about where.
+
+SEE ALSO
+       Section (6) for computer games.
+       Section (7) for databases.
+       Section (8) for `hidden' commands for booting, maintenance, etc.
+       How to get started, in the Introduction.
+
+DIAGNOSTICS
+       Upon termination each command returns two bytes of status, one supplied
+       by the system giving the cause for termination, and (in the case of
+       `normal' termination) one supplied by the program, see wait and
+       exit(2).  The former byte is 0 for normal termination, the latter is
+       customarily 0 for successful execution, nonzero to indicate troubles
+       such as erroneous parameters, bad or inaccessible data, or other
+       inability to cope with the task at hand.  It is called variously `exit
+       code', `exit status' or `return code', and is described only where
+       special conventions are involved.
+
+                                                                      INTRO(1)

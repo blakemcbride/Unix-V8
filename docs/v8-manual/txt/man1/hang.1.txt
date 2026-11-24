@@ -1,0 +1,17 @@
+HANG(1)                     General Commands Manual                    HANG(1)
+
+NAME
+       hang - start a process in stopped state
+
+SYNOPSIS
+       hang command
+
+DESCRIPTION
+       The given command is executed, but stopped before main() is called so
+       that the process can be picked up by a debugger.  To ensure that
+       breakpoints may be set, the process does not share its text.
+
+SEE ALSO
+       pi(9.1), kill(1)
+
+                                                                       HANG(1)

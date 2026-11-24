@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>regexp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; regexp.3 (<a href="../../../../source/v8/usr/man/man3/regexp.3">troff source</a>)</p>
+<pre>
+REGEXP(3)                  Library Functions Manual                  REGEXP(3)
+
+NAME
+       regcomp, regexec, regsub, regerror - regular expression handler
+
+SYNOPSIS
+       #include &lt;regexp.h&gt;
+
+       regexp *regcomp(exp)
+       char *exp;
+
+       int regexec(prog, string)
+       struct regexp *prog;
+       char *string;
+
+       regsub(prog, source, dest)
+       struct regexp *prog;
+       char *source;
+       char *dest;
+
+       regerror(msg)
+       char *msg;
+
+DESCRIPTION
+       Regcomp compiles an egrep(1)-styleregularexpressionandreturns a pointer
+       to an object with the following structure.  The object is allocated by
+       malloc(2) and may be released by free.
+
+              #define NSUBEXP  10
+              typedef struct regexp { /* see <a href="../man3/regexp.3.html">regexp(3)</a> */
+                   char *startp[NSUBEXP];
+                   char *endp[NSUBEXP];
+                   char program[1];
+              } regexp;
+
+       Startp[n] points to the first character of the substring of string that
+       matches the nth parenthesized subexpression (the subexpression
+       introduced by the nth left parenthesis).  Endp[n] points to the first
+       character following that substring.  The character array program
+       contains the compiled form of the regular expression.
+
+       Regexec matches a null-terminated string against the compiled regular
+       expression in prog.  If it matches, regexec returns a non-zero value
+       and fills in the startp and endp fields to describe the match, in which
+       `*', `+', and `?' matches are extended as far as possible.  By
+       convention, startp[0] and endp[0] refer to the substring that matches
+       the complete regular expression.
+
+       Regsub places in dest a substitution instance of source in the context
+       of the last regexec performed using prog.  Each instance of `\n', where
+       n is a digit, is replaced by the string delimited by startp[n] and
+       endp[n].  Each instance of `&amp;' is replaced by the string delimited by
+       startp [0] and endp [0].  The result is placed in the area pointed to
+       by dest .
+
+       Regerror, called whenever an error is detected in regcomp, regexec, or
+       regsub, writes the string msg on the standard error file and exits.
+       Regerror can be replaced to perform special error processing.
+
+DIAGNOSTICS
+       Regcomp returns 0 for an illegal expression or other failure.  Regexec
+       returns 0 if string is not accepted.
+
+SEE ALSO
+       egrep(1), <a href="../man1/expr.1.html">expr(1)</a>
+
+                                                                     REGEXP(3)
+</pre>
+</body></html>

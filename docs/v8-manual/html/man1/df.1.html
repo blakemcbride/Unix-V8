@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>df.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; df.1 (<a href="../../../../source/v8/usr/man/man1/df.1">troff source</a>)</p>
+<pre>
+DF(1)                       General Commands Manual                      DF(1)
+
+NAME
+       df - disk free
+
+SYNOPSIS
+       df [ -i ] [ -l ] [ filesystem ... ] [ directory ... ]
+
+DESCRIPTION
+       Df prints out the amount of free space on filesystem, e.g.
+       ``/dev/rp0a'', or on the filesystem in which the specified directory,
+       e.g. ``$HOME'', is contained.  If no file system is specified, the free
+       space on all of the normally mounted file systems is printed.
+
+       The reported numbers are in kilobytes, independent of the blocksize
+       actually used on the filesystem.
+
+       Other options are:
+
+       -i     Report also the number of inodes which are used and free.
+
+       -l     examines also the free list, double checking that the summary
+              number in the filesystem superblock is correct.
+
+FILES
+       /etc/fstab     list of normally mounted filesystems
+       /etc/mtab list of currently mounted filesystems
+
+SEE ALSO
+       <a href="../man5/fstab.5.html">fstab(5)</a>, <a href="../man5/mtab.5.html">mtab(5)</a>, <a href="../man8/icheck.8.html">icheck(8)</a>, <a href="../man8/quot.8.html">quot(8)</a>
+
+                                                                         DF(1)
+</pre>
+</body></html>

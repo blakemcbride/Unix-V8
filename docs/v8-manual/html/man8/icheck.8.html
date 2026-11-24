@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>icheck.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; icheck.8 (<a href="../../../../source/v8/usr/man/man8/icheck.8">troff source</a>)</p>
+<pre>
+ICHECK(8)                   System Manager's Manual                  ICHECK(8)
+
+NAME
+       icheck, dcheck, ncheck - file system consistency check
+
+SYNOPSIS
+       /etc/icheck [ -B ] [ -s ] [ -b numbers ] [ filesystem ]
+
+       /etc/dcheck [ -B ] [ -i numbers ] [ filesystem ]
+
+       /etc/ncheck [ -B ] [ -i numbers ] [ -a ] [ -s ] [ filesystem ]
+
+DESCRIPTION
+       These programs perform consistency checks on file systems.  For normal
+       file system maintenance, see <a href="../man8/fsck.8.html">fsck(8)</a>.
+
+       Icheck examines a file system, builds a bit map of used blocks, and
+       compares this bit map against the free list maintained on the file
+       system.  If the file system is not specified, a set of default file
+       systems is checked.  The normal output of icheck includes a report of
+
+              The total number of files and the numbers of regular, directory,
+              block special and character special files.
+
+              The total number of blocks in use and the numbers of single-,
+              double-, and triple-indirect blocks and directory blocks.
+
+              The number of free blocks.
+
+              The number of blocks missing; i.e. not in any file nor in the
+              free list.
+
+       The -s option causes icheck to ignore the actual free list and
+       reconstruct a new one by rewriting the super-block of the file system.
+       The file system should be dismounted while this is done; if this is not
+       possible (for example if the root file system has to be salvaged) care
+       should be taken that the system is quiescent.  The words in the super-
+       block which indicate the size of the free list and of the i-list are
+       believed.  If the super-block has been curdled these words will have to
+       be patched.  The -s option causes the normal output reports to be
+       suppressed.
+
+       Following the -b option is a list of block numbers; whenever any of the
+       named blocks turns up in a file or the free list, a diagnostic is
+       produced.
+
+       Dcheck reads the directories in a file system and compares the link-
+       count in each i-node with the number of directory entries by which it
+       is referenced.  The -i flag is followed by a list of i-numbers; when
+       one of those i-numbers turns up in a directory, the number, the i-
+       number of the directory, and the name of the entry are reported.
+
+       Ncheck generates a pathname vs. i-number list of all files in a file
+       system.  Names of directory files are followed by `/.'.  The -i option
+       reduces the report to only those files whose i-numbers follow.  The -a
+       option allows printing of the names `.'  and `..', which are ordinarily
+       suppressed.  The -s option reduces the report to special files and
+       files with set-user-ID mode; it is intended to discover concealed
+       violations of security policy.  The report is in no useful order, and
+       probably should be sorted.
+
+       These programs are faster if the raw version of the special file is
+       used, since they read the i-list many blocks at a time.
+
+       If filesystem is a special file, the minor device number is checked to
+       distinguish between regular and bitmapped file systems.  If the
+       filesystem resides in a regular file, it is assumed to be a regular
+       file system unless the -B option is used.
+
+FILES
+       Default file systems vary with installation.
+
+SEE ALSO
+       <a href="../man8/fsck.8.html">fsck(8)</a>, <a href="../man5/filsys.5.html">filsys(5)</a>, <a href="../man8/clri.8.html">clri(8)</a>
+
+DIAGNOSTICS
+       For duplicate blocks and bad blocks (which lie outside the file system)
+       icheck announces the difficulty, the i-number, and the kind of block
+       involved.  If a read error is encountered, the block number of the bad
+       block is printed and icheck considers it to contain 0.  `Bad freeblock'
+       means that a block number outside the available space was encountered
+       in the free list.  `n dups in free' means that n blocks were found in
+       the free list which duplicate blocks either in some file or in the
+       earlier part of the free list.
+
+       When a file turns up for which the link-count and the number of
+       directory entries disagree, dcheck reports the relevant facts.
+       Allocated files which have 0 link-count and no entries are also listed.
+       The only dangerous situation occurs when there are more entries than
+       links; if entries are removed, so the link-count drops to 0, the
+       remaining entries point to thin air.  They should be removed.  When
+       there are more links than entries, or there is an allocated file with
+       neither links nor entries, some disk space may be lost but the
+       situation will not degenerate.
+
+       When the filesystem structure is improper, ncheck prints `??' to denote
+       the `parent' of a parentless file.  A pathname beginning with `...'
+       denotes a loop.
+
+BUGS
+       Since these commands are inherently two-pass in nature, extraneous
+       diagnostics may be produced if applied to active file systems.
+
+       They believe even preposterous super-blocks and consequently can get
+       core images.
+
+                                                                     ICHECK(8)
+</pre>
+</body></html>

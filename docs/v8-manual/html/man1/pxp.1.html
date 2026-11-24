@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pxp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; pxp.1 (<a href="../../../../source/v8/usr/man/man1/pxp.1">troff source</a>)</p>
+<pre>
+PXP(1)                      General Commands Manual                     PXP(1)
+
+NAME
+       pxp, pxref - pascal printer, profiler, and cross-reference lister
+
+SYNOPSIS
+       pxp [ -acdefjnstuw_ ] [ -23456789 ] [ -z [ name ... ] ] name.p
+
+       pxref [ - ] name.p
+
+DESCRIPTION
+       Pxp prints the Pascal program name.p in a standard `pretty' form.
+       Under option -z the listing is annotated with statement execution
+       counts from a previous <a href="../man1/pascal.1.html">pascal(1)</a> run.
+
+       -a     Print the bodies of all procedures and functions in the profile;
+              even those which were never executed.
+
+       -d     Include declaration parts in a profile.
+
+       -e     Eliminate include directives when reformatting a file; the
+              include is replaced by the reformatted contents of the specified
+              file.
+
+       -f     Fully parenthesize expressions.
+
+       -j     Left justify all procedures and functions.
+
+       -n     Eject a page as each file is included; in profiles, print a
+              blank line at the top of the page.
+
+       -s     Strip comments from the input text.
+
+       -t     Print only a table of counts of procedure and function calls.
+
+       -u     Card image mode; only the first 72 characters of input lines are
+              used.
+
+       -w     Suppress warning diagnostics.
+
+       -z     Generate an execution profile.  The presence of any names causes
+              the profile to be restricted to the named procedures, functions,
+              and include files.
+
+       -_     Underline keywords.
+
+       -d     With d a digit, 2 ≤ d ≤ 9, use d spaces as the indenting unit.
+              The default is 4.
+
+       Pxref makes a line-numbered listing and cross-reference index for
+       name.p.  The optional - argument suppresses the listing.
+
+FILES
+       *.p               input files
+       *.i               include files
+       pmon.out          profile data
+       /usr/lib/how_pxp  information on basic usage
+
+SEE ALSO
+       Berkeley Pascal User's Manual
+       <a href="../man1/pascal.1.html">pascal(1)</a>
+
+BUGS
+       Pxref trims identifiers to 10 characters and pads lines with blanks.
+
+                                                                        PXP(1)
+</pre>
+</body></html>

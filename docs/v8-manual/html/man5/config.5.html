@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>config.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; config.5 (<a href="../../../../source/v8/usr/man/man5/config.5">troff source</a>)</p>
+<pre>
+CONFIG(5)                     File Formats Manual                    CONFIG(5)
+
+NAME
+       config - system configuration template files
+
+DESCRIPTION
+       These files are used as input by <a href="../man8/config.8.html">config(8)</a>.  Except as noted, they are
+       kept in /usr/sys/conf.
+
+       Files names the source files that make up the kernel.  Each line
+       consists of a filename (relative to /usr/sys) followed by some magic
+       words.  For example:
+
+              sys/acct.c     standard
+
+       is a file used by any version of the system;
+
+              dev/uba.c standard device-driver
+
+       is also always used, and contains device register references (which may
+       require special compilation hacks);
+
+              dev/ju.c  optional ju device-driver
+
+       is included only if the ju device is expected;
+
+              dev/ttyld.c    optional tty pseudo-device
+
+       is included only if the tty pseudo-device is requested.
+
+       Devices describes possible device drivers, file system handlers, and
+       line disciplines; the information is used to generate handler dispatch
+       tables.  It consists of lines with the following blank-separated
+       fields:
+
+              Type of handler: device for character devices, stream-device for
+              character stream devices, block-device for block devices, file-
+              system for file system handlers, line-discipline for line
+              discipline handlers.  If the type is preceded by the word
+              `standard' (e.g.  standard block-device), the handler is always
+              included; otherwise, it is included only if requested.
+
+              Table index: major device number, filesystem type, or line
+              discipline number.
+
+              Driver name.  Used in files and conf.  Config writes a header
+              file name.h for each device; if that device is configured, NAME
+              is defined to be the number of devices of that type.
+
+              Entry point name.  Used as a prefix for data structure and
+              driver entry points.
+
+              Entry points.  For block devices, some of open, close, strategy,
+              dump, B_TAPE (the last puts the flag B_TAPE in the d_flags entry
+              in the block device switch); for character devices, open, close,
+              read, write, ioctl, reset.  For stream devices and line
+              disciplines, info should be specified.  For file system
+              handlers, put, get, free, updat, read, write, trunc, stat, nami,
+              mount, ioctl.
+
+       As a special case, lines beginning with `:' are copied intact to
+       conf.c.  This can be used for hacks like
+
+              : int mem_no = 3;   /* major device number of memory special
+              file */
+
+       Addenda to files and devices specific to a particular machine may be
+       kept in /usr/sys/machine/files and /usr/sys/machine/devices.  The
+       addenda are treated as if appended to the general files.
+
+                                                                     CONFIG(5)
+</pre>
+</body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>yacc.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; yacc.1 (<a href="../../../../source/v8/usr/man/man1/yacc.1">troff source</a>)</p>
+<pre>
+YACC(1)                     General Commands Manual                    YACC(1)
+
+NAME
+       yacc, eyacc - yet another compiler-compiler
+
+SYNOPSIS
+       yacc [ -vdD ] [ -o output ] [ -s stem ] grammar
+
+       eyacc [ -v ] [ grammar ]
+
+DESCRIPTION
+       Yacc converts a context-free grammar into a set of tables for a simple
+       automaton which executes an LR(1) parsing algorithm.  The grammar may
+       be ambiguous; specified precedence rules are used to break ambiguities.
+
+       The output file, y.tab.c, must be compiled by the C compiler to produce
+       a program yyparse.  The output file name can be set with the -o flag.
+       This program must be loaded with the lexical analyzer program, yylex,
+       as well as main and yyerror, an error handling routine.  These routines
+       must be supplied by the user; <a href="../man1/lex.1.html">lex(1)</a> is useful for creating lexical
+       analyzers usable by yacc.
+
+       If the -D flag is given, yacc creates y.debug, which contains default
+       error messages for the parser.  The parser will use them if it is
+       compiled with the preprocessor symbol YYDEBUG defined.  The amount of
+       diagnostic output is controlled by an external variable yydebug.  If it
+       is 2, the parser prints out the name of each token returned by yylex
+       and each reduction.  If it is 1, the parser prints out the reductions,
+       and if it is 0, the parser only reports errors.
+
+       If the -v flag is given, the file y.output is prepared, which contains
+       a description of the parsing tables and a report on conflicts generated
+       by ambiguities in the grammar.
+
+       If the -d flag is used, the file y.tab.h is generated with the define
+       statements that associate the yacc-assigned `token codes' with the
+       user-declared `token names'.  This allows source files other than
+       y.tab.c to access the token codes.
+
+       The prefix y.  for the files y.tab.c y.tab.h, y.debug, and y.output can
+       be changed to stem by the -s flag.
+
+       Eyacc is an old version of yacc, with systematic error recovery.  It is
+       used in <a href="../man1/pascal.1.html">pascal(1)</a>.
+
+FILES
+       y.output
+       y.tab.c
+       y.tab.h       defines for token names
+       y.debug
+       y.tmp.??????  temporary file
+       y.acts.?????  temporary file
+       /usr/lib/yaccparparser prototype for C programs
+       /lib/liby.a   library with default `main' and `yyerror'
+
+SEE ALSO
+       <a href="../man1/lex.1.html">lex(1)</a>
+       LR Parsing by A. V. Aho and S. C. Johnson, Computing Surveys, June,
+       1974.
+       YACC - Yet Another Compiler Compiler by S. C. Johnson.
+       Susan L. Graham, Charles B. Haley, and W. N. Joy, Practical LR Error
+       Recovery, SIGPLAN Conference on Compiler Construction, August, 1979.
+
+DIAGNOSTICS
+       The number of reduce-reduce and shift-reduce conflicts is reported on
+       the standard output; a more detailed report is found in the y.output
+       file.  Similarly, if some rules are not reachable from the start
+       symbol, this is also reported.
+
+BUGS
+       The parser may not have full information when it prints out y.debug so
+       that the names of the tokens returned by yylex may be missing.
+
+                                                                       YACC(1)
+</pre>
+</body></html>

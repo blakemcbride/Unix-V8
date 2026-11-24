@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>kill.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; kill.2 (<a href="../../../../source/v8/usr/man/man2/kill.2">troff source</a>)</p>
+<pre>
+KILL(2)                       System Calls Manual                      KILL(2)
+
+NAME
+       kill - send signal to a process
+
+SYNOPSIS
+       kill(pid, sig)
+
+DESCRIPTION
+       Kill sends the signal sig to the process specified by the process
+       number by pid.  See <a href="../man2/signal.2.html">signal(2)</a> for a list of signals.
+
+       The sending and receiving processes must have the same effective user
+       ID, otherwise this call is restricted to the super-user.
+
+       If the process number is 0, the signal is sent to all other processes
+       in the sender's process group; see <a href="../man4/ttyld.4.html">ttyld(4)</a>.
+
+       If the process number is -1, and the user is the super-user, the signal
+       is broadcast universally except to processes 0, 1 and 2, the scheduler
+       initialization, and pageout processes, see <a href="../man8/init.8.html">init(8)</a>.
+
+       Processes may send signals to themselves.
+
+SEE ALSO
+       <a href="../man2/signal.2.html">signal(2)</a>, <a href="../man1/kill.1.html">kill(1)</a>
+
+DIAGNOSTICS
+       Zero is returned if the process is killed; -1 is returned if the
+       process does not have the same effective user ID and the user is not
+       super-user, or if the process does not exist.
+
+                                                                       KILL(2)
+</pre>
+</body></html>

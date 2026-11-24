@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>varargs.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; varargs.3 (<a href="../../../../source/v8/usr/man/man3/varargs.3">troff source</a>)</p>
+<pre>
+VARARGS(3)                 Library Functions Manual                 VARARGS(3)
+
+NAME
+       varargs - variable argument list
+
+SYNOPSIS
+       #include &lt;varargs.h&gt;
+       function(va_alist)
+       va_dcl
+
+       va_list pvar;
+
+       va_start(pvar);
+
+       va_arg(pvar, type );
+
+       va_end(pvar);
+
+DESCRIPTION
+       This set of macros allows portable procedures that accept variable
+       argument lists to be written.  Routines which have variable argument
+       lists (such as <a href="../man3/printf.3.html">printf(3)</a>) that do not use varargs are inherently
+       nonportable, since different machines use different argument passing
+       conventions.
+
+       The literal identifier va_alist is used in a function header to declare
+       a variable argument list.  It is declared by va_dcl.  Note that there
+       is no semicolon after va_dcl.
+
+       Va_list is the type of the variable pvar, which is used to traverse the
+       list.  One variable of this type must always be declared.
+
+       Va_start initializes pvar to the beginning of the list.
+
+       Va_arg returns the next argument in the list pointed to by pvar.  Type
+       is the type the argument is expected to be.  Different types can be
+       mixed, but it is up to the routine to know what type is expected, since
+       it cannot be determined at runtime.
+
+       Va_end is used to finish up.
+
+       Multiple traversals, each bracketed by va_start and va_end, are
+       possible.
+
+EXAMPLE
+       How to define execl in terms of execv; see <a href="../man2/exec.2.html">exec(2)</a>:
+
+              #include &lt;varargs.h&gt;
+              execl(va_alist)
+              va_dcl
+              {
+                   va_list ap;
+                   char *file;
+                   char *args[100];
+                   int argno = 0;
+                   va_start(ap);
+                   file = va_arg(ap, char*);
+                   while (args[argno++] = va_arg(ap, char*))
+                        continue;
+                   va_end(ap);
+                   execv(file, args);
+              }
+
+                                                                    VARARGS(3)
+</pre>
+</body></html>

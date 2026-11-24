@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uusched.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; uusched.8 (<a href="../../../../source/v8/usr/man/man8/uusched.8">troff source</a>)</p>
+<pre>
+UUSCHED(8)                  System Manager's Manual                 UUSCHED(8)
+
+NAME
+       uusched  - uucp file transport scheduler
+
+SYNOPSIS
+       /usr/lib/uucp/uusched [ -x debug_level ] [ -u debug_level ]
+
+DESCRIPTION
+       Uusched examines the uucp spool directories, and invokes uucico (8) for
+       each system with work pending.  It is called by uucp and <a href="../man1/uux.1.html">uux(1)</a> after
+       work is queued, and should be invoked regularly (usually hourly) by
+       <a href="../man8/cron.8.html">cron(8)</a>.
+
+       A limited number of copies of uusched are permitted at any time.  The
+       number is kept in the file /usr/lib/uucp/Maxuuscheds.
+
+       The two options are for debugging purposes only.  -x requests debugging
+       output; debug_level is a single digit, larger numbers producing more
+       detailed output.  -u debug_level causes -x debug_level to be passed to
+       uucico.
+
+FILES
+       /usr/lib/uucp/Systems
+       /usr/lib/uucp/Permissions
+       /usr/lib/uucp/Devices
+       /usr/spool/uucp/*
+       /usr/spool/uucp/LCK*
+       /usr/spool/uucppublic/*
+
+SEE ALSO
+       <a href="../man1/uucp.1.html">uucp(1)</a>, <a href="../man1/uux.1.html">uux(1)</a>, <a href="../man8/uucico.8.html">uucico(8)</a>
+
+                                                                    UUSCHED(8)
+</pre>
+</body></html>

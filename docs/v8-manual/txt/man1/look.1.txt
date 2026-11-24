@@ -1,0 +1,45 @@
+LOOK(1)                     General Commands Manual                    LOOK(1)
+
+NAME
+       look - find lines in a sorted list
+
+SYNOPSIS
+       look [ -dfnixtc ] [ string ] [ file ]
+
+DESCRIPTION
+       Look consults a sorted file and prints all lines that begin with
+       string.  It uses binary search.
+
+       The following options are recognized.  Options dfntc affect comparisons
+       as in sort(1).
+
+       i      Interactive.  There is no string argument; instead look takes
+              lines from the standard input as strings to be looked up.
+
+       x      Exact.  Print only lines of the file whose key matches string
+              exactly.
+
+       d      `Dictionary' order: only letters, digits, tabs and blanks
+              participate in comparisons.
+
+       f      Fold.  Upper case letters compare equal to lower case.
+
+       n      Numeric comparison with initial string of digits, optional minus
+              sign, and optional decimal point.
+
+       tc     `Tab character' c terminates the sort key in the file.
+
+       If no file is specified, /usr/dict/words is assumed, with collating
+       sequence df.
+
+FILES
+       /usr/dict/words
+
+SEE ALSO
+       sort(1), grep(1), dict(7)
+
+DIAGNOSTICS
+       Look returns exit status 0 if string is found, 1 if not found, 2 for
+       error.
+
+                                                                       LOOK(1)

@@ -1,0 +1,28 @@
+TERM(9.1)                                                            TERM(9.1)
+
+NAME
+       term - nonstandard mux terminals
+
+SYNOPSIS
+       exec term termtype
+
+DESCRIPTION
+       Term replaces the program in the layer on its standard output with an
+       emulator for the terminal type specified by termtype.  In the resulting
+       layer, environment variable TERM is set appropriately.  Known types are
+
+       2621   Hewlett-Packard 2621
+
+       4014   Tektronix 4014
+
+       5620   Teletype DMD 5620 stand-alone terminal.
+
+       33     Teletype Model 33 (actually closer to 35).
+
+       Also, termtype mux restores and initializes a standard mux(9.1)
+       terminal program.
+
+BUGS
+       Unexported shell parameters and functions are lost.
+
+                                                                     TERM(9.1)

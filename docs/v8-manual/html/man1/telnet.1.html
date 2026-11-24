@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>telnet.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; telnet.1 (<a href="../../../../source/v8/usr/man/man1/telnet.1">troff source</a>)</p>
+<pre>
+TELNET(1)                   General Commands Manual                  TELNET(1)
+
+NAME
+       telnet - user interface to the telnet protocol
+
+SYNOPSIS
+       telnet [ host [ port ] ]
+
+DESCRIPTION
+       Telnet communicates with another host using the TELNET protocol.  If
+       telnet is invoked without arguments, it prompts `telnet&gt;'.  In this
+       mode it accepts the commands listed below.  If it is invoked with
+       arguments, it performs an open command (see below) with those
+       arguments.
+
+       Once a connection has been opened, telnet sends typed text to the
+       remote host.  To issue telnet commands when in input mode, precede them
+       with the telnet escape character, initially control-].
+
+       The following commands are available.  Only a unique prefix of the
+       command need be typed.
+
+       open host [ port ]
+              Open a connection to the named host.  A missing port number
+              defaults to a TELNET server.  The host may be a host name or an
+              Internet address specified in the `dot notation'.
+
+       close  Close a TELNET session and return to command mode.
+
+       quit   Close any open TELNET session and exit telnet.
+
+       escape [ escape-char ]
+              Set the telnet escape character.  Control characters may be
+              specified as `^' followed by a single letter.
+
+       status Show the current status of telnet.
+
+       options
+              Toggle viewing of TELNET options processing.  When viewing is
+              on, all TELNET option negotiations will be displayed.  Options
+              sent by telnet are displayed as SENT, options received as RCVD.
+
+       crmod  Toggle carriage return mode.  When this mode is on, carriage
+              return characters received from the remote host map into a
+              carriage return and a line feed.
+
+       ? [ command ]
+              Get help.  With no arguments, print a help summary.  With a
+              command is specified, print information about that command only.
+
+FILES
+       /usr/inet/lib/*
+
+SEE ALSO
+       <a href="../man1/dcon.1.html">dcon(1)</a>, <a href="../man8/netstat.8.html">netstat(8)</a>
+
+                                   research                          TELNET(1)
+</pre>
+</body></html>

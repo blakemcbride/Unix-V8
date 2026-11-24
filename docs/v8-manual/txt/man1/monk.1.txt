@@ -1,0 +1,80 @@
+MONK(1)                     General Commands Manual                    MONK(1)
+
+NAME
+       monk, monksample - typeset documents and letters
+
+SYNOPSIS
+       monk [ options ] [ files ]
+
+       monksample [ sample ]
+
+DESCRIPTION
+       Monk formats the text in the named files for phototypesetting, using
+       other troff(1) preprocessors as necessary.  Options are given below.
+       Any other arguments or flags (e.g., -o1-2) are passed to troff(1).
+       Options can occur in any order and can be intermixed with files.  If no
+       arguments are given, monk prints a list of its options.
+
+       -Acommands
+              Invoke the commands after all preprocessors and before troff(1).
+       -Bcommands
+              Invoke the commands after monk and before any other
+              preprocessor.
+       -E     Invoke the -e option of troff(1).
+       -Rfile Use file as the index file for refer(1).
+       -Tdest Prepare output for typesetter or terminal dest; Where dest can
+              be:
+              -T202       Mergenthaler Linotron 202
+              -T9700      Xerox 9700 printer
+              -Taps       Autologic APS-5
+              -Tcanon     Canon laser printer, see candest(7) (default)
+              -Tcat       Graphic Systems C/A/T
+              -Timagen    Imagen printer, see i10send(1)
+              -Tjerq      5620 or blit terminal
+       -T-    The output from troff(1) is placed on standard output instead of
+              the default printer.
+       -x     Shows the preprocessors that are being invoked.
+
+       The following options are not normally needed because monk
+       automatically determines which preprocessor are required.  However, if
+       the commands in -A or -B options require a preprocessor, you can force
+       monk to invoke them using the following options.
+
+       -c     col(1) (postprocessor)
+       -cn    cite(1)
+       -e     eqn(1)
+       -g     grap(1)
+       -i     ideal(1)
+       -p     pic(1)
+       -r     refer(1)
+       -s     soelim(1)
+       -t     tbl(1)
+       -tp    tped(1)
+
+       Monksample produces on the standard output a skeleton document that you
+       can redirect into a file and edit.  If no argument is given, monksample
+       prints a list of the available samples.  They are:
+
+       cspress Computer Science Press galley sheets.
+       letter  Personal letter
+       model   IEEE/ACM model sheets.
+       rp      AT&T Bell Laboratories release paper.
+       song    Song sheets for singing at nursing homes.
+       tm      AT&T Bell Laboratories technical memorandum.
+
+FILES
+       /usr/lib/monk/cite     forward and backward reference preprocessor
+       /usr/lib/monk/db       monk databases
+       /usr/lib/monk/dorefer  sed script for refer(1)
+       /usr/lib/monk/monk     monk compiler
+       /usr/lib/monk/soelim   preprocessor for troff(1) `.so' directives
+       /usr/lib/monk/tmac.p   macros for pic(1) preprocessor
+       /usr/lib/monk/sample   directory for existing samples
+
+SEE ALSO
+       Murrel, S. L., Kowalski, T. J., Typing Documents on the UNIX System:
+       Using Monk 0.2
+       apsend(1), cite(1), d202(1), eqn(1), grap(1), ideal(1), ped(9.1),
+       pic(1), proof(9.1), refer(1), tbl(1), troff(1)
+
+                                                                       MONK(1)

@@ -1,0 +1,26 @@
+FREXP(3)                   Library Functions Manual                   FREXP(3)
+
+NAME
+       frexp, ldexp, modf - split into mantissa and exponent
+
+SYNOPSIS
+       double frexp(value, eptr)
+       double value;
+       int *eptr;
+
+       double ldexp(value, exp)
+       double value;
+
+       double modf(value, iptr)
+       double value, *iptr;
+
+DESCRIPTION
+       Frexp returns the mantissa of value and stores the exponent indirectly
+       through eptr, so that value = frexp(value)*2**(*eptr).
+
+       Ldexp returns the quantity value∗2∗∗exp.
+
+       Modf returns the positive fractional part of value and stores the
+       integer part indirectly through iptr.
+
+                                                                      FREXP(3)

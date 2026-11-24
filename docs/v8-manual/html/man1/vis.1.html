@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>vis.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; vis.1 (<a href="../../../../source/v8/usr/man/man1/vis.1">troff source</a>)</p>
+<pre>
+VIS(1)                      General Commands Manual                     VIS(1)
+
+NAME
+       vis - show invisible characters
+
+SYNOPSIS
+       vis [ -t ] [ -s ] file ...
+
+DESCRIPTION
+       Vis reads each file in sequence and writes it on the standard output.
+       Non-printing characters are translated on output as in the `l' (list)
+       command of <a href="../man1/ed.1.html">ed(1)</a>.  If no file is given vis reads from the standard
+       input.  Option -t suppresses translation of tabs.  Option -s strips
+       non-printing characters and makes no other translation.
+
+SEE ALSO
+       <a href="../man1/cat.1.html">cat(1)</a>, <a href="../man1/ed.1.html">ed(1)</a>
+
+                                                                        VIS(1)
+</pre>
+</body></html>

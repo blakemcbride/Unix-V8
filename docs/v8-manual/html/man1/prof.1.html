@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>prof.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; prof.1 (<a href="../../../../source/v8/usr/man/man1/prof.1">troff source</a>)</p>
+<pre>
+PROF(1)                     General Commands Manual                    PROF(1)
+
+NAME
+       prof - display profile data
+
+SYNOPSIS
+       prof [ option ] ...  [ a.out [ mon.out ... ] ]
+
+DESCRIPTION
+       Prof interprets files produced by <a href="../man3/monitor.3.html">monitor(3)</a> or the -p option of cc,
+       f77, or <a href="../man1/pascal.1.html">pascal(1)</a>.  The symbol table in the named object file (`a.out'
+       by default) is read and correlated with the profile file (`mon.out' by
+       default).  For each external symbol, the percentage of time spent
+       executing between that symbol and the next is printed (in decreasing
+       order), together with the number of times that routine was called and
+       the number of milliseconds per call.  If more than one profile file is
+       specified, the output represents the sum of the profiles.
+
+       Call counts are tallied for subroutines compiled under option -p, which
+       also causes a profile file to be produced automatically.
+
+       Options are:
+
+       -a     report all symbols, not just external symbols.
+
+       -l     sort the output by symbol value
+
+       -n
+               sort the output by number of calls
+
+       -s     produce a summary profile file in mon.sum
+
+       -v -low -high
+              produce a graphic profile on the standard output for display by
+              the <a href="../man1/plot.1.html">plot(1)</a> filters; optional numbers low and high, by default 0
+              and 100, select a percentage of the profile to be plotted
+
+       -z     include routines with zero usage in the output
+
+FILES
+       mon.out  for profile
+       a.out    for namelist
+       mon.sum  for summary profile
+
+SEE ALSO
+       <a href="../man3/monitor.3.html">monitor(3)</a>, <a href="../man2/profil.2.html">profil(2)</a>, <a href="../man1/cc.1.html">cc(1)</a>, <a href="../man1/plot.1.html">plot(1)</a>
+
+BUGS
+       Beware of quantization errors.
+       Prof is confused by f77 which puts the entry points at the bottom of
+       subroutines and functions.
+
+                                                                       PROF(1)
+</pre>
+</body></html>

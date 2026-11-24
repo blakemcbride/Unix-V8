@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>troff.7 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 7</a> &gt; troff.7 (<a href="../../../../source/v8/usr/man/man7/troff.7">troff source</a>)</p>
+<pre>
+TROFF(7)               Miscellaneous Information Manual               TROFF(7)
+
+NAME
+       troff - addenda to troff manual
+
+DESCRIPTION
+       These addenda apply to the reference.
+
+       New requests; none cause breaks:
+
+       .ab t     print text t on standard error and stop
+
+       .cf f     copy file f into troff output uninterpreted; assume net
+              motion is 0
+
+       .sy c     execute unix comand c
+
+       .pi c     pipe output of troff through command c
+
+       Deleted request:
+
+       .li
+
+       New escape sequences
+
+       \D´l dh dv´
+              draw line dh horizontally and dv vertically
+
+       \D´c d´
+              draw circle with diameter d extending right from current
+              position
+
+       \D´e h v´ draw ellipse with axis
+              h extending right from current position and vertical axis v
+
+       \D´a dh1 dv1 dh2 dv2´
+              arc counterclockwise from here, centered at dh1,dv1 to
+              dh1+dh2,dv1+dv2
+
+       \D´∼ dh1 dv1 dh2 dv2 ...´ quadratic spline
+
+       \gr or \g(rr
+              format of number register r or rr; empty if not defined
+
+       \H´n´  character height of present font is n points, width unchanged;
+              n=0 for present point size; +n increments; -n decrements
+
+       \S´n´  slant output n degrees; n may be negative
+
+       New number registers:
+
+       $$   process id of troff; read only
+
+       .L   line spacing (.ls); read only
+
+       .P   1 if page is being printed; 0 if suppressed by -o; read only
+
+       .R   number of unused number registers
+
+       .b   emboldening factor (.bd)
+
+       .j   .ad setting, usable as argument to .ad
+
+       .k   horizontal size of text (excluding indent) of current partial
+              output line
+
+       c.   input line-number, counting from 1 in each file; same as .c, but
+              writable
+
+       .T   troff output device name (a string: \*(.T)
+
+       Number register deleted:
+
+       hp
+
+SEE ALSO
+       J. F. Ossanna, NROFF/TROFF Reference Manual
+       <a href="../man1/troff.1.html">troff(1)</a>
+
+                                                                      TROFF(7)
+</pre>
+</body></html>

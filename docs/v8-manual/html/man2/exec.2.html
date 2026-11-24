@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>exec.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; exec.2 (<a href="../../../../source/v8/usr/man/man2/exec.2">troff source</a>)</p>
+<pre>
+EXEC(2)                       System Calls Manual                      EXEC(2)
+
+NAME
+       execl, execv, execle, execve, execlp, execvp, exec, exece, environ -
+       execute a file
+
+SYNOPSIS
+       execl(name, arg0, arg1, ..., argn, 0)
+       char *name, *arg0, *arg1, ..., *argn;
+
+       execv(name, argv)
+       char *name, *argv[];
+
+       execle(name, arg0, arg1, ..., argn, 0, envp)
+       char *name, *arg0, *arg1, ..., *argn, *envp[];
+
+       execve(name, argv, envp)
+       char *name, *argv[], *envp[];
+
+       extern char **environ;
+
+DESCRIPTION
+       Exec in all its forms overlays the calling process with the named file,
+       then transfers to the entry point of the core image of the file.  There
+       can be no return from a successful exec; the calling core image is
+       lost.
+
+       Files remain open across exec unless explicit arrangement has been
+       made; see <a href="../man2/ioctl.2.html">ioctl(2)</a>.  Ignored/held signals remain ignored/held across
+       these calls, but signals that are caught (see <a href="../man2/signal.2.html">signal(2)</a>) are reset to
+       their default values.
+
+       Each user has a real user ID and group ID and an effective user ID and
+       group ID.  The real ID identifies the person using the system; the
+       effective ID determines his access privileges.  Exec changes the
+       effective user and group ID to the owner of the executed file if the
+       file has the `set-user-ID' or `set-group-ID' modes.  The real user ID
+       is not affected.
+
+       The name argument is a pointer to the name of the file to be executed.
+       If the first two bytes of that file are the ASCII string `#!', then the
+       first line of the file is taken to be ASCII and determines the name of
+       the program to execute.  The first nonblank string following `#!' in
+       that line is substituted for name.  Any second string, separated from
+       the first by blanks or tabs, is inserted between the first two
+       arguments (arguments 0 and 1) passed to the invoked file.
+
+       The argument pointers arg0, arg1, ...  or the pointers in argv address
+       null-terminated strings.  Conventionally argument 0 is the name of the
+       file.
+
+       Execl is useful when a known file with known arguments is being called;
+       the arguments to execl are the character strings constituting the file
+       and the arguments.  A 0 argument must end the argument list.
+
+       Execv is useful when the number of arguments is unknown in advance; the
+       arguments to execv are the name of the file to be executed and a vector
+       of strings containing the arguments.  The last argument string must be
+       followed by a 0 pointer.
+
+       When a C program is executed, it is called as follows:
+
+              main(argc, argv, envp)
+              int argc;
+              char **argv, **envp;
+
+       where argc is the argument count and argv is an array of character
+       pointers to the arguments themselves.  As indicated, argc is
+       conventionally at least one and the first member of the array points to
+       a string containing the name of the file.
+
+       Argv is directly usable in another execv because argv[argc] is 0.
+
+       Envp is a pointer to an array of strings that constitute the
+       environment of the process.  Each string consists of a name, a `=', and
+       a null-terminated value; or a name, a pair of parentheses (), a value
+       bracketed by { and }, and by a null.  The array of pointers is
+       terminated by a null pointer.  The shell <a href="../man1/sh.1.html">sh(1)</a> passes an environment
+       entry for each global shell variable defined when the program is
+       called.  See <a href="../man5/environ.5.html">environ(5)</a> for some conventionally used names.
+
+       The C run-time start-off routine places a copy of envp in the global
+       cell environ, which is used by execv and execl to pass the environment
+       to any subprograms executed by the current program.  The exec routines
+       use lower-level routines as follows to pass an environment explicitly:
+
+              execve(file, argv, environ);
+              execle(file, arg0, arg1, . . . , argn, 0, environ);
+
+       Execlp and execvp are called with the same arguments as execl and
+       execv, but duplicate the shell's actions in searching for an executable
+       file in a list of directories.  The directory list is obtained from the
+       environment.  Exect is the same as execve, except it arranges for a
+       stop to occur on the first instruction of the new core image for the
+       benefit of tracers, see <a href="../man4/proc.4.html">proc(4)</a>.
+
+FILES
+       /bin/sh  shell, invoked if command file found by execlp or execvp
+
+SEE ALSO
+       <a href="../man2/fork.2.html">fork(2)</a>, <a href="../man5/environ.5.html">environ(5)</a>
+
+DIAGNOSTICS
+       If the file cannot be found, if it is not executable, if it does not
+       start with a valid magic number (see <a href="../man5/a.out.5.html">a.out(5)</a>), if maximum memory is
+       exceeded, or if the arguments require too much space, a return
+       constitutes the diagnostic; the return value is -1.  Even for the
+       super-user, at least one of the execute-permission bits must be set for
+       a file to be executed.
+
+BUGS
+       If execvp is called to execute a file that turns out to be a shell
+       command file, and if it is impossible to execute the shell, the values
+       of argv[0] and argv[-1] will be modified before return.
+       The path search of execlp and execvp does not extend to names
+       substituted by `#!'.
+
+                                                                       EXEC(2)
+</pre>
+</body></html>

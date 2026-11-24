@@ -1,0 +1,19 @@
+VIS(1)                      General Commands Manual                     VIS(1)
+
+NAME
+       vis - show invisible characters
+
+SYNOPSIS
+       vis [ -t ] [ -s ] file ...
+
+DESCRIPTION
+       Vis reads each file in sequence and writes it on the standard output.
+       Non-printing characters are translated on output as in the `l' (list)
+       command of ed(1).  If no file is given vis reads from the standard
+       input.  Option -t suppresses translation of tabs.  Option -s strips
+       non-printing characters and makes no other translation.
+
+SEE ALSO
+       cat(1), ed(1)
+
+                                                                        VIS(1)

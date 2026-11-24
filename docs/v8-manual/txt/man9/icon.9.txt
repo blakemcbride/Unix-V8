@@ -1,0 +1,76 @@
+ICON(9.1)                                                            ICON(9.1)
+
+NAME
+       icon - icon editor
+
+SYNOPSIS
+       icon
+
+DESCRIPTION
+       Icon is a pixel-level editor for textures and small bitmaps.  Icon's
+       layer has in the lower right a magnified grid, where each square
+       represents a pixel, and in the upper left the image in real size.
+       Editing is done on the magnified grid.  Pixels can be turned black by
+       pressing the left mouse button, and can be turned white by pressing the
+       middle button.  Many of the command icons require a rectangle to be
+       swept; this is done either by the middle button (which supplies a fixed
+       16×16 rectangle) or by the right button (for rectangles of any size).
+
+       arrow     Move region (sweep rectangle and click at destination).
+
+       overlapping regions
+                 Copy region (sweep rectangle and click at destination).
+
+       cross     Invert region (sweep rectangle).
+
+       eraser    Erase region (sweep rectangle).
+
+       horizontal (vertical) folded arrow
+                 Reflect region horizontally (vertically) (sweep rectangle).
+
+       deasil (withershins) arrow
+                 Rotate region deasil (withershins) (sweep rectangle).
+
+       horizontal (vertical) sheared lines
+                 Shear a region horizontally (vertically) (sweep rectangle and
+                 point at destination of nearest corner of rectangle).
+
+       scaled square
+                 Scale a region (sweep rectangle and sweep destination
+                 rectangle).
+
+       tweed pattern
+                 Texture a region (sweep source rectangle and a (bigger)
+                 destination rectangle to be tiled with copies of the source).
+
+       glasses   Read file (type file name and position the icon by clicking).
+                 The subdirectories of /usr/jerq/icon/ are searched
+                 automatically after the current directory.
+
+       grid      Switch on or off the background grids.
+
+       extend region
+                 Change the size of the drawing area.
+
+       pen       Write file (sweep rectangle and type file name).  See
+                 bitfile(9.5) for the format.
+
+       overlapping rectangles
+                 Bitblt region (driven by submenus on the right button).
+
+       mouse     Pick up a 16×16 rectangle and make it the current cursor
+                 (click a button to pick up a 16×16 region, and click again to
+                 revert to normal).
+
+       help      Display help information (click a button to revert to
+                 normal).
+
+       band-aid  Undo last drawing operation.
+
+FILES
+       /usr/jerq/mbin/icon.m — terminal program
+
+SEE ALSO
+       bitfile(9.5)
+
+                                                                     ICON(9.1)

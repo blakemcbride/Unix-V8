@@ -1,0 +1,100 @@
+ICONT(1)                    General Commands Manual                   ICONT(1)
+
+NAME
+       icont, iconc - Icon language translator and compiler
+
+SYNOPSIS
+       icont [ option ... ] file ... [ -x arg ... ]
+
+       iconc [ option ... ] file ...
+
+DESCRIPTION
+       Icont translates Version 5 of the Icon programming language to an
+       intermediate form, and link edits intermediate files to interpretable
+       files.  Iconc does the same, but finally compiles to machine code.
+       Unless the -o option is specified, the name of the linked file is
+       formed by deleting the suffix of the first input file named on the
+       command line.  Option -x invokes the interpreter and passes the args to
+       the Icon program.
+
+       Files whose names end in `.icn' are assumed to be Icon source programs;
+       files whose names end in `.u1' or `.u2' are assumed to be intermediate
+       files from a previous translation (only one should be named — the other
+       is assumed).  Unnamed .u1 and .u2 files are deleted.  The argument -
+       signifies the use of standard input as a source file.
+
+       The following options are recognized by icont.
+
+       -c     Suppress linking and loading; preserve intermediate files.
+
+       -m     Preprocess each `.icn' source file with the m4(1) macro
+              processor before translation.
+
+       -o output
+              Name the interpretable file output.
+
+       -s     Suppress informative messages.
+
+       -t     Arrange for &trace to have an initial value of -1 instead of 0
+              when the program is executed.
+
+       -u     Issue warning messages for undeclared identifiers.
+
+       To run either and interpreatable or an executable file, simply execute
+       it as a command.  The following environment variables - all numeric -
+       affect execution:
+
+       TRACE  Initialize the value of &trace, overriding the translation
+              option -t.
+
+       NBUFS  The number of i/o buffers to use for files, normally 3.  &input
+              and &output are buffered unless they are terminals.  &errout is
+              never buffered.
+
+       STRSIZE
+              The initial size of the string space, in bytes, normally 51200.
+
+       HEAPSIZE
+              The initial size of the heap, in bytes, normally 51200.
+
+       NSTACKS
+              The number of stacks initially available for co-expressions,
+              normally 4.
+
+       STKSIZE
+              The size of each co-expression stack, in words, normally, 2000.
+
+       PROFILE
+              Turn on execution profiling of the runtime system.  The value of
+              this variable specifies the sampling resolution, in words.  If
+              the value is zero, profiling is not done.  The profiling results
+              are left in a file `mon.out' for interpretation by prof(1).
+
+FILES
+       v5v/int/bin/utran     icon translator
+       v5v/int/bin/ulink     icon linker
+       v5v/cmp/bin/libi.a      icon runtime library
+       v5v/int/bin/iconx     icon interpreter
+       mon.out               results of profiling
+       *.u1, *.u2            intermediate files
+
+SEE ALSO
+       Reference Manual for the Icon Programming Language, Version 5,
+       Technical Report TR 81-4a, Department of Computer Science, The
+       University of Arizona, Tucson, Arizona, December 1981.
+       Co-Expressions in Icon, Technical Report TR 82-4, Department of
+       Computer Science, The University of Arizona.
+       iconc(1), m4(1), prof(1), exec(2), monitor(3)
+
+BUGS
+       If the -m option is used, line numbers reported in error messages or
+       tracing messages are from the file after, not before, preprocessing.
+       Integer overflow on multiplication is not detected.
+       An interpretable file produced on one system will not work on another
+       system unless the Icon interpreter is in the same place on both
+       systems.
+       Because of the way that co-expressions are implemented, there is a
+       possibility that programs in which they are used may malfunction
+       mysteriously.
+
+                                     alice                            ICONT(1)

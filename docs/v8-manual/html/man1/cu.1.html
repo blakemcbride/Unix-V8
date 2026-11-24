@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cu.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; cu.1 (<a href="../../../../source/v8/usr/man/man1/cu.1">troff source</a>)</p>
+<pre>
+CU(1)                       General Commands Manual                      CU(1)
+
+NAME
+       cu - call Unix
+
+SYNOPSIS
+       cu [ -tn ] telno [ service-class ]
+
+DESCRIPTION
+       Cu places a data call to a given telephone number and expects a
+       computer to answer.  It manages an interactive conversation with
+       possible transfers of text files.  Telno is the telephone number,
+       consisting of digits with minus signs at appropriate places to indicate
+       delay for second or subsequent dial tones.  A telephone number may also
+       be expressed symbolically.  The files $HOME/lib/cunumber and
+       /usr/lib/cunumber are searched for lines with up to four fields
+       separated by white space:
+
+              symbolic telephone number
+              actual telephone number
+              service class (see below)
+              comment
+
+       If a comment is present, it is printed out when the connection is made.
+
+       The flag argument -n causes cu merely to print out the the number that
+       would be called, then exit.
+
+       The flag argument -t causes cu to use the DC1/DC3 (^S/^Q) protocol to
+       stop transmission from the remote system when the local terminal
+       buffers are almost full.  This argument should only be used if the
+       remote system understands that protocol.
+
+       An optional second command argument specifies a class of service.
+       Locally, one may choose between the 103-type (slow speed) or 112-type
+       (high-speed) datasets, and perhaps between the Centrex or the data
+       Dimension networks.  D or D1200 (or just 1200) is 1200 baud on the
+       Dimension system (the default); D300 is 300 baud Dimension.  Systems
+       with their own diallers may allow C1200 and C300 as well, for 1200 and
+       300 baud Centrex calls.
+
+       An explicit service class on the command line overrides any specified
+       in a cunumber file.
+
+       After making the connection, cu runs as two processes: the send process
+       reads the standard input and passes most of it to the remote system;
+       the receive process reads from the remote system and passes most data
+       to the standard output.  Lines beginning with `~' have special
+       meanings.
+
+       The send process interprets the following:
+
+       ~.                terminate the conversation.
+       ~EOT              terminate the conversation
+
+       ~&lt;file            send the contents of file to the remote system, as
+                         though typed at the terminal.
+
+       ~!                invoke an interactive shell on the local system.
+
+       ~!cmd ...         run the command on the local system (via sh -c).
+
+       ~$cmd ...         run the command locally and send its output to the
+                         remote system.
+
+       ~b
+       ~%break           are identical, and cause a break (300 ms. space) to
+                         be sent.
+
+       ~%take from [to]  copy file `from' (on the remote system) to file `to'
+                         on the local system.  If `to' is omitted, the `from'
+                         name is used both places.
+
+       ~%put from [to]   copy file `from' (on local system) to file `to' on
+                         remote system.  If `to' is omitted, the `from' name
+                         is used both places.
+
+       ~~...             send the line `~...'.
+
+       The receive process handles output diversions of the following form:
+
+       ~&gt;[&gt;][:]file
+       zero or more lines to be written to file
+       ~&gt;
+
+       Output is diverted (or appended, if `&gt;&gt;' used) to the file.  If `:' is
+       used, the diversion is silent, i.e., it is written only to the file.
+       If `:' is omitted, output is written both to the file and to the
+       standard output.  The trailing `~&gt;' terminates the diversion.
+
+       The receive process also recognizes lines of the form
+
+       ~!command
+       or
+       ~:!command
+
+       which cause command to be executed locally.  If the `:' is present the
+       line is not printed before execution.
+
+       The use of ~%put requires stty and cat on the remote side.  It also
+       requires that the current erase and kill characters on the remote
+       system be identical to the current ones on the local system.
+       Backslashes are inserted at appropriate places.
+
+       The use of ~%take requires the existence of echo and tee on the remote
+       system.  Also, stty tabs mode is required on the remote system if tabs
+       are to be copied without expansion.
+
+FILES
+       /usr/lib/cunumber, $HOME/lib/cunumber
+
+SEE ALSO
+       dn(4), <a href="../man4/ttyld.4.html">ttyld(4)</a>, <a href="../man3/dialout.3.html">dialout(3)</a>
+
+DIAGNOSTICS
+       Exit code is zero for normal exit, nonzero (various values) otherwise.
+
+BUGS
+       The syntax is unique.  The speed option (-s) should be put back (it is
+       at least partially independent of the class of service).
+
+       ~!  is a friend to the malicious.
+
+                                                                         CU(1)
+</pre>
+</body></html>

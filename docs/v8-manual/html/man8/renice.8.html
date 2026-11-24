@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>renice.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; renice.8 (<a href="../../../../source/v8/usr/man/man8/renice.8">troff source</a>)</p>
+<pre>
+RENICE(8)                   System Manager's Manual                  RENICE(8)
+
+NAME
+       renice - alter priority of running process by changing nice
+
+SYNOPSIS
+       /etc/renice [ -pri ] pid ...
+
+DESCRIPTION
+       Renice alters the priority of the process with process-id pid.  The
+       default pri is 19.  Changing the priority requires permission to write
+       /proc/pid (see <a href="../man4/proc.4.html">proc(4)</a>), so only the super-user can alter an arbitrary
+       process's priority.  Only the super-user can raise a process's
+       priority.
+
+FILES
+       /proc/pid
+
+SEE ALSO
+       <a href="../man1/nice.1.html">nice(1)</a>, <a href="../man2/nice.2.html">nice(2)</a>, <a href="../man4/proc.4.html">proc(4)</a>
+
+                                                                     RENICE(8)
+</pre>
+</body></html>

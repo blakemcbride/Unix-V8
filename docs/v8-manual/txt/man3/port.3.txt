@@ -1,0 +1,25 @@
+PORT(3X)                                                              PORT(3X)
+
+NAME
+       port - mathematical library for Fortran
+
+SYNOPSIS
+       f77 argument ...  -lport
+
+DESCRIPTION
+       The Port library of hundreds of scientific subroutines covers
+       approximation, ordinary differential equations, partial Differential
+       Equations, linear algebra, optimization and mathematical programming,
+       quadrature, differentiation, roots, special functions, and transforms.
+       It is built upon a framework of service routines for error handling,
+       stack management, and machine constant parameterization.
+
+       The manual describes the software and gives examples.
+
+SEE ALSO
+       P. A. Fox, The PORT Mathematical Subroutine Library, AT&T Bell
+       Laboratories, May 8, 1984.
+       P. A. Fox, The PORT Mathematical Subroutine Library Installation
+       Manual, AT&T Bell Laboratories, September, 1984.
+
+                                                                      PORT(3X)

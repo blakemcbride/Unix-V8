@@ -1,0 +1,45 @@
+DEPRECATED(2)                 System Calls Manual                DEPRECATED(2)
+
+NAME
+       setpgrp, vfork, vadvise, vlimit, vswapon - system calls to be avoided
+
+SYNOPSIS
+       setpgrp(pid, pgrp)
+
+       int getpgrp(pid)
+
+       int vfork()
+
+       vadvise(how)
+
+       int vlimit(what, limit)
+
+       vswapon(special)
+       char *special;
+
+DESCRIPTION
+       These calls are hangovers from the Berkeley version of the system.
+       Some exist only for system maintenance purposes; some depend on the
+       virtual memory implementation.  None should be used except as a last
+       resort.  Most are not included in /lib/libc.a.
+
+       Setpgrp sets the process group number for process pid to pgrp; getpgrp
+       returns the process group.
+
+       Vfork is a peculiar variant of fork in which the child borrows the
+       parent's address space until exec or exit.  The intent is to avoid
+       copying a large address space.
+
+       Vadvise gives the virtual memory system hints about the paging
+       behaviour of the current process.
+
+       Vlimit sets various resource limits, such as the amount of memory
+       allowed for text and data, and the maximum size of core images.
+
+       Vswapon adds the block device special to the pool of swap space.  The
+       device must be listed in a table compiled into the kernel; vswapon
+       merely enables it.
+
+       See the Berkeley manual for more information about these calls.
+
+                                                                 DEPRECATED(2)

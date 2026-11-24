@@ -1,0 +1,70 @@
+3CC(9.1)                                                              3CC(9.1)
+
+NAME
+       3cc, 3as, 3ar, 3nm, 3size, 3strip, cprs - MAC-32 C compiler for 5620
+
+SYNOPSIS
+       3cc [ option ] ... file ...
+
+       cprs infile outfile
+
+DESCRIPTION
+       3cc is the C compiler for the MAC-32 microprocessor in the Teletype
+       DMD-5620 terminal.  Its default action is to compile programs to run
+       under the mux(9.1) environment.
+
+       The behavior of 3cc is similar to cc(1); here are listed only the
+       capabilities peculiar to 5620s.
+
+       The following 5620-specific options are interpreted by 3cc.
+
+       -J     Compile the named programs, and link them for running stand-
+              alone on a 5620 terminal.
+
+       -m     Compile the named programs for ordinary (non-jerq) environments.
+
+       -O     Invoke an object-code improver (not recommended).
+
+       -Dname=def
+       -Dname Define the name to the preprocessor, as if by `#define'.  If no
+              definition is given, the name is defined as "1".  The symbol MUX
+              is predefined unless -J or -m is set.
+
+       -Idir  `#include' files whose names do not begin with `/' are always
+              sought first in the directory of the file argument, then in
+              directories named in -I options, then in directories on a
+              standard list, which includes /usr/jerq/include.
+
+       Associated object-code manipulating programs exist, with specifications
+       identical to the usual Unix programs with names prefixed `3'.  The
+       loader, assembler and archive program are System V derivatives, and are
+       slightly different in behavior; see the System V manuals.  For typical
+       users, these differences are irrelevant.  The support programs include:
+
+       3as          assembler, see as(1)
+       3ar          archive, see ar(1) (there is no 3ranlib)
+       3nm          name list, see nm(1); doesn't work on archives
+       3size        object code size, see size(1)
+       3strip       symbol table, see strip(1).  (-r is mandatory for mux-
+                    runnable binaries.)
+
+       3strip has no -g flag; but cprs removes redundant symbol table entries
+       while copying infile to outfile.
+
+FILES
+       a.out                    loaded output
+       /tmp/ctm?                temporary
+       /lib/cpp                 preprocessor
+       /usr/jerq/lib/m32/comp   compiler
+       /usr/jerq/lib/m32/optim  optimizer
+       /usr/jerq/lib/*.o        runtime startoff, etc.
+       /usr/jerq/lib/libc.a     standard library
+       /usr/jerq/lib/libj.a     stand-alone graphics library
+       /usr/jerq/lib/libmj.a    mux-runnable graphics library (default)
+       /usr/jerq/lib/muxmap     loader I-file
+       /usr/jerq/include        standard directory for `#include' files
+
+SEE ALSO
+       System V manuals for 3ar, 3ld, 3as and cprs documentation.
+
+                                                                      3CC(9.1)

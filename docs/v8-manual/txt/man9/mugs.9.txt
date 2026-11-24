@@ -1,0 +1,40 @@
+MUGS(9.1)                                                            MUGS(9.1)
+
+NAME
+       mugs - convert gray-scale pictures into icons
+
+SYNOPSIS
+       mugs picture ...
+
+DESCRIPTION
+       Mugs is an interactive program for converting gray-scale images
+       (usually scanned-in photographs) into the 48×48 icons used by
+       vismon(9.1) and other programs.  After digesting the first picture
+       file, mugs will display an approximation to the original picture, a
+       vertical slider-bar and a 48×48 icon.  Hitting button 1 in the slider-
+       bar and sliding vertically adjusts the low and high points of values of
+       the 48×48 image.  Button 2 adjusts the low and high values
+       simultaneously (i.e. it changes the brightness without disturbing the
+       contrast.)  Button 3 presents a menu with entries:
+
+       window Select a square window in the original picture using button 3.
+              Touch down at the center of the square and slide around to
+              adjust its size.
+
+       save   Type in the name of a file in which to save the currently
+              displayed 48×48 icon.
+
+       next   Move on to the next picture mentioned on the command line.
+
+       exit   Confirm with button 3.
+
+FILES
+       /usr/jerq/mbin/mugsterm.m     terminal program
+
+BUGS
+       The format of mugs's input files is largely undocumented.  Among other
+       things, it will accept files containing an array of one-byte pixels of
+       dimensions 480x512, 486x512, 488x512, 496x512, 497x512, 512x512,
+       2047x2048 or 2048x2048.
+
+                                                                     MUGS(9.1)

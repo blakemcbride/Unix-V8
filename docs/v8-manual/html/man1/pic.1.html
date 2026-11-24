@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pic.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; pic.1 (<a href="../../../../source/v8/usr/man/man1/pic.1">troff source</a>)</p>
+<pre>
+PIC(1)                      General Commands Manual                     PIC(1)
+
+NAME
+       pic - troff preprocessor for drawing pictures
+
+SYNOPSIS
+       pic [ -Tt ] [ -D ] [ files ]
+
+DESCRIPTION
+       Pic is a <a href="../man1/troff.1.html">troff(1)</a> preprocessor for drawing figures on a typesetter.
+       The basic objects are box, line, arrow, spline, circle, ellipse, arc,
+       and text.  These may be positioned in absolute coordinates or relative
+       to previously placed objects.  Pic also provides blocks, variables,
+       expressions, built-in functions, loops, conditionals, and a macro
+       processor.
+
+       The optional argument -Tt specifies typesetter t; currently supported
+       typesetters are 202 (the default), cat (Graphic Systems CAT), and aps
+       (Autologic APS-5).
+
+       The argument -D causes pic to generate troff commands that draw lines
+       of higher quality.  Recommended for final copy on typesetters.
+
+SEE ALSO
+       B. W. Kernighan, PIC — A Graphics Language for Typesetting
+       <a href="../man1/ideal.1.html">ideal(1)</a>, <a href="../man9/ped.9.html">ped(9.1)</a>, <a href="../man1/doctype.1.html">doctype(1)</a>
+
+                                                                        PIC(1)
+</pre>
+</body></html>

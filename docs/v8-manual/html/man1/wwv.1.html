@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>wwv.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; wwv.1 (<a href="../../../../source/v8/usr/man/man1/wwv.1">troff source</a>)</p>
+<pre>
+WWV(1)                      General Commands Manual                     WWV(1)
+
+NAME
+       wwv - print and set the date from accurate clock
+
+SYNOPSIS
+       wwv [ -b -s -f -u ]
+
+DESCRIPTION
+       Wwv connects to a clock synchronized with radio station WWV.  With no
+       argument it prints the time obtained.  It accepts these arguments:
+
+       -b     Print both the WWV time and the system's current idea of the
+              time.
+
+       -s     Set the system's time to agree with WWV.  You must be super-
+              user.  The system time cannot be changed by more than 20
+              minutes.
+
+       -f     With -s, force the time to be set by WWV even if the local time
+              disagrees by more than 20 minutes.
+
+       -u     Report time in UTC rather than local time.
+
+FILES
+       /usr/adm/wtmp to record time-setting
+
+SEE ALSO
+       date (1), <a href="../man5/utmp.5.html">utmp(5)</a>
+
+BUGS
+       The WWV clock has been observed to slip sync by an integral number of
+       minutes or hours from the radio standard.
+
+                                                                        WWV(1)
+</pre>
+</body></html>

@@ -1,0 +1,133 @@
+REBOOT(8)                   System Manager's Manual                  REBOOT(8)
+
+NAME
+       reboot - bootstrapping procedures
+
+SYNOPSIS
+       /etc/reboot [ -s ] [ -n ] [ -a ] [ -d ]
+
+       /etc/halt [ -n ]
+
+DESCRIPTION
+       UNIX is started by placing it in memory at location zero and
+       transferring to zero.  Since the system is not reenterable, it is
+       necessary to read it in from disk each time it is to be bootstrapped.
+
+   Rebooting a running system
+       The preferred way to reboot is to log in on the console, invoke kill 1
+       to take the system to single user, unmount filesystems with /etc/umount
+       -a and halt and restart the system as described below under Console
+       boots.
+
+       If access to the console is difficult, /etc/reboot may be used to
+       restart a running system.  It normally syncs the disks (see sync(8)),
+       then causes a system boot and an automatic disk check.  If all this
+       succeeds, the system is brought up multi-user.
+
+       The options to reboot are:
+
+       -s     Come up single-user after the reboot, without checking the
+              disks.
+
+       -n     Don't sync the disks before performing the reboot.
+
+       -a     Ask on the console for the name of the file to be booted.
+
+       -d     Write a crash dump to the swap area before rebooting.
+
+       /etc/halt syncs the disks and stops the CPU.  If the -n option is
+       enabled, the disk sync is not performed.
+
+   Power fail and crash recovery
+       The system will normally reboot itself at power-up or after crashes if
+       the auto-restart is enabled on the machine front panel.  An automatic
+       consistency check of the file systems is performed.  Unless this fails
+       the system will resume multi-user operations.
+
+   Console boots: VAX-11/750
+       Sync the disks if necessary and possible.  To recover control of the
+       console (normally it is running as an ordinary Unix terminal), type a
+       control-P.  This will halt the CPU and yield a `>>>' prompt from the
+       VAX console subsystem (sic).  (Under undocumented conditions, this may
+       fail.  If so, hit the white button on the front panel.)  The command
+
+              >>> B
+
+       will cause a normal automatic reboot. Use
+
+              >>> B/3
+
+       to come up single-user.  This also will prompt (with `:') for the name
+       of the file to boot.  The format of the file name is
+
+              disk(m, n)file
+
+       where disk is `ra' for UDA50 disks with 4KB filesystems, `sa' for UDA50
+       disks with 1KB filesystems, `up' for UNIBUS SMD disks, `hp' for Massbus
+       SMD disks; m is the drive number (usually 0); n is the file system
+       number on the drive (usually 0); and file is the Unix name of the file
+       on the disk.
+
+       If the root disk is curdled, the bootstrap program /boot can be read
+       from another disk, say RA drive 1, by
+
+              >>> B/3 DUA1
+
+       To the console subsystem, the RA's are called DU; the Emulex disks are
+       EM.  Note that regardless how a system is bootstrapped, it will use
+       drive 0 for the root disk.
+
+   Console boots: VAX-11/780
+       To halt a 780, type control-P, then issue the command
+
+              >>> H
+
+       to halt the CPU.
+
+       Rebooting a 780 is like a 750 except for the format of the B command.
+
+              >>> B
+
+       initiates automatic reboot.
+
+              >>> B ANY
+
+       comes up single user.  Replace `ANY' by `HPS' for hp disk single user
+       reboot, `RPS' for rp reboot, and `UPS' for ra reboot.
+
+   Generating system core images
+       If the system crashes, it attempts to save a copy of its physical
+       memory to the swap area, to be copied to the file system after reboot
+       (see savecore(8)).  To save a core image for a hung system, type on the
+       console (after control-P if necessary):
+
+              >>> I
+              >>> S C00
+
+       This resets the bus and jumps to the start of the dumping code.  The
+       system will reboot automatically.
+
+   Examining system core images
+       Savecore saves in the dump directory two files: the copy of physical
+       memory, called vmcore.n, and a copy of the kernel binary unix.n, where
+       n is a sequence counter.  To recover a stack traceback at the time of
+       the crash, type
+
+              $ adb unix.n vmcore.n
+              $<crash
+              $c
+
+       Pi(9.1) can examine kernel core dumps.
+
+FILES
+       /unix             default Unix kernel binary
+       /boot             system bootstrap
+
+SEE ALSO
+       fsck(8), init(8), rc(8)
+
+BUGS
+       Our homemade boot ROM for Emulex disks always boots from drive 0, no
+       matter what you tell it.
+
+                                                                     REBOOT(8)

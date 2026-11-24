@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>track.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; track.1 (<a href="../../../../source/v8/usr/man/man1/track.1">troff source</a>)</p>
+<pre>
+TRACK(1)                    General Commands Manual                   TRACK(1)
+
+NAME
+       track - selective remote file copy
+
+SYNOPSIS
+       track [ -vntfd ] file machine
+       track -r
+
+DESCRIPTION
+       Track uses Datakit to copy files from another machine to the local
+       machine.  If the version of the named file differs from that existing
+       on the named machine, the remote file is copied.  If the named file is
+       a directory, the contents of the directory are considered recursively.
+       Files are copied only if they exist on both machines.  Options:
+
+       -v    Normally a report is given for each file copied.  Giving the
+             option causes more verbose reports, for example about files that
+             exist locally but not remotely.  Giving the option twice
+             generates a report about each file considered.
+
+       -n    Do no copying; just report what would have been copied.
+
+       -t    Copy only if a remote file is newer than the local file.
+
+       -f    Interpret the following file as a list of files and directories
+             to be handled.
+
+       -d prefix
+             Normally track copies from remote files with the same names as
+             the local files.  The -d option takes the next argument as a
+             prefix for remote names; in constructing the remote name, the
+             argument string that specifies the local file or directory is
+             replaced by the prefix.  For example,
+                  track -d /bin /usr/local/bin ikeya
+             asks to copy files from the remote /bin directory to the local
+             /usr/local/bin directory.
+
+       -r    This option causes track to act as the remote partner; it is
+             invoked in this way on the other machine, and is not intended for
+             use by humans.
+
+       Track has no special privileges.  Files must be readable remotely and
+       writable locally by the invoker.  It attempts to set the time of
+       modification of a copied file to that of the remote original; the
+       attempt can succeed only if the invoker of the local file owns it or is
+       the super-user.  This feature matters only when random libraries
+       (archives) are being copied, because the loader uses this time to
+       determine whether the symbol table is up-to-date.
+
+SEE ALSO
+       <a href="../man1/push.1.html">push(1)</a>, <a href="../man1/cp.1.html">cp(1)</a>, <a href="../man1/newer.1.html">newer(1)</a>
+
+                                                                      TRACK(1)
+</pre>
+</body></html>

@@ -1,0 +1,20 @@
+TOLOWER(3)                 Library Functions Manual                 TOLOWER(3)
+
+NAME
+       tolower, toupper - force upper or lower case
+
+SYNOPSIS
+       tolower(character)
+
+       toupper(character)
+
+DESCRIPTION
+       If character is an upper case letter, tolower returns the same lower
+       case letter, otherwise it returns the original character.
+
+       Toupper does the reverse.
+
+SEE ALSO
+       ctype(3)
+
+                                                                    TOLOWER(3)

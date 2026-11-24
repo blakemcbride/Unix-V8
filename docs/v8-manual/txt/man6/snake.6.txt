@@ -1,0 +1,31 @@
+SNAKE(6)                         Games Manual                         SNAKE(6)
+
+NAME
+       snake, worm - display chase games
+
+SYNOPSIS
+       /usr/games/snake
+
+       /usr/games/worm
+
+DESCRIPTION
+       Snake must be played on a HP2621 terminal or equivalent.  The object of
+       the game is to make as much money as possible without getting eaten by
+       the snake.
+
+       You are represented on the screen by an I.  The snake is 6 squares long
+       and is represented by S's.  The money is $, and an exit is #.  Your
+       score is posted in the upper left hand corner.
+
+       You can move around using h, j, k, and l keys for left, up, down, and
+       right.  To earn money, move to the same square the money is on.  A new
+       $ will appear when you earn the current one.  As you get richer, the
+       snake gets hungrier.  To leave the game, move to the exit (#).  a
+
+       Worm also requires a 2621-compatible terminal.  Once started, with h,
+       j, k, l keys as for snake, the worm moves forward unless directed
+       otherwise.  The object is to collect points displayed on the screen
+       without running into the wall or any part of the worm itself.  The
+       points are added to the worms length.
+
+                                                                      SNAKE(6)

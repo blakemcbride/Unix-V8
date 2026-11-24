@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>4.1 BSD</title></head><body>
+<p><em>Saved from <a href="https://gunkies.org/wiki/4.1_BSD">https://gunkies.org/wiki/4.1_BSD</a> on 2026-11-24 (MediaWiki render view).</em></p>
+<h1>4.1 BSD</h1>
+<div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr"><p><br>
+</p>
+<table class="infobox bordered" style="width: 25em; text-align: left; font-size: 90%" align="right">
+
+<tbody><tr>
+<td colspan="2" style="text-align:center; font-size: large;"><b>4.1 BSD</b>
+</td></tr>
+<tr>
+<td colspan="2" style="text-align:center;"><span typeof="mw:File"><a href="https://gunkies.org/wiki/File:41bsd.png" class="mw-file-description"><img alt="" src="images/250px-41bsd.png" decoding="async" width="250" height="131" class="mw-file-element"></a></span><br>Logging into a 4.1 BSD system
+</td></tr>
+
+<tr>
+<th>Type:
+</th>
+<td>Multitasking, multiuser
+</td></tr>
+
+<tr>
+<th>Creator:
+</th>
+<td>CSRG
+</td></tr>
+
+
+
+
+<tr>
+<th>Architecture:
+</th>
+<td><a href="https://gunkies.org/wiki/VAX" title="VAX">VAX</a>, theoretically portable
+</td></tr>
+
+
+
+
+<tr>
+<th>This Version:
+</th>
+<td>4.1 (1981)
+</td></tr>
+
+
+
+
+
+
+
+<tr>
+<th>Date Released:
+</th>
+<td>1981
+</td></tr>
+
+
+
+
+<tr>
+<td colspan="2" style="font-size: smaller;">
+</td></tr></tbody></table>
+<p><br>
+This version of <a href="https://gunkies.org/wiki/BSD" title="BSD">BSD</a> addressed many of the performance shortcomings in <a href="https://gunkies.org/wiki/4.0_BSD" class="mw-redirect" title="4.0 BSD">4.0 BSD</a> that were brought up in a VMS vs BSD paper.  Many of the changes are outlined in <a href="https://gunkies.org/wiki/Bug_fixes_and_changes_in_4.1bsd" title="Bug fixes and changes in 4.1bsd">Bug fixes and changes in 4.1bsd</a>. One of the big points of 4.1 is that it supported the <a href="https://gunkies.org/wiki/VAX-11/750" title="VAX-11/750">VAX-11/750</a>, which became a workhorse favorite of the DoD, which in turn led to DARPA grants to the <a href="https://gunkies.org/wiki/CSRG" class="mw-redirect" title="CSRG">CSRG</a> to continue developing BSD. The 4.1 BSD <a href="https://gunkies.org/wiki/Kernel" title="Kernel">kernel</a> was systematically tuned up by Bill Joy until it could perform as well as <a href="https://gunkies.org/wiki/VMS" title="VMS">VMS</a> on several benchmarks.
+</p><p>The release would have been called 5BSD, but after objections from AT&amp;T the name was changed; AT&amp;T feared confusion with <a href="https://gunkies.org/wiki/Unix_SYSV" class="mw-redirect" title="Unix SYSV">AT&amp;T's UNIX System V</a>.
+</p><p>Other features included:
+</p>
+<ul><li>job control</li>
+<li>automatic kernel config</li>
+<li>vfork()</li></ul>
+<p>4.1 BSD, June 1981 4BSD was upgraded to include many performance improvements, support for a new VAX model and autoconfiguration.
+</p><p>Once DARPA was funding the development of BSD, it lead to 2 big improvements from 4.1 to 4.2: the adddition of <a href="https://gunkies.org/wiki/TCP/IP" title="TCP/IP">TCP/IP</a>, and the new <a href="https://gunkies.org/wiki/BSD_Fast_File_System" title="BSD Fast File System">BSD Fast File System</a>. These were beta-released in three intermediate versions: 4.1a included <a href="https://gunkies.org/wiki/BBN" class="mw-redirect" title="BBN">BBN</a>'s preliminary <a href="https://gunkies.org/wiki/TCP/IP" title="TCP/IP">TCP/IP</a> implementation; 4.1b included the new FFS; and 4.1c was an interim release of what became <a href="https://gunkies.org/wiki/4.2_BSD" title="4.2 BSD">4.2 BSD</a>, during the last few months of its development. 
+</p><p>Apparently 4.1a includes the BBN TCP/IP stack, but on a 750, it only can perform at 56kb on Ethernet, and maximizes the CPU to 100%, whereas Bill Joy's TCP/IP could get upwards of 700k/sec.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Getting_this_to_run"><span class="tocnumber">1</span> <span class="toctext">Getting this to run</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#4.1"><span class="tocnumber">1.1</span> <span class="toctext">4.1</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#4.1c"><span class="tocnumber">1.2</span> <span class="toctext">4.1c</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#Games"><span class="tocnumber">2</span> <span class="toctext">Games</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Documents"><span class="tocnumber">3</span> <span class="toctext">Documents</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Post_4.1_releases"><span class="tocnumber">4</span> <span class="toctext">Post 4.1 releases</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Getting_this_to_run">Getting this to run</span></h2>
+<h3><span class="mw-headline" id="4.1">4.1</span></h3>
+<p>A tape image for 4.1 has surfaced on <a href="https://gunkies.org/wiki/Bitsavers" title="Bitsavers">bitsavers</a>, named <a rel="nofollow" class="external text" href="http://bitsavers.trailing-edge.com/bits/UCB_CSRG/4.1_BSD_19810710.zip">4.1_BSD_19810710.zip</a>  The bootblock programs do not run under SIMH using the <a href="https://gunkies.org/wiki/4.0_BSD" class="mw-redirect" title="4.0 BSD">4.0 BSD</a> strategy, however it is possible to swap tapes when restoring the root slice, and then restoring the tars.  Using this modified tape, I've created an installation guide <a href="https://gunkies.org/wiki/Installing_4.1_BSD_on_SIMH" title="Installing 4.1 BSD on SIMH">Installing 4.1 BSD on SIMH</a>.
+</p>
+<h3><span class="mw-headline" id="4.1c">4.1c</span></h3>
+<p>There is two tape images on bitsavers <a rel="nofollow" class="external text" href="http://bitsavers.trailing-edge.com/bits/UCB_CSRG/4.1C_BSD_1of2.zip">4.1C BSD 1 of 2</a>, and <a rel="nofollow" class="external text" href="http://bitsavers.trailing-edge.com/bits/UCB_CSRG/4.1C_BSD_2of2.zip">4.1C BSD 2 of 2</a>.  A much needed to revise guide is available <a href="https://gunkies.org/wiki/Installing_4.1c_BSD_on_SIMH" title="Installing 4.1c BSD on SIMH">Installing 4.1c BSD on SIMH</a>.
+</p>
+<h2><span class="mw-headline" id="Games">Games</span></h2>
+<p>These are what is available on the 1981 tape:
+</p>
+<pre>aardvark    banner      ching       lib         snake
+adventure   bcd         cribbage    mille       snscore
+advfiles    bogdict     fish        monop       trek
+arithmetic  boggle      fortune     number      wump
+backgammon  chess       hangman     quiz        zork
+</pre>
+<h2><span class="mw-headline" id="Documents">Documents</span></h2>
+<p><a href="https://gunkies.org/wiki/Bug_fixes_and_changes_in_4.1_BSD" class="mw-redirect" title="Bug fixes and changes in 4.1 BSD">Bug fixes and changes in 4.1 BSD</a>
+</p>
+<h2><span class="mw-headline" id="Post_4.1_releases">Post 4.1 releases</span></h2>
+<p>4.1a This was a test release including TCP/IP and the socket interface.  It saw a wide release, although it seems to have disappeared.
+</p><p>4.1b This was a test release, used only a Berkley and it includes the new Fast File System, using clustering for much improved performance, and contained the netw networking code.
+</p><p>4.1c 1982/1983 The third test release between 4.1BSD and 4.2BSD, it was distributed to about 100 sites and includes most 4.2 features except for the new signal facility.  There is a detailed paper <a href="https://gunkies.org/wiki/UNIX*_System_V_and_4.1C_BSD" title="UNIX* System V and 4.1C BSD">UNIX* System V and 4.1C BSD</a> written by John Chambers &amp; John Quarterman, that details 4.1c BSD.
+</p><p><br>
+</p>
+<table class="navbox" style="margin: auto;">
+
+<tbody><tr>
+<th><a href="https://gunkies.org/wiki/Template:Nav_Unix" title="Template:Nav Unix"><span title="View this template">v</span></a>&nbsp;<span style="font-size:80%;">•</span>&nbsp;<a href="https://gunkies.org/wiki/Template_talk:Nav_Unix" title="Template talk:Nav Unix"><span title="Discussion about this template">d</span></a>&nbsp;<span style="font-size:80%;">•</span>&nbsp;<a rel="nofollow" class="external text" href="https://gunkies.org/w/index.php?title=Template:Nav_Unix&amp;action=edit"><span style="color: #002bb8;" title="You can edit this template. Please use the preview button before saving.">e</span></a> <a href="https://gunkies.org/wiki/UNIX" title="UNIX">UNIX</a> Versions, Vendors and Related
+</th></tr>
+<tr>
+<td><b>Research Unix</b> <a href="https://gunkies.org/wiki/PDP-7_UNIX" title="PDP-7 UNIX">PDP-7 UNIX</a> • <a href="https://gunkies.org/wiki/UNIX_First_Edition" title="UNIX First Edition">V1</a> • <a href="https://gunkies.org/wiki/UNIX_Second_Edition" title="UNIX Second Edition">V2</a> • <a href="https://gunkies.org/wiki/UNIX_Third_Edition" title="UNIX Third Edition">V3</a> • <a href="https://gunkies.org/wiki/UNIX_Fourth_Edition" title="UNIX Fourth Edition">V4</a> • <a href="https://gunkies.org/wiki/UNIX_Fifth_Edition" title="UNIX Fifth Edition">V5</a> • <a href="https://gunkies.org/wiki/UNIX_Sixth_Edition" title="UNIX Sixth Edition">V6</a> • <a href="https://gunkies.org/wiki/Unix_Seventh_Edition" title="Unix Seventh Edition">V7</a> • <a href="https://gunkies.org/wiki/Unix_Eighth_Edition" title="Unix Eighth Edition">V8</a> • <a href="https://gunkies.org/wiki/Unix_Ninth_Edition" title="Unix Ninth Edition">V9</a> • <a href="https://gunkies.org/wiki/Unix_Tenth_Edition" title="Unix Tenth Edition">V10</a> • <a href="https://gunkies.org/wiki/LSX" title="LSX">LSX</a> • <a href="https://gunkies.org/wiki/MINI-UNIX" title="MINI-UNIX">MINI-UNIX</a> • <a href="https://gunkies.org/wiki/Unix/32V" title="Unix/32V">Unix/32V</a>
+<p><b>AT&amp;T and others</b> - <a href="https://gunkies.org/wiki/CB-UNIX" title="CB-UNIX">CB-UNIX</a> • <a href="https://gunkies.org/wiki/PWB/UNIX" title="PWB/UNIX">PWB/UNIX</a> • <a href="https://gunkies.org/wiki/USG_UNIX" title="USG UNIX">USG UNIX</a> • <a href="https://gunkies.org/wiki/UNIX_System_III" title="UNIX System III">System III</a> • <a href="https://gunkies.org/wiki/UNIX_System_IV" title="UNIX System IV">System IV</a> • <a href="https://gunkies.org/wiki/UNIX_System_V" title="UNIX System V">System V</a> • <a href="https://gunkies.org/wiki/UNIX_V7M-11" title="UNIX V7M-11">V7M</a> • <a href="https://gunkies.org/wiki/ULTRIX" title="ULTRIX">ULTRIX</a>
+</p><p><b>BSD</b> - <a href="https://gunkies.org/wiki/1BSD" title="1BSD">1BSD</a> • <a href="https://gunkies.org/wiki/2.9BSD" title="2.9BSD">2.9BSD</a> • <a href="https://gunkies.org/wiki/2.10BSD" title="2.10BSD">2.10BSD</a> • <a href="https://gunkies.org/wiki/2.11BSD" title="2.11BSD">2.11BSD</a> • <a href="https://gunkies.org/wiki/3BSD" title="3BSD">3BSD</a> • <a href="https://gunkies.org/wiki/4BSD" title="4BSD">4BSD</a> • <a href="https://gunkies.org/wiki/4.1BSD" class="mw-redirect" title="4.1BSD">4.1BSD</a> • <a href="https://gunkies.org/wiki/4.2BSD" class="mw-redirect" title="4.2BSD">4.2BSD</a> • <a href="https://gunkies.org/wiki/4.3BSD" class="mw-redirect" title="4.3BSD">4.3BSD</a> • <a href="https://gunkies.org/wiki/4.4BSD" title="4.4BSD">4.4BSD</a>
+</p><p><b>BSD Descendants</b> <a href="https://gunkies.org/wiki/386BSD" title="386BSD">386BSD</a> • <a href="https://gunkies.org/wiki/NetBSD" title="NetBSD">NetBSD</a> • <a href="https://gunkies.org/wiki/FreeBSD" title="FreeBSD">FreeBSD</a> • <a href="https://gunkies.org/wiki/OpenBSD" title="OpenBSD">OpenBSD</a> • <a href="https://gunkies.org/wiki/NeXTSTEP" title="NeXTSTEP">NeXTSTEP</a> • <a href="https://gunkies.org/wiki/Darwin" title="Darwin">Darwin</a>
+</p>
+</td></tr></tbody></table>
+<table class="navbox mw-collapsible mw-collapsed" style="margin: auto;">
+
+<tbody><tr>
+<th>
+</th></tr>
+<tr>
+<td><b>Other</b> - <a href="https://gunkies.org/wiki/Xv6" title="Xv6">xv6</a> • <a href="https://gunkies.org/wiki/AMIX" title="AMIX">AMIX</a> • <a href="https://gunkies.org/wiki/SunOS" title="SunOS">SunOS</a> • <a href="https://gunkies.org/wiki/Solaris" title="Solaris">Solaris</a> • <a href="https://gunkies.org/wiki/A/UX" title="A/UX">A/UX</a> •  <a href="https://gunkies.org/wiki/XENIX" title="XENIX">XENIX</a> • <a href="https://gunkies.org/wiki/AIX" title="AIX">AIX</a> • <a href="https://gunkies.org/wiki/Dell_UNIX" title="Dell UNIX">Dell UNIX</a>
+<p><b>Clones</b> - <a href="https://gunkies.org/wiki/DEMOS" title="DEMOS">DEMOS</a> • <a href="https://gunkies.org/wiki/Coherent" title="Coherent">Coherent</a>
+</p>
+</td></tr></tbody></table>
+<!-- 
+NewPP limit report
+Cached time: 20261120034251
+Cache expiry: 2592000
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.024 seconds
+Real time usage: 0.026 seconds
+Preprocessor visited node count: 182/1000000
+Post‐expand include size: 5485/2097152 bytes
+Template argument size: 1322/2097152 bytes
+Highest expansion depth: 9/100
+Expensive parser function count: 1/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 281/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    7.028      1 -total
+ 71.26%    5.008      1 Template:Nav_Unix
+ 55.34%    3.889      1 Template:PartiallyCollapsibleNavBox
+ 36.31%    2.552      1 Template:Tnavbar
+ 26.31%    1.849      1 Template:Infobox_OS
+-->
+
+<!-- Saved in parser cache with key mediawiki-wiki_:pcache:idhash:2636-0!canonical and timestamp 20261120034251 and revision id 16950. Rendering was triggered because: page-view
+ -->
+</div></body></html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>drum.4 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 4</a> &gt; drum.4 (<a href="../../../../source/v8/usr/man/man4/drum.4">troff source</a>)</p>
+<pre>
+DRUM(4)                    Kernel Interfaces Manual                    DRUM(4)
+
+NAME
+       drum - paging device
+
+SYNOPSIS
+       This file refers to the paging device in use by the system.  This may
+       actually be a subdevice of one of the disk drivers, but in a system
+       with paging spread across multiple disk drives or interleaved will be
+       an indirect driver.
+
+FILES
+       /dev/drum
+
+BUGS
+       Reads from the drum are not allowed across the interleaving boundaries.
+       Since these only occur every .5Mbytes or so, and since the system never
+       allocates blocks across the boundary, this is usually not a problem.
+
+                                                                       DRUM(4)
+</pre>
+</body></html>

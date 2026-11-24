@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>nm.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; nm.1 (<a href="../../../../source/v8/usr/man/man1/nm.1">troff source</a>)</p>
+<pre>
+NM(1)                       General Commands Manual                      NM(1)
+
+NAME
+       nm - print name list
+
+SYNOPSIS
+       nm [ -agnopru ] [ file ... ]
+
+DESCRIPTION
+       Nm prints the name list (symbol table) of each object file in the
+       argument list.  If an argument is an archive, a listing for each object
+       file in the archive will be produced.  If no file is given, the symbols
+       in `a.out' are listed.
+
+       Each symbol name is preceded by its value (blanks if undefined) and one
+       of the letters U (undefined), A (absolute), T (text segment symbol), D
+       (data segment symbol), B (bss segment symbol), C (common symbol), f
+       file name, or - for sdb symbol table entries (see -a below).  If the
+       symbol is local (non-external) the type letter is in lower case.  The
+       output is sorted alphabetically.
+
+       Options are:
+
+       -a     Include all symbols in candidates for printing; normally symbols
+              destined for <a href="../man1/sdb.1.html">sdb(1)</a> are excluded.
+
+       -g     Print only global (external) symbols.
+
+       -n     Sort numerically rather than alphabetically.
+
+       -o     Prepend file or archive element name to each output line rather
+              than only once.
+
+       -p     Don't sort; print in symbol-table order.
+
+       -r     Sort in reverse order.
+
+       -u     Print only undefined symbols.
+
+SEE ALSO
+       <a href="../man1/ar.1.html">ar(1)</a>, <a href="../man5/ar.5.html">ar(5)</a>, <a href="../man5/a.out.5.html">a.out(5)</a>, <a href="../man5/stab.5.html">stab(5)</a>
+
+                                                                         NM(1)
+</pre>
+</body></html>

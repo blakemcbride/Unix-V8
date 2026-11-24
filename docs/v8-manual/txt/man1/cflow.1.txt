@@ -1,0 +1,55 @@
+CFLOW(1)                    General Commands Manual                   CFLOW(1)
+
+NAME
+       cflow - generate C flow graph
+
+SYNOPSIS
+       cflow [ option ] ...  file  ...
+
+DESCRIPTION
+       Cflow analyzes a collection of C, yacc(1), lex(1), assembler and object
+       files and displays (on the standard output) a chart of external
+       references.  The -I, -D and -U options of cc(1) are understood.
+
+       Each line of output begins with a reference (i.e., line) number,
+       followed by a suitable number of tabs indicating call level.  Then the
+       name of the global (function or variable), a colon and its definition.
+       For information extracted from C source, the definition consists of an
+       abstract type declaration (e.g., char *), the name of the source file
+       and the line number where the definition was found.  Definitions
+       extracted from object files merely indicate the file name and location
+       counter under which the symbol appeared (e.g., text).  Leading
+       underscores in C-style external names are deleted.
+
+       Once a definition of a name has been printed, subsequent references to
+       that name contain only the reference number of the line where the
+       definition may be found.  For undefined references, a question mark is
+       printed.
+
+       The graph is printed from the top down.  Any argument which is a simple
+       string (has no recognizable suffix) is taken to mean the name of a
+       starting node.
+
+EXAMPLES
+       Input file, t.c               cflow output
+
+              int  i;        1    main: int(), t.c 4
+              main(){             2         f: int(), t.c 10
+                   f();      3              h: ?
+                   g();      4              i: int, t.c 1
+                   f();      5         g: ?
+              }
+              f() {
+                   i = h();
+              }
+
+       cflow printf /lib/libc.a
+              display printf() and everything it refers to
+
+SEE ALSO
+       cc(1), lint(1), nm(1)
+
+FILES
+       /usr/tmp/cf.$$.?
+
+                                                                      CFLOW(1)

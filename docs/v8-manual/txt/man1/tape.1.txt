@@ -1,0 +1,38 @@
+TAPE(1)                     General Commands Manual                    TAPE(1)
+
+NAME
+       tape, mt - identify and manipulate magnetic tape
+
+SYNOPSIS
+       tape
+
+       mt [ -t tapename ] command [ count ]
+
+DESCRIPTION
+       Tape experiments with the magnetic tape drive and reports under which
+       device name the tape mounted there can be read, how many files and
+       records there are, and how big the records are.  Mt applies a command
+       to the named tape drive (default /dev/nrmt1) count times (default 1).
+       The commands are
+
+       eof      write end-of -file mark
+
+       fsf      forward space file
+
+       fsr      forwardspace record
+
+       bsf      backspace file
+
+       bsr      backspace record
+
+       rewind   rewind
+
+       offline  rewind and take off line
+
+FILES
+       /dev/nrmt1
+
+SEE ALSO
+       tm(4), dd(1)
+
+                                                                       TAPE(1)

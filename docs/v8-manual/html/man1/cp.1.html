@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; cp.1 (<a href="../../../../source/v8/usr/man/man1/cp.1">troff source</a>)</p>
+<pre>
+CP(1)                       General Commands Manual                      CP(1)
+
+NAME
+       cp, rcp - copy
+
+SYNOPSIS
+       cp [ -i ] file1 file2
+
+       cp [ -i ] file ... directory
+
+       rcp file1 file2
+
+       rcp file ... directory
+
+DESCRIPTION
+       File1 is copied onto file2.  The mode and owner of file2 are preserved
+       if it already existed; the mode of the source file is used otherwise.
+
+       In the second form, one or more files are copied into the directory
+       with their original file-names.
+
+       Cp refuses to copy a file onto itself.
+
+       If the -i option is specified, cp will prompt the user with the name of
+       the file whenever the copy will cause an old file to be overwritten.
+       An answer of 'y' will cause cp to continue; any other answer will
+       prevent it from overwriting the file.
+
+       Rcp (recursive copy) works like cp, but also copies directories and
+       their contents and attempts to duplicate linked structures.
+
+SEE ALSO
+       <a href="../man1/cat.1.html">cat(1)</a>, <a href="../man1/mv.1.html">mv(1)</a>, <a href="../man1/push.1.html">push(1)</a>
+
+                                                                         CP(1)
+</pre>
+</body></html>

@@ -1,0 +1,20 @@
+PTOPEN(3)                  Library Functions Manual                  PTOPEN(3)
+
+NAME
+       ptopen - find and open a pseudo-terminal file
+
+SYNOPSIS
+       int ptopen (name)
+       char ∗name;
+
+DESCRIPTION
+       Ptopen searches for a pseudo-terminal file pair it can open.  If
+       successful, it returns a file descriptor for the odd-numbered member of
+       the pair, and places the name of the even-numbered member in name.
+       There must be enough room in name to contain the full pathname.  If
+       unsuccessful, ptopen returns a negative value.
+
+SEE ALSO
+       pt(4)
+
+                                                                     PTOPEN(3)

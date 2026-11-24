@@ -1,0 +1,41 @@
+CONFIG(8)                   System Manager's Manual                  CONFIG(8)
+
+NAME
+       config - configure a Unix kernel
+
+SYNOPSIS
+       /etc/config [ machine ]
+
+DESCRIPTION
+       Config generates files used to build a Unix kernel for the named
+       machine.  The working directory should be /usr/sys/conf or
+       /usr/sys/machine; if the latter, machine may be omitted from the
+       command.
+
+       A machine description is expected in machine/conf; a makefile, a number
+       of header files, and some C and assembler programs are generated from
+       the description.
+
+       The usual way to configure a new system is:
+
+              mkdir /usr/sys/newmach
+              cd /usr/sys/newmach
+              (create conf)
+              /etc/config
+              make
+
+FILES
+       ../conf/makefile    makefile template
+       ../conf/files       list of kernel source files
+       files               more sources specific to this machine
+       ../conf/devices     list of device handlers
+       devices             more devices specific to this machine
+       conf                machine description
+
+SEE ALSO
+       config(5)
+
+BUGS
+       At the moment, it's also necessary to create /usr/sys/machine/sparam.h.
+
+                                                                     CONFIG(8)

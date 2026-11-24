@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dmesg.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; dmesg.8 (<a href="../../../../source/v8/usr/man/man8/dmesg.8">troff source</a>)</p>
+<pre>
+DMESG(8)                    System Manager's Manual                   DMESG(8)
+
+NAME
+       dmesg - system diagnostic messages
+
+SYNOPSIS
+       /etc/dmesg [ - ] [ -i ] [ core namelist ]
+
+DESCRIPTION
+       Dmesg looks in a system buffer for recent kernel diagnostic messages
+       and reproduces them on the standard output.  If the - flag is given,
+       dmesg produces only those messages printed by the system since the last
+       time `dmesg -' was run.  This can be used with <a href="../man8/cron.8.html">cron(8)</a> to produce the
+       error log /usr/adm/messages by running the command
+
+              /etc/dmesg - &gt;&gt; /usr/adm/messages
+
+       periodically.
+
+       If -i is given, messages produced since the last dmesg - are printed;
+       the memory of which messages have been recorded is not changed.
+
+       If core and namelist are specified, they are used in place of /dev/kmem
+       and /unix.
+
+FILES
+       /usr/adm/messages   error log
+       /usr/adm/msgbuf     scratch file for memory of - option
+
+BUGS
+       Since the system error message buffer is of small finite size, not all
+       error messages are guaranteed to be logged.
+
+       Error diagnostics generated immediately before a system crash cannot be
+       logged.
+
+                                                                      DMESG(8)
+</pre>
+</body></html>

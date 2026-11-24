@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>gamma.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; gamma.3 (<a href="../../../../source/v8/usr/man/man3/gamma.3">troff source</a>)</p>
+<pre>
+GAMMA(3M)                                                            GAMMA(3M)
+
+NAME
+       gamma - log gamma function
+
+SYNOPSIS
+       #include &lt;math.h&gt;
+
+       double gamma(x)
+       double x;
+
+DESCRIPTION
+       Gamma returns ln Γ(x).  The sign of Γ(x) is returned in the external
+       integer signgam.  The following C program might be used to calculate Γ:
+
+            y = gamma(x);
+            if (y &gt; 88.0)
+                 error();
+            y = signgam*exp(y);
+
+DIAGNOSTICS
+       A huge value is returned for negative integer arguments.
+
+BUGS
+       There should be a positive indication of error.
+
+                                                                     GAMMA(3M)
+</pre>
+</body></html>

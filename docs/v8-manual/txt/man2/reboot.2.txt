@@ -1,0 +1,39 @@
+REBOOT(2)                     System Calls Manual                    REBOOT(2)
+
+NAME
+       reboot - reboot system or halt processor
+
+SYNOPSIS
+       #include <sys/reboot.h>
+
+       reboot(how)
+       int how;
+
+DESCRIPTION
+       Reboot reboots or halts the system.  Various options are specified in
+       how:
+
+       RB_PANIC  Cause a crash dump to be written.
+
+       RB_NOSYNC Don't finish pending disk writes (a la sync(2)).
+
+       RB_HALT   Don't reboot; leave the processor in a tight loop with
+                 interrupts disabled.
+
+       RB_SINGLE Reboot single-user.
+
+       RB_ASKNAME
+                 Arrange for the boot program to ask the name of the system to
+                 be booted.
+
+       By default, disk writes are finished, and the system is rebooted multi-
+       user from /unix on unit 0 of the root device.
+
+SEE ALSO
+       crash(8), init(8), reboot(8)
+
+BUGS
+       Of dubious utility; it's better just to use the console.  Most of the
+       flags are silly.
+
+                                                                     REBOOT(2)

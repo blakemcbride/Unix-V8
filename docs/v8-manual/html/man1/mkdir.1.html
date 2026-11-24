@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mkdir.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; mkdir.1 (<a href="../../../../source/v8/usr/man/man1/mkdir.1">troff source</a>)</p>
+<pre>
+MKDIR(1)                    General Commands Manual                   MKDIR(1)
+
+NAME
+       mkdir - make a directory
+
+SYNOPSIS
+       mkdir dirname ...
+
+DESCRIPTION
+       Mkdir creates specified directories in mode 777, subject to masking by
+       <a href="../man2/umask.2.html">umask(2)</a>.  Standard entries, `.', for the directory itself, and `..'
+       for its parent, are made automatically.
+
+       Mkdir requires write permission in the parent directory.
+
+SEE ALSO
+       <a href="../man1/rm.1.html">rm(1)</a>
+
+DIAGNOSTICS
+       Mkdir returns exit code 0 if all directories were successfully made.
+       Otherwise it prints a diagnostic and returns nonzero.
+
+                                                                      MKDIR(1)
+</pre>
+</body></html>

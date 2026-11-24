@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>add.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; add.9 (<a href="../../../../source/v8/usr/man/man9/add.9">troff source</a>)</p>
+<pre>
+ADD(9.3)                                                              ADD(9.3)
+
+NAME
+       add, sub, mul, div, eqpt, eqrect, inset, muldiv, ptinrect, raddp,
+       rsubp, rectXrect, rectclip - arithmetic on points and rectangles
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+
+       Point add(p, q) Point p, q;
+
+       Point sub(p, q) Point p, q;
+
+       Point mul(p, a) Point p; int a;
+
+       Point div(p, a) Point p; int a;
+
+       int eqpt(p, q) Point p, q;
+
+       int eqrect(r, s) Rectangle r, s;
+
+       Rectangle inset(r, n) Rectangle r; int n;
+
+       int muldiv(a, b, c) int a, b, c;
+
+       int ptinrect(p, r) Point p; Rectangle r;
+
+       Rectangle raddp(r, p) Rectangle r; Point p;
+
+       Rectangle rsubp(r, p) Rectangle r; Point p;
+
+       int rectXrect(r, s) Rectangle r, s;
+
+       int rectclip(rp, s) Rectangle *rp, s;
+
+DESCRIPTION
+       Add returns the Point sum of its arguments: (p.x+q.x, p.y+q.y).  Sub
+       returns the Point difference of its arguments: (p.x-q.x, p.y-q.y).  Mul
+       returns the Point (p.x*a, p.y*a).  Div returns the Point (p.x/a,
+       p.y/a).
+
+       Eqpt and eqrect return the equality of their arguments: 0 if unequal, 1
+       if equal.  Two Points or Rectangles are equal if their corresponding
+       coordinates are equal.
+
+       Inset returns the Rectangle (r.origin.x+n, r.origin.y+n, r.corner.x-n,
+       r.corner.y-n).  The following code creates a clear rectangle r with a
+       2-dot wide border inside r:
+
+              rectf(&amp;display, r, F_OR);
+              rectf(&amp;display, inset(r, 2), F_CLR);
+
+       Muldiv is a macro that returns the 16-bit result (a*b)/c, with (a*b)
+       calculated to 32 bits, so no precision is lost.  Muldiv is convenient
+       for calculating transformations.
+
+       Ptinrect returns 1 if p is a point within r, and 0 otherwise.
+
+       Raddp returns the Rectangle (add(r.origin, p), add(r.corner, p)); rsubp
+       returns the Rectangle (sub(r.origin, p), sub(r.corner, p)).
+
+       RectXrect returns 1 if r and s share any point; 0 otherwise.
+
+       Rectclip clips in place the Rectangle pointed to by rp so that it is
+       completely contained within s.  The return value is 1 if any part of
+       *rp is within s.  Otherwise, the return value is 0 and *rp is
+       unchanged.
+
+SEE ALSO
+       <a href="../man9/types.9.html">types(9.5)</a>
+
+                                                                      ADD(9.3)
+</pre>
+</body></html>

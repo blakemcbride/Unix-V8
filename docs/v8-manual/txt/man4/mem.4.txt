@@ -1,0 +1,37 @@
+MEM(4)                     Kernel Interfaces Manual                     MEM(4)
+
+NAME
+       mem, kmem, kmemr, kUmem, mtpr - main memory
+
+DESCRIPTION
+       Mem is a special file that is an image of the main memory of the
+       computer.  It may be used, for example, to examine (and even to patch)
+       the system.
+
+       Byte addresses in mem are interpreted as physical memory addresses.
+       References to non-existent locations cause errors to be returned.
+
+       The files kmem, kmemr, and kUmem are the same as mem except that kernel
+       virtual memory rather than physical memory is accessed.  Kmemr is read-
+       only, and excludes system buffer pools and device addresses; it is
+       intended as a ``safe'' and ``secure'' mechanism for accessing system
+       tables.  KUmem guarantees that reads and writes will be done in two-
+       byte quantities; this is convenient for UNIBUS accesses.
+
+       On the VAX, mtpr accesses internal processor registers.  Registers are
+       4 bytes long; register n may be read or written at address n∗4.
+
+FILES
+       /dev/mem, /dev/kmem, /dev/kmemr, /dev/kUmem, /dev/mtpr
+
+BUGS
+       On PDP11's and VAX's, memory files are accessed one byte at a time, an
+       inappropiate method for some device registers.
+
+       Examining and patching device and processor registers is likely to lead
+       to unexpected results when read-only or write-only bits are present.
+
+       An attempt to read a nonexistent processor register returns 0 instead
+       of an error.
+
+                                                                        MEM(4)

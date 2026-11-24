@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>swapon.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; swapon.8 (<a href="../../../../source/v8/usr/man/man8/swapon.8">troff source</a>)</p>
+<pre>
+SWAPON(8)                   System Manager's Manual                  SWAPON(8)
+
+NAME
+       swapon - specify paging/swapping device
+
+SYNOPSIS
+       /etc/swapon -a
+       /etc/swapon name ...
+
+DESCRIPTION
+       Swapon is used to specify additional devices on which paging and
+       swapping are to take place.  The system begins by swapping and paging
+       on a single device so that only one disk is required at bootstrap time.
+       Calls to swapon normally occur in the system multi-user initialization
+       file <a href="../man8/rc.8.html">rc(8)</a> making all swap devices available, so that the paging and
+       swapping activity is interleaved across several devices.
+
+       Normally, the -a argument is given, causing all devices marked as
+       ``sw'' swap devices in /etc/fstab to be made available.
+
+       The second form gives individual block devices as given in the system
+       swap configuration table.  The call makes only this space available to
+       the system for swap allocation.
+
+SEE ALSO
+       <a href="../man8/init.8.html">init(8)</a>
+
+FILES
+       /dev/ra?1 normal paging devices
+
+BUGS
+       There is no way to stop paging and swapping on a device.  It is
+       therefore not possible to make use of devices which may be dismounted
+       during system operation.
+
+                                                                     SWAPON(8)
+</pre>
+</body></html>

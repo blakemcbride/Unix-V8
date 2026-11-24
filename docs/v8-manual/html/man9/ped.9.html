@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ped.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; ped.9 (<a href="../../../../source/v8/usr/man/man9/ped.9">troff source</a>)</p>
+<pre>
+PED(9.1)                                                              PED(9.1)
+
+NAME
+       ped, tped - picture editor
+
+SYNOPSIS
+       ped [ -f ] [ file ] ...
+
+       tped [ option ] ...  [ file ] ...
+
+DESCRIPTION
+       Ped is an interactive drawing program for jerq terminals.  A file
+       argument is equivalent to an `e' command as described below.  Most
+       features of ped are menu-controlled and self-explanatory; further
+       details are in the reference.
+
+       Button 1 is used to select actions from a permanent menu and to draw or
+       pick up an object.  Button 3 is used to terminate drawing actions and
+       to change the permanent menu.  Button 2 causes the permanent menu to
+       revert to `basic'.
+
+       The operation of ped is split between host and terminal.  When a file
+       is first read, it is kept on the host; `bring in' gets it to the 5620.
+
+       Option -f causes ped to display all text in one size to save time and
+       space.
+
+       Permanent menus selected by button 3 follow.  Actions marked `(t)' in
+       the menu toggle on and off.  The last action is usually remembered and
+       may be executed repeatedly until another is selected.  Thus, for
+       example, one can fill many polygons with one button click per polygon.
+
+       Basic  is the initial menu.  `blitblt', like <a href="../man9/blitblt.9.html">blitblt(9.1)</a>, copies part
+              of the screen to file `BLITBLT', for display on a laser printer
+              by bcan; see can(9.1).  `Exit' requires a confirming push of
+              button 3.  `Markers' makes visible the defining points of
+              objects; in circles and text, these are the only points
+              sensitive to selection by button 1.
+
+              `Type comm' deactivates the mouse and takes input from the
+              keyboard.  The keyboard commands follow.  The first four behave
+              like similarly named commands in <a href="../man1/ed.1.html">ed(1)</a>, using a remembered name
+              when none is given.
+
+              e f    edit a new picture from file f; remember its name.
+              f f    Change the remembered name to f and report the new
+                     remembered name.
+              r f    Read file f into ped.
+              w f    Write the current picture onto file f.
+              u string
+                     Use string as a shell command to be applied when the menu
+                     selection user oper is made later.  The string is
+                     remembered.
+              cd d   Change working directory to d; like cd in <a href="../man1/sh.1.html">sh(1)</a>.
+              pwd    Print working directory; like <a href="../man1/pwd.1.html">pwd(1)</a>.
+              &lt;newline&gt;
+              m      Reactivate mouse.
+              qq     Quit; same as `exit' in basic menu.
+
+              If `e' or `qq' happens when the picture has been changed since
+              the last `w', the picture is saved in file `ped.save'.
+
+       Ch size
+              includes changes in object size, rotations, etc.  `Rotate'
+              displays a vector from a center of an object to the designated
+              point.  Then the object is rotated and scaled to bring that
+              point to a second designated position.  `H-elong' and `V-elong'
+              change aspect ratios; they are inverses.
+
+       Move   includes `move', and `copy' commands for objects.  Button 3
+              cancels a move or copy.  To help untangle overlapping objects,
+              the cancellation of a move does not take place until returning
+              to the basic menu.  `Attach' moves an open polygon (a broken
+              line) and hooks it to the end of another.  `Join' connects the
+              ends of two polygons.  `Link' causes multiple polygons to move
+              as one and to be filled as one (useful for making holes).
+              Mutually linked polygons must all be open or all be closed.
+              `Match' moves objects to bring designated points together;
+              `center' brings the centers of their bounding boxes together.
+
+       Draw   creates objects.  Button 1 fixes a point; button 3 terminates an
+              object.  `Text' objects may occupy several lines; an empty line
+              terminates text.  `Grid' causes points to snap to locations on a
+              grid, which indexes through settings FMC (fine, medium, coarse).
+              `Fix sz' sets option -f.  `Family' designates objects to be
+              moved or deleted together.  A family is defined by drawing a box
+              around it in the draw menu or by pointing to its members in the
+              move menu.
+
+       Reshape
+              for editing objects.  `Formal' adjusts nearly vertical or
+              horizontal lines in an object to be truly vertical or
+              horizontal.  `Spline' produces a curve guided by a polygon.
+              `Corner' toggles a point of a spline to be multiple - a corner
+              in an otherwise smooth curve.
+
+       Refine has additional editing commands.  `Adj t', with settings LRC,
+              causes text items to be left-justified, centered, or right-
+              justified on a point.  `Edit text' displays text at the top,
+              where button 1 selects a character position for inserting by
+              typing or deleting by backspacing.  Button 3 concludes the
+              editing.  `User oper' applies a user-specified command to the
+              selected object.
+
+       Shade  provides textures for filling polygons, circles, or spline-
+              bounded regions.  Curves are filled schematically on the 5620,
+              but accurately on the host.
+
+       Color  has no effect on the jerq, but is carried through for display on
+              other devices.
+
+       Remote performs all editing on the host using the jerq as a display
+              device only.
+
+       Tped is a filter to convert files of graphic information produced by
+       ped into typesetting requests for <a href="../man1/troff.1.html">troff(1)</a>.  The options are:
+
+       -Tdev  Prepare output for particular devices known to troff: -Taps or
+              -T202.
+       -b     Place a box around each picture.
+
+       The input may be straight ped output or may be arbitrary text files
+       with ped output embedded between pairs of delimiting lines:
+
+              .GS [ size ]
+              ped file
+              .GE
+
+       The optional size specification gives width or height in the form
+       w=inches or h=inches.  The ped text may be in another file:
+
+              .GS [ size ] pedfilename
+
+SEE ALSO
+       T. Pavlidis, PED Users Manual, AT&amp;T Bell Laboratories Computing Science
+       Technical Report No. 110, March 1984
+       <a href="../man9/blitblt.9.html">blitblt(9.1)</a>, <a href="../man1/can.1.html">can(1)</a>, <a href="../man1/pic.1.html">pic(1)</a>, <a href="../man1/ideal.1.html">ideal(1)</a>, <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/doctype.1.html">doctype(1)</a>
+
+DIAGNOSTICS
+       Ped error messages from the host are placed in file `.pederr'.  Error
+       messages from the terminal appear on the screen.
+
+BUGS
+       Pictures may spill into the menu or message areas.
+       Some experimentation with tped printout parameters is needed to obtain
+       satisfactory results.
+
+                                                                      PED(9.1)
+</pre>
+</body></html>

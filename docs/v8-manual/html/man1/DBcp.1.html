@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>DBcp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; DBcp.1 (<a href="../../../../source/v8/usr/man/man1/DBcp.1">troff source</a>)</p>
+<pre>
+DBCP(1)                     General Commands Manual                    DBCP(1)
+
+NAME
+       DBcp - database copy
+
+SYNOPSIS
+       DBcp source dest
+
+DESCRIPTION
+       DBcp copies a database created with either <a href="../man1/DB.1.html">DB(1)</a> or the <a href="../man3/DB.3.html">DB(3)</a> routines.
+       DBcp performs the copy by iterating through the keys using the routines
+       DBkey0 and DBkeyn, found in the DB library.
+
+       This is a separate command because of the high probability of empty
+       blocks in the database; these blocks are not copied.
+
+SEE ALSO
+       <a href="../man1/DB.1.html">DB(1)</a>, <a href="../man3/DB.3.html">DB(3)</a>, <a href="../man1/DBcvt.1.html">DBcvt(1)</a>.
+
+                                                                       DBCP(1)
+</pre>
+</body></html>

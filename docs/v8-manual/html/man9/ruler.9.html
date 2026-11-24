@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ruler.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; ruler.9 (<a href="../../../../source/v8/usr/man/man9/ruler.9">troff source</a>)</p>
+<pre>
+RULER(9.1)                                                          RULER(9.1)
+
+NAME
+       ruler - measure things on the screen
+
+SYNOPSIS
+       ruler
+
+DESCRIPTION
+       Ruler measures things on a jerq screen.  Press button 1 to sweep out a
+       rectangle anywhere on the screen.  For each rectangle swept, ruler
+       displays the coordinates of the rectangle's corners (labelled `down'
+       and `up'), the size of the rectangle and length of its diagonal.
+
+       There is a menu on button 3.  The pixels and chars buttons control
+       whether the size and diagonal measurements are in pixel or 9x14
+       character units (the size used by <a href="../man9/jim.9.html">jim(9.1)</a> and <a href="../man9/mux.9.html">mux(9.1)</a>).  The stop
+       button deactivates ruler without exiting.  Hitting measure reactivates
+       ruler.  Exit exits.
+
+BUGS
+       Ruler's menu must pop up in its own layer, perhaps far away from the
+       cursor.
+
+                                                                    RULER(9.1)
+</pre>
+</body></html>

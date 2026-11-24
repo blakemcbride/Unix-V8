@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getpass.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getpass.3 (<a href="../../../../source/v8/usr/man/man3/getpass.3">troff source</a>)</p>
+<pre>
+GETPASS(3)                 Library Functions Manual                 GETPASS(3)
+
+NAME
+       getpass - read a password
+
+SYNOPSIS
+       char *getpass(prompt)
+       char *prompt;
+
+DESCRIPTION
+       Getpass reads a password from the file /dev/tty, or if that cannot be
+       opened, from the standard input, after prompting with the null-
+       terminated string prompt and disabling echoing.  A pointer is returned
+       to a null-terminated string of at most 8 characters.
+
+FILES
+       /dev/tty
+
+SEE ALSO
+       <a href="../man3/crypt.3.html">crypt(3)</a>
+
+BUGS
+       The return value points to static data whose content is overwritten by
+       each call.
+
+                                                                    GETPASS(3)
+</pre>
+</body></html>

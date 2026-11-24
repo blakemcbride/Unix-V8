@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>qsort.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; qsort.3 (<a href="../../../../source/v8/usr/man/man3/qsort.3">troff source</a>)</p>
+<pre>
+QSORT(3)                   Library Functions Manual                   QSORT(3)
+
+NAME
+       qsort - quicker sort
+
+SYNOPSIS
+       qsort(base, nel, width, compar)
+       char *base;
+       int (*compar)();
+
+       compar(a, b)
+       char *a, *b;
+
+DESCRIPTION
+       Qsort is an implementation of the quicker-sort algorithm.  The first
+       argument is a pointer to the base of the data; the second is the number
+       of elements; the third is the width of an element in bytes; the last is
+       the name of the comparison routine to be called with two arguments
+       which are pointers to the elements being compared.  The routine must
+       return an integer less than, equal to, or greater than 0 according as
+       the first argument is to be considered less than, equal to, or greater
+       than the second.
+
+SEE ALSO
+       <a href="../man1/sort.1.html">sort(1)</a>
+
+                                                                      QSORT(3)
+</pre>
+</body></html>

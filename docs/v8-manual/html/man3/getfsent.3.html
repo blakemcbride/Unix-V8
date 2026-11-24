@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getfsent.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getfsent.3 (<a href="../../../../source/v8/usr/man/man3/getfsent.3">troff source</a>)</p>
+<pre>
+GETFSENT(3)                Library Functions Manual                GETFSENT(3)
+
+NAME
+       getfsent, getfsspec, getfsfile, setfsent, endfsent - get file system
+       descriptor file entry
+
+SYNOPSIS
+       #include &lt;fstab.h&gt;
+
+       struct fstab *getfsent()
+
+       struct fstab *getfsspec(name)
+       char *name;
+
+       struct fstab *getfsfile(name)
+       char *name;
+
+       int setfsent()
+
+       int endfsent()
+
+DESCRIPTION
+       Getfsent, getfsspec and getfsfile each return a pointer to an object
+       with the following structure containing the broken-out fields of a line
+       in the file system description file, <a href="../man5/fstab.5.html">fstab(5)</a>.
+
+              #define   FSNMLG    16
+
+              struct fstab{
+                   char fs_spec[FSNMLG];
+                   char fs_file[FSNMLG];
+                   char fs_type[3];
+                   int  fs_freq;
+                   int  fs_passno;
+              };
+
+       The fields have meanings described in <a href="../man5/fstab.5.html">fstab(5)</a>.
+
+       Getfsent  reads  the  next  line  of  the  file,  opening  the  file if
+       necessary.
+
+       Setfsent opens and rewinds the file.
+
+       Endfsent closes the file.
+
+       Getfsspec and getfsfile sequentially search from the beginning  of  the
+       file  until  a  matching  special file name or file system file name is
+       found, or until EOF is encountered.
+
+FILES
+       /etc/fstab
+
+SEE ALSO
+       <a href="../man5/fstab.5.html">fstab(5)</a>
+
+DIAGNOSTICS
+       Null pointer (0) returned on EOF or error.
+
+BUGS
+       All information is contained in a static area so it must be  copied  if
+       it is to be saved.
+
+                                                                   GETFSENT(3)
+</pre>
+</body></html>

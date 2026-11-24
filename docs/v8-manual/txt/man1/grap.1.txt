@@ -1,0 +1,28 @@
+GRAP(1)                     General Commands Manual                    GRAP(1)
+
+NAME
+       grap - pic preprocessor for drawing graphs
+
+SYNOPSIS
+       grap [ files ]
+
+DESCRIPTION
+       Grap is a pic(1) preprocessor for drawing graphs on a typesetter.
+       Graphs are surrounded by the troff `commands' .G1 and .G2.  Data that
+       is enclosed is scaled and plotted, with tick marks supplied
+       automatically.  Commands exist to modify the frame, add labels,
+       override the default ticks, change the plotting style, define
+       coordinate ranges and transformations, and include data from files.  In
+       addition, grap provides the same loops, conditionals and macro
+       processing that pic does.
+
+FILES
+       /usr/lib/grap.defines: definitions of standard plotting characters,
+       e.g., bullet.
+
+SEE ALSO
+       graph(1), plot(3)
+       J. L. Bentley, B. W. Kernighan, GRAP — A Language for Typesetting
+       Graphs
+
+                                                                       GRAP(1)

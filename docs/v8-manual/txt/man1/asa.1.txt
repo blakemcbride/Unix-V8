@@ -1,0 +1,28 @@
+ASA(1)                      General Commands Manual                     ASA(1)
+
+NAME
+       asa - interpret ASA control characters
+
+SYNOPSIS
+       asa [ file ] ...
+
+DESCRIPTION
+       Asa takes files which were written with ASA carriage control
+       characters, usually by FORTRAN programs, converts them to a form
+       suitable for printing on a terminal, line printer, and so on, and
+       writes the results on the standard output.
+
+       The control characters handled are:
+
+            ´ ´  single space
+            ´0´  double space
+            ´-´  triple space
+            ´+´  overprint the previous line
+            ´1´  start a new page
+
+       If no file names are given, the standard input is used.
+
+       Each input file given starts a new page.  A skip to a new page on the
+       first line of the first input file is ignored.
+
+                                                                        ASA(1)

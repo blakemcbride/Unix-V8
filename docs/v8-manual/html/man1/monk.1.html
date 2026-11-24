@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>monk.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; monk.1 (<a href="../../../../source/v8/usr/man/man1/monk.1">troff source</a>)</p>
+<pre>
+MONK(1)                     General Commands Manual                    MONK(1)
+
+NAME
+       monk, monksample - typeset documents and letters
+
+SYNOPSIS
+       monk [ options ] [ files ]
+
+       monksample [ sample ]
+
+DESCRIPTION
+       Monk formats the text in the named files for phototypesetting, using
+       other <a href="../man1/troff.1.html">troff(1)</a> preprocessors as necessary.  Options are given below.
+       Any other arguments or flags (e.g., -o1-2) are passed to <a href="../man1/troff.1.html">troff(1)</a>.
+       Options can occur in any order and can be intermixed with files.  If no
+       arguments are given, monk prints a list of its options.
+
+       -Acommands
+              Invoke the commands after all preprocessors and before <a href="../man1/troff.1.html">troff(1)</a>.
+       -Bcommands
+              Invoke the commands after monk and before any other
+              preprocessor.
+       -E     Invoke the -e option of <a href="../man1/troff.1.html">troff(1)</a>.
+       -Rfile Use file as the index file for <a href="../man1/refer.1.html">refer(1)</a>.
+       -Tdest Prepare output for typesetter or terminal dest; Where dest can
+              be:
+              -T202       Mergenthaler Linotron 202
+              -T9700      Xerox 9700 printer
+              -Taps       Autologic APS-5
+              -Tcanon     Canon laser printer, see <a href="../man7/candest.7.html">candest(7)</a> (default)
+              -Tcat       Graphic Systems C/A/T
+              -Timagen    Imagen printer, see i10send(1)
+              -Tjerq      5620 or blit terminal
+       -T-    The output from <a href="../man1/troff.1.html">troff(1)</a> is placed on standard output instead of
+              the default printer.
+       -x     Shows the preprocessors that are being invoked.
+
+       The following options are not normally needed because monk
+       automatically determines which preprocessor are required.  However, if
+       the commands in -A or -B options require a preprocessor, you can force
+       monk to invoke them using the following options.
+
+       -c     col(1) (postprocessor)
+       -cn    <a href="../man1/cite.1.html">cite(1)</a>
+       -e     <a href="../man1/eqn.1.html">eqn(1)</a>
+       -g     <a href="../man1/grap.1.html">grap(1)</a>
+       -i     <a href="../man1/ideal.1.html">ideal(1)</a>
+       -p     <a href="../man1/pic.1.html">pic(1)</a>
+       -r     <a href="../man1/refer.1.html">refer(1)</a>
+       -s     soelim(1)
+       -t     <a href="../man1/tbl.1.html">tbl(1)</a>
+       -tp    tped(1)
+
+       Monksample produces on the standard output a skeleton document that you
+       can redirect into a file and edit.  If no argument is given, monksample
+       prints a list of the available samples.  They are:
+
+       cspress Computer Science Press galley sheets.
+       letter  Personal letter
+       model   IEEE/ACM model sheets.
+       rp      AT&amp;T Bell Laboratories release paper.
+       song    Song sheets for singing at nursing homes.
+       tm      AT&amp;T Bell Laboratories technical memorandum.
+
+FILES
+       /usr/lib/monk/cite     forward and backward reference preprocessor
+       /usr/lib/monk/db       monk databases
+       /usr/lib/monk/dorefer  sed script for <a href="../man1/refer.1.html">refer(1)</a>
+       /usr/lib/monk/monk     monk compiler
+       /usr/lib/monk/soelim   preprocessor for <a href="../man1/troff.1.html">troff(1)</a> `.so' directives
+       /usr/lib/monk/tmac.p   macros for <a href="../man1/pic.1.html">pic(1)</a> preprocessor
+       /usr/lib/monk/sample   directory for existing samples
+
+SEE ALSO
+       Murrel, S. L., Kowalski, T. J., Typing Documents on the UNIX System:
+       Using Monk 0.2
+       <a href="../man1/apsend.1.html">apsend(1)</a>, <a href="../man1/cite.1.html">cite(1)</a>, <a href="../man1/d202.1.html">d202(1)</a>, <a href="../man1/eqn.1.html">eqn(1)</a>, <a href="../man1/grap.1.html">grap(1)</a>, <a href="../man1/ideal.1.html">ideal(1)</a>, <a href="../man9/ped.9.html">ped(9.1)</a>,
+       <a href="../man1/pic.1.html">pic(1)</a>, <a href="../man9/proof.9.html">proof(9.1)</a>, <a href="../man1/refer.1.html">refer(1)</a>, <a href="../man1/tbl.1.html">tbl(1)</a>, <a href="../man1/troff.1.html">troff(1)</a>
+
+                                                                       MONK(1)
+</pre>
+</body></html>

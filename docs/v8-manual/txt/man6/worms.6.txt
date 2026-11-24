@@ -1,0 +1,17 @@
+WORMS(6)                         Games Manual                         WORMS(6)
+
+NAME
+       worms, hanoi, rain - silly demos
+
+SYNOPSIS
+       /usr/games/worms
+
+       /usr/games/hanoi
+
+       /usr/games/rain
+
+DESCRIPTION
+       These games draw various moving patterns on a cursor-addressed
+       terminal.
+
+                                                                      WORMS(6)

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>curses.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; curses.3 (<a href="../../../../source/v8/usr/man/man3/curses.3">troff source</a>)</p>
+<pre>
+CURSES(3X)                                                          CURSES(3X)
+
+NAME
+       curses - screen functions with `optimal' cursor motion
+
+SYNOPSIS
+       cc args -lcurses -ltermcap
+
+DESCRIPTION
+       These routines give the user a method of updating screens with
+       reasonable optimization.  They keep an image of the current screen, and
+       the user sets up an image of a new one.  Then refresh() tells the
+       routines to make the current screen look like the new one.  The
+       initialization routine initscr() must be called before any other
+       routines that deal with windows and screens.  The routine endwin()
+       should be called before exiting.
+
+SEE ALSO
+       Ken Arnold, `Screen Updating and Cursor Movement Optimization: A
+       Library Package, UNIX Programmer's Manual, Berkeley 4.1BSD
+       <a href="../man2/ioctl.2.html">ioctl(2)</a>, <a href="../man5/termcap.5.html">termcap(5)</a>
+
+FUNCTIONS
+       addch(ch)                     add a character to stdscr
+       addstr(str)                   add a string to stdscr
+       box(win,vert,hor)             draw a box around a window
+       crmode()                      set cbreak mode
+       clear()                       clear stdscr
+       clearok(scr,boolf)            set clear flag for scr
+       clrtobot()                    clear to bottom on stdscr
+       clrtoeol()                    clear to end of line on stdscr
+       delwin(win)                   delete win
+       echo()                        set echo mode
+       endwin()                      end window modes
+       erase()                       erase stdscr
+       getch()                       get a char through stdscr
+       getstr(str)                   get a string through stdscr
+       gettmode()                    get tty modes
+       getyx(win,y,x)                get (y,x) co-ordinates
+       inch()                        get char at current (y,x) co-ordinates
+       initscr()                     initialize screens
+       leaveok(win,boolf)            set leave flag for win
+       longname(termbuf,name)        get long name from termbuf
+       move(y,x)                     move to (y,x) on stdscr
+       mvcur(lasty,lastx,newy,newx)  actually move cursor
+       newwin(lines,cols,begin_y,begin_x) create a new window
+       nl()                          set newline mapping
+       nocrmode()                    unset cbreak mode
+       noecho()                      unset echo mode
+       nonl()                        unset newline mapping
+       noraw()                       unset raw mode
+       overlay(win1,win2)            overlay win1 on win2
+       overwrite(win1,win2)          overwrite win1 on top of win2
+       printw(fmt,arg1,arg2,...)     printf on stdscr
+       raw()                         set raw mode
+       refresh()                     make current screen look like stdscr
+       resetty()                     reset tty flags to stored value
+       savetty()                     stored current tty flags
+       scanw(fmt,arg1,arg2,...)      scanf through stdscr
+       scroll(win)                   scroll win one line
+       scrollok(win,boolf)           set scroll flag
+       setterm(name)                 set term variables for name
+       standend()                    end standout mode
+       standout()                    start standout mode
+       subwin(win,lines,cols,begin_y,begin_x) create a subwindow
+       touchwin(win)                 `change' all of win
+       unctrl(ch)                    printable version of ch
+       waddch(win,ch)                add char to win
+       waddstr(win,str)              add string to win
+       wclear(win)                   clear win
+       wclrtobot(win)                clear to bottom of win
+       wclrtoeol(win)                clear to end of line on win
+       werase(win)                   erase win
+       wgetch(win)                   get a char through win
+       wgetstr(win,str)              get a string through win
+       winch(win)                    get char at current (y,x) in win
+       wmove(win,y,x)                set current (y,x) co-ordinates on win
+       wprintw(win,fmt,arg1,arg2,...) printf on win
+       wrefresh(win)                 make screen look like win
+       wscanw(win,fmt,arg1,arg2,...) scanf through win
+       wstandend(win)                end standout mode on win
+       wstandout(win)                start standout mode on win
+
+                                                                    CURSES(3X)
+</pre>
+</body></html>

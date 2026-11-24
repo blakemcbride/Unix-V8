@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>last.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; last.1 (<a href="../../../../source/v8/usr/man/man1/last.1">troff source</a>)</p>
+<pre>
+LAST(1)                     General Commands Manual                    LAST(1)
+
+NAME
+       last - report recent logins
+
+SYNOPSIS
+       last [ userid ... ] [ terminal ]
+
+DESCRIPTION
+       Last reports logins and logouts in reverse chronological order.
+       Optional arguments restrict attention to selected userids or terminals.
+       Terminals `tty0, tty1, ...' may be abbreviated `0, 1, ...'
+
+       Last reports userid, terminal, time on, and time off.  A pseudo-user,
+       `reboot', logs in at reboots of the system, thus
+
+              last reboot
+
+       reports recent reboots.
+
+       Upon interrupt, last tells how far back it has looked; upon quit
+       (control-\) it tells how far and keeps on looking.
+
+FILES
+       /usr/adm/wtmp       login data base
+
+SEE ALSO
+       <a href="../man1/who.1.html">who(1)</a>, wtmp(5), <a href="../man8/ac.8.html">ac(8)</a>
+
+BUGS
+       Because the accounting file does not distinguish orderly shutdowns from
+       crashes, neither does last.
+
+                                                                       LAST(1)
+</pre>
+</body></html>

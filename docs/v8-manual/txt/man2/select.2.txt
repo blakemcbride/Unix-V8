@@ -1,0 +1,46 @@
+SELECT(2)                     System Calls Manual                    SELECT(2)
+
+NAME
+       select - synchronous I/O multiplexing
+
+SYNOPSIS
+       #include <sys/types.h>
+       int select(nfds, readfds, writefds, milli);
+       fd_set *readfds, *writefds;
+
+DESCRIPTION
+       Select examines the IO descriptors specified by the bit masks readfds
+       and writefds to see if they are ready for reading and/or writing
+       respectively and returns, in place, a mask of those descriptors which
+       are ready.  Only descriptors 0 through nfds-1 are examined.  The total
+       number of ready descriptors is returned.
+
+       File descriptors referring to ordinary files and non-stream special
+       files always appear ready.
+
+       Milli is the maximum number of milliseconds to wait before giving up if
+       no descriptors come active.  If no maximum wait is desired a very large
+       integer can be given.  If milli is 0, select returns whatever
+       information is available without blocking.
+
+       Either readfds or writefds may be null if no descriptors are
+       interesting.  Readfds and writefds point to a structure containing a
+       simple bit mask: file descriptor f is represented by the bit 1<<(f%N)
+       in readfds->fds_bits[f/N], where N is the number of bits in an int
+       (given by the constant expression NBBY*NBPW).  These macros manipulate
+       the bits of mask s:
+
+       FD_ZERO(s)     clear all bits
+
+       FD_SET(n,s)    set bit n
+
+       FD_CLR(n,s)    clear bit n
+
+       FD_ISSET(n,s)  test bit n
+
+BUGS
+       Milli is rounded up to the nearest second.
+       Select is intended for use with streams; it does not work with non-
+       stream special files that can block.
+
+                                                                     SELECT(2)

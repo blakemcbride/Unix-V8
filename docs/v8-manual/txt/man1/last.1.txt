@@ -1,0 +1,34 @@
+LAST(1)                     General Commands Manual                    LAST(1)
+
+NAME
+       last - report recent logins
+
+SYNOPSIS
+       last [ userid ... ] [ terminal ]
+
+DESCRIPTION
+       Last reports logins and logouts in reverse chronological order.
+       Optional arguments restrict attention to selected userids or terminals.
+       Terminals `tty0, tty1, ...' may be abbreviated `0, 1, ...'
+
+       Last reports userid, terminal, time on, and time off.  A pseudo-user,
+       `reboot', logs in at reboots of the system, thus
+
+              last reboot
+
+       reports recent reboots.
+
+       Upon interrupt, last tells how far back it has looked; upon quit
+       (control-\) it tells how far and keeps on looking.
+
+FILES
+       /usr/adm/wtmp       login data base
+
+SEE ALSO
+       who(1), wtmp(5), ac(8)
+
+BUGS
+       Because the accounting file does not distinguish orderly shutdowns from
+       crashes, neither does last.
+
+                                                                       LAST(1)

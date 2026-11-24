@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>l3tol.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; l3tol.3 (<a href="../../../../source/v8/usr/man/man3/l3tol.3">troff source</a>)</p>
+<pre>
+L3TOL(3)                   Library Functions Manual                   L3TOL(3)
+
+NAME
+       l3tol, ltol3 - convert between 3-byte integers and long integers
+
+SYNOPSIS
+       l3tol(lp, cp, n)
+       long *lp;
+       char *cp;
+
+       ltol3(cp, lp, n)
+       char *cp;
+       long *lp;
+
+DESCRIPTION
+       L3tol converts a list of n three-byte integers packed into a character
+       string pointed to by cp into a list of long integers pointed to by lp.
+
+       Ltol3 performs the reverse conversion from long integers (lp) to three-
+       byte integers (cp).
+
+       These functions are useful for file-system maintenance where the i-
+       numbers are three bytes long.
+
+SEE ALSO
+       <a href="../man5/filsys.5.html">filsys(5)</a>
+
+                                                                      L3TOL(3)
+</pre>
+</body></html>

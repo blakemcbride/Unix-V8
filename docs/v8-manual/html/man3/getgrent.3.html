@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getgrent.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getgrent.3 (<a href="../../../../source/v8/usr/man/man3/getgrent.3">troff source</a>)</p>
+<pre>
+GETGRENT(3)                Library Functions Manual                GETGRENT(3)
+
+NAME
+       getgrent, getgrgid, getgrnam, setgrent, endgrent - get group file entry
+
+SYNOPSIS
+       #include &lt;grp.h&gt;
+
+       struct group *getgrent();
+
+       struct group *getgrgid(gid)
+
+       struct group *getgrnam(name) char *name;
+
+       setgrent();
+
+       endgrent();
+
+DESCRIPTION
+       Getgrent, getgrgid and getgrnam each return pointers to an object with
+       the following structure containing the broken-out fields of a line in
+       the group file.
+
+              struct    group { /* see <a href="../man3/getgrent.3.html">getgrent(3)</a> */
+                   char *gr_name;
+                   char *gr_passwd;
+                   int  gr_gid;
+                   char **gr_mem;
+              };
+
+       The members of this structure are:
+
+       gr_name
+              The name of the group.
+       gr_passwd
+              The encrypted password of the group.
+       gr_gid The numerical group-ID.
+       gr_mem Null-terminated vector of pointers to the individual member
+              names.
+
+       Getgrent simply reads the next line while getgrgid and getgrnam search
+       until a matching gid or name is found (or until EOF is encountered).
+       Each routine picks up where the others leave off so successive calls
+       may be used to search the entire file.
+
+       A call to setgrent has the effect of rewinding the group file to allow
+       repeated searches.  Endgrent may be called to close the group file when
+       processing is complete.
+
+FILES
+       /etc/group
+
+SEE ALSO
+       <a href="../man3/getlogin.3.html">getlogin(3)</a>, <a href="../man3/getpwent.3.html">getpwent(3)</a>, <a href="../man5/group.5.html">group(5)</a>
+
+DIAGNOSTICS
+       A null pointer (0) is returned on EOF or error.
+
+BUGS
+       All information is contained in a static area so it must be copied if
+       it is to be saved.
+
+                                                                   GETGRENT(3)
+</pre>
+</body></html>

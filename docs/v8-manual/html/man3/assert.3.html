@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>assert.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; assert.3 (<a href="../../../../source/v8/usr/man/man3/assert.3">troff source</a>)</p>
+<pre>
+ASSERT(3X)                                                          ASSERT(3X)
+
+NAME
+       assert - program verification
+
+SYNOPSIS
+       #include &lt;assert.h&gt;
+
+       assert(expression)
+
+DESCRIPTION
+       Assert is a macro that indicates expression is expected to be true at
+       this point in the program.  It causes an <a href="../man2/exit.2.html">exit(2)</a> with a diagnostic
+       comment on the standard output when expression is false (0).  Compiling
+       with the <a href="../man1/cc.1.html">cc(1)</a> option -DNDEBUG effectively deletes assert from the
+       program.
+
+DIAGNOSTICS
+       `Assertion failed: file f line n.'  F is the source file and n the
+       source line number of the assert statement.
+
+                                                                    ASSERT(3X)
+</pre>
+</body></html>

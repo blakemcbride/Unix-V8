@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>popen.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; popen.3 (<a href="../../../../source/v8/usr/man/man3/popen.3">troff source</a>)</p>
+<pre>
+POPEN(3S)                                                            POPEN(3S)
+
+NAME
+       popen, pclose - initiate IO to/from a process
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       FILE *popen(command, type)
+       char *command, *type;
+
+       pclose(stream)
+       FILE *stream;
+
+DESCRIPTION
+       The arguments to popen are pointers to null-terminated strings
+       containing respectively a shell command line and an IO mode, either "r"
+       for reading or "w" for writing.  It creates a pipe between the calling
+       process and the command to be executed.  The value returned is a stream
+       pointer that can be used (as appropriate) to write to the standard
+       input of the command or read from its standard output.
+
+       A stream opened by popen should be closed by pclose, which waits for
+       the associated process to terminate and returns the exit status of the
+       command.
+
+       Because open files are shared, a type "r" command may be used as an
+       input filter, and a type "w" as an output filter.
+
+SEE ALSO
+       <a href="../man2/pipe.2.html">pipe(2)</a>, <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/fclose.3.html">fclose(3)</a>, <a href="../man3/system.3.html">system(3)</a>, <a href="../man2/wait.2.html">wait(2)</a>
+
+DIAGNOSTICS
+       Popen returns a null pointer if files or processes cannot be created,
+       or the Shell cannot be accessed.
+
+       Pclose returns -1 if there is no process to wait for.
+
+BUGS
+       Buffered reading before opening an input filter may leave the standard
+       input of that filter mispositioned.  Similar problems with an output
+       filter may be forestalled by calling fflush; see <a href="../man3/fclose.3.html">fclose(3)</a>.
+
+                                                                     POPEN(3S)
+</pre>
+</body></html>

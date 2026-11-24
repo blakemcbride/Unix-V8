@@ -1,0 +1,28 @@
+STRIP(1)                    General Commands Manual                   STRIP(1)
+
+NAME
+       strip - remove symbols and relocation bits
+
+SYNOPSIS
+       strip [ -s ] [ -g ] [ -v ] name ...
+
+DESCRIPTION
+       Strip removes the symbol table and relocation bits ordinarily attached
+       to the output of the assembler and loader.  This is useful to save
+       space after a program has been debugged.
+
+       If -s is specified, the symbol table is compressed by removing
+       duplicate structure definitions and symbol table entries; no
+       information is lost.  If -g is specified, all line-number information
+       is deleted, thus inverting the effect of `cc -g'; -s compression is
+       performed as well. The -v flag prints out size information.  If no
+       flags are given, strip removes the symbol table entirely; this is the
+       same as use of the -s option of ld(1).
+
+FILES
+       shrink?   temporary file
+
+SEE ALSO
+       cc(1), ld(1)
+
+                                                                      STRIP(1)

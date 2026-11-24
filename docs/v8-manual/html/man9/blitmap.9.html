@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>blitmap.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; blitmap.9 (<a href="../../../../source/v8/usr/man/man9/blitmap.9">troff source</a>)</p>
+<pre>
+BLITMAP(9.1)                                                      BLITMAP(9.1)
+
+NAME
+       blitmap - map plots and path finding on a jerq
+
+SYNOPSIS
+       blitmap [ options ]
+
+DESCRIPTION
+       Blitmap displays maps on the jerq terminal.  It relies on the mouse to
+       select regions, functions, and to give formats for typed commands.  The
+       metropolitan N.Y.-N.J. area is the default map.  Blitmap's screen
+       consists of two frames, a large frame for plotting maps and printing
+       messages to the user, and a one-line command frame at the bottom.
+       Blitmap recognizes two commands from the keyboard, to designate a
+       region and to scale or plot a route from one point to another.  A
+       command may be typed at any time.
+
+       Button 3
+
+       Regions                                                                 Select
+                                                                               which
+                                                                               region
+                                                                               to
+                                                                               plot.
+                                                                               Available
+                                                                               regions
+                                                                               are
+                                                                               San
+                                                                               Francisco,
+                                                                               New
+                                                                               York
+                                                                               City
+                                                                               and
+                                                                               North
+                                                                               Jersey,
+                                                                               Washington,
+                                                                               Los
+                                                                               Angeles
+                                                                               and
+                                                                               Ann
+                                                                               Arbor.
+
+       Zoom-in                                                                 Using
+                                                                               button
+                                                                               3
+                                                                               and
+                                                                               the
+                                                                               box
+                                                                               icon,
+                                                                               enclose
+                                                                               the
+                                                                               area
+                                                                               desired
+                                                                               and
+                                                                               blitmap
+                                                                               will
+                                                                               plot
+                                                                               a
+                                                                               map
+                                                                               of
+                                                                               that
+                                                                               area
+                                                                               centered
+                                                                               at
+                                                                               the
+                                                                               center
+                                                                               of
+                                                                               the
+                                                                               drawn
+                                                                               rectangle.
+
+       Zoom-out                                                                Enclose
+                                                                               an
+                                                                               area
+                                                                               with
+                                                                               a
+                                                                               rectangle
+                                                                               and
+                                                                               the
+                                                                               map
+                                                                               shown
+                                                                               will
+                                                                               be
+                                                                               reduced
+                                                                               to
+                                                                               the
+                                                                               rectangle
+                                                                               size
+                                                                               and
+                                                                               the
+                                                                               rest
+                                                                               of
+                                                                               the
+                                                                               map
+                                                                               filled
+                                                                               in.
+                                                                               The
+                                                                               center
+                                                                               will
+                                                                               be
+                                                                               at
+                                                                               the
+                                                                               center
+                                                                               of
+                                                                               the
+                                                                               drawn
+                                                                               rectangle.
+
+       Center                                                                  With
+                                                                               button
+                                                                               3
+                                                                               point
+                                                                               to
+                                                                               new
+                                                                               center.
+                                                                               The
+                                                                               radius
+                                                                               will
+                                                                               remain
+                                                                               the
+                                                                               same.
+
+       Prev. map                                                               Blitmap
+                                                                               plots
+                                                                               the
+                                                                               previous
+                                                                               frame.
+
+       To draw map                                                             Gives
+                                                                               the
+                                                                               format
+                                                                               of
+                                                                               the
+                                                                               command
+                                                                               the
+                                                                               user
+                                                                               types
+                                                                               to
+                                                                               plot
+                                                                               a
+                                                                               map.
+
+       To find path                                                            Gives
+                                                                               the
+                                                                               format
+                                                                               of
+                                                                               the
+                                                                               command
+                                                                               the
+                                                                               user
+                                                                               types
+                                                                               to
+                                                                               find
+                                                                               a
+                                                                               path.
+
+       Quit                                                                    Must
+                                                                               be
+                                                                               confirmed
+
+       Button 2
+       Button 2 controls map editing functions.  No editing is actually done,
+       but by using the -f option, a file of changes will be written, which
+       may be added to the actual database.
+
+       Keyboard
+
+       [-options ...] radius address[,town or zip]
+              Blitmap plots an area with the given radius in miles around the
+              address.
+
+       path [-options ...] from address to address[,town or zip]
+              A  route is outlined on a map and printed directions are given
+              from point to point.
+
+       Address may be a number and street or an intersection such as, `main
+       and 10th' or `600 Mountain av,new providence.'  The options specify the
+       algorithm of the path search and plotting choices. The plotting options
+       may be used with both commands.
+
+       Path finding options
+
+       -2     Two ended search (default).
+       -1     One way search.
+       -b     Breadth search.
+       -C     Cyclists - ignore costs for turns.
+       -F     Stop at first route connect with breadth search.
+       -H     Hierarchical search.(Give priority to database with major
+              roads.)
+       -G     In breadth search, ignore ones whose cost + dist &gt;4/3 total
+              airline distance.
+       -J     Use precomputed routes. (Available from 600 mountain av,New
+              Providence.)
+       -V     Verbose directions (all intersections given).
+       -W     Walkers - no cost for turns and ignore one-way streets.
+
+       Plotting options
+
+       -A     Print every possible label.
+       -B     Print business names.
+       -MIx   Forces a detailed street plot for maps whose radius is greater
+              than 10,000 ft.
+       -b     Don't print boundaries.
+       -ix    Plot only streets with importance &gt;x; x=0 is default.
+       -j     Do sketch map only.
+       -l     Don't print labels.
+       -r     Don't print railroads.
+       -s     Don't print streets.
+       -w     Don't print waterways.
+
+FILES
+       /n/seki/usr/rje/BLIT/term/term     terminal support program
+       /n/seki/m?/map/*                  map files
+
+BUGS
+       Since the data bases have not been checked and many streets are not
+       connected, some paths may be circuitous.  There are no connecting roads
+       from N.J into N.Y or from Middlesex county into Union. The routing
+       programs will churn, trying to find a through street and will not give
+       up. There are no one-way street tags on the streets.  Blitmap does not
+       know if it has been reshaped.
+
+                                     seki                         BLITMAP(9.1)
+</pre>
+</body></html>

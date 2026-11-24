@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>can.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; can.1 (<a href="../../../../source/v8/usr/man/man1/can.1">troff source</a>)</p>
+<pre>
+CAN(1)                      General Commands Manual                     CAN(1)
+
+NAME
+       can, bcan, dcan, tcan, xcan - interface to Canon laser-printer spooler
+
+SYNOPSIS
+       can [ option ... ] [ file ... ]
+
+       bcan [ option ... ] [ file ... ]
+
+       dcan [ option ... ] [ file ... ]
+
+       tcan [ option ... ] [ file ... ]
+
+       xcan [ option ... ] [ file ... ]
+
+DESCRIPTION
+       These commands print files (standard input by default) on Canon laser
+       printers.  Four commands, all special cases of the generic xcan, handle
+       particular kinds of data files:
+
+       can    ASCII text
+
+       bcan   bitmap images created by <a href="../man9/blitblt.9.html">blitblt(9.1)</a>
+
+       dcan   output from <a href="../man1/troff.1.html">troff(1)</a>
+
+       tcan   output for a Tektronix 4014 terminal, as produced by <a href="../man1/plot.1.html">plot(1)</a>
+
+       The destination printer is determined in the following ways, listed in
+       order of decreasing precedence.  Printer names are given in <a href="../man7/candest.7.html">candest(7)</a>.
+
+              option -d dest
+              environment variable CANDEST
+              printer named in file /etc/candest
+
+       Options:
+
+       -d dest select the destination printer, see <a href="../man7/candest.7.html">candest(7)</a>.
+
+       -f font set the font (default CW.11) for can, see <a href="../man7/font.7.html">font(7)</a>.
+
+       -L      (landscape) rotate bcan pages 90 degrees.
+
+       -l n    set number of lines per page for can (default 66).
+
+       -m n    set bcan magnification (default 2).
+
+       -n      spool only, input has already been formatted by a remote xcan.
+
+       -o list print only pages whose page numbers appear in the comma-
+               separated list of numbers and ranges.  A range n-m means pages
+               n through m; a range -n means from the beginning to page n; a
+               range n- means from page n to the end.  -o implies -r.
+
+       -r      print pages in reverse order (default for can and dcan).
+
+       -sb     make xcan expect bcan input; -sb implies defaults of -x176 and
+               -y96.
+
+       -sc     make xcan expect can input; -sc does not imply -r.
+
+       -sd     make xcan expect dcan input; -sd does not imply -r.
+
+       -st     make xcan expect tcan input.
+
+       -t n    tcan scale factor is (n/100)/(n%100).  The default is 813,
+               i.e., 13 tekpoints become 8 dots on the laser printer.
+
+       -u user set the name which appears on the banner page; default is login
+               name.
+
+       -x n    set the horizontal offset of the print image, measured in dots
+               (default 48).  There are 240 dots to the inch.
+
+       -y n    set the vertical offset of the print image (default 0), except
+               in tcan, where this option specifies n extra tekpoints
+               vertically.
+
+FILES
+       /etc/candest    default destination
+       /usr/can/font   font directory
+       /usr/spool/jpd  spool directory
+
+SEE ALSO
+       <a href="../man9/blitblt.9.html">blitblt(9.1)</a>, <a href="../man1/plot.1.html">plot(1)</a>, <a href="../man1/pr.1.html">pr(1)</a>, revpag(1), <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man7/candest.7.html">candest(7)</a>, <a href="../man7/font.7.html">font(7)</a>
+
+BUGS
+       The `landscape' option is supported only by bcan; -o and -r are
+       supported only by can and dcan.
+       There ought to be a way to determine the service class from the input
+       data.
+
+                                                                        CAN(1)
+</pre>
+</body></html>

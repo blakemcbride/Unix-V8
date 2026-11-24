@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cat.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; cat.1 (<a href="../../../../source/v8/usr/man/man1/cat.1">troff source</a>)</p>
+<pre>
+CAT(1)                      General Commands Manual                     CAT(1)
+
+NAME
+       cat - catenate and print
+
+SYNOPSIS
+       cat file ...
+
+DESCRIPTION
+       Cat reads each file in sequence and writes it on the standard output.
+       Thus
+
+              cat file
+
+       prints the file and
+
+              cat file1 file2 &gt;file3
+
+       concatenates the first two files and places the result on the third.
+
+       If no file is given, or if the argument `-' is encountered, cat reads
+       from the standard input.  Output is buffered in blocks matching the
+       input.
+
+SEE ALSO
+       <a href="../man1/pr.1.html">pr(1)</a>, <a href="../man1/cp.1.html">cp(1)</a>
+
+BUGS
+       Beware of `cat a b &gt;a' and `cat a b &gt;b', which destroy input files
+       before reading them.
+
+                                                                        CAT(1)
+</pre>
+</body></html>

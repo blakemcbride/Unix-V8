@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>frexp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; frexp.3 (<a href="../../../../source/v8/usr/man/man3/frexp.3">troff source</a>)</p>
+<pre>
+FREXP(3)                   Library Functions Manual                   FREXP(3)
+
+NAME
+       frexp, ldexp, modf - split into mantissa and exponent
+
+SYNOPSIS
+       double frexp(value, eptr)
+       double value;
+       int *eptr;
+
+       double ldexp(value, exp)
+       double value;
+
+       double modf(value, iptr)
+       double value, *iptr;
+
+DESCRIPTION
+       Frexp returns the mantissa of value and stores the exponent indirectly
+       through eptr, so that value = frexp(value)*2**(*eptr).
+
+       Ldexp returns the quantity value∗2∗∗exp.
+
+       Modf returns the positive fractional part of value and stores the
+       integer part indirectly through iptr.
+
+                                                                      FREXP(3)
+</pre>
+</body></html>

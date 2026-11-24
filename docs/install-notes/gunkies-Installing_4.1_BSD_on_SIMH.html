@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Installing 4.1 BSD on SIMH</title></head><body>
+<p><em>Saved from <a href="https://gunkies.org/wiki/Installing_4.1_BSD_on_SIMH">https://gunkies.org/wiki/Installing_4.1_BSD_on_SIMH</a> on 2026-11-24 (MediaWiki render view).</em></p>
+<h1>Installing 4.1 BSD on SIMH</h1>
+<div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr"><p>This is the procedure is loosely inspired from <a rel="nofollow" class="external text" href="http://zazie.tom-yam.or.jp/starunix/4.0bsd/4.0bsd.html">Naoki Hamada</a> to install <a href="https://gunkies.org/wiki/4.0_BSD" class="mw-redirect" title="4.0 BSD">4.0 BSD</a> onto <a href="https://gunkies.org/wiki/SIMH" title="SIMH">SIMH</a>'s <a href="https://gunkies.org/wiki/VAX_11/780" class="mw-redirect" title="VAX 11/780">VAX 11/780</a> emulator.  I can't get the standalone programs to run on SIMH, so instead I'm using the 4.0 standalone to bootstrap 4.1.  So the ini files, and initial disk prep is the same.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Requirements"><span class="tocnumber">1</span> <span class="toctext">Requirements</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Preparing_for_installation"><span class="tocnumber">2</span> <span class="toctext">Preparing for installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#tboot.ini"><span class="tocnumber">2.1</span> <span class="toctext">tboot.ini</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#dboot.ini"><span class="tocnumber">2.2</span> <span class="toctext">dboot.ini</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="#Booting_from_tape"><span class="tocnumber">3</span> <span class="toctext">Booting from tape</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Booting_from_disk"><span class="tocnumber">4</span> <span class="toctext">Booting from disk</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Requirements">Requirements</span></h2>
+<ul><li>You will need a working copy of SIMH's vax780.exe for your platform.</li>
+<li>A modified 4.1 BSD install tape.  You can download one from <a rel="nofollow" class="external text" href="http://sourceforge.net/projects/bsd42/files/Install%20tapes/4.1%20BSD/4.1_BSD_19810710-modified.7z/download">sourceforge</a></li>
+<li>The 4.0 standalone boot program, avilable on <a rel="nofollow" class="external text" href="http://sourceforge.net/projects/bsd42/files/Install%20tapes/4.0%20BSD/boot/download">sourceforge</a></li>
+<li>A copy of <a href="https://gunkies.org/w/index.php?title=7zip&amp;action=edit&amp;redlink=1" class="new" title="7zip (page does not exist)">7zip</a> to decompress the tape image</li></ul>
+<h2><span class="mw-headline" id="Preparing_for_installation">Preparing for installation</span></h2>
+<p>The first step is to decompress the tape image with 7zip.  This should be very straightforward:
+</p>
+<pre>7zip x 4.1_BSD_19810710-modified.7z
+</pre>
+<p><br>
+You will need to create two ini files, one for the tape boot, and the other for the disk boot.
+</p>
+<h3><span class="mw-headline" id="tboot.ini">tboot.ini</span></h3>
+<pre>set tto 7b
+set rq dis
+set lpt dis
+set rl dis
+set hk dis
+set rq dis
+set rqb dis
+set rqc dis
+set rqd dis
+set ry dis
+set ts dis
+set tq dis
+set dz lines=8
+set rp0 rp06
+at rp0 rp06.disk
+set tu0 te16
+at tu0 4.1_BSD_19810710-modified.tap
+D 50000 20009FDE
+D 50004 D0512001
+D 50008 3204A101
+D 5000C C113C08F
+D 50010 A1D40424
+D 50014 008FD00C
+D 50018 C1800000
+D 5001C 8F320800
+D 50020 10A1FE00
+D 50024 00C139D0
+D 50028 04c1d004
+D 5002C 07e15004
+D 50030 0000f750
+run 50000
+run 0
+</pre>
+<h3><span class="mw-headline" id="dboot.ini">dboot.ini</span></h3>
+<pre>set tto 7b
+set rq dis
+set lpt dis
+set rl dis
+set hk dis
+set rq dis
+set rqb dis
+set rqc dis
+set rqd dis
+set ry dis
+set ts dis
+set tq dis
+set dz lines=8
+set rp0 rp06
+at rp0 rp06.disk
+set tu0 te16
+load -o boot 0
+run 2
+</pre>
+<p>You will also need to extract the boot program.  You can download it from <a rel="nofollow" class="external text" href="http://sourceforge.net/projects/bsd42/files/Install%20tapes/4.0%20BSD/boot/download">sourceforge</a>, or <a href="https://gunkies.org/wiki/Uudecode" title="Uudecode">uudecode</a> the following <a href="https://gunkies.org/wiki/4.0_BSD_boot" title="4.0 BSD boot">boot</a> program that is injected into SIMH's memory.
+</p>
+<h2><span class="mw-headline" id="Booting_from_tape">Booting from tape</span></h2>
+<p>Simply boot up from tape by invoking SIMH's VAX 11/780 with the tape boot ini as follows:
+</p>
+<pre>
+
+C:\bsd40&gt;vax780.exe tboot.ini
+
+VAX780 simulator V3.8-1
+RP: creating new file
+Overwrite last track? [N] y
+
+HALT instruction, PC: 00050033 (HALT)
+=
+</pre>
+<p>This will get you to the bootloader which we can then use to invoke the mkfs/restore commands.  There isn't any need to lowlevel format in the emulator.
+</p>
+<pre>=mkfs
+file sys size: 7942
+file system: hp(0,0)
+isize = 5072
+m/n = 3 500
+=
+</pre>
+<p>Now to restore the root/boot partition:
+</p>
+<pre>=restor
+Tape? ht(0,1)
+Disk? hp(0,0)
+Last chance before scribbling on disk.
+End of tape
+=
+</pre>
+<p>Hit enter when prompted "Last chance before scribbling on disk.".
+</p><p>Now we can invoke the boot program to load up the kernel so we can continue the install.
+</p>
+<pre>=boot
+
+Boot
+:
+</pre>
+<p>Now we can specify the disk &amp; kernel, as follows:
+</p>
+<pre>: hp(0,0)vmunix
+123060+27528+24628 start 0xF5C
+Berkeley VAX/UNIX Version 4.9  Wed Feb 17 15:27:46 PST 1982
+real mem  = 8322048
+avail mem = 7738368
+mcr0 at tr1
+mcr1 at tr2
+uba0 at tr3
+dz0 at uba0 csr 160100 vec 300, ipl 15
+mba0 at tr8
+hp0 at mba0 drive 0
+hp1 at mba0 drive 1
+hp2 at mba0 drive 2
+hp3 at mba0 drive 3
+mba1 at tr9
+ht0 at mba1 drive 0
+tu0 at ht0 slave 0
+tu1 at ht0 slave 1
+root device?
+</pre>
+<p>And we will be prompted for the root device, in this case it's hp0
+</p>
+<pre>root device? hp0
+WARNING: preposterous time in file system -- CHECK AND RESET THE DATE!
+WARNING: should run interleaved swap with &gt;= 2Mb
+erase ^?, kill ^U, intr ^C
+#
+</pre>
+<p>It is recommended that you run fsck to ensure that the 'a' partition is in good health. Run fsck as follows:
+</p>
+<pre># fsck /dev/rhp0a
+
+/dev/rhp0a
+File System:
+
+** Checking /dev/rhp0a
+** Phase 1 - Check Blocks and Sizes
+** Phase 2 - Check Pathnames
+** Phase 3 - Check Connectivity
+** Phase 4 - Check Reference Counts
+** Phase 5 - Check Free List
+663 files 4277 blocks 3346 free
+#
+</pre>
+<p>Now we format the 'g' partition which we will then mount under /usr and restore from tape.  Take note that we specify the size as that isn't detected, and that mkfs lives in /etc!
+</p>
+<pre># mkfs /dev/hp0g 145673
+isize = 65488
+m/n = 3 500
+</pre>
+<p>Next we link the tape device to rmt:
+</p><p><br>
+</p>
+<pre>cd /dev
+MAKE ht0
+cd /
+</pre>
+<p>Now we mount the partition, advance the tape, and restore.  
+</p>
+<pre># /etc/mount /dev/hp0g /usr
+# cd /usr
+# mt rew
+# mt fsf 2
+# tar xpb 20
+#
+</pre>
+<p>This will take about a minute to complete.
+</p><p>Next we'll install a bootblock.
+</p>
+<pre># dd if=/usr/mdec/uboot of=/dev/rhp0a bs=1b count=1
+1+0 records in
+1+0 records out
+#
+</pre>
+<p>No create the fstab by copying the example rp file
+</p>
+<pre>cp /etc/fstab.rp06 /etc/fstab
+</pre>
+<p>And you can test that its working with a 'df'
+</p>
+<pre># df
+Filesystem  Mounted on  kbytes    used    free &nbsp;% used
+/dev/hp0a   /             7623    4278    3345     56%
+/dev/hp0g   /usr        141578    9198  132380      6%
+</pre>
+<p><br>
+Then we fix some mount permissions, and shutdown the system.
+</p>
+<pre># cd /
+# chmod 755 / /usr
+# sync
+# sync
+# sync
+# sync
+# ^E
+Simulation stopped, PC: 80000963 (MTPR #0,#12)
+sim&gt; q
+Goodbye
+
+C:\bsd40&gt;
+</pre>
+<p>The operating system is now installed.
+</p>
+<h2><span class="mw-headline" id="Booting_from_disk">Booting from disk</span></h2>
+<p>This part relies on you having extracted the 4.0 BSD boot program, as there is no console floppy in SIMH.  Or I haven't figured out how to create one, so it is injected into memory and executed.  Load the simulator as follows and it'll boot up to the login prompt.
+</p><p><br>
+</p>
+<pre>C:\bsd40&gt;vax780.exe dboot.ini
+
+VAX780 simulator V3.8-1
+
+Boot
+: hp(0,0)vmunix
+123060+27528+24628 start 0xF5C
+Berkeley VAX/UNIX Version 4.9  Wed Feb 17 15:27:46 PST 1982
+real mem  = 8322048
+avail mem = 7738368
+mcr0 at tr1
+mcr1 at tr2
+uba0 at tr3
+dz0 at uba0 csr 160100 vec 300, ipl 15
+mba0 at tr8
+hp0 at mba0 drive 0
+hp1 at mba0 drive 1
+hp2 at mba0 drive 2
+hp3 at mba0 drive 3
+mba1 at tr9
+ht0 at mba1 drive 0
+tu0 at ht0 slave 0
+tu1 at ht0 slave 1
+root on hp0
+WARNING: clock lost 152 days -- CHECK AND RESET THE DATE!
+WARNING: should run interleaved swap with &gt;= 2Mb
+Automatic reboot in progress...
+Mon Feb  2 13:31:59 GMT 1976
+/dev/hp0a: 676 files 4278 blocks 3345 free
+/dev/rhp0g: 1333 files 9198 blocks 132380 free
+Mon Feb  2 13:31:59 GMT 1976
+Mounted /usr on /dev/hp0g
+preserving editor files
+clearing /tmp
+starting daemons: update        Mon Feb  2 13:31:59 GMT 1976
+
+ cron accounting network mail printer.
+Mon Feb  2 13:31:59 GMT 1976
+
+
+Berkeley 4.1 VAX/UNIX (Amnesia-Vax)
+
+login:
+</pre>
+<p>Now you can follow the `Taking the system up and down' Section of <a href="https://gunkies.org/w/index.php?title=4.1_BSD_setup&amp;action=edit&amp;redlink=1" class="new" title="4.1 BSD setup (page does not exist)">setup</a> document.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20261108075401
+Cache expiry: 2592000
+Reduced expiry: false
+Complications: [show‐toc]
+CPU time usage: 0.009 seconds
+Real time usage: 0.009 seconds
+Preprocessor visited node count: 112/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/100
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 3649/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 -total
+-->
+
+<!-- Saved in parser cache with key mediawiki-wiki_:pcache:idhash:2775-0!canonical and timestamp 20261108075401 and revision id 11428. Rendering was triggered because: page-view
+ -->
+</div></body></html>

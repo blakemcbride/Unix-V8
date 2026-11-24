@@ -1,0 +1,38 @@
+P(1)                        General Commands Manual                       P(1)
+
+NAME
+       p, more - paginate
+
+SYNOPSIS
+       p [ -n ] [ file ] ...
+
+       more [ option ] ... [ file ] ...
+
+DESCRIPTION
+       P copies its standard input, or the named files if given, to its
+       standard output, stopping at the end of the 22nd line to wait for a
+       newline from the user.  The page size may be set by saying (for
+       example)
+
+              p -60
+
+       While waiting for a newline, p interprets some commands:
+
+              -      Reprint last page. `--' reprints the second last page,
+                     etc.
+
+              !      Pass the rest of the line to the shell as a command.
+
+              q      Quit.
+
+       More, a paginator that lives up to its name, has too many features to
+       describe.  The essential fact about it is that space, not newline,
+       gives the next page.
+
+SEE ALSO
+       tk(1)
+
+BUGS
+       Because of limited storage, p can't back up too far.
+
+                                                                          P(1)

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>trace.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; trace.1 (<a href="../../../../source/v8/usr/man/man1/trace.1">troff source</a>)</p>
+<pre>
+TRACE(1)                    General Commands Manual                   TRACE(1)
+
+NAME
+       pret, trace - protocol compiler and analyzer
+
+SYNOPSIS
+       pret [ -v ] file
+
+       trace [ -options ] [ arguments ... ]
+
+DESCRIPTION
+       Trace analyzes the consistency of medium-sized data communication
+       protocols.  A protocol is specified in a nondeterministic guarded
+       command language, `Argos,' that includes case selection, do-loops,
+       variables, procedures, and macros.  The analyzer can be used to trace
+       deadlocks, unspecified receptions, timing problems, errors caused by
+       value passing, and violations of user-specified `assertions.'
+
+       Pret reads the protocol specifications for a set of interacting
+       processes from the file specified, checks its syntax and completeness,
+       and prepares a file pret.out for the analyzer containing a finite state
+       machine description of the protocol.  Under option -v pret lists the
+       numbers of states in the state machines, reports if any states are
+       unreachable, and lists the queue sort for each message queue declared.
+
+       Tracing Options:
+
+       In most cases the options c, f, l, and v will suffice to perform
+       protocol analyses.  The primary tools for reducing search times are m,
+       q, and x.  Options a, k, and n are for advanced use; i, t, and y are
+       experimental.
+
+       Option flags are listed after a single minus sign, followed by a list
+       of zero or more arguments.  Options that take an argument are matched
+       with an argument from the argument list in the order in which they
+       occur in the option list.
+
+       a      List all prefix paths that were explored up to the point where
+              they joined a previously analyzed path.  See also option l.
+
+       b      Blast search.  The fastest scan of the state space available.
+              At each step in the analysis select one and only one execution
+              option to be explored.  Will not analyze non-determinism within
+              process descriptions, nor the effect of the arbitrary
+              interleaving of process executions.  See also option x.
+
+       c N    Invoke a class N validation, where N can be chosen between 0 and
+              5 inclusive.  A class 0 search is fast and very partial; a class
+              5 search is not necessarily fast but fairly complete.
+
+       f or F Two different ways to format the output sequences.  Option f
+              gives queue histories, in which every bracketed message
+              indicates a message sent but not received at the time of the
+              error.  F gives a time ordered queue history, where each column
+              corresponds to a queue, and each line to a time step.
+
+       i      Ignore variables.  Second order state space folding tool.
+
+       j      Find first error sequence and quit.
+
+       k N    Set size of state space cache to 1024*N (default N=30).  When
+              the caches is filled, one state will be deleted for each state
+              added.
+
+       l      List execution loops.  Warning, there are usually many, and they
+              are hard to interpret.
+
+       m N    Restrict search depth to N steps.  By default the search depth
+              is restricted to a limit that excludes only pathetic executions
+              (e.g. tenfold overlaps).  The default limit is always printed on
+              the standard error file at the start of a run.
+
+       n      Override timeout heuristic.  Override the heuristic that avoids
+              generating an abundance of `microsecond' timeouts.  Normally a
+              timeout is only considered if it can resolve a pending lockup.
+
+       q N    Restrict the maximum queue size to N slots, for all queues.
+
+       r N    Restrict the runtime to N minutes.  This option cannot be used
+              in combination with R.
+
+       R N    Report on progress every N minutes of real time.  By default
+              N=2.
+
+       s      Show finite state machine transition tables graphically.  Do not
+              perform an analysis.
+
+       t N    Ignore the state of process N in state-matching operations.  The
+              value of this mechanism remains unproven.  Try other options
+              first.
+
+       v      Verbose.  List execution times, size of the state space, number
+              of levels searched, etc. at the end of the run.
+
+       x      Perform a fast partial search.  At each step in the analysis
+              select one process capable of executing and explore all options
+              in that one process.  Will not explore all possible
+              interleavings.
+
+       y      Ignore the state of queues in state-matching operations.
+
+SEE ALSO
+       G. J. Holzmann, Trace - a protocol analyzer, AT&amp;T Bell Laboratories,
+       1984
+       G. J. Holzmann, Automated protocol validation in Argos, AT&amp;T Bell
+       Laboratories, 1984
+
+                                     arend                            TRACE(1)
+</pre>
+</body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>deroff.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; deroff.1 (<a href="../../../../source/v8/usr/man/man1/deroff.1">troff source</a>)</p>
+<pre>
+DEROFF(1)                   General Commands Manual                  DEROFF(1)
+
+NAME
+       deroff - remove formatting requests
+
+SYNOPSIS
+       deroff [ option ... ] file ...
+
+DESCRIPTION
+       Deroff reads each file in sequence and removes all nroff and troff
+       command lines, backslash constructions, macro definitions, eqn
+       constructs (between `.EQ' and `.EN' lines or between delimiters), tbl
+       table descriptions, pic constructs, and refer references.  Remaining
+       text is written on the standard output.  Deroff follows chains of
+       included files (`.so' and `.nx' commands); if a file has already been
+       included, a `.so' is ignored and a `.nx' terminates execution.  If no
+       input file is given, deroff reads from the standard input file.
+
+       The options are
+
+       -w     Output a word list, one `word' (string of letters, digits, and
+              apostrophes, beginning with a letter; apostrophes are removed)
+              per line, and all other characters ignored.  Otherwise, the
+              output follows the original, with the deletions mentioned above.
+
+       -i     Ignore `.so' and `.nx' requests.
+
+       -ms, -mm
+              Follow the conventions of <a href="../man7/ms.7.html">ms(7)</a> or mm macros.
+
+       -ml    Follow the conventions of mm and suppress lists.
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/eqn.1.html">eqn(1)</a>, <a href="../man1/tbl.1.html">tbl(1)</a>, <a href="../man1/pic.1.html">pic(1)</a>, <a href="../man1/refer.1.html">refer(1)</a>
+
+BUGS
+       Deroff is not a complete troff interpreter; it can be confused.  In
+       particular, troff macro definitions containing `\$' cause chaos when
+       the popular `$$' delimiters for eqn are in effect.
+
+                                                                     DEROFF(1)
+</pre>
+</body></html>

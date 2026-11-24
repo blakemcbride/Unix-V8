@@ -1,0 +1,142 @@
+PROC(4)                    Kernel Interfaces Manual                    PROC(4)
+
+NAME
+       /proc - process file system
+
+SYNOPSIS
+       #include <sys/proc.h>
+       #include <sys/pioctl.h>
+
+DESCRIPTION
+       Proc is a file-system mount point that provides access to the image of
+       each running process in the system.  The name of each entry in the
+       /proc directory is a five-digit decimal number corresponding to the
+       process id.  The owner of each `file' is determined by the process's
+       user-id; only the owner is granted access permissions (and only if the
+       process' text file is readable).  The size of a file is the total
+       virtual memory size of the process.
+
+       The standard system-call interface is used to access proc.  Open(2) and
+       close(2) behave as usual.  The object process is unaffected, except
+       that setuid bits will be ignored if an opened process exec's.  (Setuid
+       bits are also ignored if the exec'ing process has traced signals, or
+       stops on exec; see the description of PIOCSMASK and PIOCSEXEC below.)
+       Data may be transferred from or to any locations in the object's
+       address space through lseek(2), read(2), and write(2).  The text
+       segment begins at virtual address 0; the data segment starts above the
+       text.  The user area extends downward below virtual address 0x80000000,
+       and is UPAGES*NBPG bytes long; the stack segment grows downward below
+       the user area.  Between the end of the data and the beginning of the
+       stack lies no-man's land.  The text, data, and stack sizes may be
+       determined from the process' proc structure (see below).  There are two
+       differences from reading and writing ordinary files: (1) no i/o
+       transfer may span a segment boundary; (2) the user area is writable
+       only in the locations of saved user registers.
+
+       Several process control actions are available through an ioctl(2) of
+       the form
+
+                  union { struct proc p; long i; } buffer;
+                  retval = ioctl(fildes, code, &buffer);
+
+       The possible codes are as follows:
+
+       PIOCGETPR  copies the object's proc structure from the kernel process
+                  table into buffer.p.  Since this information resides in
+                  system space, it is not accessible via a normal read.
+
+       PIOCSTOP   sends the signal SIGSTOP to the object, and waits for it to
+                  enter the stopped state.
+
+       PIOCWSTOP  simply waits for the object to stop.
+
+       PIOCRUN    makes the object runnable again after a stop.
+
+       PIOCSMASK  defines (via the bit mask buffer.i) a set of signals to be
+                  traced; i.e., the arrival of such a signal will cause the
+                  object to stop.  (The signal numbered n is specified by the
+                  bit 1<<(n-1).)  A mask of zeroes turns off the trace.  The
+                  traced state and mask bits are inherited by the child of a
+                  fork(2).  When the object is closed, the mask bits are lost,
+                  but the traced state is retained for side effects.
+
+       PIOCSEXEC  causes the object to stop after exec'ing.  This condition is
+                  inherited by children and is retained when the object is
+                  closed.
+
+       PIOCREXEC  reverses the effect of PIOCSEXEC.
+
+       PIOCCSIG   clears the object's currently pending signal (if any).
+
+       PIOCKILL   sends a signal to the process.
+
+       PIOCOPENT  provides, in retval, a read-only file descriptor for the
+                  object process' text file.  This allows a debugger to find
+                  the symbol table without having to know any path names.
+
+       PIOCNICE   increments the object's nice(2) priority by the amount
+                  buffer.i.  Only the super user may better a process'
+                  priority in this way, but any user may make the priority
+                  worse.
+
+       All system calls are interruptible by signals, so that, for example, an
+       alarm(2) may be set to avoid waiting forever for a process that may
+       never stop.  Any system call is guaranteed to be atomic with respect to
+       the object, but, as with ordinary files, there is nothing to prevent
+       more than one process from trying to control the same object.
+
+       The following header files are useful in analyzing proc files:
+
+       <signal.h>       list of signal numbers
+       <sys/param.h>    size parameters (e.g., UPAGES, NBPG)
+       <sys/types.h>    special system types
+       <sys/user.h>     user structure
+       <sys/proc.h>     proc structure
+       <sys/reg.h>      locations of saved user registers
+       <sys/pioctl.h>   ioctl codes
+
+       As with any file system, /proc must be mounted in order to be used.
+       The mount point should be an empty directory created with mode 0555;
+       /etc/procmount should then be run at boot time.  (The file system can
+       be unmounted by `/etc/procmount -u'.)
+
+FILES
+       /proc       directory (list of active processes)
+       /proc/nnnnn process image
+
+SEE ALSO
+       ps(1), hang(1), signal(2), pi(9.1)
+
+DIAGNOSTICS
+       This is a list of errors which can occur in addition to the errors
+       normally associated with the file system; see intro(2):
+
+       ENOENT  is returned if the object process has exited after being
+               opened.
+
+       EIO     is returned if I/O is attempted at an illegal address in the
+               object.
+
+       EBUSY   is returned if the object is in the midst of changing virtual
+               memory attributes, or has pages locked for physical I/O.
+
+       ENOSPC  is returned if a write is attempted on a shared text segment,
+               but there is no room on the swap space to make a copy.
+
+       EPERM   is returned if someone other than the super user attempts to
+               better a process' priority by issuing a PIOCNICE.
+
+BUGS
+       A process must be swapped in for reading and writing (but not ioctl);
+       this consumes minimal system resources, but may involve a noticeable
+       delay.
+
+       The spectrum of states which result in the EBUSY error is too
+       conservative.
+
+       A process loaded from a text file with magic number 0407 does not have
+       a read-only text segment; in this (presumably rare) case PIOCOPENT does
+       not work, and the process is accessible even if the text file is read-
+       only.
+
+                                                                       PROC(4)

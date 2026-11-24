@@ -1,0 +1,35 @@
+PACK(1)                     General Commands Manual                    PACK(1)
+
+NAME
+       pack, pcat, unpack - compress and expand files
+
+SYNOPSIS
+       pack [ - ] file ...
+
+       pcat [ file ] ...
+
+       unpack file ...
+
+DESCRIPTION
+       Pack attempts to compress the files and places the results in
+       corresponding files named file.z with the same access modes, dates, and
+       owner as the originals.  Successfully packed files are removed.
+
+       Unpack reverses the process.
+
+       Pcat unpacks files to the standard output by analogy with cat(1).
+
+       The .z suffix may be omitted from the name of the input file for unpack
+       or pcat.
+
+       Pack encodes individual characters in a Huffman code.  Option - causes
+       statistics of the encoding to be printed.  The option toggles on and
+       off at each appearance among the list of files.
+
+DIAGNOSTICS
+       The return value of pack, unpack, or pcat is the number of files it
+       failed to process.  No packing happens when the input can't be read or
+       appears to be packed already, the output file name exists or is too
+       long or can't be created, or the input has links or is a directory.
+
+                                                                       PACK(1)

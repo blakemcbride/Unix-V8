@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>putc.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; putc.3 (<a href="../../../../source/v8/usr/man/man3/putc.3">troff source</a>)</p>
+<pre>
+PUTC(3S)                                                              PUTC(3S)
+
+NAME
+       putc, putchar, fputc, putw - put character or word on a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       int putc(c, stream)
+       char c;
+       FILE *stream;
+
+       putchar(c)
+
+       fputc(c, stream)
+       FILE *stream;
+
+       putw(w, stream)
+       FILE *stream;
+
+DESCRIPTION
+       Putc appends the character c to the named output stream.  It returns
+       the character written.
+
+       Putchar(c) is defined as putc(c, stdout).
+
+       Fputc behaves like putc, but is a genuine function rather than a macro.
+       It may be used to save on object text.
+
+       Putw appends word (i.e.  int) w to the output stream.  It returns the
+       word written.  Putw neither assumes nor causes special alignment in the
+       file.
+
+       The standard stream stdout is normally buffered if and only if the
+       output does not refer to a terminal, in which case buffering occurs
+       only within calls to <a href="../man3/printf.3.html">printf(3)</a>.  This default may be changed by
+       <a href="../man3/setbuf.3.html">setbuf(3)</a>.  The standard stream stderr is normally unbuffered; freopen
+       (see <a href="../man3/fopen.3.html">fopen(3)</a>) will cause it to become buffered.  When an output stream
+       is unbuffered information appears on the destination file or terminal
+       as soon as written; when it is buffered many characters are saved up
+       and written as a block.  Fflush (see <a href="../man3/fclose.3.html">fclose(3)</a>) may be used to force
+       the block out early.
+
+SEE ALSO
+       <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/fclose.3.html">fclose(3)</a>, <a href="../man3/getc.3.html">getc(3)</a>, <a href="../man3/puts.3.html">puts(3)</a>, <a href="../man3/printf.3.html">printf(3)</a>, <a href="../man3/fread.3.html">fread(3)</a>
+
+DIAGNOSTICS
+       These functions return the constant EOF upon error.  In the case of
+       putw this indication is ambiguous; <a href="../man3/ferror.3.html">ferror(3)</a> may be used to
+       distinguish.
+
+BUGS
+       Because it is implemented as a macro, putc treats a stream argument
+       with side effects improperly.  In particular `putc(c, *f++)' doesn't
+       work sensibly.
+       Errors can occur long after the call to putc.
+
+                                                                      PUTC(3S)
+</pre>
+</body></html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sh.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; sh.1 (<a href="../../../../source/v8/usr/man/man1/sh.1">troff source</a>)</p>
+<pre>
+SH(1)                       General Commands Manual                      SH(1)
+
+NAME
+       sh, cd, wait - shell, the standard command programming language
+
+SYNOPSIS
+       sh [ -acefiknpstuvx ] [ args ]
+
+DESCRIPTION
+       Sh is a command programming language that executes commands read from a
+       terminal or a file.  See Invocation below for the meaning of arguments
+       to the shell.
+
+   Definitions
+       A blank is a tab or a space.  A name is a sequence of letters, digits,
+       or underscores beginning with a letter or underscore.  A parameter is a
+       name, a digit, or any of the characters ∗, @, #, ?, -, $, and !.  A
+       word is a sequence of characters and quoted strings, surrounded by
+       blanks or newlines.
+
+   Commands
+       A simple-command is a sequence of words separated by blanks.  The first
+       word specifies the name of the command to be executed.  Except as
+       specified below, the remaining words are passed as arguments to the
+       invoked command.  The command name is passed as argument 0 (see
+       <a href="../man2/exec.2.html">exec(2)</a>).  The value of a simple-command is its exit status if it
+       terminates normally, or (octal) 200+status if it terminates abnormally
+       (see <a href="../man2/signal.2.html">signal(2)</a> for a list of status values).
+
+       A pipeline is a sequence of one or more commands separated by ⎪.  The
+       standard output of each command but the last is connected by a <a href="../man2/pipe.2.html">pipe(2)</a>
+       to the standard input of the next command.  Each command is run as a
+       separate process; the shell waits for the last command to terminate.
+       The exit status of a pipeline is the exit status of the last command.
+
+       A list is a sequence of one or more pipelines separated by ;, &amp;, &amp;&amp;, or
+       ⎪⎪, and optionally terminated by ; or &amp;.  Of these four symbols, ; and
+       &amp; have equal precedence, which is lower than that of &amp;&amp; and ⎪⎪.  The
+       symbols &amp;&amp; and ⎪⎪ also have equal precedence.  A semicolon (;) causes
+       sequential execution of the preceding pipeline; an ampersand (&amp;) causes
+       asynchronous execution of the preceding pipeline (i.e., the shell does
+       not wait for that pipeline to finish).  The symbol &amp;&amp; (⎪⎪) causes the
+       list following it to be executed only if the preceding pipeline returns
+       a zero (non-zero) exit status.  An arbitrary number of new-lines may
+       appear in a list, instead of semicolons, to delimit commands.
+
+       A command is either a simple-command or one of the following.  Unless
+       otherwise stated, the value returned by a command is that of the last
+       simple-command executed in the command.
+
+       for name [ in word ... ; ] do list done
+              Each time a for command is executed, name is set to the next
+              word taken from the in word list.  If in word ... ; is omitted,
+              then the for command executes the do list once for each
+              positional parameter that is set (see Parameter Substitution
+              below).  Execution ends when there are no more words in the
+              list.
+       case word in [ pattern [ ⎪ pattern ] ... ) list ;; ] ... esac
+              A case command executes the list associated with the first
+              pattern that matches word.  The form of the patterns is the same
+              as that used for file-name generation (see File Name Generation)
+              except that a slash, a leading dot, or a dot immediately
+              following a slash need not be matched explicitly.
+       if list then list [ elif list then list ] ... [ else list ] fi
+              The list following if is executed and, if it returns a zero exit
+              status, the list following the first then is executed.
+              Otherwise, the list following elif is executed and, if its value
+              is zero, the list following the next then is executed.  Failing
+              that, the else list is executed.  If no else list or then list
+              is executed, then the if command returns a zero exit status.
+       while list do list done
+              A while command repeatedly executes the while list and, if the
+              exit status of the last command in the list is zero, executes
+              the do list; otherwise the loop terminates.  If no commands in
+              the do list are executed, then the while command returns a zero
+              exit status; until may be used in place of while to negate the
+              loop termination test.
+       (list)
+              Execute list in a sub-shell.
+       {list}
+              list is simply executed.
+       name () command
+              Define a function which is referenced by name.  The body of the
+              function is the command.  The most useful form of command is a
+              sequence of commands enclosed by { and }.  Execution of
+              functions is described below (see Execution).
+
+       The following words are only recognized as the first word of a command
+       and when not quoted:
+
+       if then else elif fi case esac for while until do done
+
+   Comments
+       A word beginning with # causes that word and all the following
+       characters up to a new-line to be ignored.
+
+   Command Substitution
+       The standard output from a command enclosed in a pair of grave accents
+       (``) may be used as part or all of a word; trailing new-lines are
+       removed.
+
+   Parameter Substitution
+       The character $ is used to introduce substitutable parameters.  There
+       are two types of parameters, positional and keyword.  If parameter is a
+       digit, it is a positional parameter.  Positional parameters may be
+       assigned values by set.  Keyword parameters (also known as variables)
+       may be assigned values by writing:
+
+              name=value [ name=value ] ...
+
+       Pattern-matching is not performed on value.  There cannot be a function
+       and a variable with the same name.
+
+       ${parameter}
+              The value, if any, of the parameter is substituted.  The braces
+              are required only when parameter is followed by a letter, digit,
+              or underscore that is not to be interpreted as part of its name.
+              If parameter is ∗ or @, all the positional parameters, starting
+              with $1, are substituted (separated by spaces).  Parameter $0 is
+              set from argument zero when the shell is invoked.
+       ${parameter:-word}
+              If parameter is set and is non-null, substitute its value;
+              otherwise substitute word.
+       ${parameter:=word}
+              If parameter is not set or is null set it to word; the value of
+              the parameter is substituted.  Positional parameters may not be
+              assigned to in this way.
+       ${parameter:?word}
+              If parameter is set and is non-null, substitute its value;
+              otherwise, print word and exit from the shell.  If word is
+              omitted, the message ``parameter null or not set'' is printed.
+       ${parameter:+word}
+              If parameter is set and is non-null, substitute word; otherwise
+              substitute nothing.
+
+       In the above, word is not evaluated unless it is to be used as the
+       substituted string, so that, in the following example, pwd is executed
+       only if d is not set or is null:
+
+              echo ${d:-`pwd`}
+
+       If the colon (:) is omitted from the above expressions, the shell only
+       checks whether parameter is set or not.
+
+       The following parameters are automatically set by the shell:
+              #      The number of positional parameters in decimal.
+              -      Flags supplied to the shell on invocation or by the set
+                     command.
+              ?      The decimal value returned by the last synchronously
+                     executed command.
+              $      The process number of this shell.
+              !      The process number of the last background command
+                     invoked.
+
+       The following parameters are used by the shell:
+              HOME   The default argument (home directory) for the cd command.
+              PATH   The search path for commands (see Execution below).
+              CDPATH The search path for the cd command.
+              MAIL   If this parameter is set to the name of a mail file the
+                     shell informs the user of the arrival of mail in the
+                     specified file.  The file is inspected every three
+                     minutes.
+              HISTORY
+                     If this parameter is set to the name of a writable file,
+                     the shell appends interactive input to the file, for use
+                     by the = command (<a href="../man1/%3D.1.html">=(1)</a>).
+              PS1    Primary prompt string, by default ``$ ''.
+              PS2    Secondary prompt string, by default ``&gt; ''.
+              IFS    Internal field separators, normally space, tab, and new-
+                     line.
+
+       The shell gives default values to PATH, PS1, PS2 and IFS.  HOME is set
+       by <a href="../man8/login.8.html">login(8)</a>.
+
+   Blank Interpretation
+       After parameter and command substitution, the results of substitution
+       are scanned for internal field separator characters (those found in
+       IFS) and split into distinct arguments where such characters are found.
+       Explicit null arguments ("" or '') are retained.  Implicit null
+       arguments (those resulting from parameters that have no values) are
+       removed.
+
+   File Name Generation
+       Following substitution, each command word is scanned for the characters
+       ∗, ?, and [.  If one of these characters appears the word is regarded
+       as a pattern.  The word is replaced with alphabetically sorted file
+       names that match the pattern.  If no file name is found that matches
+       the pattern, the word is left unchanged.  The directories .  and ..
+       (initially or after a /) are only matched by patterns beginning with an
+       explicit period.  The character / itself must be matched explicitly.
+
+              ∗      Matches any string, including the null string.
+              ?      Matches any single character.
+              [...]  Matches any one of the enclosed characters.  A pair of
+                     characters separated by - matches any character lexically
+                     between the pair, inclusive.  If the first character
+                     following the opening ``['' is a ``^'' any character not
+                     enclosed is matched.
+
+   Quoting
+       The following characters have a special meaning to the shell and cause
+       termination of a word unless quoted:
+
+              ;  &amp;  (  )  ⎪  &lt;  &gt;  new-line  space  tab  {  }
+
+       (The characters { and } need not be quoted inside a ${} construction.)
+       A character may be quoted (i.e., made to stand for itself) by preceding
+       it with a \.  The pair \new-line is ignored.  All characters enclosed
+       between a pair of single quote marks (''), except a single quote, are
+       quoted.  Inside double quote marks (""), parameter and command
+       substitution occurs and \ quotes the characters \, `, ", and $.  "$∗"
+       is equivalent to "$1 $2 ...", whereas "$@" is equivalent to "$1" "$2"
+       ....
+
+   Prompting
+       When used interactively, the shell prompts with the value of PS1 before
+       reading a command.  If at any time a new-line is typed and further
+       input is needed to complete a command, the secondary prompt (i.e., the
+       value of PS2) is issued.
+
+   Input/Output
+       Before a command is executed, its input and output may be redirected
+       using a special notation interpreted by the shell.  The following may
+       appear anywhere in a simple-command or may precede or follow a command
+       and are not passed on to the invoked command; substitution occurs
+       before word or digit is used:
+
+       &lt;word         Use file word as standard input (file descriptor 0).
+       &gt;word         Use file word as standard output (file descriptor 1).  If
+                     the file does not exist it is created; otherwise, it is
+                     truncated to zero length.
+       &gt;&gt;word        Use file word as standard output.  If the file exists
+                     output is appended to it (by first seeking to the end-of-
+                     file); otherwise, the file is created.
+       &lt;&lt;word        The shell input is read up to a line that is the same as
+                     word, or to an end-of-file.  The resulting document
+                     becomes the standard input.  If any character of word is
+                     quoted, no interpretation is placed upon the characters
+                     of the document; otherwise, parameter and command
+                     substitution occurs, (unescaped) \new-line is ignored,
+                     and \ must be used to quote the characters \, $, `, and
+                     the first character of word.
+       &lt;&amp;digit       Use the file associated with file descriptor digit as
+                     standard input.  Similarly for the standard output using
+                     &gt;&amp;digit.
+       &lt;&amp;-           The standard input is closed.  Similarly for the standard
+                     output using &gt;&amp;-.
+
+       If any of the above is preceded by a digit, the file descriptor which
+       will be associated with the file is that specified by the digit
+       (instead of the default 0 or 1).  For example:
+
+              ... 2&gt;&amp;1
+
+       associates file descriptor 2 with the file currently associated with
+       file descriptor 1.
+
+       The order in which redirections are specified is significant.  The
+       shell evaluates redirections left-to-right.  For example:
+
+              ... 1&gt;xxx 2&gt;&amp;1
+
+       first associates file descriptor 1 with file xxx.  It associates file
+       descriptor 2 with the file associated with file descriptor 1 (i.e.
+       xxx).  If the order of redirections were reversed, file descriptor 2
+       would be associated with the terminal (assuming file descriptor 1 had
+       been) and file descriptor 1 would be associated with file xxx.
+
+       If a command is followed by &amp; the default standard input for the
+       command is the empty file /dev/null.  Otherwise, the environment for
+       the execution of a command contains the file descriptors of the
+       invoking shell as modified by input/output specifications.
+
+   Environment
+       The environment (see <a href="../man5/environ.5.html">environ(5)</a>) is a list of name-value pairs that is
+       passed to an executed program in the same way as a normal argument
+       list.  The shell interacts with the environment in several ways.  On
+       invocation, the shell scans the environment and creates a parameter or
+       function for each name found, giving it the corresponding value.  If
+       the user modifies the value of any of these parameters or creates new
+       parameters, none of these affects the environment unless the export
+       command is used to bind the shell's parameter to the environment (see
+       also set -a).  A parameter may be removed from the environment with the
+       unset command.  The environment seen by any executed command is thus
+       composed of any unmodified name-value pairs originally inherited by the
+       shell, minus any pairs removed by unset, plus any modifications or
+       additions, all of which must be noted in export commands.
+
+       The environment for any simple-command may be augmented by prefixing it
+       with one or more assignments to parameters (but not functions).  Thus:
+
+              TERM=450 cmd                  and
+              (export TERM; TERM=450; cmd)
+
+       are equivalent (as far as the execution of cmd is concerned).
+
+       If the -k flag is set, all keyword arguments are placed in the
+       environment, even if they occur after the command name.  The following
+       first prints a=b c then c:
+
+              echo a=b c
+              set -k
+              echo a=b c
+
+   Signals
+       The INTERRUPT and QUIT signals for an invoked command are ignored if
+       the command is followed by &amp;; otherwise signals have the values
+       inherited by the shell from its parent, with the exception of signal 11
+       (but see also the trap command below).
+
+   Execution
+       Each time a command is executed, the above substitutions are carried
+       out.  If the command name matches one of the Special Commands listed
+       below, it is executed in the shell process.  If the command name does
+       not match a Special Command, but matches the name of a defined
+       function, the function is executed in the shell process (note how this
+       differs from the execution of shell procedures).  The positional
+       parameters $1, $2, ....  are set to the arguments of the function.  If
+       the command name matches neither a Special Command nor the name of a
+       defined function, a new process is created and an attempt is made to
+       execute the command via <a href="../man2/exec.2.html">exec(2)</a>.
+
+       The shell parameter PATH defines the search path for the directory
+       containing the command.  Alternative directory names are separated by a
+       colon (:).  The default path is :/bin:/usr/bin (specifying the current
+       directory, /bin, and /usr/bin, in that order).  Note that the current
+       directory is specified by a null path name, which can appear
+       immediately after the equal sign or between the colon delimiters
+       anywhere else in the path list.  If the command name contains a / the
+       search path is not used.  Otherwise, each directory in the path is
+       searched for an executable file.  If the file has execute permission
+       but is not an a.out file, it is assumed to be a file containing shell
+       commands.  A sub-shell is spawned to read it.  A parenthesized command
+       is also executed in a sub-shell.
+
+   Special Commands
+       Input/output redirection is permitted for these commands.  File
+       descriptor 1 is the default output location.
+
+       :      No effect; the command does nothing.  A zero exit code is
+              returned.
+       . file Read and execute commands from file and return.  The search path
+              specified by PATH is used to find the directory containing file.
+       builtin [ command ]
+              Execute the built-in special command (such as break) regardless
+              of functions defined with the same name.
+       break [ n ]
+              Exit from the enclosing for or while loop, if any.  If n is
+              specified break n levels.
+       continue [ n ]
+              Resume the next iteration of the enclosing for or while loop.
+              If n is specified resume at the n-th enclosing loop.
+       cd [ arg ]
+              Change the current directory to arg.  The shell parameter HOME
+              is the default arg.  The shell parameter CDPATH defines the
+              search path for the directory containing arg.  Alternative
+              directory names are separated by a colon (:).  The default path
+              is &lt;null&gt; (specifying the current directory).  Note that the
+              current directory is specified by a null path name, which can
+              appear immediately after the equal sign or between the colon
+              delimiters anywhere else in the path list.  If arg begins with a
+              / the search path is not used.  Otherwise, each directory in the
+              path is searched for arg.
+       eval [ arg ... ]
+              The arguments are read as input to the shell and the resulting
+              command(s) executed.
+       exec [ arg ... ]
+              The command specified by the arguments is executed in place of
+              this shell without creating a new process.  Input/output
+              arguments may appear and, if no other arguments are given, cause
+              the shell input/output to be modified.
+       exit [ n ]
+              Causes a shell to exit with the exit status specified by n.  If
+              n is omitted the exit status is that of the last command
+              executed (an end-of-file will also cause the shell to exit.)
+       export [ name ... ]
+              The given names are marked for automatic export to the
+              environment of subsequently-executed commands.  If no arguments
+              are given, a list of all names that are exported in this shell
+              is printed.
+       newgrp [ arg ... ]
+              Equivalent to exec newgrp arg ....  See <a href="../man1/newgrp.1.html">newgrp(1)</a> for usage and
+              description.
+       read [ name ... ]
+              One line is read from the standard input and the first word is
+              assigned to the first name, the second word to the second name,
+              etc., with leftover words assigned to the last name.  The return
+              code is 0 unless an end-of-file is encountered.
+       return [ n ]
+              Causes a function to exit with the return value specified by n.
+              If n is omitted, the return status is that of the last command
+              executed.
+       set [ --aehknptuvx [ arg ... ] ]
+              -a     Mark variables which are modified or created for export.
+              -e     Exit immediately if a command exits with a non-zero exit
+                     status.
+              -f     Disable file name generation
+              -k     All keyword arguments are placed in the environment for a
+                     command, not just those that precede the command name.
+              -n     Read commands but do not execute them.
+              -p     Remove the definitions for all functions imported from
+                     the environment, and set IFS to blank, tab and newline.
+              -t     Exit after reading and executing one command.
+              -u     Treat unset variables as an error when substituting.
+              -v     Print shell input lines as they are read.
+              -x     Print commands and their arguments as they are executed.
+              --     Do not change any of the flags; useful in setting $1 to
+                     -.
+              Using + rather than - causes these flags to be turned off.
+              These flags can also be used upon invocation of the shell.  The
+              current set of flags may be found in $-.  The remaining
+              arguments are positional parameters and are assigned, in order,
+              to $1, $2, ....  If no arguments are given the values of all
+              names are printed.
+       shift [ n ]
+              The positional parameters from $n+1 ...  are renamed $1 ....  If
+              n is not given, it is assumed to be 1.
+       times
+              Print the accumulated user and system times for processes run
+              from the shell.
+       trap [ arg ] [ n ] ...
+              The command arg is to be read and executed when the shell
+              receives signal(s) n.  (Note that arg is scanned once when the
+              trap is set and once when the trap is taken.)  Trap commands are
+              executed in order of signal number.  Any attempt to set a trap
+              on a signal that was ignored on entry to the current shell is
+              ineffective.  An attempt to trap on signal 11 (memory fault)
+              produces an error.  If arg is absent all trap(s) n are reset to
+              their original values.  If arg is the null string this signal is
+              ignored by the shell and by the commands it invokes.  If n is 0
+              the command arg is executed on exit from the shell.  The trap
+              command with no arguments prints a list of commands associated
+              with each signal number.
+       umask [ nnn ]
+              The user file-creation mask is set to nnn (see <a href="../man2/umask.2.html">umask(2)</a>).  If
+              nnn is omitted, the current value of the mask is printed.
+       unset [ name ... ]
+              For each name, remove the corresponding variable or function.
+              The variables PATH, PS1, PS2 and IFS cannot be unset.
+       wait [ n ]
+              Wait for the specified process and report its termination
+              status.  If n is not given all currently active child processes
+              are waited for and the return code is zero.
+       whatis [ name ... ]
+              For each name, print the associated value as a parameter,
+              function, builtin or executable binary as appropriate.  In each
+              case, the value is printed in a form that would yield the same
+              value if typed as input to the shell itself: parameters are
+              printed as assignments, functions as their definitions, builtins
+              as calls to builtin, and binaries as their full pathnames.
+
+   Invocation
+       If the shell is invoked through <a href="../man2/exec.2.html">exec(2)</a> and the first character of
+       argument zero is -, commands are initially read from $HOME/.profile, if
+       it exists.  Thereafter, commands are read as described below, which is
+       also the case when the shell is invoked as /bin/sh.  The flags below
+       are interpreted by the shell on invocation only; Note that unless the
+       -c or -s flag is specified, the first argument is assumed to be the
+       name of a file containing commands, and the remaining arguments are
+       passed as positional parameters to that command file:
+
+       -c string If the -c flag is present commands are read from string.
+       -s        If the -s flag is present or if no arguments remain commands
+                 are read from the standard input.  Any remaining arguments
+                 specify the positional parameters.  Shell output (except for
+                 Special Commands) is written to file descriptor 2.
+       -i        If the -i flag is present or if the shell input and output
+                 are attached to a terminal, this shell is interactive.  In
+                 this case TERMINATE is ignored (so that kill 0 does not kill
+                 an interactive shell) and INTERRUPT is caught and ignored (so
+                 that wait is interruptible).  In all cases, QUIT is ignored
+                 by the shell.
+
+       The remaining flags and arguments are described under the set command
+       above.
+
+EXIT STATUS
+       Errors detected by the shell, such as syntax errors, cause the shell to
+       return a non-zero exit status.  If the shell is being used non-
+       interactively execution of the shell file is abandoned.  Otherwise, the
+       shell returns the exit status of the last command executed (see also
+       the exit command above).
+
+FILES
+       $HOME/.profile
+       /tmp/sh∗
+       /dev/null
+
+SEE ALSO
+       <a href="../man1/%3D.1.html">=(1)</a>, cd(1), <a href="../man1/echo.1.html">echo(1)</a>, <a href="../man1/newgrp.1.html">newgrp(1)</a>, <a href="../man1/test.1.html">test(1)</a>
+       <a href="../man2/dup.2.html">dup(2)</a>, <a href="../man2/exec.2.html">exec(2)</a>, <a href="../man2/fork.2.html">fork(2)</a>, <a href="../man2/pipe.2.html">pipe(2)</a>, <a href="../man2/signal.2.html">signal(2)</a>, <a href="../man2/umask.2.html">umask(2)</a>, <a href="../man2/wait.2.html">wait(2)</a>,
+       <a href="../man5/a.out.5.html">a.out(5)</a>, <a href="../man5/environ.5.html">environ(5)</a>
+
+BUGS
+       A function invocation overwrites the arguments of the invoking shell.
+
+                                                                         SH(1)
+</pre>
+</body></html>

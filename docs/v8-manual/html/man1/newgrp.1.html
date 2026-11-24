@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>newgrp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; newgrp.1 (<a href="../../../../source/v8/usr/man/man1/newgrp.1">troff source</a>)</p>
+<pre>
+NEWGRP(1)                   General Commands Manual                  NEWGRP(1)
+
+NAME
+       newgrp - log in to a new group
+
+SYNOPSIS
+       newgrp group
+
+DESCRIPTION
+       Newgrp changes the group identification of its caller.  The same person
+       remains logged in, and the current directory is unchanged, but
+       calculations of access permissions to files are performed with respect
+       to the new group ID.
+
+       A password is demanded if the group has a password and the user himself
+       does not.
+
+       Newgrp is known to the shell, which executes it directly without a
+       fork.
+
+FILES
+       /etc/group, /etc/passwd
+
+SEE ALSO
+       <a href="../man8/login.8.html">login(8)</a>, <a href="../man5/group.5.html">group(5)</a>
+
+                                                                     NEWGRP(1)
+</pre>
+</body></html>

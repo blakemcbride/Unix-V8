@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>crypt.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; crypt.3 (<a href="../../../../source/v8/usr/man/man3/crypt.3">troff source</a>)</p>
+<pre>
+CRYPT(3)                   Library Functions Manual                   CRYPT(3)
+
+NAME
+       crypt, setkey, encrypt - DES encryption
+
+SYNOPSIS
+       char *crypt(key, salt)
+       char *key, *salt;
+
+       setkey(key)
+       char *key;
+
+       encrypt(block, edflag)
+       char *block;
+
+DESCRIPTION
+       Crypt is the password encryption routine.  It is based on the NBS Data
+       Encryption Standard, with variations intended (among other things) to
+       frustrate use of hardware implementations of the DES for key search.
+
+       The first argument to crypt is a user's typed password.  The second is
+       a 2-character string chosen from the set [a-zA-Z0-9./].  The salt
+       string is used to perturb the DES algorithm in one of 4096 different
+       ways, after which the password is used as the key to encrypt repeatedly
+       a constant string.  The returned value points to the encrypted
+       password, in the same alphabet as the salt.  The first two characters
+       are the salt itself.
+
+       The other entries provide (rather primitive) access to the actual DES
+       algorithm.  The argument of setkey is a character array of length 64
+       containing only the characters with numerical value 0 and 1.  If this
+       string is divided into groups of 8, the low-order bit in each group is
+       ignored, leading to a 56-bit key which is set into the machine.
+
+       The argument to the encrypt entry is likewise a character array of
+       length 64 containing 0's and 1's.  The argument array is modified in
+       place to a similar array representing the bits of the argument after
+       having been subjected to the DES algorithm using the key set by setkey.
+       If edflag is 0, the argument is encrypted; if non-zero, it is
+       decrypted.
+
+SEE ALSO
+       <a href="../man1/crypt.1.html">crypt(1)</a>, <a href="../man1/passwd.1.html">passwd(1)</a>, <a href="../man5/passwd.5.html">passwd(5)</a>, <a href="../man3/getpass.3.html">getpass(3)</a>
+
+BUGS
+       The return value points to static data whose content is overwritten by
+       each call.
+       Crypt and encrypt are not available outside the United States and
+       Canada.
+
+                                                                      CRYPT(3)
+</pre>
+</body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>intro.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; intro.3 (<a href="../../../../source/v8/usr/man/man3/intro.3">troff source</a>)</p>
+<pre>
+INTRO(3)                   Library Functions Manual                   INTRO(3)
+
+NAME
+       intro - introduction to library functions
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       #include &lt;math.h&gt;
+
+DESCRIPTION
+       This section describes functions that may be found in various
+       libraries, other than those functions that directly invoke UNIX system
+       primitives, which are described in section 2.  Functions are divided
+       into various libraries distinguished by the section number at the top
+       of the page:
+
+       (3)   These functions, together with those of section 2 and those
+             marked (3S) and (3M), constitute library libc, which is
+             automatically loaded by the C compiler <a href="../man1/cc.1.html">cc(1)</a> and the Fortran
+             compiler <a href="../man1/f77.1.html">f77(1)</a>.  The link editor <a href="../man1/ld.1.html">ld(1)</a> searches this library
+             under option -lc .  Declarations for some of these functions may
+             be obtained from include files indicated on the appropriate
+             pages.
+
+       (3F)  These functions are in the Fortran library, libF77, automatically
+             loaded by the Fortran compiler, and searched under option -lF77
+             of the link editor.
+
+       (3M)  These functions constitute the math library, part of libc.  (On
+             other systems they must be loaded by -lm).  Declarations for
+             these functions may be obtained from the include file &lt;math.h&gt;.
+
+       (3S)  These functions constitute the `standard IO package', see
+             <a href="../man3/stdio.3.html">stdio(3)</a>, part of libc already mentioned.  Declarations for these
+             functions may be obtained from the include file &lt;stdio.h&gt;.
+
+       (3X)  Various specialized libraries have not been given distinctive
+             captions.  Files in which such libraries are found are named on
+             appropriate pages.
+
+FILES
+       /lib/libc.a
+
+SEE ALSO
+       <a href="../man3/stdio.3.html">stdio(3)</a>, <a href="../man1/nm.1.html">nm(1)</a>, <a href="../man1/ld.1.html">ld(1)</a>, <a href="../man1/cc.1.html">cc(1)</a>, <a href="../man1/f77.1.html">f77(1)</a>, <a href="../man2/intro.2.html">intro(2)</a>
+
+DIAGNOSTICS
+       Functions in the math library (3M) may return conventional values when
+       the function is undefined for the given arguments or when the value is
+       not representable.  In these cases the external variable errno (see
+       <a href="../man2/intro.2.html">intro(2)</a>) is set to the value EDOM or ERANGE, defined in the include
+       file &lt;math.h&gt;.
+
+                                                                      INTRO(3)
+</pre>
+</body></html>

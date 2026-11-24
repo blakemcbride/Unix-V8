@@ -1,0 +1,38 @@
+NEWS(1)                     General Commands Manual                    NEWS(1)
+
+NAME
+       news - print news items
+
+SYNOPSIS
+       news [ -a ] [ -n ] [ -s ] [ item ... ]
+
+DESCRIPTION
+       When invoked without options, this simple local news service prints
+       files that have appeared in /usr/news since last reading, most recent
+       first, with each preceded by an appropriate header.  The time of
+       reading is recorded.  The options are
+
+       -a     print all items, regardless of currency.  The recorded time is
+              not changed.
+
+       -n     report the names of the current items without printing their
+              contents, and without changing the recorded time.
+
+       -s     report the number of current items.
+
+       Other arguments select particular news items.
+
+       If a delete is typed during the printing of a news item, printing stops
+       and the next item is started.  A second delete within a second of the
+       first causes the program to terminate.
+
+       To post a news item, simply create a file in /usr/news.
+
+FILES
+       /usr/news/∗
+       $HOME.news_time     date of last read news
+
+SEE ALSO
+       calendar(1), netnews(1)
+
+                                                                       NEWS(1)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>basename.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; basename.1 (<a href="../../../../source/v8/usr/man/man1/basename.1">troff source</a>)</p>
+<pre>
+BASENAME(1)                 General Commands Manual                BASENAME(1)
+
+NAME
+       basename, dirname - strip filename affixes
+
+SYNOPSIS
+       basename string [ suffix ]
+
+       dirname string
+
+DESCRIPTION
+       These functions split off useful parts of a pathname; they are
+       typically used inside substitution marks ` ` in shell scripts.
+
+       Basename deletes any prefix ending in `/' and the suffix, if present in
+       string, from string, and prints the result on the standard output.
+
+       Dirname deletes the last `/' and all following characters from the
+       string and prints the result on the standard output.  If there is no
+       `/', dirname prints `.'.
+
+EXAMPLES
+       cc $1 -o `basename $1`
+              compile `dir/file.c' into `file'
+
+       cc $1 -o `dirname $1`/`basename $1`
+              compile into `dir/file'
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>
+
+                                                                   BASENAME(1)
+</pre>
+</body></html>

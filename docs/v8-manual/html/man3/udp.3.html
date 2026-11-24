@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>udp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; udp.3 (<a href="../../../../source/v8/usr/man/man3/udp.3">troff source</a>)</p>
+<pre>
+UDP(3)                     Library Functions Manual                     UDP(3)
+
+NAME
+       udp_connect, udp_listen, udp_datagram - udp operations
+
+SYNOPSIS
+       #include &lt;sys/inet/udp_user.h&gt;
+
+       udp_connect(sport, dhost, dport)
+       in_addr dhost;
+       udp_port sport, dport;
+
+       udp_listen(sport, reply)
+       udp_port sport;
+       struct udpreply *reply;
+
+       udp_datagram(sport)
+       udp_port sport;
+
+DESCRIPTION
+       These routines are loaded by the -lin option of <a href="../man1/ld.1.html">ld(1)</a>.
+
+       UDP is one of the many protocols which are layered upon IP (internet
+       protocol).  It provides datagram service between end points called
+       sockets.  A socket address is composed of the internet address of its
+       host and the port number to which the socket is bound.
+
+       Udp_connect returns the fd of a UDP socket bound to port sport.  All
+       writes(2) performed on this fd will be sent to the UDP socket at host
+       dhost, port dport and reads(2) from this fd will only accept datagrams
+       from that socket.  Udp_connect returns -1 on failure.
+
+       Udp_listen returns the fd of a UDP socket bound to port sport and waits
+       for a datagram to be sent to that port.  Once a message has been
+       received from another socket, all writes(2) will go to that socket and
+       reads(2) will only accept data from that socket.
+
+       Udp_datagram returns the fd of a UDP socket bound to port sport.  All
+       messages written to the socket must start with a struct udpaddr which
+       contains the destination of the message.
+       struct udpaddr {    /* from udp_user.h */
+            in_addr   host;
+            int port;
+       };
+       All messages read from the socket also start with a struct udpaddr and
+       contain the address of the source socket.
+
+FILES
+       /dev/udp* the socket devices
+
+SEE ALSO
+       <a href="../man3/internet.3.html">internet(3)</a>, <a href="../man3/tcp.3.html">tcp(3)</a>
+
+                                                                        UDP(3)
+</pre>
+</body></html>

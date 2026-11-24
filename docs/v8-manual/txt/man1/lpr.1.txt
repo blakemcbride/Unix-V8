@@ -1,0 +1,30 @@
+LPR(1)                      General Commands Manual                     LPR(1)
+
+NAME
+       lpr- line printer spooler
+
+SYNOPSIS
+       lpr [ -m ] [ name ... ]
+
+       lp0 [ name ... ]
+       lp1 [ name ... ]
+
+DESCRIPTION
+       Lpr causes the named files to be queued for printing.  If no files are
+       named, the standard input is read.  The option -m causes notification
+       via mail(1) to be sent when the job completes.
+
+       Lp0 and lp1 direct output to particular printers.
+
+FILES
+       /usr/spool/lpd/*    spool area
+       /usr/lib/lpd        printer daemon
+       /usr/lib/lpf        filter to handle banners and underlining
+
+SEE ALSO
+       pr(1)
+
+BUGS
+       Queued jobs print in directory (seemingly random) order.
+
+                                     alice                              LPR(1)

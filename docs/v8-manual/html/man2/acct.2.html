@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>acct.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; acct.2 (<a href="../../../../source/v8/usr/man/man2/acct.2">troff source</a>)</p>
+<pre>
+ACCT(2)                       System Calls Manual                      ACCT(2)
+
+NAME
+       acct - turn accounting on or off
+
+SYNOPSIS
+       acct(file)
+       char *file;
+
+DESCRIPTION
+       The system is prepared to write a record in an accounting file for each
+       process as it terminates.  This call, with a null-terminated string
+       naming an existing file as argument, turns on accounting; records for
+       each terminating process are appended to file.  An argument of 0 causes
+       accounting to be turned off.
+
+       The accounting file format is given in <a href="../man5/acct.5.html">acct(5)</a>.
+
+SEE ALSO
+       <a href="../man5/acct.5.html">acct(5)</a>, <a href="../man8/sa.8.html">sa(8)</a>
+
+DIAGNOSTICS
+       On error -1 is returned.  The file must exist and the call may be
+       exercised only by the super-user.  It is erroneous to try to turn on
+       accounting when it is already on.
+
+BUGS
+       No accounting is produced for programs running when a crash occurs.  In
+       particular nonterminating programs are never accounted for.
+
+                                                                       ACCT(2)
+</pre>
+</body></html>

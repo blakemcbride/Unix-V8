@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getc.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getc.3 (<a href="../../../../source/v8/usr/man/man3/getc.3">troff source</a>)</p>
+<pre>
+GETC(3S)                                                              GETC(3S)
+
+NAME
+       getc, getchar, fgetc, getw - get character or word from stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       int getc(stream)
+       FILE *stream;
+
+       int getchar()
+
+       int fgetc(stream)
+       FILE *stream;
+
+       int getw(stream)
+       FILE *stream;
+
+DESCRIPTION
+       Getc returns the next character from the named input stream.
+
+       Getchar() is identical to getc(stdin).
+
+       Fgetc behaves like getc, but is a genuine function, not a macro; it may
+       be used to save object text.
+
+       Getw returns the next word (32-bit integer on a VAX) from the named
+       input stream.  It returns the constant EOF upon end of file or error,
+       but since that is a good integer value, feof and <a href="../man3/ferror.3.html">ferror(3)</a> should be
+       used to check the success of getw.  Getw assumes no special alignment
+       in the file.
+
+SEE ALSO
+       <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/putc.3.html">putc(3)</a>, <a href="../man3/gets.3.html">gets(3)</a>, <a href="../man3/scanf.3.html">scanf(3)</a>, <a href="../man3/fread.3.html">fread(3)</a>, <a href="../man3/ungetc.3.html">ungetc(3)</a>
+
+DIAGNOSTICS
+       These functions return the integer constant EOF at end of file or upon
+       read error.
+
+BUGS
+       Because it is implemented as a macro, getc treats a stream argument
+       with side effects incorrectly.  In particular, `getc(*f++)' doesn't
+       work sensibly.
+
+                                                                      GETC(3S)
+</pre>
+</body></html>

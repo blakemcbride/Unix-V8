@@ -1,0 +1,22 @@
+LIBRARY(7)             Miscellaneous Information Manual             LIBRARY(7)
+
+NAME
+       library, bellcat - bell labs library services
+
+SYNOPSIS
+       library
+
+       bellcat
+
+DESCRIPTION
+       Library places orders with the Bell Labs library network for books,
+       technical reports, etc.  Its use is self-explanatory.
+
+       Bellcat places a call to the Bell Labs on-line book catalog.  Its use,
+       too, is self-explanatory, except you must use `~.' to exit.
+
+BUGS
+       Bellcat requires an HP2621 terminal, real or simulated, and produces
+       some irrelevant chatter.
+
+                                                                    LIBRARY(7)

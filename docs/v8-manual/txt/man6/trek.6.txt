@@ -1,0 +1,38 @@
+TREK(6)                          Games Manual                          TREK(6)
+
+NAME
+       trek, ogre, sol, warp, sail - war games
+
+SYNOPSIS
+       /usr/games/trek [ [ -a ] file ]
+
+       /usr/games/ogre
+
+       /usr/games/sol
+
+       /usr/games/warp
+
+       /usr/games/sail
+
+DESCRIPTION
+       Trek is a classic sci-fi game for a dumb terminal.  For instructions,
+       respond `?' to any question.  See the reference for details.
+
+       If a file is named, a log of the game is written onto that file.
+       Option -a causes the file to be appended to, not truncated.
+
+       Sol and warp are other space-war games; they volunteer instructions.
+
+       Ogre is a tank-war game.  It needs a cursor-addressed terminal.  For
+       instructions, see ogre(6) on line.
+
+       Sail allows one or more players to con a ship of the line through
+       battle.  It requires a cursor addressed terminal.  See the reference
+       for details.
+
+SEE ALSO
+       /n/bowell/src/doc/trek
+       /usr/man/man6/ogre.6
+       /n/bowell/src/doc/sail
+
+                                                                       TREK(6)

@@ -1,0 +1,51 @@
+LOGIN(8)                    System Manager's Manual                   LOGIN(8)
+
+NAME
+       login - sign on
+
+SYNOPSIS
+       /etc/login name
+       /etc/login -f name
+       /etc/login -p passwd-line
+
+DESCRIPTION
+       Login is executed by getty(8).  See `How to Get Started' for how to
+       dial up initially.
+
+       Login asks for a password if appropriate.  Echoing is turned off during
+       the typing of the password.  The -f option forces login of the named
+       user, without a password.  -p is similar to -f but uses the supplied
+       line of the password file instead of the appropriate one in
+       /etc/passwd.  Both of these options will demand a typed password if the
+       named user is the super-user.
+
+       After a successful login, accounting files are updated, the message of
+       the day is printed, and the user is informed of the existence of mail.
+       Login initializes the user and group IDs and the working directory,
+       then executes a command interpreter (usually sh(1)) according to
+       specifications found in /etc/passwd.  Argument 0 of the command
+       interpreter is the name of the command interpreter with a leading dash
+       (`-') prepended.
+
+       Login also initializes the environment with information specifying home
+       directory, search path, and an indication of the source of the login if
+       appropriate.
+
+       Only the super-user may execute login.
+
+FILES
+       /etc/utmp          accounting
+       /usr/adm/wtmp      accounting
+       /usr/spool/mail/*  mail
+       /etc/motd          message-of-the-day
+       /etc/passwd        password file
+
+SEE ALSO
+       init(8), newgrp(1), getty(8), su(8), passwd(1)
+
+DIAGNOSTICS
+       `Login incorrect,' if the name or the password is bad.
+       `No Shell', `cannot open password file', `no directory': seek
+       knowledgeable assistance.
+
+                                                                      LOGIN(8)

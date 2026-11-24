@@ -1,0 +1,22 @@
+FACE(9.1)                                                            FACE(9.1)
+
+NAME
+       face - show faces on jerq
+
+SYNOPSIS
+       face machine!user file ...
+
+DESCRIPTION
+       Face displays the 48×48 bit icons specified by its arguments.  If an
+       argument contains an exclamation mark, it is assumed to be a machine
+       and user pair and is looked up in the face file system (see
+       faced(9.5)); otherwise it is taken to be a file name.  If the file does
+       not exist and contains no slashes, it is looked up in /n/face/48x48x1.
+
+       When face's layer is full, it waits for a character to be typed before
+       continuing.
+
+SEE ALSO
+       faced(9.5), icon(9.1), vismon(9.1)
+
+                                                                     FACE(9.1)

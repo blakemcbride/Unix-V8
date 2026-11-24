@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dict.7 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 7</a> &gt; dict.7 (<a href="../../../../source/v8/usr/man/man7/dict.7">troff source</a>)</p>
+<pre>
+DICT(7)                Miscellaneous Information Manual                DICT(7)
+
+NAME
+       dict - look up words in English dictionaries
+
+SYNOPSIS
+       dict [ -p ] [ dictionary [ word ] ]
+
+DESCRIPTION
+       Dict looks up words in the specified dictionary.  Words are read, one
+       per line from the standard input, and entries are written on the
+       standard output.  Characters other than letters, digits, and space are
+       ignored.  If just one word is to be looked up, it may be given as an
+       argument.  Dictionary is one of
+
+       webster  Merriam-Webster Collegiate Dictionary, Seventh Edition, full
+                text (default)
+
+       web7     same, words only
+
+       etym[ology]
+                inverted index to `webster' by root words
+
+       web2     Merriam-Webster New International Dictionary, Second Edition,
+                unabridged, words only
+
+       oxford   The Oxford Advanced Learner's Dictionary of Contemporary
+                English, full text
+
+       spell    word list of <a href="../man1/spell.1.html">spell(1)</a>
+
+       acro[nym]
+                17000 AT&amp;T acronyms
+
+       Option -p finds all entries of which the specified `word' is a prefix.
+       This option is ignored for full-text dictionaries.
+
+       The dictionaries for webster, oxford, web7 and etymology are
+       copyrighted and should not be copied without permission.
+
+FILES
+       /usr1/dict/w7full/*
+       /usr1/dict/w7etym
+       /usr1/dict/web2
+       /usr1/dict/oaldce/*
+       /usr/dict/words      spell or web7, depending on machine
+       /usr1/dict/acro
+
+SEE ALSO
+       <a href="../man1/look.1.html">look(1)</a>
+
+BUGS
+       In some of the dictionaries, diacriticals are done right - by
+       overstrikes, with which few screen terminals can cope.
+
+                                    bowell                             DICT(7)
+</pre>
+</body></html>

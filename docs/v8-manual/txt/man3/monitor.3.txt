@@ -1,0 +1,49 @@
+MONITOR(3)                 Library Functions Manual                 MONITOR(3)
+
+NAME
+       monitor - prepare execution profile
+
+SYNOPSIS
+       monitor(lowpc, highpc, buffer, bufsize, nfunc)
+       int (*lowpc)(), (*highpc)();
+       short buffer[];
+
+DESCRIPTION
+       An executable program created by `cc -p' automatically includes calls
+       for monitor with default parameters; monitor needn't be called
+       explicitly except to gain fine control over profiling.
+
+       Monitor is an interface to profil(2).  Lowpc and highpc are the
+       addresses of two functions; buffer is the address of a (user supplied)
+       array of bufsize short integers.  Monitor arranges to record a
+       histogram of periodically sampled values of the program counter, and of
+       counts of calls of certain functions, in the buffer.  The lowest
+       address sampled is that of lowpc and the highest is just below highpc.
+       At most nfunc call counts can be kept; only calls of functions compiled
+       with the profiling option -p of cc(1) are recorded.  For the results to
+       be significant, especially where there are small, heavily used
+       routines, it is suggested that the buffer be no more than a few times
+       smaller than the range of locations sampled.
+
+       To profile the entire program, it is sufficient to use
+
+            extern etext();
+            . . .
+            monitor((int) 2, etext, buf, bufsize, nfunc);
+
+       Etext lies just above all the program text, see end(3).
+
+       To stop execution monitoring and write the results on the file mon.out,
+       use
+
+            monitor(0);
+
+       then prof(1) can be used to examine the results.
+
+FILES
+       mon.out
+
+SEE ALSO
+       prof(1), profil(2), cc(1)
+
+                                                                    MONITOR(3)

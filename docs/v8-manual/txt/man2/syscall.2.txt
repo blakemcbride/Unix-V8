@@ -1,0 +1,28 @@
+SYSCALL(2)                    System Calls Manual                   SYSCALL(2)
+
+NAME
+       syscall - indirect system call
+
+SYNOPSIS
+       syscall(number, arg, ... )  (VAX)
+
+       syscall(number, r0, r1, arg ... )  (PDP11)
+
+DESCRIPTION
+       Syscall performs the system call whose assembly language interface has
+       the specified number and arguments.
+
+       On a PDP11 the first two arguments correspond to registers r0 and r1,
+       regardless of whether the entry point really uses them.
+
+       The r0 value of the system call is returned.
+
+DIAGNOSTICS
+       When the C-bit is set, syscall returns -1 and sets the external
+       variable errno (see intro(2)).
+
+BUGS
+       There is no way to simulate system calls such as pipe(2), which return
+       values in register r1.
+
+                                                                    SYSCALL(2)

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>filsys.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; filsys.5 (<a href="../../../../source/v8/usr/man/man5/filsys.5">troff source</a>)</p>
+<pre>
+FILSYS(5)                     File Formats Manual                    FILSYS(5)
+
+NAME
+       filsys, flblk, ino - format of file system volume
+
+SYNOPSIS
+       #include &lt;sys/types.h&gt;
+       #include &lt;sys/fblk.h&gt;
+       #include &lt;sys/filsys.h&gt;
+       #include &lt;sys/ino.h&gt;
+
+DESCRIPTION
+       Every file system is divided into a certain number of blocks of 1K or
+       4K bytes, as determined by the predicate BITFS() applied to the minor
+       device number where the file system is mounted.  Block 0 is unused and
+       is available to contain a bootstrap program, pack label, or other
+       information.
+
+       Block 1 is the super block.  The layout of the super block as defined
+       by the include file &lt;sys/filsys.h&gt; is:
+
+       /*
+        * Structure of the super-block
+        */
+       struct  filsys
+       {
+               unsigned short s_isize;   /* size in blocks of i-list */
+               daddr_t         s_fsize;   /* size in blocks of entire volume */
+               short           s_ninode;  /* number of i-nodes in s_inode */
+               ino_t           s_inode[NICINOD];/* free i-node list */
+               char            s_flock;   /* lock during free list manipulation */
+               char            s_ilock;   /* lock during i-list manipulation */
+               char            s_fmod;    /* super block modified flag */
+               char            s_ronly;   /* mounted read-only flag */
+               time_t          s_time;    /* last super block update */
+               daddr_t         s_tfree;   /* total free blocks*/
+               ino_t           s_tinode;  /* total free inodes */
+               short  s_dinfo[2];        /* interleave stuff */
+       #define s_m    s_dinfo[0]
+       #define s_n    s_dinfo[1]
+               char            s_fsmnt[14];/* ordinary file mounted on */
+               ino_t  s_lasti;           /* start place for circular search */
+               ino_t  s_nbehind;         /* est # free inodes before s_lasti */
+               union {
+                      struct {
+                               short     S_nfree;/* number of addresses in s_free */
+                               daddr_t   S_free[NICFREE];/* free block list */
+                      } R;
+                      struct {
+                               char      S_valid;/* 1 on disk means bit map valid */
+       #define BITMAP 961
+                               long      S_bfree[BITMAP];/* bit map for free data blocks */
+                      } B;
+               } U;
+       };
+       #define s_nfree U.R.S_nfree
+       #define s_free  U.R.S_free
+       #define s_valid U.B.S_valid
+       #define s_bfree U.B.S_bfree
+
+       #ifdef KERNEL
+       struct  filsys *getfs();
+       #endif
+
+       S_isize is the address of the first block after the i-list, which
+       starts just after the super-block, in block 2.  Thus the i-list is
+       s_isize-2 blocks long.  S_fsize is the address of the first block not
+       potentially available for allocation to a file.  These numbers are used
+       by the system to check for bad block addresses; if an `impossible'
+       block address is allocated from the free list or is freed, a diagnostic
+       is written on the on-line console.  Moreover, the free array is
+       cleared, so as to prevent further allocation from a presumably
+       corrupted free list.
+
+       The free list for a 1K file system is maintained as follows.  The
+       s_free array contains, in s_free[1], ... , s_free[s_nfree-1], up to
+       NICFREE free block numbers.  NICFREE is a configuration constant.
+       S_free[0] is the block address of the head of a chain of blocks
+       constituting the free list.  The layout of each block of the free chain
+       as defined in the include file &lt;sys/fblk.h&gt; is:
+
+       struct fblk
+       {
+               int             df_nfree;
+               daddr_t         df_free[NICFREE];
+       };
+
+       The fields df_nfree and df_free in a free block are used exactly like
+       s_nfree and s_free in the super block.  To allocate a block: decrement
+       s_nfree, and the new block number is s_free[s_nfree].  If the new block
+       address is 0, there are no blocks left, so give an error.  If s_nfree
+       became 0, read the new block into s_nfree and s_free.  To free a block,
+       check if s_nfree is NICFREE; if so, copy s_nfree and the s_free array
+       into it, write it out, and set s_nfree to 0.  In any event set
+       s_free[s_nfree] to the freed block's address and increment s_nfree.
+
+       The free list for a 4K file system is a bitmap.  The bit
+       (s_bfree[i/w]&gt;&gt;(i%w))&amp;1, where w is the bit size of a long, is nonzero
+       if the ith data block is free.  The bitmap of a mounted file system is
+       maintained only in main memory; the bitmap on the medium is marked
+       invalid by setting s_valid to zero.  Unmounting updates the medium copy
+       and sets s_valid to 1.  A file system with invalid bitmap may be
+       mounted read-only; its bitmap can be corrected by <a href="../man8/fsck.8.html">fsck(8)</a>.
+
+       S_ninode is the number of free i-numbers in the s_inode array.  To
+       allocate an i-node: if s_ninode is greater than 0, decrement it and
+       return s_inode[s_ninode].  If it was 0, read the i-list and place the
+       numbers of all free inodes (up to NICINOD) into the s_inode array, then
+       try again.  To free an i-node, provided s_ninode is less than NICINODE,
+       place its number into s_inode[s_ninode] and increment s_ninode.  If
+       s_ninode is already NICINODE, don't bother to enter the freed i-node
+       into any table.  This list of i-nodes is only to speed up the
+       allocation process; the information as to whether the inode is really
+       free or not is maintained in the inode itself.
+
+       The fields s_lasti and s_nbehind are used to avoid searching the inode
+       list from the beginning each time the system runs out of inodes.
+       S_lasti gives the base of the block of inodes last searched on the
+       filesystem when inodes ran out, and s_nbehind gives the number of
+       inodes, whose numbers were less than s_lasti when they were freed with
+       s_ninode already NICINODE.  Thus s_ninode is the number of free inodes
+       before s_lasti.  The system will search forward for free inodes from
+       s_lasti for more inodes unless s_nbehind is sufficiently large, in
+       which case it will search the file system inode list from the
+       beginning.  This mechanism avoids quadratic behavior in allocating
+       inodes.
+
+       S_flock and s_ilock are flags maintained in the core copy of the file
+       system while it is mounted and their values on disk are immaterial.
+       The value of s_fmod on disk is likewise immaterial; it is used as a
+       flag to indicate that the super-block has changed and should be copied
+       to the disk during the next periodic update of file system information.
+       S_ronly is a write-protection indicator; its disk value is also
+       immaterial.
+
+       S_time is the last time the super-block of the file system was changed.
+       During a reboot, s_time of the super-block for the root file system is
+       used to set the system's idea of the time.
+
+       The fields s_tfree, s_tinode, s_fname and s_fpack are not currently
+       maintained.
+
+       I-numbers begin at 1, and the storage for i-nodes begins in block 2.
+       I-nodes are 64 bytes long, so 16 of them fit into a block.  I-node 2 is
+       reserved for the root directory of the file system, but no other i-
+       number has a built-in meaning.  Each i-node represents one file.  The
+       format of an i-node as given in the include file &lt;sys/ino.h&gt; is:
+
+       /*
+        * Inode structure as it appears on
+        * a disk block.
+        */
+       struct dinode
+       {
+               unsigned short di_mode;/* mode and type of file */
+               short   di_nlink;    /* number of links to file */
+               short   di_uid;      /* owner's user id */
+               short   di_gid;      /* owner's group id */
+               off_t   di_size;     /* number of bytes in file */
+               char    di_addr[40]; /* disk block addresses */
+               time_t  di_atime;    /* time last accessed */
+               time_t  di_mtime;    /* time last modified */
+               time_t  di_ctime;    /* time created */
+       };
+       /*
+        * the 40 address bytes:
+        *       39 used; 13 addresses
+        *       of 3 bytes each.
+        */
+
+       Di_mode tells the kind of file; it is encoded identically to the
+       st_mode field of <a href="../man2/stat.2.html">stat(2)</a>.  Di_nlink is the number of directory entries
+       (links) that refer to this i-node.  Di_uid and di_gid are the owner's
+       user and group IDs.  Size is the number of bytes in the file.  Di_atime
+       and di_mtime are the times of last access and modification of the file
+       contents (read, write or create) (see <a href="../man2/times.2.html">times(2)</a>); Di_ctime records the
+       time of last modification to the inode or to the file, and is used to
+       determine whether it should be dumped.
+
+       Special files are recognized by their modes and not by i-number.  A
+       block-type special file is one which can potentially be mounted as a
+       file system; a character-type special file cannot, though it is not
+       necessarily character-oriented.  For special files, the di_addr field
+       is occupied by the device code (see <a href="../man5/types.5.html">types(5)</a>).  The device codes of
+       block and character special files overlap.
+
+       A symbolic link is, aside from mode, a plain file whose sole content is
+       the name of the file linked to.
+
+       Disk addresses of plain files and directories are kept in the array
+       di_addr packed into 3 bytes each.  The first 10 addresses specify
+       device blocks directly.  The last 3 addresses are singly, doubly, and
+       triply indirect and point to blocks of 256 block pointers.  Pointers in
+       indirect blocks have the type daddr_t (see <a href="../man5/types.5.html">types(5)</a>).
+
+       For block b in a file to exist, it is not necessary that all blocks
+       less than b exist.  A zero block number either in the address words of
+       the i-node or in an indirect block indicates that the corresponding
+       block has never been allocated.  Such a missing block reads as if it
+       contained all zero words.
+
+SEE ALSO
+       <a href="../man8/fsck.8.html">fsck(8)</a>, <a href="../man8/icheck.8.html">icheck(8)</a>, dcheck(8), <a href="../man5/dir.5.html">dir(5)</a>, <a href="../man8/mount.8.html">mount(8)</a>, <a href="../man2/stat.2.html">stat(2)</a>, <a href="../man5/types.5.html">types(5)</a>
+
+                                                                     FILSYS(5)
+</pre>
+</body></html>

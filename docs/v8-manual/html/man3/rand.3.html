@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>rand.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; rand.3 (<a href="../../../../source/v8/usr/man/man3/rand.3">troff source</a>)</p>
+<pre>
+RAND(3)                    Library Functions Manual                    RAND(3)
+
+NAME
+       rand, lrand, frand, nrand, srand - random number generator
+
+SYNOPSIS
+       int rand( )
+
+       long lrand( )
+
+       double frand( )
+
+       int nrand(val)
+       int val;
+
+       srand(seed)
+       int seed;
+
+DESCRIPTION
+       Rand uses a polynominal feedback random number generator with period
+       2^49-2^32 to return successive uniform pseudo-random numbers x,
+       0&lt;=x&lt;2^15.
+
+       Lrand returns a uniform long x, 0&lt;=x&lt;2^31.
+
+       Frand returns a uniform double x, 0.0&lt;=x&lt;1.0.
+
+       Nrand returns a uniform integer x, 0&lt;=x&lt;val.
+
+       The generators are initialized by calling srand with whatever you like
+       as argument.  To get a different starting value each time,
+
+              srand((int)time(0))
+
+       should work as long as it is not called more often than once per
+       second.
+
+BUGS
+       Rand and lrand are quite machine-dependent.  In principle frand and
+       nrand are more portable, but only the Eighth Edition has them.
+
+                                                                       RAND(3)
+</pre>
+</body></html>

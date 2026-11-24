@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mknod.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; mknod.8 (<a href="../../../../source/v8/usr/man/man8/mknod.8">troff source</a>)</p>
+<pre>
+MKNOD(8)                    System Manager's Manual                   MKNOD(8)
+
+NAME
+       mknod - build special file
+
+SYNOPSIS
+       /etc/mknod name [ c ] [ b ] major minor
+
+DESCRIPTION
+       Mknod makes a special file.  The first argument is the name of the
+       entry.  The second is b if the special file is block-type (disks, tape)
+       or c if it is character-type (other devices).  The last two arguments
+       are numbers specifying the major device type and the minor device (e.g.
+       unit, drive, or line number).
+
+       The assignment of major device numbers is specific to each system.
+       They have to be dug out of the system source file conf/devices.
+
+SEE ALSO
+       <a href="../man2/mknod.2.html">mknod(2)</a>, <a href="../man5/config.5.html">config(5)</a>
+
+                                                                      MKNOD(8)
+</pre>
+</body></html>

@@ -1,0 +1,80 @@
+Excerpt from the Dennis Ritchie / Warren Toomey email collection published by TUHS:
+  https://www.tuhs.org/Archive/Documentation/Emails/dmr_wkt  (HTML: dmr_wkt.html)
+Only the messages of the "V8's roots?" thread that discuss V8 are reproduced; mail routing headers removed.
+
+From: dmr@plan9.bell-labs.com
+Message-Id: <199901070336.OAA27429@csadfa.cs.adfa.oz.au>
+Date: Wed, 6 Jan 1999 22:36:41 -0500
+Subject: Re: V8's roots?
+To: wkt@cs.adfa.oz.au
+CC: norman@nose.cita.utoronto.ca
+
+I also got mail from Norman Wilson today about the discussion.
+
+This is mainly to confirm and fill out details of Wilson's account.
+
+The Eighth Edition system started with (I believe) BSD 4.1c and
+the work was done on VAX 11/750s -- our group did not get
+a 780 until a while later.
+
+Most of the operating system superstructure of BSD was retained
+(in particular no one (even the indefatigable Norman)
+wanted to get much into the paging code.  Norman is also
+right that the competitor was John Reiser's (and Tom London's)
+32V descendant from another group at the Labs.  In structure
+this system had a lot to offer (in particular the buffer cache and the page
+pool were unified, but it was clear that their work was not being
+supported by their own management.  It was used for a while on
+our first 750 and also our first 11/780 ("alice", a name that lives
+in netnews fame preceding  the reach of Dejanews).
+
+The big change leading to V8 was the scooping-out and replacement of
+the character-device and networking part by the streams mechanism.  Later,
+Peter Weinberger added the file-system switch that enabled
+remote file systems and prescient things ideas like /proc).  Weinberger,
+as Norman said, also did a simple-minded FFS.
+
+The TCP/IP stack wasn't very important to us then and it has a mixed and
+murky history.  Much of it came from early CSRG work, but it was converted
+to a streams approach by Robert Morris and subsequently fiddled over a lot.
+
+Likewise, as Norman said, the applications (/bin and whatnot) were somewhat
+of a mixture.  Many were the locally-done versions, some were taken
+from BSD in some incarnation, some from System V.
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+From: dmr@plan9.bell-labs.com
+Message-Id: <199901080532.QAA04970@csadfa.cs.adfa.oz.au>
+Date: Fri, 8 Jan 1999 00:33:13 -0500
+To: wkt@cs.adfa.oz.au
+Subject: Re: V8's roots?
+
+ > Do you think Lucent owns these systems? Do you think they might
+ > eventually be prepared to sell licenses? I'll ask my SCO contacts
+ > and find out who they think owns V8, 9 and 10. :-)
+
+The v8 etc situation is more complicated because not only do
+they begin to incorporate Sys/V material that is closer to SCO's heart,
+and clearly after the separation of USL->...->SCO, but begins
+to get into Lucent stuff that I'd have to justify inside the company.
+
+I'll try to find time to package up at least one of the early C compilers.
+Theoretically it has all the same problems as the OS but I believe
+that the possible lawyer-interest problem is in practice nonexistent.
+It's more a matter of proper curating of the material.
+
+
+
+
+
+
+
+------------------------------------------------------------
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>intro.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; intro.9 (<a href="../../../../source/v8/usr/man/man9/intro.9">troff source</a>)</p>
+<pre>
+INTRO(9)                   Kernel Developer's Manual                  INTRO(9)
+
+NAME
+       intro - introduction to jerq-related software
+
+DESCRIPTION
+       Section 9 of this manual lists software for running or supporting
+       Teletype DMD-5620 terminals, the current implementation of the `jerq'
+       graphics terminals.  Subsections 9.1-9.7 mirror the purposes of the
+       preceding sections 1-7, with 9.1 being commands, 9.6 being games, etc.
+
+       The only `real' 5620 commands are 32ld, which loads programs into the
+       terminal, and mux, which starts the characteristic `layer' or window
+       system.  The other commands in section 9 either run on Unix or within
+       mux layers.
+
+       A layer is technically a virtual terminal, but is almost
+       indistinguishable in software from a real terminal; in particular, the
+       interface described in <a href="../man4/ttyld.4.html">ttyld(4)</a> applies to layers, except for the
+       additional editing capabilities discussed in <a href="../man9/mux.9.html">mux(9.1)</a>.
+
+       The commands in sections 9.1 and 9.6 run on Unix, but most also call
+       32ld to `down-load' a program that replaces the default terminal
+       process running in the layer, that is, the command's controlling
+       teletype.  To Unix the interface is still that of a terminal; in
+       particular /dev/tty is always connected to the layer.  The default mux
+       terminal program implements the teletype function itself, but when a
+       program is down-loaded a teletype line discipline is pushed on the
+       stream (see <a href="../man4/stream.4.html">stream(4)</a> and <a href="../man4/ttyld.4.html">ttyld(4)</a>).  Some commands may simply emulate
+       other terminals by down-loading a terminal program (see <a href="../man9/term.9.html">term(9.1)</a>;
+       others, such as the text editor <a href="../man9/jim.9.html">jim(9.1)</a>, are really two programs — one
+       on Unix and one in the layer — communicating using standard
+       input/output on Unix and sendchar/rcvchar in the terminal; see
+       <a href="../man9/request.9.html">request(9.2)</a>.
+
+       There is an identity between bitmaps and layers in the graphics
+       software.  The objects of jerq graphics are bitmaps.  The primitives
+       that operate on layers are aliased to the bitmap primitives, and the
+       data structures are isomorphic.  When running under mux, a programmer
+       need not consider layers as graphical objects at all; the operating
+       system checks the arguments to the graphics primitives and dispatches
+       the appropriate operator depending on the type of the argument.  Except
+       in stand-alone software, layers are an invisible implementation detail.
+
+SEE ALSO
+       <a href="../man9/32ld.9.html">32ld(9.1)</a>, <a href="../man9/mux.9.html">mux(9.1)</a>, <a href="../man4/stream.4.html">stream(4)</a>, <a href="../man4/pt.4.html">pt(4)</a>
+
+                                                                      INTRO(9)
+</pre>
+</body></html>

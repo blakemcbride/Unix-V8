@@ -1,0 +1,51 @@
+WWBSTAND(1)                 General Commands Manual                WWBSTAND(1)
+
+NAME
+       wwbstand - print standards used by prose(1)
+
+SYNOPSIS
+       wwbstand [ -flags ][ -ver ][ -tm | -t | -c | -x standards-file ]
+
+DESCRIPTION
+       Wwbstand reads the standards files that are used by prose(1), and
+       prints the average ranges of 12 style(1) scores for documents of
+       certain kinds.  Prose considers scores that fall within these ranges to
+       be good.
+
+       Four options to wwbstand tell it what standards file to read:
+
+            -tm    print average ranges of style scores for Bell Labs
+                   Technical Memoranda judged good by department heads in the
+                   research area.  This is the default.
+
+            -t     print average ranges of style scores for Bell Labs training
+                   documents from Department 45272.
+
+            -c     print suggested ranges of style scores for craft documents
+                   based on the research of E. Coke, department 11222.
+
+            -x standards-file
+                   print average ranges of style scores contained in
+                   standards-file.  The standards-file can be made using
+                   mkstand(1).
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+SEE ALSO
+       mkstand(1), prose(1), style(1), wwb(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                   WWBSTAND(1)

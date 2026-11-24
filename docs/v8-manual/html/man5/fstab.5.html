@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fstab.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; fstab.5 (<a href="../../../../source/v8/usr/man/man5/fstab.5">troff source</a>)</p>
+<pre>
+FSTAB(5)                      File Formats Manual                     FSTAB(5)
+
+NAME
+       fstab - static information about the filesystems
+
+SYNOPSIS
+       #include &lt;fstab.h&gt;
+
+DESCRIPTION
+       The file /etc/fstab contains descriptive information about the various
+       file systems.  /etc/fstab is only read by programs, and not written; it
+       is the duty of the system administrator to properly create and maintain
+       this file.
+
+       These programs use /etc/fstab: dump, mount, umount, swapon, fsck and
+       df.  The order of records in /etc/fstab is important; fsck, mount, and
+       umount depend on it.
+
+       The special file name is the block special file name, and not the
+       character special file name.  If a program needs the character special
+       file name, the program must create it by inserting an `r' after the
+       last `/' in the special file name.
+
+       #define FSTAB                  "/etc/fstab"
+       #define FSNMLG                 16
+
+       #define FSTABFMT    "%16s:%16s:%2s:%d:%d\n"
+       #define FSTABARG(p) (p)-&gt;fs_spec, (p)-&gt;fs_file, \
+                           (p)-&gt;fs_type, &amp;(p)-&gt;fs_freq, &amp;(p)-&gt;fs_passno
+       #define FSTABNARGS  5
+
+       #define FSTAB_RW    "rw"       /* read write device */
+       #define FSTAB_RO    "ro"       /* read only device */
+       #define FSTAB_SW    "sw"       /* swap device */
+       #define FSTAB_XX    "xx"       /* ignore totally */
+
+       struct fstab {
+               char  fs_spec[FSNMLG]; /* block special device name */
+               char  fs_file[FSNMLG]; /* file system path prefix */
+               char  fs_type[3];      /* rw,ro,sw or xx */
+               int   fs_freq;         /* dump frequency, in days */
+               int   fs_passno;       /* pass number on parallel dump */
+       };
+
+       The proper way to read records from /etc/fstab is to use the routines
+       getfsent(), getfsspec() or getfsfile().
+
+FILES
+       /etc/fstab
+
+SEE ALSO
+       <a href="../man3/getfsent.3.html">getfsent(3)</a>
+
+                                                                      FSTAB(5)
+</pre>
+</body></html>

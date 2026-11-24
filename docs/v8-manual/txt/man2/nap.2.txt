@@ -1,0 +1,17 @@
+NAP(2)                        System Calls Manual                       NAP(2)
+
+NAME
+       nap - suspend execution for a short interval
+
+SYNOPSIS
+       nap(ticks)
+
+DESCRIPTION
+       Nap suspends execution of the current process for ticks/HZ seconds,
+       where HZ is 50 or 60 depending on your locality.  The time may be at
+       most two seconds.
+
+SEE ALSO
+       alarm(2), sleep(3)
+
+                                                                        NAP(2)

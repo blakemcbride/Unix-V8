@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>lex.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; lex.1 (<a href="../../../../source/v8/usr/man/man1/lex.1">troff source</a>)</p>
+<pre>
+LEX(1)                      General Commands Manual                     LEX(1)
+
+NAME
+       lex - generator of lexical analysis programs
+
+SYNOPSIS
+       lex [ -tvfn ] [ file ] ...
+
+DESCRIPTION
+       Lex generates programs to be used in simple lexical analyis of text.
+       The input files (standard input default) contain regular expressions to
+       be searched for, and actions written in C to be executed when
+       expressions are found.
+
+       A C source program, `lex.yy.c' is generated, to be compiled thus:
+
+              cc lex.yy.c -ll
+
+       This program, when run, copies unrecognized portions of the input to
+       the output, and executes the associated C action for each regular
+       expression that is recognized.
+
+       The following lex program converts upper case to lower, removes blanks
+       at the end of lines, and replaces multiple blanks by single blanks.
+
+              %%
+              [A-Z] putchar(yytext[0]+´a´-´A´);
+              [ ]+$
+              [ ]+  putchar(´ ´);
+
+       The options have the following meanings.
+
+       -t     Place the result on the standard output instead of in file
+              `lex.yy.c'.
+
+       -v     Print a one-line summary of statistics of the generated
+              analyzer.
+
+       -n     Opposite of -v; -n is default.
+
+       -f     `Faster' compilation: don't bother to pack the resulting tables;
+              limited to small programs.
+
+SEE ALSO
+       <a href="../man1/yacc.1.html">yacc(1)</a>, <a href="../man1/sed.1.html">sed(1)</a>
+       M. E. Lesk and E. Schmidt, LEX - Lexical Analyzer Generator
+
+                                                                        LEX(1)
+</pre>
+</body></html>

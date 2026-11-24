@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>lpd.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; lpd.8 (<a href="../../../../source/v8/usr/man/man8/lpd.8">troff source</a>)</p>
+<pre>
+LPD(8)                      System Manager's Manual                     LPD(8)
+
+NAME
+       lpd - line printer daemon
+
+SYNOPSIS
+       /etc/lpd
+
+DESCRIPTION
+       Lpd is the daemon for the line printer.  Lpd uses the directory
+       /usr/spool/lpd.  The file lock in that directory is used to prevent two
+       daemons from becoming active.  After the program has successfully set
+       the lock, it forks and the main path exits, thus spawning the daemon.
+       The directory is scanned for files beginning with df.  Each such file
+       is submitted as a job.  Each line of a job file must begin with a key
+       character to specify what to do with the remainder of the line.
+
+       L    specifies that the remainder of the line is to be sent as a
+            literal.
+
+       B    specifies that the rest of the line is a file name.
+
+       F    is the same as B except a form feed is prepended to the file.
+
+       U    specifies that the rest of the line is a file name.  After the job
+            has been transmitted, the file is unlinked.
+
+       M    is followed by a user ID; after the job is sent, a message is
+            mailed to the user via the <a href="../man1/mail.1.html">mail(1)</a> command to verify the sending
+            of the job.
+
+       Any error encountered will cause the daemon to wait and start over.
+       This means that an improperly constructed df file may cause the same
+       job to be submitted repeatedly.
+
+       Lpd is automatically initiated by the line printer command, lpr.
+
+       To restart lpd (in the case of hardware or software malfunction), it is
+       necessary to first kill the old daemon (if still alive), and remove the
+       lock file before initiating the new daemon.  This is done automatically
+       when the system is brought up, by /etc/rc, in case there were any jobs
+       left in the spooling directory when the system last went down.
+
+FILES
+       /usr/spool/lpd/* spool area for line printer daemon
+       /etc/passwd to get the user's name
+       /dev/lp line printer device
+
+SEE ALSO
+       <a href="../man1/lpr.1.html">lpr(1)</a>
+
+                                                                        LPD(8)
+</pre>
+</body></html>

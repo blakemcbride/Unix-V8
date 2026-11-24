@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cpp.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; cpp.8 (<a href="../../../../source/v8/usr/man/man8/cpp.8">troff source</a>)</p>
+<pre>
+CPP(8)                      System Manager's Manual                     CPP(8)
+
+NAME
+       cpp - C language preprocessor
+
+SYNOPSIS
+       /lib/cpp [ option ...  ] [ ifile [ ofile ] ]
+
+DESCRIPTION
+       Cpp interprets control lines (marked with `#') for <a href="../man1/cc.1.html">cc(1)</a> and other
+       compilers.  The input, ifile, and output, ofile, default to standard
+       input and standard output respectively.
+
+       The options are:
+
+       -P     Do not place `#line' indications on the output.
+
+       -C     Do not remove comments.
+
+       -Uname
+       -Dname
+       -Dname=def
+       -Idir  Same as in <a href="../man1/cc.1.html">cc(1)</a>.  -U overrides -D.
+
+       -M     Pass modification date with file names, in the form
+              file@modtime, where modtime is the integer number of seconds
+              since the epoch.
+
+       -T     Truncate preprocessor symbols to eight characters.
+
+       The name `__LINE__' is the current line number in the input file,
+       `__FILE__' is the file name.  The line number and (optionally) the file
+       name may be set by
+
+              #line integer-constant " filename "
+
+       These symbols are also predefined in various implementations:
+              operating system:
+                           ibm, gcos, os, tss, unix
+              hardware:    interdata, pdp11, u370, u3b, u3b5, vax
+              UNIX system: RES, RT
+              <a href="../man1/lint.1.html">lint(1)</a>:     lint
+
+       Any number of blanks and tabs are allowed between the initial `#' and
+       the control directive.
+
+       A builtin function `defined(name)' or `defined name' may be used in
+       constant expressions within a #if control lines to test whether name is
+       defined.
+
+       Preprocessor formal parameters are recognized withing quoted strings in
+       the replacement text.  When comments are removed, they are replaced by
+       null strings; this unofficial feature makes it possible to construct
+       identifiers by concatenation.
+
+FILES
+       /usr/include   standard directory for include files
+
+                                                                        CPP(8)
+</pre>
+</body></html>

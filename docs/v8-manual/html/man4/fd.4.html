@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fd.4 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 4</a> &gt; fd.4 (<a href="../../../../source/v8/usr/man/man4/fd.4">troff source</a>)</p>
+<pre>
+FD(4)                      Kernel Interfaces Manual                      FD(4)
+
+NAME
+       fd, stdin, stdout, stderr, tty - file descriptor files
+
+DESCRIPTION
+       These files, conventionally called /dev/fd/0, /dev/fd/1, ...
+       /dev/fd/127, refer to files accessible through file descriptors.  If
+       file descriptor n is open, these two system calls have the same effect:
+
+              fd = open("/dev/fd/n", mode);
+              fd = dup(n);
+
+       Creat(2) is equivalent to open, and mode is ignored.  As with dup,
+       subsequent IO on fd fails unless the original file descriptor allows
+       the read or write operation.
+
+       Entry /dev/fd/3 is conventionally the `control terminal' of the process
+       group to which the present process belongs; see <a href="../man4/stream.4.html">stream(4)</a>.
+
+       The entries /dev/stdin, /dev/stdout, /dev/stderr, and /dev/tty are
+       conventionally linked to /dev/fd/0, /dev/fd/1, /dev/fd/2, and /dev/fd/3
+       respectively.
+
+SEE ALSO
+       <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/dup.2.html">dup(2)</a>, <a href="../man4/stream.4.html">stream(4)</a>
+
+DIAGNOSTICS
+       Open returns -1 if the related file descriptor is not open.
+
+                                                                         FD(4)
+</pre>
+</body></html>

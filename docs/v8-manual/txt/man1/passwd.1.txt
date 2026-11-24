@@ -1,0 +1,54 @@
+PASSWD(1)                   General Commands Manual                  PASSWD(1)
+
+NAME
+       passwd - change login password
+
+SYNOPSIS
+       passwd [ -an ] [ name ]
+
+DESCRIPTION
+       This command changes (or installs) a password associated with the user
+       name (your own name by default).
+
+       The program prompts for the old password and then for the new one.  The
+       caller must supply both.  The new password must be typed twice, to
+       forestall mistakes.
+
+       New passwords must be at least four characters long if they use a
+       sufficiently rich alphabet and at least six characters long if
+       monocase.  These rules are relaxed if you are insistent enough.
+
+       Only the owner of the name or the super-user may change a password; the
+       owner must prove he knows the old password.
+
+       If the -a option is given, passwd prompts for new values of certain
+       fields of the password file entry.
+
+       The super-user may use the -n option to install new users.  The prompts
+       are self-explanatory, and most of the defaults obvious.  A null
+       response to the ``UID:'' prompt assigns a numeric userid one greater
+       than the largest one previously in /etc/passwd.  A null response to the
+       ``Directory:'' prompt assigns the user a home directory in /usr.  If
+       the first character of the response to this prompt is an asterisk, the
+       remaining characters are taken as the name of the new user's home
+       directory, and a symbolic link to this directory is placed in /usr.  A
+       user can be assigned a directory with a name of the form /dir/username
+       by replying ∗dir.
+
+       A new user's home directory starts with a file named .profile.  This
+       file is a copy of /etc/stdprofile with \N replaced by the user's name,
+       and \D replaced by the name of the user's home directory.
+
+FILES
+       /etc/passwd
+       /etc/stdprofile
+
+SEE ALSO
+       passwd(5), crypt(3)
+       Robert Morris and Ken Thompson, UNIX password security
+
+BUGS
+       The password file information should be kept in a different data
+       structure allowing indexed access.
+
+                                                                     PASSWD(1)

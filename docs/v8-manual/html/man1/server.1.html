@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>server.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; server.1 (<a href="../../../../source/v8/usr/man/man1/server.1">troff source</a>)</p>
+<pre>
+SERVER(1)                   General Commands Manual                  SERVER(1)
+
+NAME
+       server - run anonymous command on another machine
+
+SYNOPSIS
+       server machine command
+
+DESCRIPTION
+       Server uses Datakit to run command on the named machine.  If it has
+       set-uid mode, the owner of server will log in on the remote machine.
+       In this way, a user can execute commands on the remote machine without
+       having a login there.
+
+       Server typically accepts only a small set of commands, such as who, ps,
+       cat, and date; the list is at the discretion of the remote machine.
+       Server also checks for suspicious argument characters.
+
+FILES
+       /etc/server    list of legal commands
+
+SEE ALSO
+       <a href="../man1/dcon.1.html">dcon(1)</a>, <a href="../man1/push.1.html">push(1)</a>, rx(1)
+
+                                                                     SERVER(1)
+</pre>
+</body></html>

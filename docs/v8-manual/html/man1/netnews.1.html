@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>netnews.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; netnews.1 (<a href="../../../../source/v8/usr/man/man1/netnews.1">troff source</a>)</p>
+<pre>
+NETNEWS(1)                  General Commands Manual                 NETNEWS(1)
+
+NAME
+       netnews - send or receive news articles
+
+SYNOPSIS
+       netnews [ -a [ date ]] [ -n newsgroups ] [ -t titles ] [ -lpr ]
+
+       netnews -s [ newsgroups ]
+
+       netnews -i title [ -n newsgroups ]
+
+DESCRIPTION
+       Netnews is an intercomputer news service.  Without argument it prints
+       recent articles.  After each article a command is read from the
+       standard input.
+
+       newline   Go on to next article.
+
+       p         Print article again.
+
+       -         Go back to previous article.
+
+       c         Cancel (restricted to contributor and superuser).
+
+       w file    Append a copy of the article to the named file.
+
+       r         Reply to author (via mail).
+
+       q         Exit.
+
+       x         Exit without update.
+
+       Option -p prints with no questions asked.  Option -r prints in reverse
+       time order.  Option -l prints titles only.
+
+       Normally, printed articles must
+
+       (1)    be more recent than your last use of netnews; option -a adjusts
+              the time threshold (no date means the beginning of time)
+
+       (2)    be in one of the user's newsgroups.  Option -n specifies
+              different newsgroups.
+
+       (3)    have no particular title.  Option -t restricts titles to contain
+              one of the specified strings.
+
+       Option -s prints the list of newsgroups to which the user subscribes,
+       or, if newsgroups are given, specifies a new subscription list.
+       Newsgroup `ALL' receives all articles.  `NET.ALL' receives all
+       newsgroups that begin with `NET.'.  All users subscribe to the
+       newsgroup `general'.
+
+       Netnews -i inserts an article (read from standard input) with title
+       title to the newsgroups specified by -n (default `general').
+
+EXAMPLES
+
+       netnews -a last tues -n ALL
+              Read all news since Tuesday.
+
+       netnews -alr
+              Print titles of all news articles of interest, most recent
+              first.
+
+       netnews -s ALL !NET.ALL
+              Subscribe to all local articles, and no NET articles (obscure
+              feature).
+
+FILES
+       /usr/spool/news/sys.nnn   news articles
+       /usr/spool/news/.bitfile  bit map of users with news
+       /usr/spool/news/.ngfile   list of newsgroups to which it is legal to
+                                 subscribe or submit news
+       /usr/spool/news/.uindex   index of netnews users
+       /usr/spool/news/.nindex   index of news articles
+       /usr/spool/news/.seq      sequence number of last article
+       /usr/spool/news/.history  list of all articles ever seen
+       /usr/spool/news/.sys      system subscription list
+
+SEE ALSO
+       <a href="../man1/mail.1.html">mail(1)</a>, <a href="../man1/news.1.html">news(1)</a>, <a href="../man1/uucp.1.html">uucp(1)</a>
+
+BUGS
+       Netnews and <a href="../man1/readnews.1.html">readnews(1)</a> use the same text in different churches.
+
+                                   not alice                        NETNEWS(1)
+</pre>
+</body></html>

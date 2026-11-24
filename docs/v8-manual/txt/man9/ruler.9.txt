@@ -1,0 +1,25 @@
+RULER(9.1)                                                          RULER(9.1)
+
+NAME
+       ruler - measure things on the screen
+
+SYNOPSIS
+       ruler
+
+DESCRIPTION
+       Ruler measures things on a jerq screen.  Press button 1 to sweep out a
+       rectangle anywhere on the screen.  For each rectangle swept, ruler
+       displays the coordinates of the rectangle's corners (labelled `down'
+       and `up'), the size of the rectangle and length of its diagonal.
+
+       There is a menu on button 3.  The pixels and chars buttons control
+       whether the size and diagonal measurements are in pixel or 9x14
+       character units (the size used by jim(9.1) and mux(9.1)).  The stop
+       button deactivates ruler without exiting.  Hitting measure reactivates
+       ruler.  Exit exits.
+
+BUGS
+       Ruler's menu must pop up in its own layer, perhaps far away from the
+       cursor.
+
+                                                                    RULER(9.1)

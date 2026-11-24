@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mknod.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; mknod.2 (<a href="../../../../source/v8/usr/man/man2/mknod.2">troff source</a>)</p>
+<pre>
+MKNOD(2)                      System Calls Manual                     MKNOD(2)
+
+NAME
+       mknod - make a directory or a special file
+
+SYNOPSIS
+       mknod(name, mode, addr)
+       char *name;
+
+DESCRIPTION
+       Mknod creates a new file whose name is the null-terminated string
+       pointed to by name.  The mode of the new file (including directory and
+       special file bits) is initialized from mode.  (The protection part of
+       the mode is modified by the process's mode mask; see <a href="../man2/umask.2.html">umask(2)</a>).  The
+       first block pointer of the i-node is initialized from addr.  For
+       ordinary files and directories addr is normally zero.  In the case of a
+       special file, addr specifies which special file.
+
+       Mknod may be invoked only by the super-user.
+
+SEE ALSO
+       <a href="../man1/mkdir.1.html">mkdir(1)</a>, mknod(1), <a href="../man5/filsys.5.html">filsys(5)</a>
+
+DIAGNOSTICS
+       Zero is returned if the file has been made; -1 if the file already
+       exists or if the user is not the super-user.
+
+                                                                      MKNOD(2)
+</pre>
+</body></html>

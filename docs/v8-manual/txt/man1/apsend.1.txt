@@ -1,0 +1,38 @@
+APSEND(1)                   General Commands Manual                  APSEND(1)
+
+NAME
+       apsend - send troff output to aps-5
+
+SYNOPSIS
+       apsend [ options ] [ file ] ...
+
+DESCRIPTION
+       Apsend sends troff(1) output in the named file or in the standard input
+       for typesetting on the Murray Hill Computer Center APS-5 machine.
+
+       The options, which need only be spelled far enough to be unique, are
+
+       account=xx
+              GCOS account number (default from password file).
+
+       bin=xx Computer center bin number (default from password file).
+
+       mailto=xx
+              Mailing instructions, up to 28 characters, instead of comp
+              center bin.
+
+       comment=xx
+              Up to 30 characters, for APSLOG file entry.  Default value is
+              the filename or pipe.end.
+
+       device=imagen
+              Print on comp center laser printer instead of phototypesetter.
+
+FILES
+       /usr/lib/apsend/*
+       APSLOG    record of apsend activity
+
+SEE ALSO
+       troff(1), d202(1)
+
+                                                                     APSEND(1)

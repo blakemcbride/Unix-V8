@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>grep.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; grep.1 (<a href="../../../../source/v8/usr/man/man1/grep.1">troff source</a>)</p>
+<pre>
+GREP(1)                     General Commands Manual                    GREP(1)
+
+NAME
+       grep, egrep, fgrep - search a file for a pattern
+
+SYNOPSIS
+       grep [ options ] expression [ files ]
+
+       egrep [ options ] [ expression ] [ files ]
+
+       fgrep [ options ] [ strings ] [ files ]
+
+DESCRIPTION
+       Commands of the grep family search the input files (standard input
+       default) for lines matching a pattern.  Normally, each line found is
+       copied to the standard output.  Grep patterns are limited regular
+       expressions in the style of <a href="../man1/ed.1.html">ed(1)</a>; it uses a compact non-deterministic
+       algorithm.  Egrep patterns are full regular expressions; it uses a fast
+       deterministic algorithm.  Fgrep patterns are fixed strings; it is fast
+       and compact.  The following options are recognized:
+
+       -v     All lines but those matching are printed.
+       -x     (Exact) only lines matched in their entirety are printed (fgrep
+              only).
+       -c     Only a count of matching lines is printed.
+       -i     Ignore alphabetic case distinctions.
+       -l     Only the names of files with matching lines are listed (once),
+              separated by new-lines.
+       -n     Each line is preceded by its relative line number in the file.
+       -b     Each line is preceded by the block number on which it was found.
+              This is sometimes useful in locating disk block numbers by
+              context.
+       -h     Do not print filename headers with output lines.
+       -s     No output is produced, only status.
+       -e expression
+              Same as a simple expression argument, but useful when the
+              expression begins with a -.
+       -f file
+              The regular expression (egrep) or strings list (fgrep) is taken
+              from the file.
+
+       Output lines are tagged by filename when there is more than one input
+       file.  Care should be taken when using the shell metacharacters
+       $*[^|()\ in expression; it is safest to enclose the entire expression
+       in single quotes ′...′.
+
+       Fgrep searches for lines that contain one of the strings separated by
+       new-lines.
+
+       Egrep accepts regular expressions as in <a href="../man1/ed.1.html">ed(1)</a>, except for \(, \), and
+       \n, with the addition of:
+
+       1.     A regular expression followed by + matches one or more
+              occurrences of the expression.
+       2.     A regular expression followed by ?  matches 0 or 1 occurrence.
+       3.     Two regular expressions separated by ⎪ or newline match
+              ocurrences of either.
+       4.     Parentheses () specify grouping.
+
+       The order of precedence of operators is [], then ∗?+, then
+       concatenation, then ⎪ and new-line.
+
+SEE ALSO
+       <a href="../man1/ed.1.html">ed(1)</a>, <a href="../man1/sed.1.html">sed(1)</a>, <a href="../man1/sh.1.html">sh(1)</a>.
+
+DIAGNOSTICS
+       Exit status is 0 if any matches are found, 1 if none, 2 for syntax
+       errors or inaccessible files (even if matches were found).
+
+BUGS
+       Ideally there should be only one grep, but we do not know a single
+       algorithm that spans a wide enough range of space-time tradeoffs.
+       Lines are truncated at BUFSIZ characters; see <a href="../man3/setbuf.3.html">setbuf(3)</a>.  Null
+       characters behave as end-of-line in matches.
+
+                                                                       GREP(1)
+</pre>
+</body></html>

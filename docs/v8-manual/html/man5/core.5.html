@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>core.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; core.5 (<a href="../../../../source/v8/usr/man/man5/core.5">troff source</a>)</p>
+<pre>
+CORE(5)                       File Formats Manual                      CORE(5)
+
+NAME
+       core - format of memory image file
+
+DESCRIPTION
+       UNIX writes out a memory image of a terminated process when any of
+       various errors occur.  See <a href="../man2/signal.2.html">signal(2)</a> for the list of reasons; the most
+       common are memory violations, illegal instructions, bus errors, and
+       user-generated quit signals.  The memory image is called `core' and is
+       written in the process's working directory (provided it can be; normal
+       access controls apply).
+
+       The core file consists of the u. area, which currently consists of 6
+       pages, beginning with a user structure as given in
+       /usr/include/sys/user.h.  The kernel stack grows from the end of this 6
+       page region.  The remainder of the core file consists first of the data
+       pages and then the stack pages of the process image.
+
+       In general the debugger <a href="../man1/adb.1.html">adb(1)</a> is sufficient to deal with core images.
+
+SEE ALSO
+       <a href="../man1/adb.1.html">adb(1)</a>, <a href="../man9/pi.9.html">pi(9.1)</a>, <a href="../man1/coreid.1.html">coreid(1)</a>
+
+                                                                       CORE(5)
+</pre>
+</body></html>

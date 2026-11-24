@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>chdir.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; chdir.2 (<a href="../../../../source/v8/usr/man/man2/chdir.2">troff source</a>)</p>
+<pre>
+CHDIR(2)                      System Calls Manual                     CHDIR(2)
+
+NAME
+       chdir, chroot - change working or root directory
+
+SYNOPSIS
+       chdir(dirname)
+       char *dirname;
+
+       chroot(dirname)
+       char *dirname;
+
+DESCRIPTION
+       Chdir changes the working directory of the invoking process to dirname;
+       chroot changes its root directory.
+
+       The root directory is the starting point when searching for pathnames
+       beginning with `/'.  The working directory is the starting point for
+       pathnames that don't.  The root directory normally points to the system
+       root, defined when the system is built.  Login(1) initially sets the
+       working directory as specified in the password file, <a href="../man5/passwd.5.html">passwd(5)</a>.
+
+       After chroot, it is impossible to name a file outside the subtree
+       rooted at the current root, provided that the current directory is
+       located within the subtree and there are no links pointing outside the
+       subtree (except for the entry `..' in the root directory).
+
+       Chroot may only be used by the super-user.
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>
+
+DIAGNOSTICS
+       Zero is returned if the directory was changed; -1 is returned if the
+       given pathname doesn't exist, isn't a directory or can't be searched,
+       or if chroot is used by other than the super-user.
+
+BUGS
+       Using chroot, it is quite easy to fool set-UID programs about the
+       contents of the password file (for example).
+
+                                                                      CHDIR(2)
+</pre>
+</body></html>

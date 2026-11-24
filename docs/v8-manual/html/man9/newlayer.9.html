@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>newlayer.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; newlayer.9 (<a href="../../../../source/v8/usr/man/man9/newlayer.9">troff source</a>)</p>
+<pre>
+NEWLAYER(9.2)                                                    NEWLAYER(9.2)
+
+NAME
+       newlayer, dellayer, lbitblt, lpoint, lrectf, lsegment, ltexture,
+       upfront - layer control and graphics
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+
+       Layer *newlayer(r); Rectangle r;
+
+       void dellayer(l) Layer *l;
+
+       void lbitblt(sl, r, dl, p, f) Layer *sl, *dl; Rectangle r; Point p;
+       Code f;
+
+       void lpoint(l, p, f) Layer *l; Point p; Code f;
+
+       void lrectf(l, r, f) Layer *l; Rectangle r; Code f;
+
+       void segment(l, p, q, f) Layer *l; Point p, q; Code f;
+
+       void ltexture(l, r, t, f) Layer *l; Rectangle r; Texture *t; Code f;
+
+DESCRIPTION
+       Newlayer creates a layer in Rectangle r in the physical display bitmap,
+       and returns its address, or 0 on failure.  Newproc(9.2) explains how to
+       attach a process to a layer.
+
+       Dellayer de-allocates a layer; the associated process must also be
+       freed (see <a href="../man9/newproc.9.html">newproc(9.2)</a>).
+
+       The routines lbitblt, lpoint, lsegment and ltexture are equivalent to
+       their <a href="../man9/bitblt.9.html">bitblt(9.3)</a> counterparts except that they never inhibit the mouse
+       cursor, so they are mainly useful only for implementation of efficient
+       composite graphics operations such as circle-drawing.  Because of the
+       duality of Bitmaps and Layers, arguments of either type may be passed
+       freely to any of the graphics primitives.
+
+SEE ALSO
+       <a href="../man9/bitblt.9.html">bitblt(9.3)</a>, <a href="../man9/newproc.9.html">newproc(9.2)</a>
+       Graphics in Overlapping Bitmap Layers, Rob Pike, ACM Trans. on
+       Graphics, April 1983.
+
+                                                                 NEWLAYER(9.2)
+</pre>
+</body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>su.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; su.8 (<a href="../../../../source/v8/usr/man/man8/su.8">troff source</a>)</p>
+<pre>
+SU(8)                       System Manager's Manual                      SU(8)
+
+NAME
+       su - substitute user id temporarily
+
+SYNOPSIS
+       /etc/su [ user ]
+
+DESCRIPTION
+       Su demands the password for the login name user, and if it is given,
+       changes to that userid and invokes the Shell <a href="../man1/sh.1.html">sh(1)</a> without changing the
+       current directory.  The user environment is unchanged except for HOME
+       and SHELL, which are taken from the password file for the user being
+       substituted (see <a href="../man5/environ.5.html">environ(5)</a>).  The new userid stays in force until the
+       Shell exits.
+
+       If no user is specified, `root' is assumed.  To remind the super-user
+       of his responsibilities, the Shell substitutes `#' for its usual
+       prompt.
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>
+
+                                                                         SU(8)
+</pre>
+</body></html>

@@ -1,0 +1,23 @@
+ERF(3M)                                                                ERF(3M)
+
+NAME
+       erf, erfc - error function
+
+SYNOPSIS
+       #include <math.h>
+
+       double erf(x)
+       double x;
+
+       double erfc(x)
+       double x;
+
+DESCRIPTION
+       These functions calculate the error function erf(x) =(2/)∫exp(−t2)dt
+       and the complementary error function erfc(x) = 1 - erf(x).  The error
+       criterion for both erf and erfc is relative.
+
+DIAGNOSTICS
+       There are no error returns.
+
+                                                                       ERF(3M)

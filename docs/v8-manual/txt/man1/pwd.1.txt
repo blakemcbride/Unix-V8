@@ -1,0 +1,22 @@
+PWD(1)                      General Commands Manual                     PWD(1)
+
+NAME
+       pwd, where - print machine name and working directory
+
+SYNOPSIS
+       pwd
+
+       where
+
+DESCRIPTION
+       Pwd prints the pathname of the working (current) directory.
+
+       Where prints the name of the machine and the pathname of the current
+       directory in the form
+
+              machine!fullpathname
+
+SEE ALSO
+       cd(1)
+
+                                                                        PWD(1)

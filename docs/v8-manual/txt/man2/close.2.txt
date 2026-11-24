@@ -1,0 +1,24 @@
+CLOSE(2)                      System Calls Manual                     CLOSE(2)
+
+NAME
+       close - close a file
+
+SYNOPSIS
+       close(fildes)
+
+DESCRIPTION
+       Close closes the file associated with a file descriptor.
+
+       Files are closed upon termination of a process, but since there is a
+       limit on the number of open files per process, close is necessary for
+       programs which deal with many files.  It is possible to arrange for
+       files to be closed by exec(2); see FIOCLEX in ioctl(2).
+
+SEE ALSO
+       creat(2), open(2), pipe(2), exec(2), ioctl(2)
+
+DIAGNOSTICS
+       Zero is returned if a file is closed; -1 is returned for an unknown
+       file descriptor.
+
+                                                                      CLOSE(2)

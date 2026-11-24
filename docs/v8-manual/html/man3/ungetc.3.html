@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ungetc.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; ungetc.3 (<a href="../../../../source/v8/usr/man/man3/ungetc.3">troff source</a>)</p>
+<pre>
+UNGETC(3S)                                                          UNGETC(3S)
+
+NAME
+       ungetc - push character back into input stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       ungetc(c, stream)
+       FILE *stream;
+
+DESCRIPTION
+       Ungetc pushes the character c back on an input stream.  That character
+       will be returned by the next getc call on that stream.  Ungetc returns
+       c.
+
+       One character of pushback is guaranteed provided something has been
+       read from the stream and the stream is actually buffered.  Attempts to
+       push EOF are rejected.
+
+       Fseek(3) erases all memory of pushed back characters.
+
+SEE ALSO
+       <a href="../man3/getc.3.html">getc(3)</a>, <a href="../man3/setbuf.3.html">setbuf(3)</a>, <a href="../man3/fseek.3.html">fseek(3)</a>
+
+DIAGNOSTICS
+       Ungetc returns EOF if it can't push a character back.
+
+                                                                    UNGETC(3S)
+</pre>
+</body></html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tail.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; tail.1 (<a href="../../../../source/v8/usr/man/man1/tail.1">troff source</a>)</p>
+<pre>
+TAIL(1)                     General Commands Manual                    TAIL(1)
+
+NAME
+       tail - deliver the last part of a file
+
+SYNOPSIS
+       tail [ ±number[lbc][fr] ] [ file ]
+
+DESCRIPTION
+       Tail copies the named file to the standard output beginning at a
+       designated place.  If no file is named, the standard input is used.
+
+       Copying begins at distance +number from the beginning, or -number from
+       the end of the input.  Number is counted in units of lines, 1K blocks
+       or characters, according to the appended option l, b or c.  When no
+       units are specified, counting is by lines.
+
+       Option r causes tail to print lines from the end of the file in reverse
+       order.  Option f (follow) causes tail not to stop at the end, and to
+       watch for further data to appear.
+
+SEE ALSO
+       <a href="../man1/dd.1.html">dd(1)</a>
+
+BUGS
+       Tails relative to the end of the file are treasured up in a buffer, and
+       thus are limited in length.
+       Various kinds of anomalous behavior may happen with character special
+       files.
+
+                                                                       TAIL(1)
+</pre>
+</body></html>

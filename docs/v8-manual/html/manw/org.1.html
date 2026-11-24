@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>org.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section w</a> &gt; org.1 (<a href="../../../../source/v8/usr/man/manw/org.1">troff source</a>)</p>
+<pre>
+ORG(1)                      General Commands Manual                     ORG(1)
+
+NAME
+       org - show the organization of a document
+
+SYNOPSIS
+       org [ -flags ][ -ver ] [file ...]
+
+DESCRIPTION
+       Org copies the input text to the output, and formats it, preserving
+       headings and paragraph boundaries, but only including the first and
+       last sentence of each paragraph.  The input text must contain standard
+       <a href="../manw/mm.1.html">mm(1)</a> macros.
+
+       The output can be used to study the general organization of the paper,
+       and is sometimes a good abstract.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+SEE ALSO
+       <a href="../manw/mm.1.html">mm(1)</a>.
+
+BUGS
+       The input text must contain standard mm macros.
+
+       Org will not recognize common abbreviations at the end of a sentence as
+       the sentence end.  Consequently, more than two sentences may be printed
+       for a paragraph.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                        ORG(1)
+</pre>
+</body></html>

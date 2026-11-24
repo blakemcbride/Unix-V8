@@ -1,0 +1,19 @@
+TABS(1)                     General Commands Manual                    TABS(1)
+
+NAME
+       tabs - set terminal tabs
+
+SYNOPSIS
+       tabs [ +mnum ] [ -Tterm ]
+
+DESCRIPTION
+       Tabs sets the tabs on a variety of terminals.  Term is a name given in
+       term(7).  The name may also be supplied by the environment variable
+       TERM.
+
+       The +n option offsets the left margin n positions.
+
+SEE ALSO
+       stty(1), term(7), tset(1)
+
+                                                                       TABS(1)

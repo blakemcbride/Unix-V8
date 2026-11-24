@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>time.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; time.2 (<a href="../../../../source/v8/usr/man/man2/time.2">troff source</a>)</p>
+<pre>
+TIME(2)                       System Calls Manual                      TIME(2)
+
+NAME
+       time, ftime - get date and time
+
+SYNOPSIS
+       long time(0)
+
+       long time(tloc)
+       long *tloc;
+
+       #include &lt;sys/types.h&gt;
+       #include &lt;sys/timeb.h&gt;
+       ftime(tp)
+       struct timeb *tp;
+
+DESCRIPTION
+       Time returns the time since 00:00:00 GMT, Jan. 1, 1970, measured in
+       seconds.
+
+       If tloc is nonnull, the return value is also stored in the place to
+       which tloc points.
+
+       The ftime entry fills in a structure pointed to by its argument, as
+       defined by &lt;sys/timeb.h&gt;:
+
+       /*
+        * Structure returned by ftime system call
+        */
+       struct timeb
+       {
+            time_t   time;
+            unsigned short millitm;
+            short    timezone;
+            short    dstflag;
+       };
+
+       The structure contains the time since the epoch in seconds, up to 1000
+       milliseconds of more-precise interval, the local time zone (measured in
+       minutes of time westward from Greenwich), and a flag that, if nonzero,
+       indicates that Daylight Saving time applies locally during the
+       appropriate part of the year.
+
+SEE ALSO
+       <a href="../man1/date.1.html">date(1)</a>, <a href="../man2/stime.2.html">stime(2)</a>, <a href="../man3/ctime.3.html">ctime(3)</a>
+
+                                                                       TIME(2)
+</pre>
+</body></html>

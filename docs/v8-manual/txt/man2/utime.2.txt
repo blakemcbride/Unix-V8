@@ -1,0 +1,23 @@
+UTIME(2)                      System Calls Manual                     UTIME(2)
+
+NAME
+       utime - set file times
+
+SYNOPSIS
+       #include <sys/types.h>
+
+       utime(file, timep)
+       char *file;
+       time_t timep[2];
+
+DESCRIPTION
+       The utime call uses the `accessed' and `updated' times in that order
+       from the timep vector to set the corresponding recorded times for file.
+
+       The caller must be the owner of the file or the super-user.  The
+       `inode-changed' time of the file is set to the current time.
+
+SEE ALSO
+       stat(2)
+
+                                                                      UTIME(2)

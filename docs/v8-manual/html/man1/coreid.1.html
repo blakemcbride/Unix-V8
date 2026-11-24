@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>coreid.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; coreid.1 (<a href="../../../../source/v8/usr/man/man1/coreid.1">troff source</a>)</p>
+<pre>
+COREID(1)                   General Commands Manual                  COREID(1)
+
+NAME
+       coreid - identify source of core image
+
+SYNOPSIS
+       coreid [ corefile ]
+
+DESCRIPTION
+       Coreid reads the file ``core,'' or the specified corefile if given, and
+       prints on its standard output the argument list of the command which
+       produced the core image.
+
+FILES
+       core
+
+SEE ALSO
+       <a href="../man5/core.5.html">core(5)</a>
+
+BUGS
+       Only works for core images from C and FORTRAN programs.
+       The arguments shown are those at the time of the dump, not at
+       invocation of the command.
+
+                                                                     COREID(1)
+</pre>
+</body></html>

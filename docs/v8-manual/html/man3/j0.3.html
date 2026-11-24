@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>j0.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; j0.3 (<a href="../../../../source/v8/usr/man/man3/j0.3">troff source</a>)</p>
+<pre>
+J0(3M)                                                                  J0(3M)
+
+NAME
+       j0, j1, jn, y0, y1, yn - bessel functions
+
+SYNOPSIS
+       #include &lt;math.h&gt;
+
+       double j0(x)
+       double x;
+
+       double j1(x)
+       double x;
+
+       double jn(n, x)
+       double x;
+
+       double y0(x)
+       double x;
+
+       double y1(x)
+       double x;
+
+       double yn(n, x)
+       double x;
+
+DESCRIPTION
+       These functions calculate Bessel functions of the first and second
+       kinds for real arguments and integer orders.
+
+DIAGNOSTICS
+       Negative arguments cause y0, y1, and yn to return a huge negative value
+       and set errno to EDOM.
+
+                                                                        J0(3M)
+</pre>
+</body></html>

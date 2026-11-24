@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>exp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; exp.3 (<a href="../../../../source/v8/usr/man/man3/exp.3">troff source</a>)</p>
+<pre>
+EXP(3M)                                                                EXP(3M)
+
+NAME
+       exp, log, log10, pow, sqrt - exponential, logarithm, power, square root
+
+SYNOPSIS
+       #include &lt;math.h&gt;
+
+       double exp(x)
+       double x;
+
+       double log(x)
+       double x;
+
+       double log10(x)
+       double x;
+
+       double pow(x, y)
+       double x, y;
+
+       double sqrt(x)
+       double x;
+
+DESCRIPTION
+       Exp returns the exponential function of x.
+
+       Log returns the natural logarithm of x; log10 returns the base 10
+       logarithm.
+
+       Pow returns xy0.
+
+       Sqrt returns the square root of x.
+
+SEE ALSO
+       <a href="../man3/hypot.3.html">hypot(3)</a>, <a href="../man3/sinh.3.html">sinh(3)</a>, <a href="../man2/intro.2.html">intro(2)</a>
+
+DIAGNOSTICS
+       Exp and pow return a huge value when the correct value would overflow;
+       errno is set to ERANGE.  Pow returns 0 and sets errno to EDOM when the
+       second argument is negative and non-integral and when both arguments
+       are 0.
+
+       Log returns a huge negative value when x is zero or negative; errno is
+       set to EDOM.
+
+       Sqrt returns 0 when x is negative; errno is set to EDOM.
+
+                                                                       EXP(3M)
+</pre>
+</body></html>

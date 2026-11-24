@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>column.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; column.1 (<a href="../../../../source/v8/usr/man/man1/column.1">troff source</a>)</p>
+<pre>
+COLUMN(1)                   General Commands Manual                  COLUMN(1)
+
+NAME
+       col, 2-6, mc, fold, expand - column alignment
+
+SYNOPSIS
+       col [ -bfx ]
+
+       2 [ file ]
+
+       ind [ prefix ]
+
+       fold [ -N ] [ file ] ...
+
+       mc [ - ] [ -N ] [ -t ] [ file ] ...
+
+       expand [ -stops ] [ file ] ...
+
+DESCRIPTION
+       These programs rearrange files for appearance's sake.  All read the
+       standard input and write the standard output.  Some optionally read
+       from files instead.
+
+       Col overlays lines to expunge reverse line feeds (ESC-7) and half line
+       feeds (ESC-9 and ESC-8) as produced by nroff for .2C in <a href="../man7/ms.7.html">ms(7)</a> and for
+       <a href="../man1/tbl.1.html">tbl(1)</a>.  It normally emits only full line feeds; option -f (fine)
+       allows half line feeds too.  Option -b removes backspaces, printing
+       just one of each pile of overstruck characters.  Col normally converts
+       white space to tabs; option -x overrides this feature.  Other escaped
+       characters and non-printing characters, except for SO and SI, are
+       ignored.
+
+       Col should not be used for printing on an HP ThinkJet printer with
+       think(9.1), which performs the col function itself.
+
+       Commands 2, 3, 4, 5, 6 convert their input to 2-, 3-, 4-, 5-, or
+       6-column form.
+
+       Mc prints in as many columns as will fit on N-column `paper' (default
+       n=80).  If an input line ends in a colon `:', a `break' occurs; thus
+       `ls directory1 directory2 | mc' lists each directory separately.  This
+       feature is suppressed if option - is present, or if input is from a
+       file.  On output, multiple spaces are converted to tabs; this is
+       suppressed by option -t.
+
+       Expand replaces tabs by spaces.  The optional stops argument is a
+       comma-separated of tab stop postions, counted from 0; default is every
+       8 columns.
+
+       Fold inserts newlines after each N characters (default n=80) of long
+       lines.
+
+EXAMPLE
+       tbl file ⎪ nroff -ms ⎪ col ⎪ hp
+
+FILES
+       /etc/termcap
+
+SEE ALSO
+       <a href="../man1/pr.1.html">pr(1)</a>
+
+BUGS
+       Col can't back up more than 128 lines or handle more than 800
+       characters per line, and understands VT (013) as reverse line feed.
+
+                                                                     COLUMN(1)
+</pre>
+</body></html>

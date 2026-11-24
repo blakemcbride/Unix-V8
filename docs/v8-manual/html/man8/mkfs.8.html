@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mkfs.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; mkfs.8 (<a href="../../../../source/v8/usr/man/man8/mkfs.8">troff source</a>)</p>
+<pre>
+MKFS(8)                     System Manager's Manual                    MKFS(8)
+
+NAME
+       mkfs, mkbitfs, mklost+found - construct a file system
+
+SYNOPSIS
+       /etc/mkfs special size
+
+       /etc/mkbitfs special size
+
+       /etc/mklost+found
+
+DESCRIPTION
+       Mkfs (mkbitfs) constructs a regular (bitmapped) file system by writing
+       on the special file special.  Size is the number of 1K (4K) blocks on
+       the special file.  The resulting file system has a single empty
+       directory.  The number of i-nodes is calculated as a function of the
+       filesystem size.
+
+       Immediately after creating a file system, mklost+found should be run to
+       create a repository for disconnected files recovered by <a href="../man8/fsck.8.html">fsck(8)</a>.  If
+       the special file is /dev/disk and its mount point /mnt, mklost+found
+       works as follows:
+
+              /etc/mount /dev/disk /mnt
+              cd /mnt
+              /etc/mklost+found
+
+       Mkfs (only) also has capabilities for assembling a prototype file
+       system, but this code has not been exercised in years.
+
+SEE ALSO
+       <a href="../man5/filsys.5.html">filsys(5)</a>, <a href="../man8/fsck.8.html">fsck(8)</a>
+
+BUGS
+       There should be some way to specify bad blocks.
+       Mkfs and mkbitfs should make lost+found automatically.
+
+                                                                       MKFS(8)
+</pre>
+</body></html>

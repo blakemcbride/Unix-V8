@@ -1,0 +1,45 @@
+IDIFF(1)                    General Commands Manual                   IDIFF(1)
+
+NAME
+       idiff - interactive file comparison
+
+SYNOPSIS
+       idiff file1 file2
+
+DESCRIPTION
+       Idiff compares file1 with file2 using diff, then presents each set of
+       changed lines for selection or processing.  File2 may be a directory;
+       in that case, the basename of file1 is appended.
+
+       For each group, legal responses are
+
+       <      to retain the `from' lines
+
+       >      to retain the `to' lines
+
+       e      to edit both sets of lines
+
+       d      to delete both sets
+
+       1      to retain the rest of the `from' file
+
+       2      to retain the rest of the `to' file
+
+       !      to invoke a shell command
+
+       Lines common to each file are copied verbatim.  Lines produced by this
+       process, including the lines written from within the editor, are
+       written to file idiff.out.
+
+FILES
+       idiff.out
+       idiff.*
+       /tmp/idiff.*
+
+SEE ALSO
+       diff(1), diff3(1)
+
+BUGS
+       There is no way to revisit a choice.
+
+                                                                      IDIFF(1)

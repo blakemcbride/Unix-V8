@@ -1,0 +1,13 @@
+BACK(6)                          Games Manual                          BACK(6)
+
+NAME
+       back - backgammon
+
+SYNOPSIS
+       /usr/games/back
+
+DESCRIPTION
+       This program does what you expect.  It will ask whether you need
+       instructions.
+
+                                                                       BACK(6)

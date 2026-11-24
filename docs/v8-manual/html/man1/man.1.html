@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>man.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; man.1 (<a href="../../../../source/v8/usr/man/man1/man.1">troff source</a>)</p>
+<pre>
+MAN(1)                      General Commands Manual                     MAN(1)
+
+NAME
+       man - print sections of this manual
+
+SYNOPSIS
+       man [ option ... ] [ chapter ] title ...
+
+DESCRIPTION
+       Man locates and prints the section of this manual named title in the
+       specified chapter.  (In this context, the word `page' is often used as
+       a synonym for `section'.)  The title is entered in lower case.  The
+       chapter number does not have a letter suffix.  If no chapter is
+       specified, the whole manual is searched for title and all occurrences
+       of it are printed.
+
+       Options and their meanings are:
+
+       -q     Copy an already formatted manual section to the terminal or, if
+              none is available, act as -n.  If the standard output is a
+              terminal, underline(1) the output.  This is the default option.
+
+       -t     Place typesetting instructions on the standard output using
+              <a href="../man1/troff.1.html">troff(1)</a>.
+
+       -n     Print the section on the standard output using nroff.
+
+       -w     Print the path names of the manual sections, but do not print
+              the sections themselves.
+
+       Further options, e.g. to specify the kind of terminal you have, are
+       passed on to <a href="../man1/troff.1.html">troff(1)</a> or nroff.  Options and chapter may be changed
+       before each title.
+
+EXAMPLE
+       man man
+              reproduces this section as well as any other sections named man
+              that may exist in other chapters of the manual, e.g.  <a href="../man7/man.7.html">man(7)</a>.
+
+FILES
+       /usr/man/man?/∗
+       /usr/spool/man/∗
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/eqn.1.html">eqn(1)</a>, tc(1), <a href="../man7/man.7.html">man(7)</a>
+
+BUGS
+       The manual was intended to be typeset; some detail is sacrificed on
+       terminals.
+       You can't ask for manual pages named 1 through 9.
+       Certain manual pages (those that need eqn ) terminate the output under
+       option -t, causing any following pages to be lost.
+
+                                                                        MAN(1)
+</pre>
+</body></html>

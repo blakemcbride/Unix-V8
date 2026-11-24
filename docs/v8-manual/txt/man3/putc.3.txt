@@ -1,0 +1,58 @@
+PUTC(3S)                                                              PUTC(3S)
+
+NAME
+       putc, putchar, fputc, putw - put character or word on a stream
+
+SYNOPSIS
+       #include <stdio.h>
+
+       int putc(c, stream)
+       char c;
+       FILE *stream;
+
+       putchar(c)
+
+       fputc(c, stream)
+       FILE *stream;
+
+       putw(w, stream)
+       FILE *stream;
+
+DESCRIPTION
+       Putc appends the character c to the named output stream.  It returns
+       the character written.
+
+       Putchar(c) is defined as putc(c, stdout).
+
+       Fputc behaves like putc, but is a genuine function rather than a macro.
+       It may be used to save on object text.
+
+       Putw appends word (i.e.  int) w to the output stream.  It returns the
+       word written.  Putw neither assumes nor causes special alignment in the
+       file.
+
+       The standard stream stdout is normally buffered if and only if the
+       output does not refer to a terminal, in which case buffering occurs
+       only within calls to printf(3).  This default may be changed by
+       setbuf(3).  The standard stream stderr is normally unbuffered; freopen
+       (see fopen(3)) will cause it to become buffered.  When an output stream
+       is unbuffered information appears on the destination file or terminal
+       as soon as written; when it is buffered many characters are saved up
+       and written as a block.  Fflush (see fclose(3)) may be used to force
+       the block out early.
+
+SEE ALSO
+       fopen(3), fclose(3), getc(3), puts(3), printf(3), fread(3)
+
+DIAGNOSTICS
+       These functions return the constant EOF upon error.  In the case of
+       putw this indication is ambiguous; ferror(3) may be used to
+       distinguish.
+
+BUGS
+       Because it is implemented as a macro, putc treats a stream argument
+       with side effects improperly.  In particular `putc(c, *f++)' doesn't
+       work sensibly.
+       Errors can occur long after the call to putc.
+
+                                                                      PUTC(3S)

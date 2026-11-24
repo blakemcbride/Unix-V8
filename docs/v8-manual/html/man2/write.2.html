@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>write.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; write.2 (<a href="../../../../source/v8/usr/man/man2/write.2">troff source</a>)</p>
+<pre>
+WRITE(2)                      System Calls Manual                     WRITE(2)
+
+NAME
+       write - write on a file
+
+SYNOPSIS
+       write(fildes, buffer, nbytes)
+       char *buffer;
+
+DESCRIPTION
+       Write writes data on the open file associated with the file descriptor.
+
+       Buffer is the address of nbytes contiguous bytes which are written on
+       the output file.  The number of characters actually written is
+       returned.  It should be regarded as an error if this is not the same as
+       requested.
+
+       If the open file is being read by another process, data of at most one
+       write will be delivered to any <a href="../man2/read.2.html">read(2)</a> in the other process.  In
+       particular, if nbytes = 0, the read will return a count of 0, which is
+       conventionally taken to mean end of file.
+
+       Writes which are synchronized with file system blocks are more
+       efficient than others; see <a href="../man5/filsys.5.html">filsys(5)</a>.
+
+       On some systems write clears the set-user-id bit on a file.  This
+       prevents penetration of system security by a user who captures a
+       writable set-user-id file that he does not own.
+
+SEE ALSO
+       <a href="../man2/creat.2.html">creat(2)</a>, <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/pipe.2.html">pipe(2)</a>, <a href="../man2/select.2.html">select(2)</a>
+
+DIAGNOSTICS
+       Returns -1 on error: bad descriptor, buffer address, or count; physical
+       I/O errors.
+
+                                                                      WRITE(2)
+</pre>
+</body></html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>netstat.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; netstat.8 (<a href="../../../../source/v8/usr/man/man8/netstat.8">troff source</a>)</p>
+<pre>
+NETSTAT(8)                  System Manager's Manual                 NETSTAT(8)
+
+NAME
+       netstat - show network status for ARPA internet
+
+SYNOPSIS
+       /usr/inet/bin/netstat [ -acCirs ] [ system ] [ core ]
+
+DESCRIPTION
+       Netstat displays internet traffic and configuration data.  The options
+       are:
+
+       -a     show the known mappings between internet names and ethernet
+              addresses.
+
+       -c     show all socket assignments.
+
+       -C     show only sockets with active connections.
+
+       -i     show the state of interfaces.
+
+       -s     show protocol statistics.
+
+       -r     show the routing tables.
+
+       The arguments system and core are substitutes for the defaults `/unix'
+       and `/dev/kmem'.
+
+FILES
+       /usr/inet/bin/netstat
+       /usr/inet/lib/hosts
+       /usr/inet/lib/networks
+       /usr/inet/lib/services
+       /unix
+
+DIAGNOSTICS
+       `nlist /unix failed' - Netstat could not find pertinent kernel
+       information.  This message occurs on machines that can not handle
+       internet traffic.
+
+SEE ALSO
+       <a href="../man8/vmstat.8.html">vmstat(8)</a>
+
+                                   research                         NETSTAT(8)
+</pre>
+</body></html>

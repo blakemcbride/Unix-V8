@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sleep.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; sleep.3 (<a href="../../../../source/v8/usr/man/man3/sleep.3">troff source</a>)</p>
+<pre>
+SLEEP(3)                   Library Functions Manual                   SLEEP(3)
+
+NAME
+       sleep - suspend execution for an interval
+
+SYNOPSIS
+       sleep(seconds)
+       unsigned seconds;
+
+DESCRIPTION
+       The current process is suspended from execution for the number of
+       seconds specified by the argument.  The actual suspension time may be
+       up to 1 second less than that requested, because scheduled wakeups
+       occur at fixed 1-second intervals, and an arbitrary amount longer
+       because of other activity in the system.
+
+       The routine is implemented by setting an alarm clock signal and pausing
+       until it occurs.  The previous state of this signal is saved and
+       restored.  If the sleep time exceeds the time to the alarm signal, the
+       process sleeps only until the signal would have occurred, and the
+       signal is sent 1 second later.
+
+SEE ALSO
+       <a href="../man2/alarm.2.html">alarm(2)</a>, <a href="../man2/pause.2.html">pause(2)</a>
+
+                                                                      SLEEP(3)
+</pre>
+</body></html>

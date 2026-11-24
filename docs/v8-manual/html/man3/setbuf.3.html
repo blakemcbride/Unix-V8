@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>setbuf.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; setbuf.3 (<a href="../../../../source/v8/usr/man/man3/setbuf.3">troff source</a>)</p>
+<pre>
+SETBUF(3S)                                                          SETBUF(3S)
+
+NAME
+       setbuf - assign buffering to a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       setbuf(stream, buf)
+       FILE *stream;
+       unsigned char *buf;
+
+DESCRIPTION
+       Setbuf is used after a stream has been opened but before it is read or
+       written.  It causes the character array buf to be used instead of an
+       automatically allocated buffer.  If buf is the constant pointer NULL,
+       input/output will be completely unbuffered.
+
+       A manifest constant BUFSIZ tells how big an array is needed:
+
+              unsigned char buf[BUFSIZ];
+
+       A buffer is normally obtained from <a href="../man3/malloc.3.html">malloc(3)</a> upon the first getc or
+       <a href="../man3/putc.3.html">putc(3)</a> on the file, except that the standard output is line buffered
+       when directed to a terminal.  Other output streams directed to
+       terminals, and the standard error stream stderr are normally not
+       buffered.  If the standard output is line buffered, then it is flushed
+       each time data is read from the standard input by <a href="../man2/read.2.html">read(2)</a>.
+
+SEE ALSO
+       <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/getc.3.html">getc(3)</a>, <a href="../man3/putc.3.html">putc(3)</a>, <a href="../man3/malloc.3.html">malloc(3)</a>
+
+                                                                    SETBUF(3S)
+</pre>
+</body></html>

@@ -1,0 +1,22 @@
+ASSERT(3X)                                                          ASSERT(3X)
+
+NAME
+       assert - program verification
+
+SYNOPSIS
+       #include <assert.h>
+
+       assert(expression)
+
+DESCRIPTION
+       Assert is a macro that indicates expression is expected to be true at
+       this point in the program.  It causes an exit(2) with a diagnostic
+       comment on the standard output when expression is false (0).  Compiling
+       with the cc(1) option -DNDEBUG effectively deletes assert from the
+       program.
+
+DIAGNOSTICS
+       `Assertion failed: file f line n.'  F is the source file and n the
+       source line number of the assert statement.
+
+                                                                    ASSERT(3X)

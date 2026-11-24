@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>thinkblt.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; thinkblt.9 (<a href="../../../../source/v8/usr/man/man9/thinkblt.9">troff source</a>)</p>
+<pre>
+THINKBLT(9.1)                                                    THINKBLT(9.1)
+
+NAME
+       thinkblt, think - print on ThinkJet
+
+SYNOPSIS
+       thinkblt [ stream ]
+
+       think [ -o stream ] [ files... ]
+
+       nroff -Tthink ... | think [ -o stream ]
+
+DESCRIPTION
+       Thinkblt downloads an interrupt driver for the printer, provides a menu
+       of operations for printing various data residing in the terminal, and
+       sets up a stream ($HOME/.THINK by default) on which think can print
+       data from the host.  It is intended to be down-loaded once per terminal
+       session.  Most of the menu items are identical to those of
+       <a href="../man9/blitblt.9.html">blitblt(9.1)</a>.  The remaining ones are:
+
+       print bitmap      prints whatever bitmap is currently selected, in
+                         analogy to <a href="../man9/blitblt.9.html">blitblt(9.1)</a>.  The widest printable bitmap
+                         is 640 pixels across.
+
+       print mux buffer  prints the mux `snarf' buffer.
+
+       reset printer     sends `&lt;esc&gt;E'.
+
+       While the printer is operating, a different menu allows one to abort or
+       pause the print operation.  The printer has a fairly large internal
+       buffer, so response may be slow.
+
+       Files on the host may be printed by giving them as arguments or
+       standard input to think.  When used with nroff, names like \(′e may be
+       used to access the special characters provided by the hardware; see the
+       nroff(1) terminal driving file for a complete list.  Both nroff(1) and
+       <a href="../man1/pr.1.html">pr(1)</a> will paginate properly if top-of-form is set so that the paper
+       tear is aligned flush with the top of the metal clip which holds the
+       absorber.
+
+FILES
+       /usr/jerq/mbin/thinkblt.m - terminal program
+       /usr/lib/term/tab.think - nroff descriptor file
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/pr.1.html">pr(1)</a>, <a href="../man9/blitblt.9.html">blitblt(9.1)</a>
+
+BUGS
+       The 5620 ROM program is unable to cope with interrupts from the
+       printer; it is therefore necessary to download <a href="../man9/mux.9.html">mux(9.1)</a> before powering
+       on the printer.
+
+       Thinkblt substitutes its own interrupt routine for the (trivial) one
+       provided by <a href="../man9/mux.9.html">mux(9.1)</a>.  The latter is restored upon exit, but havoc may
+       result if the thinkblt layer is simply deleted.
+
+       The special nroff(1) character names are not currently supported by any
+       other device.
+
+                                                                 THINKBLT(9.1)
+</pre>
+</body></html>

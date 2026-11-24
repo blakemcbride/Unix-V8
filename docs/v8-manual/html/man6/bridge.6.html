@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>bridge.6 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 6</a> &gt; bridge.6 (<a href="../../../../source/v8/usr/man/man6/bridge.6">troff source</a>)</p>
+<pre>
+BRIDGE(6)                        Games Manual                        BRIDGE(6)
+
+NAME
+       bridge - card game
+
+SYNOPSIS
+       /usr/games/bridge [ arg ] ...
+
+DESCRIPTION
+       Bridge manages bridge games among four players.  A master process
+       mediates the flow of information between player processes.  Each player
+       process is either a `robot' player or a cursor-controlled screen
+       interface with a human player.
+
+       If several humans wish to play each invokes bridge and a rendezvous
+       protocol hooks them together in a common game.  Once the game is set up
+       bridge displays a diagram similar to those in newspaper bridge columns.
+
+       Bids are coded p for pass, d for double, 3n for three notrump, and so
+       on.  Plays are coded c3 for the club three, ht for the heart ten, and
+       so on.  A menu of common commands appears at the bottom of the screen;
+       further help may be obtained by typing +.
+
+       Arguments take several forms:
+
+       -h nhumans
+       humans=nhumans
+              Join (or set up and join) a game with indicated number of human
+              players.
+       -s seed
+       seed=seed
+              Initialize the random number generator.  Useful for duplicate
+              play.
+       -f file
+       deck=file
+              Take the initial shuffled card deck from named file.
+       -r file
+       script=file
+              Make a record of the game in the named file.
+       -d dealership
+       dlr=dealership
+              Specify dealership with a one-letter direction code.
+       -v vulnerability
+       vuln=vulnerability
+              Specify vulnerability with one of these codes: none both n-s e-
+              w.
+       -t
+       tough  Do not display bidding history on player's screen.
+
+FILES
+       /tmp/nbridgez* rendezvous file for robots
+       /tmp/mbridgey* rendezvous file for humans
+       /tmp/mbridge*  temporary lock file
+       /dev/pt/pt*    interprocess communication
+       /etc/termcap
+       DEBUG          recipient of debugging messages
+
+SEE ALSO
+       J. A. Reeds and L. A. Shepp, Bridge: An exciting new card game, TM
+       11217-840119-02, TM 11218-840119-01.
+
+BUGS
+       Occasionally the whole program goes dead.
+       The robots' bridge technique has subtle bugs.
+
+                                     alice                           BRIDGE(6)
+</pre>
+</body></html>

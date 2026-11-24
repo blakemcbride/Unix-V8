@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fork.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; fork.2 (<a href="../../../../source/v8/usr/man/man2/fork.2">troff source</a>)</p>
+<pre>
+FORK(2)                       System Calls Manual                      FORK(2)
+
+NAME
+       fork - spawn new process
+
+SYNOPSIS
+       fork()
+
+DESCRIPTION
+       Fork is the only way new processes are created.  The new process's core
+       image is a copy of that of the caller of fork.  The only distinction is
+       that the value returned in the old (parent) process is the process ID
+       of the new (child) process, while the value returned in the child is 0.
+       Process ID's range from 1 to 30,000.  The process ID is used by
+       <a href="../man2/wait.2.html">wait(2)</a>.
+
+       Files open before the fork are shared, and have a common read-write
+       pointer.  In particular, this is the way that standard input and output
+       files are passed and also how pipes are set up.
+
+SEE ALSO
+       <a href="../man2/wait.2.html">wait(2)</a>, <a href="../man2/exec.2.html">exec(2)</a>
+
+DIAGNOSTICS
+       Returns -1 and fails to create a process if: there is inadequate swap
+       space, the user is not super-user and has too many processes, or the
+       system's process table is full.  Only the super-user can take the last
+       process-table slot.
+
+                                                                       FORK(2)
+</pre>
+</body></html>

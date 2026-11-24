@@ -1,0 +1,48 @@
+WINDOWS(9.1)                                                      WINDOWS(9.1)
+
+NAME
+       windows, jps, reshape - create and initialize windows
+
+SYNOPSIS
+       windows [ ox oy cx cy "command [args]" ] ...
+
+       jps
+
+       reshape [ -r ] x y
+
+DESCRIPTION
+       For each set of arguments, windows makes a mux(9.1) layer with
+       rectangle Rect(ox, oy, cx, cy) (see types(9.5)), then executes the
+       command therein.  The command may be null ("").  Any number of layers
+       may be specified;  each command and its args appears as a single
+       argument to windows.
+
+       In windows that are not expected to be reused and do not need a shell,
+       it is good practice to invoke the command with `exec'; see sh(1).
+
+       Jps prints the rectangle coordinates of each window and the arguments
+       (if any) with which it was down-loaded, to help set up the windows
+       command.
+
+       Reshape adjusts its layer so that the display rectangle inside the
+       border is x by y pixels.  Under option -r it adjusts the width/height
+       ratio to x/y, with the new shape as large as will fit inside the old.
+
+SEE ALSO
+       mux(9.1), ruler(9.1)
+
+DIAGNOSTICS
+       Windows may adjust rectangles to a minimum size or to stay within the
+       usual layer bounds (8 pixels inside the screen edge).
+       Layer creation can fail if there are no process slots or memory left in
+       the terminal.
+       Reshape clips a layer that is too big (display rectangle > 786×1002)
+       and does nothing if the layer is too small (<100×40) or if there is no
+       space.
+
+BUGS
+       Jps reports what has been downloaded to the 5620; usually this is not
+       the same as the command that must be used in windows to cause the
+       download.
+
+                                                                  WINDOWS(9.1)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>seq.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; seq.1 (<a href="../../../../source/v8/usr/man/man1/seq.1">troff source</a>)</p>
+<pre>
+SEQ(1)                      General Commands Manual                     SEQ(1)
+
+NAME
+       seq  -  print sequences of numbers
+
+SYNOPSIS
+       seq [-w] [-ppicture] [ first [ incr ] ] last
+
+DESCRIPTION
+       Seq prints the sequence of numbers, one per line, from first (default
+       1) to last, inclusive, in increments of incr (default 1).  The numbers
+       are interpreted as floating point.
+
+       The default output format is to round each number to the nearest
+       integer.  This may be overridden by specifying a picture that is an
+       example of the desired format.  For example, the option -p10.00 results
+       in numbers printed to two decimal places.  Leading zeroes in the
+       picture are preserved in the output.
+
+       The option -w causes the output lines to have constant width, by
+       padding short numbers with leading zeroes, after the minus sign for
+       negative numbers.
+
+BUGS
+       Pictures involving exponents don't work.
+
+                                                                        SEQ(1)
+</pre>
+</body></html>

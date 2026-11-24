@@ -1,0 +1,25 @@
+CORE(5)                       File Formats Manual                      CORE(5)
+
+NAME
+       core - format of memory image file
+
+DESCRIPTION
+       UNIX writes out a memory image of a terminated process when any of
+       various errors occur.  See signal(2) for the list of reasons; the most
+       common are memory violations, illegal instructions, bus errors, and
+       user-generated quit signals.  The memory image is called `core' and is
+       written in the process's working directory (provided it can be; normal
+       access controls apply).
+
+       The core file consists of the u. area, which currently consists of 6
+       pages, beginning with a user structure as given in
+       /usr/include/sys/user.h.  The kernel stack grows from the end of this 6
+       page region.  The remainder of the core file consists first of the data
+       pages and then the stack pages of the process image.
+
+       In general the debugger adb(1) is sufficient to deal with core images.
+
+SEE ALSO
+       adb(1), pi(9.1), coreid(1)
+
+                                                                       CORE(5)

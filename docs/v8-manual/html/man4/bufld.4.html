@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>bufld.4 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 4</a> &gt; bufld.4 (<a href="../../../../source/v8/usr/man/man4/bufld.4">troff source</a>)</p>
+<pre>
+BUFLD(4)                   Kernel Interfaces Manual                   BUFLD(4)
+
+NAME
+       buf_ld - buffering line discipline
+
+DESCRIPTION
+       This stream module treasures up data for a while, then emits it in a
+       burst.  It is otherwise transparent.  It intends to reduce overhead of
+       programs such as <a href="../man1/cu.1.html">cu(1)</a> and <a href="../man1/uucp.1.html">uucp(1)</a> that read input from moderate-speed
+       lines in raw or cbreak mode.
+
+       It saves characters until 16 are accumulated or 1/20 sec has passed
+       without seeing a character.
+
+SEE ALSO
+       <a href="../man4/stream.4.html">stream(4)</a>
+
+BUGS
+       One supposes that the parameters should be settable.
+
+                                                                      BUFLD(4)
+</pre>
+</body></html>

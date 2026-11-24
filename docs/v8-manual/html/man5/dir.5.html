@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dir.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; dir.5 (<a href="../../../../source/v8/usr/man/man5/dir.5">troff source</a>)</p>
+<pre>
+DIR(5)                        File Formats Manual                       DIR(5)
+
+NAME
+       dir - format of directories
+
+SYNOPSIS
+       #include &lt;sys/types.h&gt;
+       #include &lt;sys/dir.h&gt;
+
+DESCRIPTION
+       A directory behaves exactly like an ordinary file, save that no user
+       may write into a directory.  The fact that a file is a directory is
+       indicated by a bit in the flag word of its i-node entry; see <a href="../man5/filsys.5.html">filsys(5)</a>.
+       The structure of a directory entry as given in the include file is:
+
+              #ifndef DIRSIZ
+              #define DIRSIZ    14
+              #endif
+              struct  direct
+              {
+                      ino_t     d_ino;
+                      char      d_name[DIRSIZ];
+              };
+
+       By convention, the first two entries in each directory are for `.' and
+       `..'.  The first is an entry for the directory itself.  The second is
+       for the parent directory.  The meaning of `..' is modified for the root
+       directory of the master file system (`/'), where `..' has the same
+       meaning as `.'.
+
+SEE ALSO
+       <a href="../man5/filsys.5.html">filsys(5)</a>, <a href="../man3/directory.3.html">directory(3)</a>
+
+                                                                        DIR(5)
+</pre>
+</body></html>

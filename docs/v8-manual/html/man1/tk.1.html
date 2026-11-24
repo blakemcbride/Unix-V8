@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tk.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; tk.1 (<a href="../../../../source/v8/usr/man/man1/tk.1">troff source</a>)</p>
+<pre>
+TK(1)                       General Commands Manual                      TK(1)
+
+NAME
+       tk - paginator for the Tektronix 4014
+
+SYNOPSIS
+       tk [ -t ] [ -N ] [ -pL ] [ file ]
+
+DESCRIPTION
+       The output of tk is intended for a Tektronix 4014 terminal.  Tk
+       arranges for 66 lines to fit on the screen, divides the screen into N
+       columns, and contributes an eight space page offset in the (default)
+       single-column case.  Tabs, spaces, and backspaces are collected and
+       plotted when necessary.  Teletype Model 37 half- and reverse-line
+       sequences are interpreted and plotted.  At the end of each page tk
+       waits for a newline (empty line) from the keyboard before continuing on
+       to the next page.  In this wait state, the command !command will send
+       the command to the shell.
+
+       The command line options are:
+
+       -t     Don't wait between pages; for directing output into a file.
+
+       -N     Divide the screen into N columns and wait after the last column.
+
+       -pL    Set page length to L lines.
+
+SEE ALSO
+       <a href="../man1/pr.1.html">pr(1)</a>
+
+                                                                         TK(1)
+</pre>
+</body></html>

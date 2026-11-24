@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getwd.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getwd.3 (<a href="../../../../source/v8/usr/man/man3/getwd.3">troff source</a>)</p>
+<pre>
+GETWD(3)                   Library Functions Manual                   GETWD(3)
+
+NAME
+       getwd, getcwd - get current directory
+
+SYNOPSIS
+       char *getwd(buf)
+       char *buf;
+
+       char *getcwd(buf, size)
+       char *buf;
+
+DESCRIPTION
+       Both routines fill buf with a null-terminated string representing the
+       current directory and return buf.  A null pointer is returned on an
+       error and buf is filled with a diagnostic.
+
+       Getwd is in the style of 4.2 BSD and getcwd in that of System V.  If
+       buf is null, this entry will call <a href="../man3/malloc.3.html">malloc(3)</a> to allocate size bytes for
+       the buffer.
+
+SEE ALSO
+       <a href="../man1/pwd.1.html">pwd(1)</a>
+
+                                                                      GETWD(3)
+</pre>
+</body></html>

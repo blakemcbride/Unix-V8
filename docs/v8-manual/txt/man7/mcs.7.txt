@@ -1,0 +1,61 @@
+MCS(7)                 Miscellaneous Information Manual                 MCS(7)
+
+NAME
+       mcs - macros for formatting cover sheets
+
+SYNOPSIS
+       troff -mcs file ...
+
+DESCRIPTION
+       The -mcs macro package defines macros for use with troff to generate a
+       document cover sheet.  These macros need the -ms macros.
+
+       Following is a summary of the -mcs macros and argument list with a
+       brief description of each macro; explanations are provided as needed.
+       Macros marked with * are mandatory; all other macros are optional.
+       Optional arguments are enclosed in square brackets.  The macros must be
+       used in the order presented:
+
+       Request                    Explanation
+
+       * .TI                      Title text follows
+       * .AH name loc dept ext rm Author
+       * .SA                      Begin Abstract
+       * .SE                      End Abstract
+         .KW [k1] ... [k9]        Keywords
+       * .MT type software        Memo Type (TM, IM, TC), software related
+                                  (`y') (Technical Memorandum, Internal
+                                  Memorandum, Technical Correspondence)
+       * .NU org-date-seq filing_case work_project
+                                  Document Number, default work_project is
+                                  that of 1127
+         .MY [y] [y] [y] [y] [y] [y] [y]
+                                  Mercury Code, positional arguments, max=3 1
+                                  = Chemistry & Materials, 2 = Communications,
+                                  3 = Computing, 4 = Electronics, 5 = Life
+                                  Sciences, 6 = Math & Statistics, 7 = Physics
+         .PR [BR]                 Proprietary Marking - default ATT-BL
+                                  Proprietary, BR=restricted
+         .GS                      Government Security
+       * .CI code                 CI-II Review `y' = CONTAINS CI-II info; MAY
+                                  NOT be distributed to AT&T-IS `n' = DOES NOT
+                                  CONTAIN CI-II info; MAY be distributed to
+                                  AT&T-IS
+         .CO [y]                  Complete Copy Distribution List follows, `y'
+                                  = 1127 default
+         .CE                      End distribution lists
+         .CV [y]                  Cover Sheet Only Distribution List follows,
+                                  `y' = 1127 default
+       * .SC pgs oth fig tab ref  Cover Sheet
+
+FILES
+       /usr/lib/tmac/tmac.cs
+       /usr/lib/tmac/tmac.rscover
+
+SEE ALSO
+       docgen(1), ms(7), sendcover(1)
+
+BUGS
+       Footnotes in abstracts do not work.
+
+                                                                        MCS(7)

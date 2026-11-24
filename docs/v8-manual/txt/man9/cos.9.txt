@@ -1,0 +1,38 @@
+COS(9.3)                                                              COS(9.3)
+
+NAME
+       cos, sin, atan2, sqrt, norm - integer math functions
+
+SYNOPSIS
+       int cos(d) int d;
+
+       int sin(d) int d;
+
+       int atan2(x, y) int x, y;
+
+       int norm(x, y, z) int x, y, z;
+
+       int sqrt(x) long x;
+
+DESCRIPTION
+       Cos and Sin return scaled integer approximations to the trigonometric
+       functions.  The argument values are in degrees.  The return values are
+       scaled so that cos(0)=1024.  Therefore, to calculate, for example, the
+       mathematical expression x=x0*cos(d), the multiplication must be scaled:
+
+              x=muldiv(x0, cos(d), 1024).
+
+       Atan2 returns the approximate arc-tangent of y/x.  The return value is
+       in integral degrees.  The approximation is poor; the error may be as
+       large as two degrees.
+
+       Sqrt returns the 16-bit signed integer closest to the square root of
+       its 32-bit signed argument.
+
+       Norm returns the Pythagorean length of the three-vector (x, y, z).
+
+DIAGNOSTICS
+       Atan2(0, 0) and sqrt(0) return 0.  Norm does not protect against
+       overflow.
+
+                                                                      COS(9.3)

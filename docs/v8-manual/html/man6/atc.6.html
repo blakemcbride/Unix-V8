@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>atc.6 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 6</a> &gt; atc.6 (<a href="../../../../source/v8/usr/man/man6/atc.6">troff source</a>)</p>
+<pre>
+ATC(6)                           Games Manual                           ATC(6)
+
+NAME
+       atc - air traffic controller
+
+SYNOPSIS
+       /usr/games/atc
+
+DESCRIPTION
+       Atc presents air traffic on a cursor-controlled screen.  As the
+       controller, you must shepherd it safely through the air space.  At the
+       beginning of the game atc displays the takeoff/landing direction for
+       each airport and prompts for the game duration with:
+
+       &lt; &gt;    enter a number from 16 simulated minutes (hard) to 99 (easier)
+
+       Options are
+
+       -u=file  take airspace description from file
+
+       -a=name  use the named airspace; default is `Apple1'
+
+       -s=seed  a number for seeding a 32-bit random number generator
+
+       -t=time  preset the game duration
+
+       -p=file  save the play of the game in the named file
+
+       -m=file  play a `movie' of the saved game
+
+       The initial display of a typical airspace looks like this:
+
+              . 0 . . . . . . 1 . . . . . . . . . . . . . .
+              . . , . . . . . , . . . . . . . . . . . . . .
+              . . . , . . . . , . . . . . . . . . . . . . 2
+              . . . . , . . . , . . . . . . . . . . . . , .
+              . . . . . , . . , . . . . . . . . . . . , . .
+              . . . . . . , . , . . . . . . . . . . , . . .
+              . . . . . . . , , . . . . . . . . . , . . . .
+              6 , , , , , , , * , , , , , , , , , , , , , 3
+              . . . . . . . . , , . . . . . . , . . . . . .
+              . . . . . . . . , . , . . . . , . . . . . . .
+              . . . . . . . . , . . , . . % . . . . . . . .
+              . . . . . . . . , . . . , , . . . . . . . . .
+              . . . . . . . . , . . . , , . . . . . . . . .
+              . . . . . . . . , . . , . . , . . . . . . . .
+              . . . . . . . . , . , . . . . , . . . . . . .
+              . . . . . . . . , , . . . . . . , . . . . . .
+              4 , , , , , , , * , , , , , # , , , , , , , 5
+              . . . . . . . , , . . . . . . . . . , . . . .
+              . . . . . . , . , . . . . . . . . . . , . . .
+              . . . . . , . . , . . . . . . . . . . . , . .
+              . . . . , . . . , . . . . . . . . . . . . , .
+              . . . , . . . . , . . . . . . . . . . . . . 9
+              . . 7 . . . . . 8 . . . . . . . . . . . . . .
+
+       % and # denote airports, * and ! denote navigational aids (navaids),
+       and commas denote airways that link entry/exit `fixes', airports, and
+       navaids.  Dots are separated by one mile, horizontally, vertically, and
+       diagonally.  An airplane appears as a letter followed by its height in
+       thousands of feet.
+
+       There are two kinds of planes: jets flying 1 mile per tick (15 seconds)
+       and props flying 1/2 mile per tick.
+
+       You must prevent various misfortunes.  Running out of fuel is serious.
+       So is a close encounter - less than 3 miles horizontal separation at a
+       given altitude.  A plane changing altitude is considered to be at both
+       its old and new altitudes.  A `boundary error', leaving the airspace at
+       the wrong place, not on an airway, or at the wrong height, is also
+       serious, but not as likely to be fatal.
+
+       The right side of the screen shows flight plans.  A typical flight
+       strip looks like:
+               Fj 7-&gt;3  4  NE     +
+       The first letter is the aircraft ID, the next letter is `j' for jet or
+       `p' for prop.  The next field gives the plane's intentions: this one is
+       entering at (or is now at) fix 7 and leaving at fix 3.  The origin
+       character tells where the plane is (or will be when it enters), the
+       destination is a fix it wishes to go to.  (It will, however, continue
+       on a straight path unless instructed otherwise.)  Next is the altitude,
+       in this case 4000 feet.  The bearing is a compass direction: N, NE, E,
+       etc.  The final character is the amount of fuel left, `+' for more than
+       10 minutes, otherwise the number of minutes of fuel remaining.  Jets
+       begin with 15 minutes of fuel, props 21.
+
+       At the top of the flight plans are listed planes that will appear in
+       the next minute, preceded by how many ticks (0-4) they are away.
+       Planes may be cleared for takeoff as soon as they are listed.
+
+       Commands are terminated by &lt;RETURN&gt;.  &lt;BACK SPACE&gt; may be used to
+       correct errors.  The following kinds of commands can be issued.
+
+       $
+       End the game (game normally ends after 26 planes)
+
+       W    Print flight plan for airplane W
+
+       XA3  X will change altitude to 3000 feet
+
+       QA0  Q will land (go to 0 feet altitude)
+
+       HRE  H will turn right until it is heading east
+
+       ALNW A will turn left until it is heading northwest
+
+       CTS  C will turn south through the smallest angle
+
+       T*7  T will take exit bearing for fix 7 at next navaid
+
+       P*%  P will take landing bearing for % at next navaid
+
+       DH   D will circle (hold) at next navaid
+
+       MR0  Abort pending hold, clearance, or turn for plane M
+
+       J?   Cancel delayed commands for J
+
+       &lt;SPACE&gt;
+            Speed up the game by advancing 15 seconds
+
+       Climbing/descending.  Planes climb or descend 1000 feet per mile.
+       Climbing from 0 is a takeoff; descending to 0 is a landing.  The
+       takeoff/landing direction for each airport is given.  A landing
+       airplane must reach altitude 0 headed in the right direction 1 mile
+       before the runway.  No further commands may be given after a descent to
+       0, as control then rests with the tower.  If a plane lands from the
+       wrong direction, it will climb to 1000 feet and issue a `go around'
+       error.  While changing altitude, a flight strip reads like
+               Dp :-&gt;2  7v3  S     9
+       which means at 7000 feet descending to 3000.
+
+       Turning.  Planes turn 45 degrees per mile.  Turns may be left (L) right
+       (R) or to a specified direction (T).  Thus `ULNE' tells the pilot of
+       plane U to turn to his left until he is heading northeast.  Changes of
+       direction are indicated in the flight strip:
+               Nj :-&gt;5  5  S r W   +
+       indicates that jet N is heading south, and will turn 90 degrees to the
+       right.  To cancel the remaining part of a turn, give the command (for
+       plane N) `NR0'.
+
+       Navaids.  A plane may be directed to turn at a navaid or hold (circle)
+       there, Thus command `AH' holds plane A at the next navaid.  The flight
+       strip for a plane that is to hold looks like
+               Ap :-&gt;2  5  S *    7
+       During the hold, the `*' will become `h'.  Every incoming plane that
+       will be landing holds at a navaid unless the controller gives it other
+       instructions.
+
+       The command `*' clears a plane to turn sharply to any known fix at the
+       next navaid.  The flight strip for a plane cleared through a navaid (to
+       fix 5, for example) looks like:
+            Hj .-&gt;2  5  S *5    +
+       A holding aircraft given a clearance will continue around to the
+       navaid, then immediately assume the specified bearing.  Turns cancel
+       clearances.
+
+       Delayed commands.  Commands of the form
+            @&lt;location&gt;,&lt;command&gt;[,&lt;command&gt; ...]
+       stack up activities.  A location may be any fix or a point offset from
+       a fix, e.g.
+            @#sw3s2,ARE
+       which means at the point which can be reached by going three miles SW
+       from airport #, then two miles S, plane A should begin a right turn
+       until heading E.  The information command shows all delayed commands
+       pending for that plane.  Note that delayed commands allow one to
+       specify actions more than one navaid ahead.
+
+                                                                        ATC(6)
+</pre>
+</body></html>

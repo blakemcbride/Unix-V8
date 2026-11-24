@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ra.4 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 4</a> &gt; ra.4 (<a href="../../../../source/v8/usr/man/man4/ra.4">troff source</a>)</p>
+<pre>
+RA(4)                      Kernel Interfaces Manual                      RA(4)
+
+NAME
+       ra - DEC MSCP disks (RA60, RA80, RA81)
+
+DESCRIPTION
+       Ra∗ refer to disk drives conforming to DEC's Mass Storage Control
+       Protocol standard: drives such as the RA81 connected via controllers
+       such as the UDA50.  Files with minor device numbers 0 through 7 refer
+       to various portions of drive 0, minor devices 8 through 16 refer to
+       drive 1, and so on up to 63.  These files have a blocksize of 1K bytes;
+       if 64 is added to the minor device number, the resulting file has 4K
+       byte blocks, and if used as a filesystem, a slightly different
+       structure.
+
+       The range and size of the pseudo-drives for each drive are as follows.
+       Sizes are measured in hardware sectors (512 bytes).
+
+            disk      start     length
+            0         0         10240
+            1         10240     20480
+            2         30720     249848
+            3         280568    249848
+            4         530416    249848
+            5         780264    110808
+            6         30720     749544
+            7         0         arbitrarily large
+
+       Partition 7 covers the entire disk: 891072 sectors on an RA81.
+
+       The ra files discussed above access the disk via the system's normal
+       buffering mechanism and may be read and written without regard to
+       physical disk records.  There is also a `raw' interface which provides
+       for direct transmission between the disk and the user's read or write
+       buffer.  A single read or write call results in exactly one I/O
+       operation and therefore raw I/O is considerably more efficient when
+       many words are transmitted.  The names of the raw RA files begin with
+       rra and end with a number which selects the same disk as the
+       corresponding ra file.
+
+       In raw I/O the buffer must begin on a word boundary, and counts should
+       be a multiple of 512 bytes (a disk block).  Likewise <a href="../man2/lseek.2.html">lseek(2)</a> calls
+       should specify a multiple of 512 bytes.
+
+       Several <a href="../man2/ioctl.2.html">ioctl(2)</a> calls apply to the raw devices.  They are probably
+       useful only for bad block handling.
+
+       UIOCHAR   The third argument to ioctl is a pointer to a struct ud_unit:
+                 struct ud_unit {
+                      daddr_t radsize;/* size of the disk */
+                      daddr_t rctsize;/* size of the RCT, including pad */
+                      long medium;
+                      short tracksz;
+                      short groupsz;
+                      short cylsz;
+                      char rbns;
+                      char copies;
+                 };
+                 which the system fills with geometry parameters for the
+                 drive.
+
+       UIORRCT   The third argument points to a struct ud_rctbuf:
+                 struct ud_rctbuf {
+                      caddr_t   buf;
+                      int  lbn;
+                 };
+
+                 Buf points to a 512-byte buffer, into which block lbn of the
+                 replacement and caching table (RCT) is read.  As many copies
+                 of the RCT as necessary are examined to find a readable copy
+                 of the block.
+
+       UIOWRCT   The third argument points to a struct ud_rctbuf; block lbn of
+                 the RCT is written in all copies.
+
+       UIOREPL   The third argument points to a struct ud_repl :
+                 struct ud_repl {
+                      daddr_t replbn;/* good block */
+                      daddr_t lbn;   /* bad block */
+                      short prim;    /* nonzero if primary replacement */
+                 };
+
+                 A REPLACE command is sent to the controller, requesting that
+                 attempts to access logical block lbn henceforth be revectored
+                 to replacement block replbn.  Prim should be set nonzero if
+                 and only if replbn is the primary replacement block for lbn.
+
+FILES
+       /dev/ra*, /dev/rra*
+
+SEE ALSO
+       <a href="../man8/rarepl.8.html">rarepl(8)</a>
+       MSCP Basic Disk Functions Manual
+       DEC Standard Disk Format Specification
+
+BUGS
+       In raw I/O read and <a href="../man2/write.2.html">write(2)</a> truncate file offsets to 512-byte block
+       boundaries, and write scribbles on the tail of incomplete blocks.
+       Thus, in programs that are likely to access raw devices, read, write
+       and <a href="../man2/lseek.2.html">lseek(2)</a> should always deal in 512-byte multiples.
+
+       UIORRCT and UIOWRCT will misbehave if invoked on a partition that
+       doesn't start at the beginning of the disk.  Partition 7 (the whole
+       disk) is the best choice.
+
+       This driver should be split into a generic disk driver and a port
+       driver, which communicate by exchanging MSCP packets.
+
+                                                                         RA(4)
+</pre>
+</body></html>

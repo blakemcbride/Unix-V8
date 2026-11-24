@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>vi.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; vi.1 (<a href="../../../../source/v8/usr/man/man1/vi.1">troff source</a>)</p>
+<pre>
+VI(1)                       General Commands Manual                      VI(1)
+
+NAME
+       ex, vi - text editor
+
+SYNOPSIS
+       ex [ - ] [ -v ] [ -t tag ] [ -r ] [ -R ] [ +command ] [ -l ] name ...
+
+       edit [ options ]
+
+       vi [ -t tag ] [ -r ] [ -R ] [ +command ] [ -l ] [ -wn ] name ...
+
+DESCRIPTION
+       Ex is a superset of <a href="../man1/ed.1.html">ed(1)</a> with a display editing facility; edit is a
+       simplified subset of ex; and vi is a fully display-based editor with
+       similar capabilities.  Option -R makes the editor read-only.
+
+FILES
+       /usr/lib/ex?.?strings         error messages
+       /usr/lib/ex?.?recover         recover command
+       /usr/lib/ex?.?preserve        preserve command
+       /etc/termcap             describes capabilities of terminals
+       ~/.exrc                  editor startup file
+       /tmp/Exnnnnn             editor temporary
+       /tmp/Rxnnnnn             named buffer temporary
+       /usr/preserve            preservation directory
+
+SEE ALSO
+       Edit: A Tutorial
+       Ex Reference Manual
+       An Introduction to Display Editing with Vi
+       Vi Quick Reference Card, all in BSD 4.1 Progammer's Manual, Volume 2
+       <a href="../man1/ed.1.html">ed(1)</a>, <a href="../man9/jim.9.html">jim(9.1)</a>, <a href="../man1/sed.1.html">sed(1)</a>
+
+BUGS
+       The undo command causes all marks to be lost on lines changed and then
+       restored if the marked lines were changed.
+       Undo never clears the buffer modified condition.
+       The z command prints a number of logical rather than physical lines.
+       More than a screen full of output may result if long lines are present.
+       File input/output errors don't print a name if the command line `-'
+       option is used.
+       There is no easy way to do a single scan ignoring case.
+       The editor does not warn if text is placed in named buffers and not
+       used before exiting the editor.
+       Null characters are discarded in input files, and cannot appear in
+       resultant files.
+       Software tabs using ^T work only immediately after the autoindent.
+       The wrapmargin option can be fooled since it looks at output columns
+       when blanks are typed.  If a long word passes through the margin and
+       onto the next line without a break, then the line won't be broken.
+       The source command does not work when executed as :source; there is no
+       way to use the :append, :change, and :insert commands in vi, since it
+       is not possible to give more than one line of input to a : escape.  To
+       use these on a :global you must Q to ex command mode, execute them, and
+       then reenter the screen editor with vi or open.
+
+                                                                         VI(1)
+</pre>
+</body></html>

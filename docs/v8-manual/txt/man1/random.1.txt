@@ -1,0 +1,24 @@
+RANDOM(1)                   General Commands Manual                  RANDOM(1)
+
+NAME
+       random - sample lines from a file or provide random exit code
+
+SYNOPSIS
+       random [ -e ] [ n ]
+
+DESCRIPTION
+       Random reads the standard input and copies each line to the standard
+       output with probability 1/n.
+
+       Option -e writes no output and returns a random exit code in the range
+       [0,n-1].
+
+       The default value of n is 2.
+
+       To select just one line randomly from a file use fortune(6).
+
+BUGS
+       Successive results of option -e are highly correlated if random is
+       called more than once per second.
+
+                                                                     RANDOM(1)

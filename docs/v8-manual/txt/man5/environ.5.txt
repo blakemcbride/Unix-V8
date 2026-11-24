@@ -1,0 +1,41 @@
+ENVIRON(5)                    File Formats Manual                   ENVIRON(5)
+
+NAME
+       environ - user environment
+
+SYNOPSIS
+       extern char **environ;
+
+DESCRIPTION
+       An array of strings called the `environment' is made available by
+       exec(2) when a process begins.  By convention these strings have either
+       the form `name=value', defining a variable, or `name(){value}',
+       defining a function (see sh(1)).  The following variables are used by
+       various commands:
+
+       PATH    The sequence of directory prefixes that sh, time, nice(1),
+               etc., apply in searching for a file known by an incomplete path
+               name.  The prefixes are separated by `:'.  Login(1) sets
+               PATH=:/bin:/usr/bin.
+
+       HOME    A user's login directory, set by login(8) from the password
+               file passwd(5).
+
+       TERM    The kind of terminal for which output is to be prepared.  This
+               information is used by commands, such as nroff or plot(1),
+               which may exploit special terminal capabilities.  See
+               /etc/termcap for a list of terminal types.
+
+       SHELL   The name of the login shell.
+
+       The environment may be queried by getenv(3) or by the set or whatis
+       commands of sh(1).  Names may be placed in the environment by the
+       export command by and `name=value' arguments in sh(1).  Names may also
+       be placed in the environment at the point of an exec(2).  It is unwise
+       to conflict with certain sh(1) variables that are frequently exported
+       by `.profile' files: MAIL, PS1, PS2, IFS.
+
+SEE ALSO
+       sh(1), exec(2), getenv(3), term(7)
+
+                                                                    ENVIRON(5)

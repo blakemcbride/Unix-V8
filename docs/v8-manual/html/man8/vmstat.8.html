@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>vmstat.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; vmstat.8 (<a href="../../../../source/v8/usr/man/man8/vmstat.8">troff source</a>)</p>
+<pre>
+VMSTAT(8)                   System Manager's Manual                  VMSTAT(8)
+
+NAME
+       vmstat - report virtual memory statistics
+
+SYNOPSIS
+       vmstat [ -fs ] [ interval [ count ] ]
+
+DESCRIPTION
+       Vmstat normally reports certain statistics kept about process, virtual
+       memory, disk, trap and cpu activity.  Option -f reports on forks since
+       system startup and the number of pages of virtual memory involved.
+       Option -s reports on paging events since boot.
+
+       In the absence of other options, the optional interval argument causes
+       vmstat to report once each interval seconds, repeated count times or
+       forever.
+
+       The default format fields are:
+
+       Procs: information about numbers of processes in various states.
+       R    in run queue
+       B    blocked for resources (i/o, paging, etc.)
+       W    runnable or short sleeper (&lt; 20 secs) but swapped
+
+       Memory: usage of virtual and real memory.  `Active' virtual pages
+       belong to processes that have run in the last 20 seconds.
+       AVM  active virtual pages
+       FRE  size of the free list
+
+       Page: paging activity, averaged each five seconds, and given in units
+       per second.
+       RE   page reclaims (simulating reference bits)
+       PI   page-in events
+       PO   page-out events
+       FR   pages freed per second
+       DE   anticipated short term memory shortfall
+       SR   scan rate: pageout daemon rpm
+
+       Disk: operations per second.  Typically paging is split across several
+       drives.  The drive names are ephemeral: ask a guru.
+
+       Faults: trap/interrupt rate averages per second over last 5 seconds.
+       IN   (non clock) device interrupts per second
+       SY   system calls per second
+       PD   pseudo-dma interrupts on DZ
+       CS   cpu context switch rate (switches/sec)
+
+       Cpu: breakdown of percentage usage of CPU time
+       US   user time for normal and low priority processes
+       SY   system time
+       ID   cpu idle
+
+FILES
+       /dev/kmem, /unix
+
+                                                                     VMSTAT(8)
+</pre>
+</body></html>

@@ -1,0 +1,25 @@
+CHOWN(2)                      System Calls Manual                     CHOWN(2)
+
+NAME
+       chown, fchown - change owner and group of a file
+
+SYNOPSIS
+       chown(name, owner, group)
+       char *name;
+
+       fchown(fd, owner, group)
+
+DESCRIPTION
+       Chown changes the owner and group of the file specified by the null-
+       terminated string name.  Fchown changes the owner and group of an open
+       file specified by file descriptor.  Only the super-user may execute
+       these calls.
+
+SEE ALSO
+       chown(1), chmod(2), passwd(5)
+
+DIAGNOSTICS
+       Zero is returned if the owner is changed; -1 is returned on illegal
+       owner changes.
+
+                                                                      CHOWN(2)

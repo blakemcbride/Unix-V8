@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mktemp.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; mktemp.3 (<a href="../../../../source/v8/usr/man/man3/mktemp.3">troff source</a>)</p>
+<pre>
+MKTEMP(3)                  Library Functions Manual                  MKTEMP(3)
+
+NAME
+       mktemp, tmpnam - make a unique file name
+
+SYNOPSIS
+       char *mktemp(template)
+       char *template;
+
+       #include &lt;stdio.h&gt;
+
+       char *tmpnam(s)
+       char s[L_tmpnam];
+
+DESCRIPTION
+       Mktemp replaces template by a unique file name, and returns the address
+       of the template.  The template should look like a file name with six
+       trailing X's, which will be replaced with the current process id and a
+       unique letter.
+
+       Tmpnam places in the string pointed to by s a unique file name
+       referring to a standard directory for temporary files (/tmp) and
+       returns s.  If s is 0, tmpnam returns the address of a fixed internal
+       buffer that contains the name.  (Note: it is bad form to leave files in
+       the temporary directory.)
+
+SEE ALSO
+       <a href="../man2/getuid.2.html">getuid(2)</a> for getpid
+
+BUGS
+       Tmpnam should not be tied to <a href="../man3/stdio.3.html">stdio(3)</a>.
+
+                                                                     MKTEMP(3)
+</pre>
+</body></html>

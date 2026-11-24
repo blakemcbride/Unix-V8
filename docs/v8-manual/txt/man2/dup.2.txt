@@ -1,0 +1,30 @@
+DUP(2)                        System Calls Manual                       DUP(2)
+
+NAME
+       dup, dup2 - duplicate an open file descriptor
+
+SYNOPSIS
+       dup(fildes)
+       int fildes;
+
+       dup2(fildes, fildes2)
+       int fildes, fildes2;
+
+DESCRIPTION
+       Given a file descriptor dup allocates another file descriptor
+       synonymous with the original.  The new file descriptor is returned.
+
+       In the second form of the call, fildes is a file descriptor referring
+       to an open file, and fildes2 is a non-negative integer less than the
+       maximum value allowed for file descriptors (currently 127).  Dup2
+       causes fildes2 to refer to the same file as fildes.  If fildes2 already
+       referred to an open file, it is closed first.
+
+SEE ALSO
+       creat(2), open(2), close(2), pipe(2)
+
+DIAGNOSTICS
+       The value -1 is returned if: the given file descriptor is invalid;
+       there are already too many open files.
+
+                                                                        DUP(2)

@@ -1,0 +1,67 @@
+PROOFR(1)                   General Commands Manual                  PROOFR(1)
+
+NAME
+       proofr - automatic proofreader
+       proofer - alternative command-name for proofr
+
+SYNOPSIS
+       proofr [ -s ][ -flags ][ -ver ] file ...
+
+DESCRIPTION
+       Proofr is an automatic proofreading system that runs modified versions
+       of 5 programs:
+
+            spellwwb(1)   - checks for misspelled words.
+
+            punct(1)      - checks for rudimentary punctuation errors.
+
+            double(1)     - searches for consecutive occurrences of the same
+                          word.
+
+            dictplus(1)   - locates wordy and/or misused phrases and suggests
+                          alternatives.
+
+            splitinf(1)   - searches for split infinitives.
+
+       Proofr is one of the programs run under the wwb(1) command.
+
+       Options are:
+
+            -s     produce a short summary version of proofr.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+NOTE
+       If the user has a file called $HOME/lib/ddict, proofr will run dictplus
+       so that phrases in ddict are located or ignored, as specified.  See
+       diction(1), dictadd(1), dictplus(1) for more information.
+
+       If the user has a file called $HOME/lib/spelldict, proofr will run
+       spellwwb so that words in spelldict are not listed as errors.  See
+       spellwwb(1) and spelladd(1) for more information.
+
+FILES
+       /tmp/$$*             temporary files
+
+SEE ALSO
+       spellwwb(1), punct(1), double(1), splitinf(1), diction(1), wwb(1),
+       worduse(1), spelltell(1), deroff(1).
+
+BUGS
+       See other manual pages for bugs in individual programs.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                     PROOFR(1)

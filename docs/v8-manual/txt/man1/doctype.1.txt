@@ -1,0 +1,23 @@
+DOCTYPE(1)                  General Commands Manual                 DOCTYPE(1)
+
+NAME
+       doctype - guess command line for formatting a document
+
+SYNOPSIS
+       doctype [ -e ] [ file ] ...
+
+DESCRIPTION
+       Doctype guesses the command line necessary for printing a document that
+       uses troff(1), related preprocessors like eqn, and the -ms and -mm
+       macro packages.  The optional argument -e causes the command line to be
+       executed.
+
+SEE ALSO
+       troff(1), eqn(1), tbl(1), refer(1), pic(1), ideal(1), grap(1), ms(7),
+       mm(7)
+
+BUGS
+       It's pretty dumb about guessing the proper macro package.
+       There is no way to supply non-filename arguments when -e is used.
+
+                                                                    DOCTYPE(1)

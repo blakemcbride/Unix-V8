@@ -1,0 +1,211 @@
+PI(9.1)                                                                PI(9.1)
+
+NAME
+       pi, 3pi - process inspector
+
+SYNOPSIS
+       pi [ -t corefile objectfile ]
+
+       3pi [ -p programmer ]
+
+DESCRIPTION
+       Pi is a C debugger that is bound dynamically to multiple subject
+       processes or core dumps.  It works better for programs compiled cc -g.
+       Pi uses the Pads(9.5) multi-window user interface.  There are three
+       types of windows: debugger control windows, which access the global
+       state of the debugger; process control windows (exactly one per
+       process), which start and stop processes and connect to process-
+       specific functions; and process inspection windows, which include
+       viewers for source text and memory, formatted various ways.
+
+       The most important debugger control window is the pi window itself.
+       Each line within the pi window refers to a specific process.  These
+       lines may be introduced to the window by running ps(1) from the button
+       3 menu; by typing a file name, either a /proc(4) name, or the name of a
+       core image followed by the name of the binary that created the core; or
+       by typing a command, prefixed by an exclamation `!', to be executed as
+       a child of pi.  There are several ways to access a process (using the
+       button 2 menu), each of which generates a process control window: open
+       process (open coredump) attaches to a running process (core image);
+       open child attaches to a process forked by a process being debugged by
+       the current pi; and take over rebinds an existing process window
+       hierarchy (pointed to with the mouse) to the named process, which must
+       be an instance of the same program.  A command may be instantiated
+       afresh (hang & open proc) or restarted and bound to an existing process
+       window (hang & take over); in either case, IO is redirected to
+       /dev/null.
+
+       The process window indicates the process's state, shows the call stack
+       traceback and connects to windows that access source text, local
+       variables within a stack frame, raw memory, and so on.  These windows
+       are cross-connected, so, for example, an instruction in a process's
+       assembly language window can be inspected in hexadecimal in the raw
+       memory window.  Closing the process control window closes all the
+       windows under it.
+
+       The following menu functions are provided by the various window types
+       in pi.  Initially there are these windows available:
+
+       Help Reminder of user interface mechanics.
+
+       Pi   Overall control of processes, core dumps and programs.  A process
+            is identified by its pathname or command line.  Process symbols
+            are found in the executable file from which the process was
+            loaded, but may be overridden.  Symbols for core dumps must be
+            supplied explicitly, after the core filename.  Synopsis: Identify
+            and open process or core dump; run a program as Pi's child; take
+            over a process with the debugging environment of a different one.
+
+       Pwd/cd
+            change the working directory of the debugger.
+
+   Process Window
+       Selecting and opening a process from the Pi window creates a new window
+       with overall control of that process.  It shows the process state, and
+       a traceback if the process is halted or dead.  States are:
+
+       ACTIVE         running normally
+       HALTED         halted asynchronously by a debugger
+       BREAKPOINT     halted on reaching breakpoint
+       STMT STEPPED   halted after executing C source statement(s)
+       INSTR STEPPED  halted after executing machine instruction(s)
+       EVENT PENDING  halted about to receive a signal being traced
+       ERROR STATE    the process has probably exited.
+
+       The menu operations on the process are:
+       go        let the process run
+       stop      stop the process
+       kill      send signal SIGKILL to the process
+       src text  open source text window(s)
+       Signals   open window for sending and trapping signals
+       Globals   open window for evaluating expression in global scope
+       RawMemory open window for editing uninterpreted memory
+       Assembler open window for disassembler
+
+       Each line of the call stack traceback describes one function.  Each
+       function in the traceback can open an expression evaluator window or
+       display its current source line.
+
+   Globals and Stack Frame Windows
+       These windows evaluate expressions with respect to global scope, and
+       scope in a function, respectively.  A stack frame window is opened from
+       a line in the call stack traceback or from a line of source text.  C
+       expressions can be entered by the keyboard or mouse.  The unary
+       operators fabs and sizeof are supported; the only assignment operator
+       is `='.  Functions from the user program may be called.
+
+       New C expressions can be derived from old ones by the keyboard or
+       mouse.  In menus and the keyboard, $ means the expression in the
+       current line.  The VAX registers are called $r0 to $r15; the address of
+       a register is the location at which it was saved.  The format in which
+       values are displayed can be changed.  The raw memory editor may be
+       entered using an expression's value as address.  An expression may be
+       made a spy.  The value of a spy expression is evaluated and displayed
+       each time the debugger looks at the process.  If the value of a spy
+       changes the process is halted at the next instruction, statement or
+       breakpoint.  A stack frame can find its active source line in a source
+       window or the stack frame window of its caller.
+
+       The comma operator is useful in conditional breakpoints because the
+       values of its subexpressions are displayed.  E.g. x, y, x==y traces the
+       values of x and y when the condition fails; x, y, 0 just traces.
+
+       To cross scope boundaries, the environment (a function identifier) in
+       which an expression is to be evaluated may be specified as: { expr }
+       function.  From the source directory window, file static variables can
+       be promoted to appear in the menu of global variables.
+
+   Source Text Windows
+       The source file directory window lists all the source files, if there
+       are two or more.  A textual prefix, entered from the keyboard, points
+       to a source directory, without changing the working directory.  Each
+       source file is in a separate window, opened when needed.  The source
+       file's pathname as given to cc can be overridden from the keyboard.  If
+       things go wrong, use reopen to open the file afresh.  Synopsis:
+       set/clear (conditional) breakpoint; single-step source statements; step
+       into (rather than over) a function; go the process; show the statement
+       for the current PC; open a stack frame window for a source line's
+       function; evaluate expression; disassemble first instruction of source
+       statement; context search for string.
+
+   Breakpoints Window
+       Lists all the active source and assembler breakpoints and related
+       errors.  Synopsis: show source or assembler for a breakpoint; clear
+       breakpoint; clear all breakpoints.
+
+   Signals Window
+       Lists all signal types, showing which ones are traced.  Synopsis:
+       Change which signals are traced; send a signal to the subject process;
+       clear pending signal; stop process on exec.
+
+   Raw Memory Window
+       A ``memory editor'' in which memory is a viewed as a sequence of 1-,
+       2-, 4- or 8-byte cells.  Synopsis: set cell address; change cell size;
+       change display format; display cells above and below; indirect to cell;
+       change cell value; spy on memory cell; disassemble instruction at cell.
+
+   (Dis)assembler Window
+       Disassembler in which memory is viewed as a sequence of instructions.
+       Synopsis: set instruction address; display more instructions; change
+       display format; display instruction as cell in raw memory window;
+       set/clear breakpoint on instruction; open stack frame window for
+       instruction's function; display instruction at current PC; single step
+       instruction(s); step over a function call instead of into the function.
+
+   Exec and Fork
+       If a process controlled by pi executes an exec(), it is suspended as if
+       started by hang(1), if an exec() break is set in the Signals window.
+       To debug the process after the exec, close the original process window
+       and re-open it.  When re-opened it will get the new symbol tables.
+
+       To debug a child process: (i) set a breakpoint in code that will be
+       executed in the child after the fork; (ii) execute the fork at full
+       speed (the child inherits the parent's breakpoints, which aren't there
+       if the parent is stepped); (iii) before altering any breakpoints, get a
+       fresh ps in the Pi window and apply open child to the child.  The child
+       should be stopped on the inherited breakpoint, but it and all other
+       breakpoints should have been cleared.
+
+   Kernel
+       The state of kernel variables associated with a process may be examined
+       by giving their name or virtual address.  The UNIX environment variable
+       specifies the file from which the system was loaded; the default is
+       /unix.  Kernel dumps may be examined by opening the `kernel pi' window.
+
+   Just A Traceback
+       With the -t option pi writes a traceback on its standard output and
+       quits.
+
+   3pi
+       3pi is a variant of pi for debugging 5620 programs running under
+       mux(9.1).  It creates two terminal processes: one for its access to
+       terminal memory and graphics and a second for its Pads(9.5) interface.
+
+   Remote Debugging
+       With the -p option 3pi loads its first process, but not Pads.  Instead,
+       it mails a 3pi command to programmer, to be executed on any host in the
+       local network.  That 3pi command loads Pads on programmer's terminal,
+       and connects to the originator's terminal.  If separate hosts are
+       involved and the versions of critical files differ, be careful with
+       pathnames.
+
+   3pi Graphics
+       Points, rectangles, textures and bitmaps can be displayed graphically.
+
+   3pi - pi
+       Most differences come from obvious differences in the hardware and
+       software architectures.  Also, in 3pi function calls are executed by a
+       debugger process on its own call stack.
+
+SEE ALSO
+       hang(1), proc(4), strip(1), pads(9.5)
+
+BUGS
+       In switch statements there is no boundary between the last case and the
+       branch code; the program appears to jump to the last case (but is
+       really in the branch) and then to the real case.  A changed spy only
+       stops the process at a breakpoint or while stepping.  An expression can
+       be cast only by menu.  Functions may only be called when the process is
+       stopped and not in a system call.
+
+                                                                       PI(9.1)

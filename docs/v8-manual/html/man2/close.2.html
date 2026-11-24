@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>close.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; close.2 (<a href="../../../../source/v8/usr/man/man2/close.2">troff source</a>)</p>
+<pre>
+CLOSE(2)                      System Calls Manual                     CLOSE(2)
+
+NAME
+       close - close a file
+
+SYNOPSIS
+       close(fildes)
+
+DESCRIPTION
+       Close closes the file associated with a file descriptor.
+
+       Files are closed upon termination of a process, but since there is a
+       limit on the number of open files per process, close is necessary for
+       programs which deal with many files.  It is possible to arrange for
+       files to be closed by <a href="../man2/exec.2.html">exec(2)</a>; see FIOCLEX in <a href="../man2/ioctl.2.html">ioctl(2)</a>.
+
+SEE ALSO
+       <a href="../man2/creat.2.html">creat(2)</a>, <a href="../man2/open.2.html">open(2)</a>, <a href="../man2/pipe.2.html">pipe(2)</a>, <a href="../man2/exec.2.html">exec(2)</a>, <a href="../man2/ioctl.2.html">ioctl(2)</a>
+
+DIAGNOSTICS
+       Zero is returned if a file is closed; -1 is returned for an unknown
+       file descriptor.
+
+                                                                      CLOSE(2)
+</pre>
+</body></html>

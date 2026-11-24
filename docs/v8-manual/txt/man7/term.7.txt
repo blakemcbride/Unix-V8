@@ -1,0 +1,40 @@
+TERM(7)                Miscellaneous Information Manual                TERM(7)
+
+NAME
+       terminals - conventional names
+
+DESCRIPTION
+       These names are used by certain commands and are maintained as part of
+       the shell environment (see sh(1),environ(5)).
+
+       adm3a     Lear Seigler Adm-3a
+       2621      Hewlett-Packard HP262? series terminals
+       1620      DIABLO 1620 (and others using HyType II)
+       300       DASI/DTC/GSI 300 (and others using HyType I)
+       33        Teletype Model 33
+       37        Teletype Model 37
+       43        Teletype Model 43
+       5620      Teletype Model 5620 dotmap display
+       735       Texas Instruments TI735 (and TI725)
+       745       Texas Instruments TI745
+       dumb      terminals with no special features
+       4014      Tektronix 4014
+       vt52      Digital Equipment Corp. VT52
+
+       The list goes on and on.  Consult /etc/termcap (see termcap(5)) for an
+       up-to-date and locally correct list.
+
+       Commands whose behavior may depend on the terminal either consult TERM
+       in the environment, or accept arguments of the form -Tterm, where term
+       is one of the names given above.
+
+SEE ALSO
+       stty(1), tabs(1), plot(1), sh(1), environ(5) clear(1), underline(1),
+       stty(1), tset(1), termcap(5)
+       troff(1) for nroff
+
+BUGS
+       The programs that ought to adhere to this nomenclature do so only
+       fitfully.
+
+                                                                       TERM(7)

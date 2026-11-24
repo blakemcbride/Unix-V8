@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>blitblt.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; blitblt.9 (<a href="../../../../source/v8/usr/man/man9/blitblt.9">troff source</a>)</p>
+<pre>
+BLITBLT(9.1)                                                      BLITBLT(9.1)
+
+NAME
+       blitblt - make hard copy of screen image
+
+SYNOPSIS
+       blitblt [ -p command ]
+
+DESCRIPTION
+       Blitblt copies part or all of a jerq screen into a file or down a pipe
+       to a printer daemon.  The program is menu driven off button 3 as
+       follows:
+
+       choose layer     A bull's eye cursor appears.  Clicking button 3 with
+                        the cursor inside a layer (cf. 3pi(9.1)) selects it
+                        for subsequent manipulation.
+
+       layer interior   As above, but the border surrounding the layer is not
+                        included.
+
+       flip border      The border is changed from narrow to wide (or
+                        vice versa) in the selected layer or rectangle.
+
+       reverse video    The video is inverted in the selected layer or
+                        rectangle.
+
+       run/halt         The terminal process in the selected layer is
+                        continued or halted.  This menu entry changes with the
+                        layer's status.
+
+       sweep rectangle  A rectangle cursor appears.  The rectangle swept out
+                        on button 3 becomes the selected area.
+
+       whole screen     The entire screen, including border areas, but
+                        excluding the blitblt layer itself, is selected.
+
+       write file       The portion of the screen previously selected and
+                        prepared is written into a file or pipe. The filename
+                        is typed in answer to a prompt appearing at the bottom
+                        of the blitblt layer.  Hitting return selects the
+                        (default) name in parentheses.  If the first character
+                        typed is a `|' (pipe symbol), the remainder of the
+                        line is taken as a shell command which will read the
+                        bitmap on its standard input.
+
+       | command        The selected portion of the screen is sent to the
+                        command specified by the -p option (default bcan.)
+
+       exit             Must be confirmed by clicking button 3 in response to
+                        the skull cursor.
+
+FILES
+       /usr/jerq/mbin/blitblt.m - terminal program
+
+SEE ALSO
+       <a href="../man1/can.1.html">can(1)</a>, <a href="../man9/bitfile.9.html">bitfile(9.5)</a>
+
+BUGS
+       Moving layers (e.g. clocks) result in broken images.  Use the halt
+       function.
+       If a pipe request fails, the blitblt layer becomes unusable.
+
+                                                                  BLITBLT(9.1)
+</pre>
+</body></html>

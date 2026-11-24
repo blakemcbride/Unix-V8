@@ -1,0 +1,42 @@
+RAND(3)                    Library Functions Manual                    RAND(3)
+
+NAME
+       rand, lrand, frand, nrand, srand - random number generator
+
+SYNOPSIS
+       int rand( )
+
+       long lrand( )
+
+       double frand( )
+
+       int nrand(val)
+       int val;
+
+       srand(seed)
+       int seed;
+
+DESCRIPTION
+       Rand uses a polynominal feedback random number generator with period
+       2^49-2^32 to return successive uniform pseudo-random numbers x,
+       0<=x<2^15.
+
+       Lrand returns a uniform long x, 0<=x<2^31.
+
+       Frand returns a uniform double x, 0.0<=x<1.0.
+
+       Nrand returns a uniform integer x, 0<=x<val.
+
+       The generators are initialized by calling srand with whatever you like
+       as argument.  To get a different starting value each time,
+
+              srand((int)time(0))
+
+       should work as long as it is not called more often than once per
+       second.
+
+BUGS
+       Rand and lrand are quite machine-dependent.  In principle frand and
+       nrand are more portable, but only the Eighth Edition has them.
+
+                                                                       RAND(3)

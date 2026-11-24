@@ -1,0 +1,31 @@
+FD(4)                      Kernel Interfaces Manual                      FD(4)
+
+NAME
+       fd, stdin, stdout, stderr, tty - file descriptor files
+
+DESCRIPTION
+       These files, conventionally called /dev/fd/0, /dev/fd/1, ...
+       /dev/fd/127, refer to files accessible through file descriptors.  If
+       file descriptor n is open, these two system calls have the same effect:
+
+              fd = open("/dev/fd/n", mode);
+              fd = dup(n);
+
+       Creat(2) is equivalent to open, and mode is ignored.  As with dup,
+       subsequent IO on fd fails unless the original file descriptor allows
+       the read or write operation.
+
+       Entry /dev/fd/3 is conventionally the `control terminal' of the process
+       group to which the present process belongs; see stream(4).
+
+       The entries /dev/stdin, /dev/stdout, /dev/stderr, and /dev/tty are
+       conventionally linked to /dev/fd/0, /dev/fd/1, /dev/fd/2, and /dev/fd/3
+       respectively.
+
+SEE ALSO
+       open(2), dup(2), stream(4)
+
+DIAGNOSTICS
+       Open returns -1 if the related file descriptor is not open.
+
+                                                                         FD(4)

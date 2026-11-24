@@ -1,0 +1,63 @@
+CYNTAX(1)                   General Commands Manual                  CYNTAX(1)
+
+NAME
+       cyntax, cem - C syntax checker
+
+SYNOPSIS
+       cyntax [ options ] ... files ...
+
+       /usr/lib/cyntax/cem [ options ] ... files ...
+
+DESCRIPTION
+       Cyntax is a C compiler front end.  Cem (cemantics) is a link editor for
+       cyntax.  Together they obsolete lint(1).
+
+       Cyntax assumes that files whose names end with `.c' are C source
+       programs; they are compiled to an object file whose name is that of the
+       source with `.O' substituted for `.c'.  If all goes well it will invoke
+       the link editor on the resulting object files plus any arguments whose
+       names end with `.O'.  Object files contain type information - no code.
+
+       Options -D, -I, -U, -o, -l are as in cc(1).  Options -O, -g, and -p are
+       ignored.  Other options are:
+
+       -c     Suppress link editing.
+       -h     Base object files on the basename of the source file rather than
+              the full pathname.
+       -j     Change default directory of include files to
+              `/usr/jerq/include'.
+       -w     Enable pedantic warning diagnostics.
+       -m     equivalent to `-j -DMUX'.
+       -v     Report what cyntax is actually doing.
+       -Vfunc:n
+              Declare function func to have a variable number of arguments,
+              the first n of which are to be type checked.
+
+       Cem is normally invoked only by cyntax.  It also has options, some of
+       which cyntax can't be coerced into providing.  Besides -o and -l
+       already mentioned, they are:
+
+       -m     Don't believe file modification times.  These are normally used
+              to avert redundant type checking.
+
+       -p     Be pedantic about type checking.
+
+       -t     Unconditionally include file modification times in diagnostics.
+
+       -v     Use a verbose format for type names.
+
+FILES
+       *.c
+       *.O
+       a.out
+       /usr/include/*
+       In /usr/lib/cyntax:
+       ccom cyntax proper
+       cem  cemantics
+       libc type library
+       libj
+
+SEE ALSO
+       cc(1), ld(1), lint(1)
+
+                                                                     CYNTAX(1)

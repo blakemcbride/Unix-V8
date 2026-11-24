@@ -1,0 +1,34 @@
+OPEN(2)                       System Calls Manual                      OPEN(2)
+
+NAME
+       open - open for reading or writing
+
+SYNOPSIS
+       open(name, mode)
+       char *name;
+
+DESCRIPTION
+       Open opens the file name for reading (if mode is 0), writing (if mode
+       is 1) or for both reading and writing (if mode is 2).  Name is the
+       address of a string of ASCII characters representing a path name,
+       terminated by a null character.
+
+       The file is positioned at the beginning (byte 0).  The returned file
+       descriptor must be used for subsequent calls for other input-output
+       functions on the file.
+
+SEE ALSO
+       creat(2), read(2), write(2), dup(2), close(2)
+
+DIAGNOSTICS
+       The value -1 is returned if the file does not exist, if one of the
+       necessary directories does not exist or is unreadable, if the file is
+       not readable (resp. writable), the name is too long, or if too many
+       files are open.
+
+BUGS
+       It should be possible to optionally open files for writing with
+       exclusive use, and to optionally call open without the possibility of
+       hanging waiting for carrier on communication lines.
+
+                                                                       OPEN(2)

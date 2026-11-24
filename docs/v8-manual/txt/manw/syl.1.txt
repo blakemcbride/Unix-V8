@@ -1,0 +1,57 @@
+SYL(1)                      General Commands Manual                     SYL(1)
+
+NAME
+       syl - syllable counter
+
+SYNOPSIS
+       syl [ -flags ][ -ver ] [ -num ][ file ... ]
+
+DESCRIPTION
+       Syl counts the number of syllables in each word in the input text.  The
+       input text can be a file, or words typed in at the terminal.  Syl
+       prints each unique word in the file preceded by its syllable count,
+       with the words ordered alphabetically within each syllable category.
+       That is, all one-syllable words are printed first, in alphabetical
+       order, followed by the two-syllable words, and so on.
+
+       One option is available:
+
+            -num     only print words that have at least num syllables, where
+                     num is an integer.
+
+       To use syl interactively, type syl (carriage return), then type in the
+       word or words to be counted on the next line.  Syl will print the
+       syllable count for each word.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+EXAMPLES
+       The command:
+            syl -5 filename
+       will print all the words in filename that have five syllables or more.
+
+       The sequence:
+            syl (carriage return)
+            Who needs a dictionary
+       will print the syllable counts for each word in the line.  When
+       finished, type "control-d."
+
+BUGS
+       Because there are minor rules and exceptions in English, not covered by
+       the syl program, the program is about 98% accurate.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                        SYL(1)

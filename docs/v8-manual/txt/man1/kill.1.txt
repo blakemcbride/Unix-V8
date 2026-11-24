@@ -1,0 +1,36 @@
+KILL(1)                     General Commands Manual                    KILL(1)
+
+NAME
+       kill - terminate a process with extreme prejudice
+
+SYNOPSIS
+       kill [ -sig ] processid ...
+       kill -l
+
+DESCRIPTION
+       Kill sends the TERM (terminate, 15) signal to the specified processes.
+       If a signal name or number preceded by `-' is given as first argument,
+       that signal is sent instead of terminate (see signal(2)).  The signal
+       names are listed by `kill -l', and are as given in
+       /usr/include/signal.h, stripped of the common SIG prefix.
+
+       The terminate signal will kill processes that do not catch the signal;
+       `kill -9 ...' is a sure kill, as the KILL signal (signal 9) cannot be
+       caught.  By convention, if process number 0 is specified, all members
+       in the process group (i.e. processes resulting from the current login)
+       are signaled.  The killed processes must belong to the current user
+       unless he is the super-user.
+
+       To shut the system down and bring it up single user the super-user may
+       send the initialization process a TERM (terminate) signal by `kill 1';
+       see init(8).  To force init to close and open terminals according to
+       what is currently in /etc/ttys use `kill -1 1' (sending a hangup,
+       signal 1).
+
+       The process number of an asynchronous process started with `&' is
+       reported by the shell and by ps(1).
+
+SEE ALSO
+       ps(1), kill(2), signal(2)
+
+                                                                       KILL(1)

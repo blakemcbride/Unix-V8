@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sync.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; sync.2 (<a href="../../../../source/v8/usr/man/man2/sync.2">troff source</a>)</p>
+<pre>
+SYNC(2)                       System Calls Manual                      SYNC(2)
+
+NAME
+       sync - update super-block
+
+SYNOPSIS
+       sync()
+
+DESCRIPTION
+       Sync causes all information in core memory that should be on disk to be
+       written out.  This includes modified super blocks, modified i-nodes,
+       and delayed block I/O.
+
+       It should be used by programs which examine a file system, for example
+       icheck, df, etc.  It is mandatory before a boot.
+
+SEE ALSO
+       <a href="../man8/sync.8.html">sync(8)</a>, <a href="../man8/update.8.html">update(8)</a>
+
+BUGS
+       The writing, although scheduled, is not necessarily complete upon
+       return from sync.
+
+                                                                       SYNC(2)
+</pre>
+</body></html>

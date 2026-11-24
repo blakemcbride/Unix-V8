@@ -1,0 +1,47 @@
+FACTOR(1)                   General Commands Manual                  FACTOR(1)
+
+NAME
+       factor, lfactor, qfactor, primes - factor a number, generate large
+       primes
+
+SYNOPSIS
+       factor [ number ]
+
+       lfactor
+
+       qfactor
+
+       primes [ start [ finish ] ]
+
+DESCRIPTION
+       Factor prints number and its prime factors, each repated the proper
+       number of times.  The number must be positive and less than 2**56
+       (about 7.2e16)
+
+       If no number is given, factor reads a stream of numbers from the
+       standard input and factors them.  It exits on any input not a positive
+       integer.
+
+       Maximum time to factor is proportional to sqrt(n) and occurs when n is
+       prime or the square of a prime.
+
+       Lfactor reads one number from the standard input and factors it.
+       Worst-case running time is proportional to n**(1/5); it beats factor
+       for hard 12-digit problems and is workable to around n=10**30.  Qfactor
+       reads one number from the standard input and factors it.  It is almost
+       always better than lfactor , and will factor numbers up to about 40
+       digits.
+
+       Primes prints the prime numbers ranging from start to finish, where
+       start and finish are positive numbers less than 2**56.  If finish is
+       missing, primes prints without end; if start is missing, it reads the
+       starting number from the standard input.
+
+DIAGNOSTICS
+       `Ouch.' for input out of range or for garbage input.
+
+BUGS
+       Lfactor makes mysterious progress reports on its arcane inner workings.
+       Qfactor does too.
+
+                                                                     FACTOR(1)

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>unlink.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; unlink.2 (<a href="../../../../source/v8/usr/man/man2/unlink.2">troff source</a>)</p>
+<pre>
+UNLINK(2)                     System Calls Manual                    UNLINK(2)
+
+NAME
+       unlink - remove directory entry
+
+SYNOPSIS
+       unlink(name)
+       char *name;
+
+DESCRIPTION
+       Name points to a null-terminated string.  Unlink removes the entry for
+       the file pointed to by name from its directory.  If this entry was the
+       last link to the file, the contents of the file are freed and the file
+       is destroyed.  If, however, the file was open in any process, the
+       actual destruction is delayed until it is closed, even though the
+       directory entry has disappeared.
+
+SEE ALSO
+       <a href="../man1/rm.1.html">rm(1)</a>, <a href="../man2/link.2.html">link(2)</a>
+
+DIAGNOSTICS
+       Zero is normally returned; -1 indicates that the file does not exist,
+       that its directory cannot be written, or that the file contains pure
+       procedure text that is currently in use.  Write permission is not
+       required on the file itself.  It is also illegal to unlink a directory
+       (except for the super-user).
+
+                                                                     UNLINK(2)
+</pre>
+</body></html>

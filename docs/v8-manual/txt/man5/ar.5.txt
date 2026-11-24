@@ -1,0 +1,55 @@
+AR(5)                         File Formats Manual                        AR(5)
+
+NAME
+       ar - archive (library) file format
+
+SYNOPSIS
+       #include <ar.h>
+
+DESCRIPTION
+       The archive command ar is used to combine several files into one.
+       Archives are used mainly as libraries to be searched by the link-editor
+       ld.
+
+       A file produced by ar has a magic string at the start, followed by the
+       constituent files, each preceded by a file header.  The magic number
+       and header layout as described in the include file are:
+
+              #define ARMAG  "!<arch>\en"
+              #define SARMAG 8
+
+              #define ARFMAG "`\en"
+
+              struct ar_hdr {
+                      char   ar_name[16];
+                      char   ar_date[12];
+                      char   ar_uid[6];
+                      char   ar_gid[6];
+                      char   ar_mode[8];
+                      char   ar_size[10];
+                      char   ar_fmag[2];
+              };
+
+       The name is a blank-padded string.  The ar_fmag field contains ARFMAG
+       to help verify the presence of a header.  The other fields are left-
+       adjusted, blank-padded numbers.  They are decimal except for ar_mode,
+       which is octal.  The date is the modification date of the file at the
+       time of its insertion into the archive.
+
+       Each file begins on a even (0 mod 2) boundary; a new-line is inserted
+       between files if necessary.  Nevertheless the size given reflects the
+       actual size of the file exclusive of padding.
+
+       There is no provision for empty areas in an archive file.
+
+       The encoding of the header is portable across machines.  If an archive
+       contains printable files, the archive itself is printable.
+
+SEE ALSO
+       ar(1), ld(1), nm(1)
+
+BUGS
+       File names lose trailing blanks.  Most software dealing with archives
+       takes even an included blank as a name terminator.
+
+                                                                         AR(5)

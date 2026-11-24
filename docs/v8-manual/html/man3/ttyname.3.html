@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ttyname.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; ttyname.3 (<a href="../../../../source/v8/usr/man/man3/ttyname.3">troff source</a>)</p>
+<pre>
+TTYNAME(3)                 Library Functions Manual                 TTYNAME(3)
+
+NAME
+       ttyname, cttyname, isatty, ttyslot - find name of a terminal
+
+SYNOPSIS
+       char *ttyname(fildes)
+
+       char *cttyname()
+
+       isatty(fildes)
+
+       ttyslot()
+
+DESCRIPTION
+       Ttyname returns a pointer to the null-terminated path name of the
+       terminal device associated with file descriptor fildes.
+
+       Cttyname returns a pointer to the path name of the terminal device
+       associated with the first file descriptor among 0,1,2 that is connected
+       to a terminal device.  This probably is the control terminal for the
+       present process.
+
+       Isatty returns 1 if fildes is associated with a terminal device, 0
+       otherwise.
+
+       Ttyslot returns the number of the entry in the <a href="../man5/ttys.5.html">ttys(5)</a> file for the
+       control terminal of the current process.
+
+FILES
+       /dev/∗
+       /etc/ttys
+
+SEE ALSO
+       <a href="../man2/ioctl.2.html">ioctl(2)</a>, <a href="../man5/ttys.5.html">ttys(5)</a>
+
+DIAGNOSTICS
+       Ttyname returns a null pointer (0) if fildes does not describe a
+       terminal device in directory `/dev'.
+
+       Ttyslot returns 0 if `/etc/ttys' is inaccessible or if it cannot
+       determine the control terminal.
+
+BUGS
+       The return value points to static data whose content is overwritten by
+       each call.
+
+                                                                    TTYNAME(3)
+</pre>
+</body></html>

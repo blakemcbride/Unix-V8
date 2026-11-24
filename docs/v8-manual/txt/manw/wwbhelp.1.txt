@@ -1,0 +1,52 @@
+WWBHELP(1)                  General Commands Manual                 WWBHELP(1)
+
+NAME
+       wwbhelp - print Writer's Workbench commands for a topic
+
+SYNOPSIS
+       wwbhelp [ -flags ][ -ver ] [ word or part of word ... ]
+
+DESCRIPTION
+       Wwbhelp searches a file of descriptive topics covered by Writer's
+       Workbench programs.  It prints the topical descriptors followed by
+       commands and options that can be used to get topically related
+       information.
+
+       When wwbhelp is typed on a line with the input topic(s), it will print
+       the commands and options and then exit.  When wwbhelp is typed on a
+       line by itself, the program prompts with ">" for a topic.  To quit,
+       type "q" after the prompt.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+EXAMPLE
+       The command:
+
+            wwbhelp syl
+
+       returns:
+
+            syllable counts for words....syl file
+            syllables greater than N.....syl -N file
+
+FILES
+       /wwb/lib/helpfile    contains the list of topics and programs
+
+SEE ALSO
+       wwbinfo(1), wwb(1).
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                    WWBHELP(1)

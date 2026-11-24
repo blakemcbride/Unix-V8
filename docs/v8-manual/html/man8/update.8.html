@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>update.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; update.8 (<a href="../../../../source/v8/usr/man/man8/update.8">troff source</a>)</p>
+<pre>
+UPDATE(8)                   System Manager's Manual                  UPDATE(8)
+
+NAME
+       update - periodically update the super block
+
+SYNOPSIS
+       /etc/update
+
+DESCRIPTION
+       Update is a program that executes the <a href="../man2/sync.2.html">sync(2)</a> primitive every 30
+       seconds.  This insures that the file system is fairly up to date in
+       case of a crash.  This command should not be executed directly, but
+       rather out of the initialization shell command file <a href="../man8/rc.8.html">rc(8)</a>.
+
+SEE ALSO
+       <a href="../man2/sync.2.html">sync(2)</a>, <a href="../man8/sync.8.html">sync(8)</a>, <a href="../man8/init.8.html">init(8)</a>
+
+                                                                     UPDATE(8)
+</pre>
+</body></html>

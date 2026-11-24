@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>types.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; types.9 (<a href="../../../../source/v8/usr/man/man9/types.9">troff source</a>)</p>
+<pre>
+TYPES(9.5)                                                          TYPES(9.5)
+
+NAME
+       Word, Point, Rectangle, Bitmap, Texture, Pt, Rect, Rpt, display, Drect,
+       Jrect - basic jerq graphics data types
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+
+       typedef int Word;
+       typedef struct Point Point;
+       typedef struct Rectangle Rectangle;
+       typedef struct Bitmap Bitmap;
+       typedef struct Texture Texture;
+
+       extern Bitmap display;
+       extern Rectangle Drect, Jrect;
+
+       Point Pt(x, y) int x, y;
+
+       Rectangle Rect(x0, y0, x1, y1) int x0, y0, x1, y1;
+
+       Rectangle Rpt() Point p0, p1;
+
+DESCRIPTION
+       A Word is a 32-bit integer, and is the unit of storage used in the
+       graphics software.
+
+       A Point is a location in a Bitmap (see below), such as the display, and
+       is defined as:
+
+              typedef struct Point {
+                   short x;
+                   short y;
+              } Point;
+
+       The coordinate system has x increasing to the right and y increasing
+       down.  All objects and operators in the graphics live in the same
+       coordinate space — that of the display bitmap.
+
+       A Rectangle is a rectangular area in a Bitmap.
+
+              typedef struct Rectangle {
+                   Point origin;  /* upper left */
+                   Point corner;  /* lower right */
+              } Rectangle;
+
+       By definition, origin.x&lt;=corner.x and origin.y&lt;=corner.y.  By
+       convention, the right (maximum x) and bottom (maximum y) edges are
+       excluded from the represented rectangle, so abutting rectangles have no
+       points in common.  Thus, corner is the coordinates of the first point
+       beyond the rectangle.  The image on the display is contained in the
+       Rectangle {0, 0, XMAX, YMAX}, where XMAX=800 and YMAX=1024.
+
+       A Bitmap holds a rectangular image, stored in contiguous memory
+       starting at base.
+
+              typedef struct Bitmap {
+                   Word *base;         /* pointer to start of data */
+                   unsigned width;          /* width in Words of total data area */
+                   Rectangle rect;          /* rectangle in data area, screen coords */
+              } Bitmap;
+
+       Each width Words of memory form a scan-line of the image, and rect
+       defines the coordinate system inside the Bitmap: rect.origin is the
+       location in the Bitmap of the upper-leftmost point in the image.  The
+       coordinate system is arranged so x positions equal to 0 mod 16 are in
+       the leftmost bit of a Word.
+
+       A Texture is a 16×16 dot bit pattern.
+
+              typedef struct {
+                   Word bits[16];
+              } Texture;
+
+       Textures are aligned to absolute display positions, so adjacent areas
+       colored with the same Texture mesh smoothly.
+
+       The functions Pt, Rect and Rpt construct geometrical data types from
+       their components.  Since they are implemented as macros, they only work
+       in function argument lists.
+
+       The global display is a Bitmap describing the display area of the
+       process.  Drect is a Rectangle defining, in screen coordinates, the
+       display area available to the program (inside the layer's border).
+       Jrect is the Rectangle {0, 0, XMAX, YMAX}.
+
+                                                                    TYPES(9.5)
+</pre>
+</body></html>

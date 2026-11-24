@@ -1,0 +1,39 @@
+FERROR(3S)                                                          FERROR(3S)
+
+NAME
+       feof, ferror, clearerr, fileno - stream status inquiries
+
+SYNOPSIS
+       #include <stdio.h>
+
+       feof(stream)
+       FILE *stream;
+
+       ferror(stream)
+       FILE *stream
+
+       clearerr(stream)
+       FILE *stream
+
+       fileno(stream)
+       FILE *stream;
+
+DESCRIPTION
+       Feof returns non-zero if end of file has been encountered on the named
+       input stream, otherwise zero.
+
+       Ferror returns non-zero when an error has occurred reading or writing
+       the named stream, otherwise zero.  Unless cleared by clearerr, the
+       error indication lasts until the stream is closed.
+
+       Clearerr resets the error indication on the named stream.
+
+       Fileno returns the integer file descriptor associated with the stream,
+       see open(2).
+
+       These functions are implemented as macros; they cannot be redeclared.
+
+SEE ALSO
+       fopen(3), open(2)
+
+                                                                    FERROR(3S)

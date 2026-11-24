@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ttys.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; ttys.5 (<a href="../../../../source/v8/usr/man/man5/ttys.5">troff source</a>)</p>
+<pre>
+TTYS(5)                       File Formats Manual                      TTYS(5)
+
+NAME
+       ttys - terminal initialization data
+
+DESCRIPTION
+       The ttys file is read by the init program and specifies which terminal
+       special files are to have a process created for them which will allow
+       people to log in.  It contains one line per special file.
+
+       The first character of a line is either `0' or `1'; the former causes
+       the line to be ignored, the latter causes it to be effective.  The
+       second character is used as an argument to <a href="../man8/getty.8.html">getty(8)</a>, which performs
+       such tasks as baud-rate recognition, reading the login name, and
+       calling <a href="../man8/login.8.html">login(8)</a>.  For normal lines, the character is `0'; other
+       characters can be used, for example, with hard-wired terminals where
+       speed recognition is unnecessary or which have special characteristics.
+       (Getty will have to be fixed in such cases.)  The remainder of the line
+       is the terminal's entry in the device directory, /dev.
+
+FILES
+       /etc/ttys
+
+SEE ALSO
+       <a href="../man8/init.8.html">init(8)</a>, <a href="../man8/getty.8.html">getty(8)</a>, <a href="../man8/login.8.html">login(8)</a>
+
+                                                                       TTYS(5)
+</pre>
+</body></html>

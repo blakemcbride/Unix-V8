@@ -1,0 +1,17 @@
+BASIC(1)                    General Commands Manual                   BASIC(1)
+
+NAME
+       basic, bas, bite - Basic language interpreters
+
+SYNOPSIS
+       /usr/bin/lcl/basic
+
+       /usr/bin/lcl/bas
+
+       /usr/bin/lcl/bite
+
+DESCRIPTION
+       Of these three completely different Basic interpreters, basic is the
+       biggest, and unfortunately the best.  Caveat emptor.
+
+                                     grigg                            BASIC(1)

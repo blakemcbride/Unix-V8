@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>jx.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; jx.9 (<a href="../../../../source/v8/usr/man/man9/jx.9">troff source</a>)</p>
+<pre>
+JX(9.1)                                                                JX(9.1)
+
+NAME
+       jx - jerq execution and stdio interpreter
+
+SYNOPSIS
+       jx file [ arguments ]
+
+DESCRIPTION
+       Jx downloads the program in file to the jerq or layer on its
+       controlling tty and runs it there, simulating standard I/O functions of
+       <a href="../man3/stdio.3.html">stdio(3)</a>.  Jx works either stand-alone or in a layer.
+
+       Stdout and stderr, if directed to the controlling terminal, will be
+       squirreled away during execution to be cat'ed after the terminal
+       program has been rebooted.
+
+       Programs to be run by jx should include &lt;jerqio.h&gt; and call exit() upon
+       termination in order to restart the default terminal program.  Programs
+       to be run stand-alone should be compiled with the -J option of
+       <a href="../man9/3cc.9.html">3cc(9.1)</a>.  No special options are required for running in a layer.
+
+       Stdio functions available under jx are
+
+              getc  putc  fopen popen printf      fread
+              getchar     putchar     freopen     pclosesprintffwrite
+              fgets puts  fclose            fprintf
+                    fputs access
+                    fflush
+
+       Unlike in <a href="../man3/stdio.3.html">stdio(3S)</a>, getc and putc are functions, not macros.  Printf
+       has only %d, %s, %c, %o and %x.  %u prints an unsigned decimal number.
+       %D prints an unsigned long decimal number.
+
+       Since jx uses sendchar, sendnchars, and rcvchar, jx programs should
+       avoid these, and use only the standard I/O routines.
+
+FILES
+       /usr/jerq/include/jerqio.h
+       /usr/jerq/lib/sysint        standard I/O interpreter
+       $HOME/.jxout                saved standard output
+       $HOME/.jxerr                saved standard diagnostic output
+
+SEE ALSO
+       <a href="../man9/request.9.html">request(9.2)</a>
+
+BUGS
+       Keyboard standard input doesn't work; use kbdchar(9.2).
+       Stand-alone programs do not receive arguments.
+
+                                                                       JX(9.1)
+</pre>
+</body></html>

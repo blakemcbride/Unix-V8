@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>upas.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; upas.8 (<a href="../../../../source/v8/usr/man/man8/upas.8">troff source</a>)</p>
+<pre>
+UPAS(8)                     System Manager's Manual                    UPAS(8)
+
+NAME
+       upas - address driven mailer
+
+SYNOPSIS
+       mail person ...
+       rmail -N network person ...
+       cmail -N network person ...
+
+DESCRIPTION
+       Upas is a mail delivery system that disposes of messages in a way
+       determined by the destination address and a set of rewriting rules.  It
+       can be used to recognize many address formats and route remote mail to
+       different network mail interfaces.
+
+       mail   is used by a user to send or read mail.  See <a href="../man1/mail.1.html">mail(1)</a>.
+
+       rmail  is used to inject mail coming from other machines into the mail
+              system.  No message conversion is performed.
+
+       cmail  is used to inject mail formatted according to ARPA RFC 822 into
+              the mail system.  The mail is converted into a form
+              understandable to upas.
+
+       Upas's rewriting rules (<a href="../man7/mail.7.html">mail(7)</a>) contain <a href="../man1/ed.1.html">ed(1)</a> style substitutions that
+       allow addresses to be transformed into the commands used to inject mail
+       to the networks.
+
+       The -N option causes the `network' indicates the name of the network
+       from which the message is coming.  This network name is prepended to
+       the return address.
+
+       Each message submitted using rmail or cmail is checked against a
+       forwarding list.  Unless the name of all machines in the source path or
+       all machines in the destination path are in the forwarding list, the
+       message is refused.
+
+FILES
+       /usr/lib/upas/rewrite     the rewriting rules
+       /usr/lib/upas/forwardlist the forwarding list
+       /usr/lib/upas/forwardlist.lolocal forwarding list
+       /bin/mail                 the mailer program
+       /bin/rmail                linked to /bin/mail
+       /bin/cmail                linked to /bin/mail
+       /usr/spool/mail/*         mailboxes
+       /etc/passwd               authentication
+       /tmp/ma*                  temp file
+       /tmp/ml*                  lock file
+       $HOME/dead.letter         unmailable text
+
+SEE ALSO
+       <a href="../man1/xsend.1.html">xsend(1)</a>, <a href="../man1/write.1.html">write(1)</a>, <a href="../man1/uucp.1.html">uucp(1)</a>, <a href="../man1/mail.1.html">mail(1)</a>, <a href="../man7/mail.7.html">mail(7)</a>
+
+                                                                       UPAS(8)
+</pre>
+</body></html>

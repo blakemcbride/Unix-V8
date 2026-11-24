@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>fread.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; fread.3 (<a href="../../../../source/v8/usr/man/man3/fread.3">troff source</a>)</p>
+<pre>
+FREAD(3S)                                                            FREAD(3S)
+
+NAME
+       fread, fwrite - buffered binary input/output
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       fread(ptr, sizeof(*ptr), nitems, stream)
+       FILE *stream;
+
+       fwrite(ptr, sizeof(*ptr), nitems, stream)
+       FILE *stream;
+
+DESCRIPTION
+       Fread reads, into a block beginning at ptr, nitems of data of the type
+       of *ptr from the named input stream.  It returns the number of items
+       actually read.
+
+       Fwrite appends at most nitems of data of the type of *ptr beginning at
+       ptr to the named output stream.  It returns the number of items
+       actually written.
+
+SEE ALSO
+       <a href="../man2/read.2.html">read(2)</a>, <a href="../man2/write.2.html">write(2)</a>, <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man3/getc.3.html">getc(3)</a>, <a href="../man3/putc.3.html">putc(3)</a>, <a href="../man3/gets.3.html">gets(3)</a>, <a href="../man3/puts.3.html">puts(3)</a>,
+       <a href="../man3/printf.3.html">printf(3)</a>, <a href="../man3/scanf.3.html">scanf(3)</a>
+
+DIAGNOSTICS
+       Fread and fwrite return 0 upon end of file or error.
+
+                                                                     FREAD(3S)
+</pre>
+</body></html>

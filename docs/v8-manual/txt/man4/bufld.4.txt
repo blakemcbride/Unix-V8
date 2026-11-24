@@ -1,0 +1,21 @@
+BUFLD(4)                   Kernel Interfaces Manual                   BUFLD(4)
+
+NAME
+       buf_ld - buffering line discipline
+
+DESCRIPTION
+       This stream module treasures up data for a while, then emits it in a
+       burst.  It is otherwise transparent.  It intends to reduce overhead of
+       programs such as cu(1) and uucp(1) that read input from moderate-speed
+       lines in raw or cbreak mode.
+
+       It saves characters until 16 are accumulated or 1/20 sec has passed
+       without seeing a character.
+
+SEE ALSO
+       stream(4)
+
+BUGS
+       One supposes that the parameters should be settable.
+
+                                                                      BUFLD(4)

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>push.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; push.1 (<a href="../../../../source/v8/usr/man/man1/push.1">troff source</a>)</p>
+<pre>
+PUSH(1)                     General Commands Manual                    PUSH(1)
+
+NAME
+       push, pull - datakit remote file copy
+
+SYNOPSIS
+       push [ -v ] machine file ... remotedir
+
+       pull [ -v ] machine file ... localdir
+
+DESCRIPTION
+       Push and pull copy files between machines over Datakit.  Push copies
+       files from the local machine to the directory remotedir on the named
+       machine.  Pull copies files from the named machine to the directory
+       localdir on the local machine.  The last component of the name of a
+       copy is the same as that of the original.  If one of the files is a
+       directory, a corresponding directory is created and the directory's
+       files are copied, recursively.
+
+       Option -v announces each file as it is copied.
+
+       Pushing and pulling involve two programs running in different contexts
+       on different machines.  In particular, pulling to directory `.'  puts
+       files in the local current directory, but pushing to `.'  puts files in
+       the remote home directory.  Shell metacharacters which are to be
+       interpreted on the remote machine must be quoted.
+
+FILES
+       /usr/lib/Rpull and /usr/lib/Rpush, links to /usr/bin/pull and
+       /usr/bin/push, handle the remote end of transactions.
+
+SEE ALSO
+       <a href="../man1/dcon.1.html">dcon(1)</a>, <a href="../man1/cp.1.html">cp(1)</a>, <a href="../man1/ropy.1.html">ropy(1)</a>
+
+DIAGNOSTICS
+       Messages marked `(remote)' are from the sister process running on the
+       remote machine.
+
+                                                                       PUSH(1)
+</pre>
+</body></html>

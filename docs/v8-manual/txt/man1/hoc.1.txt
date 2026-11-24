@@ -1,0 +1,56 @@
+HOC(1)                      General Commands Manual                     HOC(1)
+
+NAME
+       hoc - interactive floating point language
+
+SYNOPSIS
+       hoc [ file ... ]
+
+DESCRIPTION
+       Hoc interprets a simple language for floating point arithmetic, at
+       about the level of BASIC, with C-like syntax and functions.
+
+       The named files are read and interpreted in order.  If no file is given
+       or if file is `-' hoc interprets the standard input.
+
+       Hoc input consists of expressions and statements.  Expressions are
+       evaluated and their results printed.  Statements, typically assignments
+       and function or procedure definitions, produce no output unless they
+       explicitly call print.
+
+       Variable names are the usual syntax, including `_'; the name `_' by
+       itself contains the value of the last expression evaluated.  The
+       variables E, PI, PHI, GAMMA and DEG are predefined; the last is
+       59.25..., degrees per radian.
+
+       Expressions are formed with these operators:
+            ^         exponentiation
+            ! - ++ -- unary logical and arithmetic negation, ...
+            * / %     the obvious
+            + -       ditto
+            > >= < <= == !=
+            &&
+            ||
+            = += -= ∗= /= %=
+       Built in functions include abs, atan (one argument), cos, exp, int,
+       log, log10, sin, and sqrt.  The function read(x) reads a value into the
+       variable x; the statement print prints a list of expressions that may
+       include string constants such as "hello\n".
+
+       Control flow includes if-else, while, and for, with braces for
+       grouping.  End of line marks end of statement, as does a semicolon.
+
+       Functions and procedures are introduced by the words func and proc;
+       return is used to return, with a value from a function.  Within a
+       function or procedure, arguments are referred to as $1, $2, etc.; all
+       other variables are global.
+
+SEE ALSO
+       The Unix Programming Environment by Brian Kernighan and Rob Pike.
+       bc(1), dc(1)
+
+BUGS
+       Error recovery is imperfect within function and procedure definitions.
+       The treatment of newlines is not exactly user-friendly.
+
+                                                                        HOC(1)

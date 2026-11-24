@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uucleanup.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; uucleanup.8 (<a href="../../../../source/v8/usr/man/man8/uucleanup.8">troff source</a>)</p>
+<pre>
+UUCLEANUP(8)                System Manager's Manual               UUCLEANUP(8)
+
+NAME
+       uucleanup - uucp spool directory clean-up
+
+SYNOPSIS
+       /usr/lib/uucp/uucleanup [ options ]
+
+DESCRIPTION
+       Uucleanup removes old files from the uucp spool directories.  It is
+       controlled by a number of options:
+
+       -Cdays  Remove B C.  files that are at least days old, and send a
+               message to the user who queued the job.
+
+       -Ddays  Remove D.  files that are at least days old.  If the data file
+               appears to contain a mail message, an attempt will be made to
+               deliver it; if it contains a netnews article from another
+               system, it will be handed to rnews.
+
+       -Wdays  Send a warning to the user who queued any jobs (C.  files) at
+               least days old.  If one of the data files for the job appears
+               to be a mail message, the message is included in the warning.
+
+       -Xdays  Remove any X.  files at least days old.
+
+       -mstring
+               Include string in warning messages.  The default is ``See your
+               local administrator to locate the problem.''
+
+       -odays  Remove any other files that are at least days old.
+
+       -ssystem
+               Examine only files associated with system.
+
+       By default, C.  files generate a warning when one day old, and are
+       removed after 7 days; D.  files are removed after 7 days; and X.  and
+       other files are removed after 2 days.
+
+       This program is typically called by the shell uudemon.cleanup, which
+       should be started regularly by <a href="../man8/cron.8.html">cron(8)</a>.
+
+FILES
+       /usr/lib/uucp
+                  directory with commands used by uucleanup internally
+       /usr/spool/uucp
+                  spool directory
+
+SEE ALSO
+       <a href="../man1/uucp.1.html">uucp(1)</a>
+
+                                                                  UUCLEANUP(8)
+</pre>
+</body></html>

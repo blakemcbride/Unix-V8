@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>brk.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; brk.2 (<a href="../../../../source/v8/usr/man/man2/brk.2">troff source</a>)</p>
+<pre>
+BRK(2)                        System Calls Manual                       BRK(2)
+
+NAME
+       brk, sbrk, break - change core allocation
+
+SYNOPSIS
+       char *brk(addr)
+
+       char *sbrk(incr)
+
+DESCRIPTION
+       Brk sets the system's idea of the lowest location not used by the
+       program (called the break) to addr (rounded up to the next multiple of
+       64 bytes on a PDP11 and 1024 bytes on a VAX).  Locations not less than
+       addr and below the stack pointer are not in the address space and will
+       thus cause a memory violation if accessed.
+
+       In the alternate function sbrk, incr more bytes are added to the
+       program's data space and a pointer to the start of the new area is
+       returned.  (Rounding occurs as with brk, but a nominal break is
+       remembered, so rounding does not accumulate.)
+
+       When a program begins execution via exec the break is set at the
+       highest location defined by the program and data storage areas.
+       Ordinarily, therefore, only programs with growing data areas need to
+       use break.
+
+SEE ALSO
+       <a href="../man2/exec.2.html">exec(2)</a>, <a href="../man3/malloc.3.html">malloc(3)</a>, <a href="../man3/end.3.html">end(3)</a>
+
+DIAGNOSTICS
+       Zero is returned if the brk could be set; -1 if the program requests
+       more memory than the system limit or if too many segmentation registers
+       would be required to implement the break.  Sbrk returns -1 if the break
+       could not be set.
+
+                                                                        BRK(2)
+</pre>
+</body></html>

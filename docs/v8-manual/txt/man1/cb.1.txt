@@ -1,0 +1,54 @@
+CB(1)                       General Commands Manual                      CB(1)
+
+NAME
+       cb, pp - C program beautifier and pretty printer
+
+SYNOPSIS
+       cb [ option ] ...  [ file ] ...
+
+       pp [ option ] ... [ file ] ...
+
+DESCRIPTION
+       Cb reads C programs either from the named files or from the standard
+       input and writes them on the standard output with spacing and
+       indentation that displays the structure of the code.  The options are:
+
+       -s     place newlines as in Kernighan and Ritchie.  (Original newlines
+              are preserved by default.)
+
+       -j     join split lines.
+
+       -l leng
+              split lines that are longer than leng.
+
+       Pp formats the named C source files, or its standard input if none are
+       given, and writes a `publication format' on the standard output for
+       printing on a typesetter with filters like d202(1).  The options are
+
+       -Tdev  prepare output for devices named as in troff(1); default is 202
+
+       -b     use bold fonts suffixed `K' rather than `B'
+
+       -ffont set the main font; the default is MM, Memphis Medium
+
+       -kfile cause words in the named file, one per line, to be recognized as
+              keywords; the file will be looked up in /usr/lib/pp if it is not
+              in the current directory
+
+       -ttitle
+              generate a title page with the title specified and a date stamp
+
+DIAGNOSTICS
+       Pp complains and exits if it cannot find a required font.  If this
+       happens, take the name of the missing font to a local font guru.
+
+SEE ALSO
+       pr(1), troff(1), d202(1), dcan(1), etc.
+       B. W. Kernighan and D. M. Ritchie, The C Programming Language,
+       Prentice-Hall, 1978.
+
+BUGS
+       Punctuation hidden in preprocessor statements causes cb to make
+       indentation errors.
+
+                                                                         CB(1)

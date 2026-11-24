@@ -1,0 +1,28 @@
+PIC(1)                      General Commands Manual                     PIC(1)
+
+NAME
+       pic - troff preprocessor for drawing pictures
+
+SYNOPSIS
+       pic [ -Tt ] [ -D ] [ files ]
+
+DESCRIPTION
+       Pic is a troff(1) preprocessor for drawing figures on a typesetter.
+       The basic objects are box, line, arrow, spline, circle, ellipse, arc,
+       and text.  These may be positioned in absolute coordinates or relative
+       to previously placed objects.  Pic also provides blocks, variables,
+       expressions, built-in functions, loops, conditionals, and a macro
+       processor.
+
+       The optional argument -Tt specifies typesetter t; currently supported
+       typesetters are 202 (the default), cat (Graphic Systems CAT), and aps
+       (Autologic APS-5).
+
+       The argument -D causes pic to generate troff commands that draw lines
+       of higher quality.  Recommended for final copy on typesetters.
+
+SEE ALSO
+       B. W. Kernighan, PIC — A Graphics Language for Typesetting
+       ideal(1), ped(9.1), doctype(1)
+
+                                                                        PIC(1)

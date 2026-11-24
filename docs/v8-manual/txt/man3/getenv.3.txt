@@ -1,0 +1,18 @@
+GETENV(3)                  Library Functions Manual                  GETENV(3)
+
+NAME
+       getenv - value for environment name
+
+SYNOPSIS
+       char *getenv(name)
+       char *name;
+
+DESCRIPTION
+       Getenv searches the environment list (see environ(5)) for a string of
+       the form name=value and returns value if such a string is present,
+       otherwise 0 (NULL).
+
+SEE ALSO
+       environ(5), exec(2)
+
+                                                                     GETENV(3)

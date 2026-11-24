@@ -1,0 +1,96 @@
+APNEWS(7)              Miscellaneous Information Manual              APNEWS(7)
+
+NAME
+       apnews, ap.keys - present AP wire stories
+
+SYNOPSIS
+       apnews [ -f dir ] [ -r ]
+
+DESCRIPTION
+       Apnews presents news from the AP wire on a video screen.  The top half
+       of the screen contains 20 story slugs (two-word labels).  Apnews
+       responds to these commands:
+
+       n       print story for slug n; page through it by typing newlines
+
+       m    present more slugs
+
+       .       return to current slug list
+
+       t       return to first list
+
+       s keywords
+               present slugs for stories containing these keywords
+
+       y       present slugs for stories containing words from the last story
+               read
+
+       c file  (copy) add story being read to named file or directory
+
+       ?       print some help
+
+       To suggest interest, slugs may be followed by a bracketed number that
+       shows the average number of pages (up to 5) that readers have perused.
+       Option -r turns this feature off.
+
+       Option -f directs the attention of apnews to a specified directory of
+       AP stories, as may be collected by ap.keys.
+
+       To monitor news automatically, put a file ap.keys in your home
+       directory.  This file contains instruction lines marked by stars (*),
+       each followed by one or more search lines.  Instructions specify how
+       much to capture:
+
+       S    whole story
+       P    first paragraph
+       H    heading
+
+       then what to do with it:
+
+       | command
+              specifying a command (often mail) to be executed with the story
+              as standard input
+
+       > file specifying a file or directory to add the story to; pathnames
+              are relative to your home directory
+
+       If no instruction is present, the default is
+
+              *S | mail yourself
+
+       Search lines may contain:
+
+       -      a sequence of blank-separated words; these words must occur in
+              this order
+
+       -      a sequence of words separated by commas; these words must appear
+              in the same sentence
+
+       -      a sequence of words separated by periods; these words may occur
+              anywhere in the story, but all must appear
+
+       Combinations are allowed, e.g.  x . y, z specifies y and z in the same
+       sentence and x somewhere in the same story.  The character `!' means
+       not, so that !chocolate chip means chip not preceded by chocolate.
+       Some suffixes are removed; and capitals are ignored except when entire
+       words are capitalized.  Thus ERA and era are distinguished, but Waters
+       and waters are not.  Special `words' specify story types:
+
+       #f   flash
+       #b   bulletin
+       #u   urgent news
+       #r   regular news
+       #d   deferred news
+
+EXAMPLE
+       ∗S > stuff
+       bell laboratories
+       FCC . telephone, regulation
+       ∗P | mail joe
+       #b
+       AM-NewsDigest
+
+FILES
+       /usr/spool/ap/*
+
+                                     alice                           APNEWS(7)

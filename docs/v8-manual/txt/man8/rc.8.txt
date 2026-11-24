@@ -1,0 +1,25 @@
+RC(8)                       System Manager's Manual                      RC(8)
+
+NAME
+       rc - boot script
+
+SYNOPSIS
+       /etc/rc
+
+DESCRIPTION
+       Rc is the command script invoked by init(8) to control reboots.  During
+       an automatic reboot, rc is invoked with the argument autoboot;
+       typically this invokes /etc/fsck -p to repair minor filesystem
+       inconsistencies.  If rc exits with an unsuccessful status, init stops
+       in single-user mode; otherwise it proceeds to multi-user.
+
+       When the system enters multi-user mode, either during an auto-reboot or
+       after the single-user shell terminates, rc is invoked without
+       arguments.  This usually causes it to mount filesystems, start daemons,
+       clear /tmp, and perform other housekeeping.  If this call to rc exits
+       unsuccessfully, init reverts to single-user mode.
+
+SEE ALSO
+       init(8), reboot(8)
+
+                                                                         RC(8)

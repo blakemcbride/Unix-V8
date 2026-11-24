@@ -1,0 +1,59 @@
+NETFS(8)                    System Manager's Manual                   NETFS(8)
+
+NAME
+       netfs - network file system
+
+SYNOPSIS
+       /usr/net/share.go
+
+       /usr/net/share
+
+       /usr/net/fshare
+
+       /usr/net/pscript
+
+DESCRIPTION
+       The network file system is conventionally a set of directories
+       contained in /n, and a set of files and programs contained in /usr/net.
+
+       The connections in the network file system are asymmetric, connecting a
+       client and a server.  When the client is connected to the server, the
+       server's file system appears in one of the directories in /n.  The
+       client establishes and maintains connections to servers using
+       /usr/net/setup, which is started by invoking the shell script
+       /usr/net/setup.go in rc(8).  This program uses the file
+       /usr/net/friends to control the connections to servers.  Each line in
+       /usr/net/friends contains four fields: service name, mount point,
+       unique identifier, and debugging flag.  The service name is the network
+       name for the server, for instance, mh/astro/aliceF for the server on
+       alice.  The mount point is the name of the directory on which the
+       remote file system is to be mounted, for instance /n/alice.  The unique
+       identifiers can be any integers bigger than the maximum major device
+       number of a device in the system, and smaller than 255.  The simplest
+       practice is to number the lines consecutively starting at 64.  The
+       debugging flag is usually 0, but can be set to 3 before the connection
+       is established to cause the server to store copious debugging
+       information in a buffer, called debugbuf, which can be examined using
+       pi(9.1).  Setup reads the file and attempts to connect to all the
+       servers it is not already connected to.  If the file is changed it will
+       be re-read within 30 seconds.  Connections are tried every 20 minutes.
+       If the connection exists it is tested every 30 seconds, and shut down
+       if there is no response to several consecutive probes.
+
+       The server program is /usr/net/fshare, invoked in /usr/rc by
+       /usr/net/share.go.  It runs as super-user.  It uses a table
+       /usr/net/people to translate permissions between the server and its
+       clients.  The front of the file explains its format.  The permission
+       table is maintained by running pscript in the directory /usr/net.  This
+       produces a table by matching login names from the client and server
+       password files.
+
+FILES
+       /n/*              mount points for remote file systems
+       /usr/net/people   userid translation table
+       /usr/net/friends  connection list
+
+BUGS
+       Group permissions are not well mapped.
+
+                                                                      NETFS(8)

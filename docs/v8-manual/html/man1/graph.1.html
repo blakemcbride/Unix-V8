@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>graph.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; graph.1 (<a href="../../../../source/v8/usr/man/man1/graph.1">troff source</a>)</p>
+<pre>
+GRAPH(1)                    General Commands Manual                   GRAPH(1)
+
+NAME
+       graph - draw a graph
+
+SYNOPSIS
+       graph [ option ] ...
+
+       spline [ option ] ...
+
+DESCRIPTION
+       Graph with no options takes pairs of numbers from the standard input as
+       abscissas (x-values) and ordinates (y-values) of a graph.  Successive
+       points are connected by straight lines.  The graph is encoded on the
+       standard output for display by the <a href="../man1/plot.1.html">plot(1)</a> filters.
+
+       If the ordinate of a point is followed by a nonnumeric string, that
+       string is printed as a label beginning on the point.  Labels may be
+       surrounded with quotes "...", in which case they may be empty or
+       contain blanks and numbers; labels never contain newlines.
+
+       The following options are recognized, each as a separate argument.
+
+       -a     Supply abscissas automatically; no x-values appear in the input.
+              Spacing is given by the next argument (default 1).  A second
+              optional argument is the starting point for automatic abscissas
+              (default 0, or 1 with a log scale in x, or the lower limit given
+              by -x).
+
+       -b     Break (disconnect) the graph after each label in the input.
+
+       -c     Character string given by next argument is default label for
+              each point.
+
+       -g     Next argument is grid style, 0 no grid, 1 frame with ticks, 2
+              full grid (default).
+
+       -l     Next argument is a legend to title the graph.  Grid ranges are
+              automatically printed as part of the title unless a -s option is
+              present.
+
+       -m     Next argument is mode (style) of connecting lines: 0
+              disconnected, 1 connected.  Some devices give distinguishable
+              line styles for other small integers.  Mode -1 (default) begins
+              with style 1 amd rotates styles for successive curves under
+              option -o.
+
+       -o     (Overlay.)  The ordinates for n superposed curves appear in the
+              input with each abscissa value.  The next argument is n.
+
+       -s     Save screen; no new page for this graph.
+
+       -x [ l ]
+              If l is present, x axis is logarithmic.  Next 1 (or 2) arguments
+              are lower (and upper) x limits.  Third argument, if present, is
+              grid spacing on x axis.  Normally these quantities are
+              determined automatically.
+
+       -y [ l ]
+              Similarly for y.
+
+       -e     Make automatically determined x and y scales equal.
+
+       -h     Next argument is fraction of space for height.
+
+       -w     Similarly for width.
+
+       -r     Next argument is fraction of space to move right before
+              plotting.
+
+       -u     Similarly to move up before plotting.
+
+       -t     Transpose horizontal and vertical axes.  (Option -a now applies
+              to the vertical axis.)
+
+       If a specified lower limit exceeds the upper limit, the axis is
+       reversed.
+
+       Spline is a filter that interpolates extra data in input suitable for
+       graph to make smoother-looking curves.
+
+       The following options are recognized, each as a separate argument.
+
+       -a     as in graph
+
+       -x     as in graph
+
+       -k     The constant k used in the boundary value computation
+
+                      (2nd deriv. at end) = k*(2nd deriv. next to end)
+
+              is set by the next argument.  (Default k = 0.)
+
+       -n     Space output points so that approximately n intervals occur
+              between the lower and upper x limits.  (Default n = 100.)
+
+       -p     Make output periodic, i.e. match derivatives at ends.  First and
+              last input values should normally agree.
+
+DIAGNOSTICS
+       When data is not strictly monotone in x, spline simply reproduces its
+       input.
+
+SEE ALSO
+       <a href="../man1/plot.1.html">plot(1)</a>, <a href="../man1/grap.1.html">grap(1)</a>
+
+BUGS
+       In graph segments that run out of bounds are dropped, not windowed.
+       Logarithmic axes may not be reversed.
+       Option -e actually makes automatic limits, rather than automatic
+       scaling, equal.
+       Spline quietly discards points after the first 1000.
+       Spline's piecewise cubic fit (R. W. Hamming, Numerical Methods for
+       Scientists and Engineers, 2nd ed., p. 349) overshoots at sudden jumps.
+
+                                                                      GRAPH(1)
+</pre>
+</body></html>

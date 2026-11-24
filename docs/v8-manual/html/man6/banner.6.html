@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>banner.6 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 6</a> &gt; banner.6 (<a href="../../../../source/v8/usr/man/man6/banner.6">troff source</a>)</p>
+<pre>
+BANNER(6)                        Games Manual                        BANNER(6)
+
+NAME
+       banner, rot, rnd, bigp - print in large type
+
+SYNOPSIS
+       /usr/games/banner [ -font ] text [ | /usr/games/rot | /usr/games/rnd
+       height width ]
+
+       bigp [ text ]
+
+DESCRIPTION
+       Banner prints its arguments, one per line, in
+        #                                   #
+         #                                  #
+         #    ###  # ##   ## #  ###        ####  #   # # ##   ###
+         #       # ##  # #  ## #   #        #    #   # ##  # #   #
+         #    #### #     #   # ####         #    #   # #   # ####
+         #   #   # #     #   # #            #  # #  ## #   # #       ##
+          #   ###  #      ####  ###          ##   ## # ####   ###    ##
+                             #                       # #
+                         ####                     ###  #
+
+       The font may be selected from /usr/jerq/font (see <a href="../man9/font.9.html">font(9.5)</a>).
+
+       Rot rotates its input clockwise ninety degrees.
+
+              banner Sideways | rot
+
+       runs down the page, and
+
+              banner Upside Down | rot | rot
+
+       is disconcerting.
+
+       Rnd scales the non-white-space characters in its input by integral
+       height and width.
+
+       Bigp generates banners suitable for printing on a line-printer.  Its
+       output is approximately the same as
+
+              banner -defont text | rot | rnd 2 4 .
+
+       If no arguments are supplied, bigp creates a banner from the standard
+       input.
+
+                                                                     BANNER(6)
+</pre>
+</body></html>

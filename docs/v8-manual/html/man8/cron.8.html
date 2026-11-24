@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cron.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; cron.8 (<a href="../../../../source/v8/usr/man/man8/cron.8">troff source</a>)</p>
+<pre>
+CRON(8)                     System Manager's Manual                    CRON(8)
+
+NAME
+       cron - clock daemon
+
+SYNOPSIS
+       /etc/cron
+
+DESCRIPTION
+       Cron executes commands at specified dates and times according to the
+       instructions in the file /etc/crontab.  Since cron never exits, it
+       should be executed only once, by running cron from the initialization
+       process through the file /etc/rc; see <a href="../man8/init.8.html">init(8)</a>.
+
+       Crontab consists of lines of seven fields each.  The fields are
+       separated by spaces or tabs.  The first field specifies the user under
+       whose uid and gid the command should be executed.  The next five are
+       integer patterns to specify the minute (0-59), hour (0-23), day of the
+       month (1-31), month of the year (1-12), and day of the week (1-7 with
+       1=Monday).  Each of these patterns may contain a number in the range
+       above; two numbers separated by a minus meaning a range inclusive; a
+       list of numbers separated by commas meaning any of the numbers; or an
+       asterisk meaning all legal values.  The seventh field is a string that
+       is executed by the shell at the specified times.  A percent character
+       in this field is translated to a new-line character.  Only the first
+       line (up to a % or end of line) of the command field is executed by the
+       Shell.  The other lines are made available to the command as standard
+       input.
+
+       Crontab is examined by cron every minute.
+
+FILES
+       /etc/crontab
+
+                                                                       CRON(8)
+</pre>
+</body></html>

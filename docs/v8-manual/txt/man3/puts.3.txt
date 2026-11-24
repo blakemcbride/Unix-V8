@@ -1,0 +1,32 @@
+PUTS(3S)                                                              PUTS(3S)
+
+NAME
+       puts, fputs - put a string on a stream
+
+SYNOPSIS
+       #include <stdio.h>
+
+       puts(s)
+       char *s;
+
+       fputs(s, stream)
+       char *s;
+       FILE *stream;
+
+DESCRIPTION
+       Puts copies the null-terminated string s to the standard output stream
+       stdout and appends a newline character.
+
+       Fputs copies the null-terminated string s to the named output stream.
+
+       Neither routine copies the terminal null character.
+
+SEE ALSO
+       fopen(3), gets(3), putc(3), printf(3), ferror(3)
+       fread(3) for fwrite
+
+BUGS
+       Puts appends a newline, fputs does not, all in the name of backward
+       compatibility.
+
+                                                                      PUTS(3S)

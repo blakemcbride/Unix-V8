@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sysmon.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; sysmon.9 (<a href="../../../../source/v8/usr/man/man9/sysmon.9">troff source</a>)</p>
+<pre>
+SYSMON(9.1)                                                        SYSMON(9.1)
+
+NAME
+       sysmon, vismon - display system statistics
+
+SYNOPSIS
+       sysmon [ -n ] [ -m ] [ system ... ]
+
+DESCRIPTION
+       Sysmon monitors use of one or more UNIX systems.  It displays time of
+       day, announcements, and CPU usage statistics.
+
+       CPU usage is reported as a numerical load average (average number of
+       runnable processes) and its change in the last minute, and a bar graph
+       showing, left-to-right, the proportion of CPU time spent in: default-
+       priority user processes, low priority (nice) processes, system kernel,
+       stream I/O, and idle time.
+
+       Arrival of mail or communications via wall(1) or <a href="../man1/write.1.html">write(1)</a> is announced.
+       Communications appear in a shell (<a href="../man1/sh.1.html">sh(1)</a>) layer superimposed on sysmon's
+       layer.  This layer may be used for reply.
+
+       The options are:
+
+       -n     Update the bar graph every n seconds.  (n=5 by default.)
+
+       -m     Do not monitor CPU usage on other systems.
+
+       Vismon is the same as sysmon, but identifies mail sources by picture as
+       well as by name.
+
+FILES
+       /usr/jerq/mbin/sysmon.m  terminal program
+       /usr/spool/mail
+       /usr/spool/mail/mail.log
+       /n/face/*           vismon pictures
+
+DIAGNOSTICS
+       `Can't open comm window' means a shell layer cannot be created.  To
+       receive any further communications, delete some layer.
+
+SEE ALSO
+       <a href="../man9/face.9.html">face(9.1)</a>, <a href="../man9/faced.9.html">faced(9.5)</a>
+
+BUGS
+       There's more to system performance than meets the eye.
+
+                                                                   SYSMON(9.1)
+</pre>
+</body></html>

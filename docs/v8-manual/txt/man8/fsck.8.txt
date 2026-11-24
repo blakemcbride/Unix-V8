@@ -1,0 +1,138 @@
+FSCK(8)                     System Manager's Manual                    FSCK(8)
+
+NAME
+       fsck - file system consistency check and interactive repair
+
+SYNOPSIS
+       /etc/fsck -p [ filesystem ...  ]
+       /etc/fsck [ -y ] [ -n ] [ -sX ] [ -SX ] [ -t filename ] [ filesystem ]
+       ...
+
+DESCRIPTION
+       The first form of fsck preens a standard set of filesystems (those
+       mentioned in /etc/fstab) or the specified file systems.  It is normally
+       called from /etc/rc during automatic reboot.
+
+       The file /etc/fstab defines the order in which disks are checked by
+       assigning each file system to a ``pass'' of fsck.  Normally, the root
+       file system will be checked on pass 1, and other files on later passes.
+       For savecore(8) to work, no more than three large file systems should
+       be checked on each pass.  A file system is not checked if its pass
+       number is 0 or it is not to be mounted.
+
+       Fsck with the -p option will repair only the following ailments:
+
+              unreferenced i-nodes;
+
+              wrong link counts in i-nodes;
+
+              missing blocks in the free list;
+
+              blocks in the free list also in files; and
+
+              counts wrong in the super-block.
+
+       If fsck encounters other inconsistencies, it exits with an abnormal
+       return status and the automatic reboot aborts.  For each corrected
+       inconsistency one or more lines will be printed identifying the file
+       system and the nature of the correction.  After successfully preening a
+       file system, fsck will print the number of files on that file system
+       and the number of used and free blocks.
+
+       Without the -p option, fsck audits and interactively repairs
+       inconsistent conditions on file systems.  If the file system is
+       inconsistent the operator is prompted for concurrence before each
+       correction is attempted.  The operator may require arcane knowledge to
+       guide fsck safely through repair of a badly damaged file system.
+
+       The following flags are interpreted by fsck.
+
+       -y    Assume a yes response to all questions asked by fsck; this should
+             be used with great caution.
+
+       -n    Assume a no response to all questions asked by fsck; do not open
+             the file system for writing.  This option is enabled
+             automatically if the file system is not writable.
+
+       -sX   Ignore the actual free list and (unconditionally) reconstruct a
+             new one by rewriting the super-block of the file system.  The
+             file system should be unmounted while this is done; if this is
+             not possible, care should be taken that the system is quiescent
+             and that it is rebooted immediately afterwards.  This precaution
+             is necessary so that the old, bad, in-core copy of the superblock
+             will not continue to be used, or written on the file system.  If
+             the file system has a bitmap free list (see filsys(5)), the free
+             list is always reconstructed unless the -n option is enabled.
+
+             The -sX option allows for creating an optimal free-list
+             organization.  The following forms of X are supported for the
+             following devices:
+
+                  -s3 (RP03)
+                  -s4 (RP04, RP05, RP06)
+                  -sBlocks-per-cylinder:Blocks-to-skip (for anything else)
+
+             If X is not given, the values used when the filesystem was
+             created are used.  If these values were not specified, then the
+             value 400:9 is used.
+
+       -SX   Conditionally reconstruct the free list. This option is like -sX
+             above except that the free list is rebuilt only if there were no
+             discrepancies discovered in the file system. The -S option
+             enables -n.
+
+       -t    If fsck cannot obtain enough memory to keep its tables, it uses a
+             scratch file. If the -t option is specified, the file named in
+             the next argument is used as the scratch file, if needed. Without
+             the -t flag, fsck will prompt the operator for the name of the
+             scratch file. The file chosen should not be on the filesystem
+             being checked, and if it is not a special file or did not already
+             exist, it is removed when fsck completes.
+
+       If no filesystems are given to fsck then a default list of file systems
+       is read from the file /etc/fstab.
+
+       Inconsistencies checked are as follows:
+
+       Blocks claimed by more than one inode or the free list.
+       Blocks claimed by an inode or the free list outside the range of the
+       file system.
+       Incorrect link counts.
+       Size checks:
+       Directory size not 16-byte aligned.
+       Bad inode format.
+       Blocks not accounted for anywhere.
+       Directory checks:
+       File pointing to unallocated inode.
+              Inode number out of range.
+       Super Block checks:
+       More than 65536 inodes.
+              More blocks for inodes than there are in the file system.
+       Bad free block list format.
+       Total free block and/or free inode count incorrect.
+
+       Orphaned files and directories (allocated but unreferenced) are
+       reconnected by placing them in the lost+found directory.  The name
+       assigned is the inode number. The only restriction is that the
+       directory lost+found must exist in the root of the filesystem being
+       checked and must have empty slots in which entries can be made.
+
+       Checking the raw device is almost always faster for 1K-block file
+       systems, but bitmap file systems must be checked using the block
+       device.
+
+FILES
+       /etc/fstab           contains default list of file systems to check.
+
+SEE ALSO
+       fstab(5), filsys(5), crash(8), reboot(8)
+
+BUGS
+       Inode numbers for .  and ..  in each directory should be checked for
+       validity.
+
+       The `three large filesystems' rule assumes a system with 4 megabytes of
+       memory and a 20 megabyte swap area.  Your mileage may vary.  The goal
+       is to avoid overwriting the part of the swap area where the dump lives.
+
+                                                                       FSCK(8)

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>galloc.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; galloc.3 (<a href="../../../../source/v8/usr/man/man3/galloc.3">troff source</a>)</p>
+<pre>
+GALLOC(3)                  Library Functions Manual                  GALLOC(3)
+
+NAME
+       galloc, gfree, garbage - storage allocation with garbage collection
+
+SYNOPSIS
+       char *galloc(n)
+       unsigned n;
+
+       gfree(p)
+       char *p;
+
+       garbage( )
+
+DESCRIPTION
+       These functions perform heap storage allocation with garbage
+       collection.
+
+       Galloc allocates a block of at least n bytes and returns a pointer to
+       it.  Gfree frees a block previously allocated by galloc.
+
+       When space gets tight, garbage blocks are freed automatically.  A block
+       allocated by galloc is deemed to be garbage unless it is reachable.  A
+       reachable block is one whose first byte is pointed to by a declared C
+       variable or by a pointer in a reachable block.
+
+       The frequency of garbage collection is controlled by external variables
+       declared
+
+              long gcmax = 5000, gcmin = 50;
+
+       No more than gcmax allocations may intervene between automatic
+       collections; this feature will help contain the growth of virtual
+       address space.  At least gcmin allocations must intervene, otherwise
+       garbage collection will be abandoned as fruitless.  Garbage may be
+       called to do garbage collection at an arbitrary time.
+
+       Malloc(3) and galloc allocate from the same arena, but garbage
+       collection affects only galloc blocks.  Free (see <a href="../man3/malloc.3.html">malloc(3)</a>) must not
+       be used on blocks allocated with galloc.
+
+DIAGNOSTICS
+       Galloc returns a null (0) pointer when space cannot be found.
+
+SEE ALSO
+       <a href="../man3/malloc.3.html">malloc(3)</a>
+
+BUGS
+       Garbage collection is conservative; blocks that appear to be pointed to
+       from within declared storage will not be freed, regardless of whether
+       the apparent `pointers' were declared as such.
+
+                                                                     GALLOC(3)
+</pre>
+</body></html>

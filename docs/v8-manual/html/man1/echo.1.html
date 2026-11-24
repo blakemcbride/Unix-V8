@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>echo.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; echo.1 (<a href="../../../../source/v8/usr/man/man1/echo.1">troff source</a>)</p>
+<pre>
+ECHO(1)                     General Commands Manual                    ECHO(1)
+
+NAME
+       echo - echo arguments
+
+SYNOPSIS
+       echo [ -n ] [ -e ] [ arg ] ...
+
+DESCRIPTION
+       Echo writes its arguments separated by blanks and terminated by a
+       newline on the standard output.  Option -n suppresses the newline.
+
+       Option -e enables the interpretation of C-style escape codes, \b, \f,
+       \n, \r, \t, \\, and \ddd, where d is an octal digit, plus the special
+       code \c, which terminates the output.
+
+       Echo is useful for producing diagnostics in shell programs and for
+       writing constant data on pipes.  To send diagnostics to the standard
+       error file, do `echo ... 1&gt;&amp;2'.
+
+                                                                       ECHO(1)
+</pre>
+</body></html>

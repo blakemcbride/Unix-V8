@@ -1,0 +1,23 @@
+FORTUNE(6)                       Games Manual                       FORTUNE(6)
+
+NAME
+       fortune - cookies
+
+SYNOPSIS
+       fortune [ file ]
+
+       say [ N ]
+
+DESCRIPTION
+       Fortune prints a one-line aphorism chosen at random.  If a file is
+       specified, the sayings are taken from that file; otherwise they are
+       selected from /usr/games/lib/fortunes.
+
+       Say constructs N proverbs out of old parts.  N=1 by default.
+
+FILES
+       /usr/games/lib/fortunes — sayings
+       /usr/games/lib/fortunes.index — fast lookup table, maintained
+       automatically
+
+                                                                    FORTUNE(6)

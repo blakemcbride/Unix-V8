@@ -1,0 +1,27 @@
+GAMMA(3M)                                                            GAMMA(3M)
+
+NAME
+       gamma - log gamma function
+
+SYNOPSIS
+       #include <math.h>
+
+       double gamma(x)
+       double x;
+
+DESCRIPTION
+       Gamma returns ln Γ(x).  The sign of Γ(x) is returned in the external
+       integer signgam.  The following C program might be used to calculate Γ:
+
+            y = gamma(x);
+            if (y > 88.0)
+                 error();
+            y = signgam*exp(y);
+
+DIAGNOSTICS
+       A huge value is returned for negative integer arguments.
+
+BUGS
+       There should be a positive indication of error.
+
+                                                                     GAMMA(3M)

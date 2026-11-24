@@ -1,0 +1,17 @@
+SYNC(8)                     System Manager's Manual                    SYNC(8)
+
+NAME
+       sync - update the super block
+
+SYNOPSIS
+       sync
+
+DESCRIPTION
+       Sync executes the sync system primitive.  Sync can be called to insure
+       all disk writes have been completed before the processor is halted
+       manually.
+
+SEE ALSO
+       sync(2), reboot(8), update(8)
+
+                                                                       SYNC(8)

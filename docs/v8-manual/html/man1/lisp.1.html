@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>lisp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; lisp.1 (<a href="../../../../source/v8/usr/man/man1/lisp.1">troff source</a>)</p>
+<pre>
+LISP(1)                     General Commands Manual                    LISP(1)
+
+NAME
+       lisp, liszt, lxref - lisp interpreter and compiler
+
+SYNOPSIS
+       lisp
+
+       liszt [ option ... ] [ source ]
+
+       lxref [ -n ] file ...
+
+DESCRIPTION
+       Lisp interprets Franz Lisp, which closely resembles MIT's Maclisp.
+       Interpreted functions may be mixed with code compiled by liszt, and
+       both may be debugged using the `Joseph Lister' trace package.
+
+       There are too many functions to list here; one should refer to the
+       manuals listed below.
+
+       Liszt compiles the lisp source file, whose name ends in .l, into an
+       object file, whose name ends in .o.  The following options are
+       available.
+
+       -w     suppress warning diagnostics
+
+       -q     suppress compilation statistics
+
+       -o object
+              put object code in specified file
+
+       -m     source is Maclisp
+
+       -u     source is UCI Lisp
+
+       -S     leave assembler input in file suffixed .s; do not finish
+              compilation
+
+       -x     place cross-reference list in file suffixed .x to be used by
+              lxref.
+
+       Liszt with no arguments is the same as lisp.  The compiler may be
+       invoked from the interpreter:
+
+              ( liszt [options] foo)
+
+       compiles file `foo.l'.
+
+       Lxref writes to the standard output a readable form of the named cross-
+       reference files.  Not more than n (default 50) references to any
+       function will be printed.
+
+FILES
+       /usr/lib/lisp/auxfns0.l   common functions
+       /usr/lib/lisp/auxfns1.l   less common functions
+       /usr/lib/lisp/trace.l     Joseph Lister trace package
+       /usr/lib/lisp/toplevel.l  top level read-eval-print loop
+       /usr/lib/lisp/machacks.l  Maclisp compatibility package
+       /usr/lib/list/ucifnc.l    UCI Lisp compatibility package
+
+SEE ALSO
+       `FRANZ LISP  Manual, Version 1' by John K. Foderaro
+       MACLISP Manual
+
+BUGS
+       The error system is in a state of flux and not all error messages are
+       as informative as they could be.
+
+                                  alice sola                           LISP(1)
+</pre>
+</body></html>

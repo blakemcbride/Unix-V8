@@ -1,0 +1,15 @@
+PAPER(1)                    General Commands Manual                   PAPER(1)
+
+NAME
+       paper - list input on HP2621P printer
+
+SYNOPSIS
+       paper [ file ] ...
+
+DESCRIPTION
+       paper prints the argument files (or the standard input if there are no
+       arguments) on the user's terminal which is assumed to be a HP2621P.  A
+       handshaking protocol is used to prevent overrunning the terminal's
+       buffer and dropping characters.
+
+                                                                      PAPER(1)

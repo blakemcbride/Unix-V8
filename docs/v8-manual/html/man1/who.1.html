@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>who.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; who.1 (<a href="../../../../source/v8/usr/man/man1/who.1">troff source</a>)</p>
+<pre>
+WHO(1)                      General Commands Manual                     WHO(1)
+
+NAME
+       who, whois -  who is on the system
+
+SYNOPSIS
+       who [-i] [ who-file ]
+
+       who am i
+
+       whois username
+
+DESCRIPTION
+       Who, without an argument, lists the login name, terminal name, and
+       login time for each current UNIX user.  With the -i option, the report
+       includes the number of minutes that the user's terminal has been idle.
+
+       With two arguments, as in `who am I' (and also `who are you'), who
+       tells who you are logged in as.
+
+       Without an argument, who examines the /etc/utmp file to obtain its
+       information.  If a file is given, that file is examined.  Typically the
+       given file will be /usr/adm/wtmp, which contains a record of all the
+       logins since it was created.  Then who lists logins, logouts, and
+       crashes since the creation of the wtmp file.  Each login is listed with
+       user name, terminal name (with `/dev/' suppressed), and date and time.
+       When an argument is given, logouts produce a similar line without a
+       user name.  Reboots produce a line with `x' in the place of the device
+       name, and a fossil time indicative of when the system went down.
+
+       Whois consults administrative files to identify the username.
+       (Actually, whois uses <a href="../man1/grep.1.html">grep(1)</a> and can locate information by any useful
+       key, such as real name or telephone number.)
+
+FILES
+       /etc/utmp
+       /usr/adm/usrlist
+       /etc/passwd
+
+SEE ALSO
+       <a href="../man1/last.1.html">last(1)</a>, <a href="../man1/getuid.1.html">getuid(1)</a>, <a href="../man2/getuid.2.html">getuid(2)</a>, <a href="../man5/utmp.5.html">utmp(5)</a>, wtmp(5)
+
+                                                                        WHO(1)
+</pre>
+</body></html>

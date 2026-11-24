@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cpio.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; cpio.1 (<a href="../../../../source/v8/usr/man/man1/cpio.1">troff source</a>)</p>
+<pre>
+CPIO(1)                     General Commands Manual                    CPIO(1)
+
+NAME
+       cpio - copy file archives in and out
+
+SYNOPSIS
+       cpio -o [ acBv ]
+
+       cpio -i [ BcdmrtuvfsSb6 ] [ patterns ]
+
+       cpio -p [ adlmruv ] directory
+
+DESCRIPTION
+       Cpio -o (copy out) reads the standard input to obtain a list of path
+       names and copies those files onto the standard output together with
+       path name and status information.
+
+       Cpio -i (copy in) extracts files from the standard input which is
+       assumed to be the product of a previous cpio -o.  Only files with names
+       that match patterns are selected.  Patterns are given in the name-
+       generating notation of <a href="../man1/sh.1.html">sh(1)</a>.  In patterns, meta-characters ?, ∗, and
+       [...]  match the slash / character.  Multiple patterns may be specified
+       and if no patterns are specified, the default for patterns is ∗ (i.e.,
+       select all files).  The extracted files are conditionally created and
+       copied into the current directory tree based upon the options described
+       below.
+
+       Cpio -p (pass) reads the standard input to obtain a list of path names
+       of files that are conditionally created and copied into the destination
+       directory tree based upon the options described below.
+
+       The meanings of the available options are:
+
+       a      Reset access times of input files after they have been copied.
+       B      Input/output is to be blocked 5,120 bytes to the record (does
+              not apply to the pass option; meaningful only with data directed
+              to or from /dev/rmt?).
+       d      Directories are to be created as needed.
+       c      Write header information in ASCII character form for
+              portability.
+       r      Interactively rename files.  If the user types a null line, the
+              file is skipped.
+       t      Print a table of contents of the input.  No files are created.
+       u      Copy unconditionally (normally, an older file will not replace a
+              newer file with the same name).
+       v      Verbose: causes a list of file names to be printed.  When used
+              with the t option, the table of contents looks like the output
+              of an ls -l command (see <a href="../man1/ls.1.html">ls(1)</a>).
+       l      Whenever possible, link files rather than copying them.  Usable
+              only with the -p option.
+       m      Retain previous file modification time.  This option is
+              ineffective on directories that are being copied.
+       f      Copy in all files except those in patterns.
+       s      Swap bytes.  Use only with the -i option.
+       S      Swap halfwords.  Use only with the -i option.
+       b      Swap both bytes and halfwords.  Use only with the -i option.
+       6      Process an old (i.e., UNIX Sixth Edition format) file.  Only
+              useful with -i (copy in).
+
+EXAMPLES
+       The first example below copies the contents of a directory into an
+       archive; the second duplicates a directory hierarchy:
+
+              ls ⎪ cpio -o &gt;/dev/mt0
+
+              cd olddir
+              find . -depth -print ⎪ cpio -pdl newdir
+
+       The trivial case ``find . -depth -print ⎪ cpio -oB &gt;/dev/rmt0'' can be
+       handled more efficiently by:
+
+              find . -cpio /dev/rmt0
+
+SEE ALSO
+       <a href="../man1/ar.1.html">ar(1)</a>, <a href="../man1/find.1.html">find(1)</a>, cpio(4).
+
+BUGS
+       Path names are restricted to 128 characters.
+       If there are too many unique linked files, the program runs out of
+       memory to keep track of them and, thereafter, linking information is
+       lost.
+       Only the super-user can copy special files.
+       The -B option does not work with certain magnetic tape drives.
+
+                                                                       CPIO(1)
+</pre>
+</body></html>

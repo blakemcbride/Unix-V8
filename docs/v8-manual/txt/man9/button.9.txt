@@ -1,0 +1,66 @@
+BUTTON(9.2)                                                        BUTTON(9.2)
+
+NAME
+       button123, mouse, cursallow, cursinhibit, cursset, cursswitch,
+       getrect123 - mouse control
+
+SYNOPSIS
+       #include <jerq.h>
+
+       extern struct Mouse {
+           Point xy;
+           short buttons;
+       } mouse;
+
+       int button(n) int n;
+       int button1(), button2(), button3();
+       int button12(), button23(), button123();
+
+       void cursinhibit();
+       void cursallow();
+
+       void cursset(p); Point p;
+
+       Texture *cursswitch(t); Texture *t;
+
+       Rectangle getrect(n) int n;
+       Rectangle getrect1(), getrect2(), getrect3();
+       Rectangle getrect12(), getrect23(), getrect123();
+
+DESCRIPTION
+       For processes that request the mouse (see request(9.2)), the mouse
+       state is updated asynchronously in the per-process structure mouse.
+       The coordinates of the mouse are held in mouse.xy, and the state of the
+       buttons in mouse.buttons.  Each process's mouse structure is
+       independent of the others, so that (except for cursset) actions such as
+       changing the tracking cursor do not affect other process's use of the
+       mouse.  Mouse is not updated if the process does not `own' the mouse;
+       see request(9.2).
+
+       The macro button and its counterparts return the state of the
+       associated mouse button: non-zero if the button is depressed, 0
+       otherwise.  The buttons are numbered 1 to 3 from left to right.
+       Button12 and the other multi-button functions return the OR of their
+       states: true if either button 1 or button 2 is depressed (as opposed to
+       button 1 and button 2).
+
+       Cursinhibit turns off interrupt-time cursor tracking (the drawing of
+       the cursor on the screen), although the mouse coordinates are still
+       kept current and available.  Cursallow enables interrupt-time cursor
+       tracking.  Cursallow and cursinhibit stack: to enable cursor tracking
+       after two calls to cursinhibit, two calls to cursallow are required.
+
+       Cursset moves the mouse cursor to the Point p.
+
+       Cursswitch changes the mouse cursor (a 16×16 pixel image) to that
+       specified by the Texture *t.  If the argument is (Texture *)0, the
+       cursor is restored to the default arrow.  Cursswitch returns the
+       previous value of the cursor: the argument of the previous call to
+       cursswitch.
+
+       Getrect prompts the user with a box cursor and waits for a rectangle to
+       be swept out named button, identified as with the button primitives.
+       It returns the screen coordinates of the box swept.  The box may be
+       partly or wholly outside the process's layer.
+
+                                                                   BUTTON(9.2)

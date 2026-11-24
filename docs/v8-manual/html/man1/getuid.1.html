@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getuid.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; getuid.1 (<a href="../../../../source/v8/usr/man/man1/getuid.1">troff source</a>)</p>
+<pre>
+GETUID(1)                   General Commands Manual                  GETUID(1)
+
+NAME
+       getuid, id - get user identity
+
+SYNOPSIS
+       getuid [ - ] [ arguments ]
+
+       id
+
+DESCRIPTION
+       Getuid prints on its standard output information about its invoker,
+       based on the effective user id, as presented in the password file.
+       With no arguments, getuid prints the login id of its invoker.
+       Arguments select which information to print:
+
+              user    login id
+              group   group id
+              passwd  encrypted password
+              uid     numerical user id
+              gid     numerical group id
+              acct    GCOS account number
+              bin     GCOS output bin
+              home    home directory
+              shell   default shell
+
+       If the optional - or more than one argument is present, the information
+       is displayed in the form
+
+              user=name
+
+       as suitable for setting environment variables in the shell.
+
+       Id prints the effective userid and groupid numerically, and, if
+       possible, textually
+
+FILES
+       /etc/passwd
+       /etc/group
+
+SEE ALSO
+       <a href="../man1/who.1.html">who(1)</a>, <a href="../man2/getuid.2.html">getuid(2)</a>, <a href="../man5/passwd.5.html">passwd(5)</a>, <a href="../man1/sh.1.html">sh(1)</a>
+
+BUGS
+       Getuid reports the default group for the user, not the current
+       effective group id.
+       The login id reported is the first one in the password file with the
+       correct numerical user id, not necessarily the login for the current
+       session.
+
+                                                                     GETUID(1)
+</pre>
+</body></html>

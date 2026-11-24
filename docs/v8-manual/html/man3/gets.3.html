@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>gets.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; gets.3 (<a href="../../../../source/v8/usr/man/man3/gets.3">troff source</a>)</p>
+<pre>
+GETS(3S)                                                              GETS(3S)
+
+NAME
+       gets, fgets - get a string from a stream
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       char *gets(s)
+       char *s;
+
+       char *fgets(s, n, stream)
+       char *s;
+       FILE *stream;
+
+DESCRIPTION
+       Gets reads a string into s from the standard input stream `stdin'.  The
+       string is terminated by a newline character, which is replaced in s by
+       a null character.  Gets returns its argument.
+
+       Fgets reads n-1 characters, or up to a newline character, whichever
+       comes first, from the stream into the string s.  The last character
+       read into s is followed by a null character.  Fgets returns its first
+       argument.
+
+SEE ALSO
+       <a href="../man3/puts.3.html">puts(3)</a>, <a href="../man3/getc.3.html">getc(3)</a>, <a href="../man3/scanf.3.html">scanf(3)</a>, <a href="../man3/fread.3.html">fread(3)</a>, <a href="../man3/ferror.3.html">ferror(3)</a>
+
+DIAGNOSTICS
+       Gets and fgets return the constant pointer NULL upon end of file or
+       error.
+
+BUGS
+       Gets deletes a newline, fgets keeps it, all in the name of backward
+       compatibility.
+
+                                                                      GETS(3S)
+</pre>
+</body></html>

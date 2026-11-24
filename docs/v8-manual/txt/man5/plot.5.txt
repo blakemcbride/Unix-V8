@@ -1,0 +1,232 @@
+PLOT(5)                       File Formats Manual                      PLOT(5)
+
+NAME
+       plot - graphics interface
+
+DESCRIPTION
+       Files of this format are produced by routines described in plot(3), and
+       are interpreted for various devices by commands described in plot(1).
+       A graphics file is an ASCII stream of instruction lines.  Arguments are
+       delimited by spaces, tabs, or commas.  Numbers may be floating point.
+       Punctuation marks (except `:'), spaces, and tabs at the beginning of
+       lines are ignored.  Comments run from  `:' to newline.  Instructions
+       may be the whole function name or just enough characters to
+       disambiguate it.  (Thus ..line, line, or li are all valid
+       instructions.)  Arguments are interpreted as follows:
+
+       1.     If an instruction requires no arguments, the rest of the line is
+              ignored.
+
+       2.     If it requires a string argument, then all the line after the
+              first field separator is passed as argument.  Quote marks may be
+              used to preserve leading blanks.  Strings may include newlines
+              represented as `\n'.
+
+       3.     Between numeric arguments alphabetic characters and punctuation
+              marks are ignored.  Thus
+                   line from 5 6 to 7 8
+              draws a line from (5, 6) to (7, 8).
+
+       4.     Instructions with numeric arguments remain in effect until a new
+              instruction is read.  Such commands may spill over many lines.
+              Thus the following sequence will draw a polygon with vertices
+              (4.5, 6.77), (5.8, 5.6), (7.8, 4.55), and (10.0, 3.6).
+
+              move 4.5 6.77
+              vec 5.8, 5.6 7.8
+              4.55 10.0, 3.6 4.5, 6.77
+
+       The instructions are executed in order.  The last designated point in a
+       line, move, rmove, vec, rvec, arc or point command becomes the `current
+       point' (X, Y) for the next command.  Each of the following descriptions
+       corresponds to a routine in plot(3).
+
+       Open & Close
+
+       o[penpl] string
+                 Open plotting device. For troff string specifies the size of
+                 the plot (default is 6i.)
+
+       cl[osepl] Close plotting device.
+
+       Basic Plotting Commands
+
+       e[rase]   Start another frame of output or erase the screen on CRT
+                 terminals without scroll.
+
+       m[ove] x y
+                 Current point becomes x y.
+
+       rm[ove] dx dy
+                 Current point becomes X+dx Y+dy.
+
+       poi[nt] x y
+                 Plot the point x y and make it the current point.
+
+       v[ec] x y Draw a line from the current point to x y.
+
+       li[ne] x1 y1 x2 y2
+                 Draw a line from x1 y1 to x2 y2.  Make the current point x2
+                 y2.
+
+       t[ext] string
+                 Place the following ASCII string so that its first character
+                 is centered on the current point (default).  If string begins
+                 with `\C', the string is centered on the current point.  If
+                 string begins with `\R', the string is right adjusted on the
+                 current point.  A backslash at the beginning of the string
+                 may be escaped with another backslash (`\').
+
+       a[rc] x1 y1 x2 y2 xc yc r
+                 Draw a circular arc from x1 y1 to x2 y2 with center xc yc and
+                 radius r.  If the radius is positive, the arc is drawn
+                 counterclockwise; if the radius is negetive, the arc is drawn
+                 clockwise.  The starting point is exact but the ending point
+                 is approximate.
+
+       ci[rcle] xc yc r
+                 Draw a circle centered at xc yc with radius r.  If the range
+                 and frame parameters do not specify a square, the circle will
+                 be elliptical.
+
+       di[sc] xc yc r
+                 Draw a solid circle centered at xc yc with radius r using the
+                 filling color (see cfill below).  disc only works on the
+                 5620; on other devices disc is the same as circle.
+
+       bo[x] x1 y1 x2 y2
+                 Draw a box with lower left hand corner at x1 y1 and upper
+                 right hand corner at x2 y2.
+
+       sb[ox] x1 y1 x2 y2
+                 Draw a solid box with lower lefthand corner at x1 y1 and
+                 upper righthand corner at x2 y2 using the filling color (see
+                 cfill below).
+
+       par[abola] x1 y1 x2 y2 xg yg
+                 Draw a parabola from x1 y1 to x2 y2 `guided' by xg yg.  The
+                 parabola passes through the midpoint of the line joining xg
+                 yg with the midpoint of the line joining x1 y1 and x2 y2 and
+                 is tangent to the lines from xg yg to the endpoints.
+
+       pol[y] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw polygons with vertices x1 y1 ... xn yn and X1 Y1 ... Xm
+                 Ym.  If only one polygon is specified, the inner brackets are
+                 not needed.  If square brackets `[ ]' are used, the first
+                 vertex is repeated at the end of the list to close the
+                 polygon.
+
+       fi[ill] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Fill a polygon.  The arguments are the same as those for poly
+                 above except that the first vertex is automatically repeated
+                 to close each polygon.  The polygons do not have to be
+                 connected.  Enclosed polygons appear as holes.
+
+       sp[line] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw a parabolic spline guided by x1 y1 ... xn yn with simple
+                 endpoints.
+
+       fsp[line] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw a parabolic spline guided by x1 y1 ... xn yn with double
+                 first endpoint.
+
+       lsp[line] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw a parabolic spline guided by x1 y1 ... xn yn with double
+                 last endpoint.
+
+       dsp[line] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw a parabolic spline guided by x1 y1 ... xn yn with double
+                 endpoints.
+
+       csp[line] { {x1 y1 ... xn yn} ... {X1 Y1 ... Xm Ym} }
+                 Draw a closed parabolic spline guided by x1 y1 ... xn yn.
+
+       in[clude] filename
+                 Take commands from file filename.
+
+       de[fine] string { commands }
+                 Define string as commands.
+
+       ca[ll] string scale
+                 Invoke commands defined as string applying scale to all
+                 coordinates.
+
+       Commands Controlling the Environment
+
+       co[lor] string
+                 Draw lines with color string.  Available colors depend on the
+                 device.  String may contain definitions for several devices
+                 separated by ``/''.  Colors possible for the various devices
+                 are:
+                 pen  black, red, green, blue, Tblack, Tred, Tgreen, Tblue
+                           (assumes default carousel, T=thick)
+                      1-8 (pen number)
+                      /Snumber character size as a % of plotting area
+                 ramtek    red, green, blue, magenta, yellow, cyan, white
+                 troff     /Fstring font
+                      /Pnumber point size
+                 2621 /Hcharacter used for plotting
+
+       pe[n] string
+                 Use string as the style for drawing lines.  Not all pen
+                 styles are implemented for all devices.  String may contain
+                 definitions for several devices separated by ``/''.  The
+                 available pen styles are:
+                 pen  solid, dott[ed], short, long, dotd[ashed], cdash, ddash
+                      where cdash and ddash are combinations of long and short
+                 4014 solid, dott[ed], short, long, dotd[ashed], ddash
+                 troff     solid, dash where only straight lines will be dashed
+                 5620 /Bnumber for line thickness
+                 2621 /Hcharacter character used for plotting
+
+       cf[ill] string
+                 Use string as color for filling.  String may contain the
+                 definitions for several devices separated by `/'.  The
+                 following colors are available on the specified devices:
+                 pen  black, red, green, blue, Tblack, Tred, Tgreen, Tblue
+                      1-8 pen number
+                 ramtek    red, green, blue, magenta, yellow, cyan, white
+                 5620 /Btexture string with octal numbers for texture; see types(9.5).
+                      The 16 words of texture should be followed by one word for the mode used
+                      by texture (see bitblt(9.3)
+                 2621 /Hcharacter character to use for filling
+
+       All devices
+            /Adegrees angle of slant of shading lines
+            /Gnumber gap between shading lines (in user units)
+
+       ra[nge] x1 y1 x2 y2
+                 The data will fall between x1 y1 and x2 y2.  The plot will be
+                 magnified or reduced to fit the device as closely as
+                 possible.
+
+                 Range settings that exactly fill the plotting area with unity
+                 scaling appear below for devices supported by the filters of
+                 plot(1).  The upper limit is just outside the plotting area.
+                 In every case the plotting area is taken to be square; points
+                 outside may be displayable on devices with nonsquare faces.
+
+                 4014      range(0.,, 0.,, 3120.,, 3120.);
+                 troff     range(0.,0.,6144., 6144.);
+                 ramtek    range(0., 0., 511., 511.);
+                 2621      range(0., 0., 22., 22.);
+                 5620      range dependent on layer size
+                 pen       range dependent on paper size
+
+       fr[ame] px1 py1 px2 py2
+                 The data will be plotted in the fraction of the display
+                 specified by px1 py1 for lower lefthand corner and px2 py2
+                 for upper righthand corner.  Thus  frame .5 0 1. .5 plots in
+                 the lower right quadrant of the display; frame 0. 1. 1. 0.
+                 uses the whole display but inverts the y coordinates.
+
+       sa[ve]    Save the current environment, and move to a new one.  The new
+                 environment inherits the old one.  There are 7 levels of
+                 environment.
+
+       re[store] Restore previous environment.
+
+SEE ALSO
+       plot(1), plot(3), graph(1)
+
+                                                                       PLOT(5)

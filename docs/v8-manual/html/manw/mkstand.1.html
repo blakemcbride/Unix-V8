@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>mkstand.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section w</a> &gt; mkstand.1 (<a href="../../../../source/v8/usr/man/manw/mkstand.1">troff source</a>)</p>
+<pre>
+MKSTAND(1)                  General Commands Manual                 MKSTAND(1)
+
+NAME
+       mkstand - compile style standards for prose program
+
+SYNOPSIS
+       mkstand [ -flags ][ -ver ][ -mm | -ms ][ -li | +li ][ -o outfile ]
+       file1 file2 ...
+
+DESCRIPTION
+       Mkstand enables users to compile their own set of style(1) standards
+       for use by <a href="../manw/prose.1.html">prose(1)</a>.  Prose describes stylistic features of a text and
+       compares them to specified standards.  If a user or group, for example
+       a writing group, has many documents of a certain type that they
+       consider good, those documents can be used as the basis for their own
+       standards.  Mkstand creates the standards, which reflect the stylistic
+       features of the input documents.  Then the user can use prose to
+       evaluate documents according to those standards.
+
+       Mkstand runs style on a set of documents and computes the means and
+       standard deviations of certain style statistics.  Then it puts these
+       into outfile (stand.out is the default) in a format that prose can
+       read.  Then if prose is run with the  command:
+
+            prose -x outfile textfile
+
+       it compares textfile with the standards in outfile.  The command:
+
+            wwbstand -x outfile
+
+       will display the standards in a comprehensible form.
+
+       Mkstand tries to produce valid standards by enforcing these
+       requirements:
+
+            1.     Input files must be at least 90 sentences or 1900 words
+                   long.
+
+            2.     If an input file has style scores that are more than 2
+                   standard deviations from the mean, scores for that file are
+                   excluded from the computation of the standards.
+
+       Although mkstand will compile standards for any number of documents (up
+       to 75), standards will be most reliable if at least 20 documents are
+       used.
+
+       Because mkstand runs <a href="../man1/deroff.1.html">deroff(1)</a> on input files before computing scores,
+       formatting header files should be included as part of the input.
+
+       Four options affect deroff:
+
+            -mm    eliminate <a href="../manw/mm.1.html">mm(1)</a> macros, and associated text that is not
+                   part of sentences (e.g. headings), from the analysis.  This
+                   is the default.
+
+            -ms    eliminate ms(1) macros, and associated text that is not
+                   part of sentences, from the analysis.  The -ms flag
+                   overrides the default, -mm.
+
+            -li    eliminate list items, as defined by mm macros, from the
+                   analysis.  This is the default.
+
+            +li    Include list items in the input text, in the analysis.
+                   This flag should be used if the texts contain lists of
+                   sentences, but not if the texts contain many lists of non-
+                   sentences.
+
+       Other options are:
+
+            -o outfile put standards in outfile instead of the default
+                       stand.out.
+
+       Two options give information about the program:
+
+            -flags print the command synopsis line (see above) showing command
+                   flags and options, then exit.
+
+            -ver   print the Writer's Workbench version number of the command,
+                   then exit.
+
+       Mkstand saves the style scores it used in computing the standards in a
+       file named styl.scores.  Users should examine the scores in this file
+       for any scores that seem unusual or invalid.  If any are found, mkstand
+       should be rerun without the unusual document.
+
+FILES
+       /tmp/$$stat.out      temporary file containing style tables of input
+                            files
+
+       stand.out            default output file containing standards
+
+       styl.scores          output file containing style scores used in
+                            compiling standards
+
+SEE ALSO
+       <a href="../manw/prose.1.html">prose(1)</a>, style(1), <a href="../man1/deroff.1.html">deroff(1)</a>, <a href="../manw/wwbstand.1.html">wwbstand(1)</a>, <a href="../man1/wwb.1.html">wwb(1)</a>.
+
+SUPPORT
+       COMPONENT NAME:  Writer's Workbench
+       APPROVAL AUTHORITY:  Div 452
+       STATUS:  Standard
+       SUPPLIER:  Dept 45271
+       USER INTERFACE:  Stacey Keenan, Dept 45271, PY x3733
+       SUPPORT LEVEL: Class B - unqualified support other than Div 452
+
+                                                                    MKSTAND(1)
+</pre>
+</body></html>

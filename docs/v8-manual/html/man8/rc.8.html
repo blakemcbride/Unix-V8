@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>rc.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; rc.8 (<a href="../../../../source/v8/usr/man/man8/rc.8">troff source</a>)</p>
+<pre>
+RC(8)                       System Manager's Manual                      RC(8)
+
+NAME
+       rc - boot script
+
+SYNOPSIS
+       /etc/rc
+
+DESCRIPTION
+       Rc is the command script invoked by <a href="../man8/init.8.html">init(8)</a> to control reboots.  During
+       an automatic reboot, rc is invoked with the argument autoboot;
+       typically this invokes /etc/fsck -p to repair minor filesystem
+       inconsistencies.  If rc exits with an unsuccessful status, init stops
+       in single-user mode; otherwise it proceeds to multi-user.
+
+       When the system enters multi-user mode, either during an auto-reboot or
+       after the single-user shell terminates, rc is invoked without
+       arguments.  This usually causes it to mount filesystems, start daemons,
+       clear /tmp, and perform other housekeeping.  If this call to rc exits
+       unsuccessfully, init reverts to single-user mode.
+
+SEE ALSO
+       <a href="../man8/init.8.html">init(8)</a>, <a href="../man8/reboot.8.html">reboot(8)</a>
+
+                                                                         RC(8)
+</pre>
+</body></html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>doctype.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; doctype.1 (<a href="../../../../source/v8/usr/man/man1/doctype.1">troff source</a>)</p>
+<pre>
+DOCTYPE(1)                  General Commands Manual                 DOCTYPE(1)
+
+NAME
+       doctype - guess command line for formatting a document
+
+SYNOPSIS
+       doctype [ -e ] [ file ] ...
+
+DESCRIPTION
+       Doctype guesses the command line necessary for printing a document that
+       uses <a href="../man1/troff.1.html">troff(1)</a>, related preprocessors like eqn, and the -ms and -mm
+       macro packages.  The optional argument -e causes the command line to be
+       executed.
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/eqn.1.html">eqn(1)</a>, <a href="../man1/tbl.1.html">tbl(1)</a>, <a href="../man1/refer.1.html">refer(1)</a>, <a href="../man1/pic.1.html">pic(1)</a>, <a href="../man1/ideal.1.html">ideal(1)</a>, <a href="../man1/grap.1.html">grap(1)</a>, <a href="../man7/ms.7.html">ms(7)</a>,
+       mm(7)
+
+BUGS
+       It's pretty dumb about guessing the proper macro package.
+       There is no way to supply non-filename arguments when -e is used.
+
+                                                                    DOCTYPE(1)
+</pre>
+</body></html>

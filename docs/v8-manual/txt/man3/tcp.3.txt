@@ -1,0 +1,74 @@
+TCP(3)                     Library Functions Manual                     TCP(3)
+
+NAME
+       tcp_sock, tcp_conn, tcp_listen, tcp_accept, tcp_rcmd - tcp operations
+
+SYNOPSIS
+       #include <sys/inet/tcp_user.h>
+
+       tcp_sock();
+
+       tcp_connect(fd, lport, faddr, fport)
+       int fd;
+       tcp_port lport, fport;
+       in_addr faddr;
+
+       tcp_listen(fd, lport, faddr, fport)
+       int fd;
+       tcp_port lport, fport;
+       in_addr faddr;
+
+       tcp_accept(fd, faddrp, fportp, devp)
+       int fd, *devp;
+       in_addr *faddrp;
+       tcp_port *fportp;
+
+       tcp_rcmd(host, port, locuser, remuser, cmd, fd2p)
+       char *host, *port, *locuser, *remuser, *cmd;
+       int *fd2p;
+
+DESCRIPTION
+       These routines are loaded by the -lin option of ld(1).
+
+       TCP is one of the many protocols which are layered upon IP (internet
+       protocol).  It provides full duplex byte stream connections between end
+       points called sockets.  The address of a socket is composed of the
+       internet address of its host and the port number to which the socket is
+       bound.
+
+       Tcp_sock returns the file descriptor of an unbound socket.  Once
+       opened, a socket may be bound to a port number within the host and set
+       up as the active or passive end of a connection.  Tcp_sock returns -1
+       if no sockets are available.
+
+       Tcp_connect binds socket fd to port lport and attempts to set up a
+       connection to the socket bound to port fport on host faddr.
+       Tcp_connect returns 0 if the connection is established, -1 otherwise.
+       Communications proceeds by performing read(2) and write(2) on fd.
+
+       Tcp_listen binds socket fd to port lport and configures the socket to
+       listen for connection requests to that port.  If faddr and fport are
+       non-zero, only connections coming from sockets on machine faddr and
+       bound to port fport are listened for.  Tcp_listen returns 0 on success,
+       -1 otherwise.  Select(2) can be used with a listening socket to provide
+       asynchronous polling of connection requests.
+
+       Tcp_accept waits for and accepts a connection request sent to the
+       listening socket fd.  When a connection arrives, tcp_accept fills in
+       faddr and fport with the identity of the connector and returns a new fd
+       over which communications can proceed.  Fd is left open and continues
+       listening for connections.
+
+       Tcp_rcmd remotely executes a cmd on host as user remuser.  Standard
+       input is attached to cmd's standard input and cmd's standard output is
+       attached to standard output.  If fd2p is non-zero, it is filled with
+       the fd of a new TCP connection attached to cmd's standard error.
+       Otherwise, cmd's standard error is attached to its standard output.
+
+FILES
+       /dev/tcp* the socket devices
+
+SEE ALSO
+       internet(3), udp(3)
+
+                                                                        TCP(3)

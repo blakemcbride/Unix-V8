@@ -1,0 +1,48 @@
+SYSMON(9.1)                                                        SYSMON(9.1)
+
+NAME
+       sysmon, vismon - display system statistics
+
+SYNOPSIS
+       sysmon [ -n ] [ -m ] [ system ... ]
+
+DESCRIPTION
+       Sysmon monitors use of one or more UNIX systems.  It displays time of
+       day, announcements, and CPU usage statistics.
+
+       CPU usage is reported as a numerical load average (average number of
+       runnable processes) and its change in the last minute, and a bar graph
+       showing, left-to-right, the proportion of CPU time spent in: default-
+       priority user processes, low priority (nice) processes, system kernel,
+       stream I/O, and idle time.
+
+       Arrival of mail or communications via wall(1) or write(1) is announced.
+       Communications appear in a shell (sh(1)) layer superimposed on sysmon's
+       layer.  This layer may be used for reply.
+
+       The options are:
+
+       -n     Update the bar graph every n seconds.  (n=5 by default.)
+
+       -m     Do not monitor CPU usage on other systems.
+
+       Vismon is the same as sysmon, but identifies mail sources by picture as
+       well as by name.
+
+FILES
+       /usr/jerq/mbin/sysmon.m  terminal program
+       /usr/spool/mail
+       /usr/spool/mail/mail.log
+       /n/face/*           vismon pictures
+
+DIAGNOSTICS
+       `Can't open comm window' means a shell layer cannot be created.  To
+       receive any further communications, delete some layer.
+
+SEE ALSO
+       face(9.1), faced(9.5)
+
+BUGS
+       There's more to system performance than meets the eye.
+
+                                                                   SYSMON(9.1)

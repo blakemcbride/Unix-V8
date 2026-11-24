@@ -1,0 +1,43 @@
+ECVT(3)                    Library Functions Manual                    ECVT(3)
+
+NAME
+       ecvt, fcvt, gcvt - output conversion
+
+SYNOPSIS
+       char *ecvt(value, ndigit, decpt, sign)
+       double value;
+       int ndigit, *decpt, *sign;
+
+       char *fcvt(value, ndigit, decpt, sign)
+       double value;
+       int ndigit, *decpt, *sign;
+
+       char *gcvt(value, ndigit, buf)
+       double value;
+       char *buf;
+
+DESCRIPTION
+       Ecvt converts the value to a null-terminated string of ndigit ASCII
+       digits and returns a pointer thereto.  The position of the decimal
+       point relative to the beginning of the string is stored indirectly
+       through decpt (negative means to the left of the returned digits).  If
+       the sign of the result is negative, the word pointed to by sign is non-
+       zero, otherwise it is zero.  The low-order digit is rounded.
+
+       Fcvt is similar to ecvt and produces output for the Fortran format
+       F*.ndigit.  If decpt ≤ −ndigit, then the returned string is null.
+       Otherwise, decpt+ndigit characters are returned.
+
+       Gcvt converts the value to a null-terminated ASCII string in buf and
+       returns a pointer to buf.  It attempts to produce ndigit significant
+       digits in Fortran F format if possible, otherwise E format, ready for
+       printing.  Trailing zeros may be suppressed.
+
+SEE ALSO
+       printf(3)
+
+BUGS
+       The return values point to static data whose content is overwritten by
+       each call.
+
+                                                                       ECVT(3)

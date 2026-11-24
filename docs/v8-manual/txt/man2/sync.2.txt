@@ -1,0 +1,24 @@
+SYNC(2)                       System Calls Manual                      SYNC(2)
+
+NAME
+       sync - update super-block
+
+SYNOPSIS
+       sync()
+
+DESCRIPTION
+       Sync causes all information in core memory that should be on disk to be
+       written out.  This includes modified super blocks, modified i-nodes,
+       and delayed block I/O.
+
+       It should be used by programs which examine a file system, for example
+       icheck, df, etc.  It is mandatory before a boot.
+
+SEE ALSO
+       sync(8), update(8)
+
+BUGS
+       The writing, although scheduled, is not necessarily complete upon
+       return from sync.
+
+                                                                       SYNC(2)

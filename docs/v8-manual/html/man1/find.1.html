@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>find.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; find.1 (<a href="../../../../source/v8/usr/man/man1/find.1">troff source</a>)</p>
+<pre>
+FIND(1)                     General Commands Manual                    FIND(1)
+
+NAME
+       find - find files
+
+SYNOPSIS
+       find pathname-list  expression
+
+DESCRIPTION
+       Find recursively descends the directory hierarchy for each pathname in
+       the pathname-list (i.e., one or more pathnames) seeking files that
+       match a boolean expression written in the primaries given below.  In
+       the descriptions, the argument n is used as a decimal integer where +n
+       means more than n, -n means less than n and n means exactly n.
+
+       -name filename
+                 True if the filename argument matches the current file name.
+                 Normal Shell argument syntax may be used if escaped (watch
+                 out for `[', `?' and `*').
+
+       -perm onum
+                 True if the file permission flags exactly match the octal
+                 number onum (see <a href="../man1/chmod.1.html">chmod(1)</a>).  If onum is prefixed by a minus
+                 sign, more flag bits (017777, see <a href="../man2/stat.2.html">stat(2)</a>) become significant
+                 and the flags are compared: (flags&amp;onum)==onum.
+
+       -type c   True if the type of the file is c, where c is b, c, d, f or L
+                 for block special file, character special file, directory,
+                 plain file or symbolic link.
+
+       -links n  True if the file has n links.
+
+       -user uname
+                 True if the file belongs to the user uname (login name or
+                 numeric user ID).
+
+       -group gname
+                 True if the file belongs to group gname (group name or
+                 numeric group ID).
+
+       -size n   True if the file is n blocks long (512 bytes per block).
+
+       -inum n   True if the file has inode number n.
+
+       -atime n  True if the file has been accessed in n days.
+
+       -mtime n  True if the file has been modified in n days.
+
+       -exec command
+                 True if the executed command returns a zero value as exit
+                 status.  The end of the command must be punctuated by an
+                 escaped semicolon.  A command argument `{}' is replaced by
+                 the current pathname.
+
+       -ok command
+                 Like -exec except that the generated command is written on
+                 the standard output, then the standard input is read and the
+                 command executed only upon response y.
+
+       -print    Always true; causes the current pathname to be printed.
+
+       -newer file
+                 True if the current file has been modified more recently than
+                 the argument file.
+
+       The primaries may be combined using the following operators (in order
+       of decreasing precedence):
+
+       1)  A parenthesized group of primaries and operators (parentheses are
+           special to the Shell and must be escaped).
+
+       2)  The negation of a primary (`!' is the unary not operator).
+
+       3)  Concatenation of primaries (the and operation is implied by the
+           juxtaposition of two primaries).
+
+       4)  Alternation of primaries (`-o' is the or operator).
+
+EXAMPLE
+       To remove all files named `a.out' or `*.o' that have not been accessed
+       for a week:
+
+         find / \( -name a.out -o -name '*.o' \) -atime +7 -exec rm {} \;
+
+FILES
+       /etc/passwd
+       /etc/group
+
+SEE ALSO
+       <a href="../man1/sh.1.html">sh(1)</a>, <a href="../man1/test.1.html">test(1)</a>, <a href="../man5/filsys.5.html">filsys(5)</a>
+
+BUGS
+       The syntax is painful.
+
+                                                                       FIND(1)
+</pre>
+</body></html>

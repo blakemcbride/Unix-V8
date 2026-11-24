@@ -1,0 +1,386 @@
+ADB(1)                      General Commands Manual                     ADB(1)
+
+NAME
+       adb - debugger
+
+SYNOPSIS
+       adb [-w] [ objfil [ corfil ] ]
+
+DESCRIPTION
+       Adb is a general purpose debugging program.  It may be used to examine
+       files and to provide a controlled environment for the execution of UNIX
+       programs.
+
+       Objfil is normally an executable program file, preferably containing a
+       symbol table; if not then the symbolic features of adb cannot be used
+       although the file can still be examined.  The default for objfil is
+       `a.out'.  Corfil is assumed to be a core image file produced after
+       executing objfil; the default for corfil is `core'.
+
+       Requests to adb are read from the standard input and responses are to
+       the standard output.  If the -w flag is present then both objfil and
+       corfil are created if necessary and opened for reading and writing so
+       that files can be modified using adb.  Adb ignores QUIT; INTERRUPT
+       causes return to the next adb command.
+
+       In general requests to adb have the form
+
+                [address]  [, count] [command] [;]
+
+       If address is present then dot is set to address.  Initially dot is set
+       to 0.  For most commands count specifies how many times the command
+       will be executed.  The default count is 1.  Address and count are
+       expressions.
+
+EXPRESSIONS
+       .      The value of dot.
+
+       +      The value of dot incremented by the current increment.
+
+       ^      The value of dot decremented by the current increment.
+
+       "      The last address typed.
+
+       integer
+              A number.  The prefixes 0o and 0O (zero oh) force interpretation
+              in octal radix; the prefixes 0t and 0T force interpretation in
+              decimal radix; the prefixes 0x and 0X or a leading sharp-sign
+              `#' force interpretation in hexadecimal radix.  Thus 0o20 = 0t16
+              = 0x10 = sixteen.  If no prefix appears, then the default radix
+              is used; see the $d command.  The default radix is initially
+              hexadecimal.  The hexadecimal digits are 0123456789abcdefABCDEF
+              with the obvious values.  Note that a hexadecimal number whose
+              most significant digit would otherwise be an alphabetic
+              character must have a 0x (or 0X) prefix (or a leading zero if
+              the default radix is hexadecimal).
+
+       integer.fraction
+              A 32 bit floating point number.
+
+       ´cccc´ The ASCII value of up to 4 characters.  \ may be used to escape
+              a ´.
+
+       < name The value of name, which is either a variable name or a register
+              name.  Adb maintains a number of variables (see VARIABLES) named
+              by single letters or digits.  If name is a register name then
+              the value of the register is obtained from the system header in
+              corfil.  The register names are those printed by the $r command.
+
+       symbol A symbol is a sequence of upper or lower case letters,
+              underscores or digits, not starting with a digit.  \f[R] may be
+              used to escape other characters.  The value of the symbol is
+              taken from the symbol table in objfil.  An initial _ or ~ will
+              be prepended to symbol if needed.
+
+       _ symbol
+              In C, the `true name' of an external symbol begins with _.  It
+              may be necessary to utter this name to disinguish it from
+              internal or hidden variables of a program.
+
+       routine.name
+              The address of the variable name in the specified C routine.
+              Both routine and name are symbols.  If name is omitted the value
+              is the address of the most recently activated C stack frame
+              corresponding to routine; if routine is omitted, the active
+              procedure is assumed.
+
+       (exp)  The value of the expression exp.
+
+       Monadic operators
+
+       *exp   The contents of the location addressed by exp in corfil.
+
+       @exp   The contents of the location addressed by exp in objfil.
+
+       -exp   Integer negation.
+
+       ~exp   Bitwise complement.'
+
+       %exp   If exp is used as an address, it is in register space; see
+              ADDRESSES .
+
+       Dyadic operators are left associative and are less binding than monadic
+       operators.
+
+       e1+e2  Integer addition.
+
+       e1-e2  Integer subtraction.
+
+       e1*e2  Integer multiplication.
+
+       e1%e2  Integer division.
+
+       e1&e2  Bitwise conjunction.
+
+       e1⎪e2  Bitwise disjunction.
+
+       e1#e2  E1 rounded up to the next multiple of e2.
+
+COMMANDS
+       Most commands consist of a verb followed by a modifier or list of
+       modifiers.  The following verbs are available.  (The commands `?' and
+       `/' may be followed by `*'; see ADDRESSES for further details.)
+
+       ?f   Locations starting at address in objfil are printed according to
+            the format f.  dot is incremented by the sum of the increments for
+            each format letter (q.v.).
+
+       /f   Locations starting at address in corfil are printed according to
+            the format f and dot is incremented as for `?'.
+
+       =f   The value of address itself is printed in the styles indicated by
+            the format f.  (For i format `?' is printed for the parts of the
+            instruction that reference subsequent words.)
+
+       A format consists of one or more characters that specify a style of
+       printing.  Each format character may be preceded by a decimal integer
+       that is a repeat count for the format character.  While stepping
+       through a format dot is incremented by the amount given for each format
+       letter.  If no format is given then the last format is used.  The
+       format letters available are as follows.
+
+              o 2    Print 2 bytes in octal.
+              O 4    Print 4 bytes in octal.
+              q 2    Print in signed octal.
+              Q 4    Print long signed octal.
+              d 2    Print in decimal.
+              D 4    Print long decimal.
+              x 2    Print 2 bytes in hexadecimal.
+              X 4    Print 4 bytes in hexadecimal.
+              u 2    Print unsigned decimal.
+              U 4    Print long unsigned decimal.
+              f 4    Print the 32 bit value as a floating point number.
+              F 8    Print double floating point.
+              b 1    Print the addressed byte in octal.
+              c 1    Print the addressed character.
+              C 1    Print the addressed character using the standard escape
+                     convention where control characters are printed as ^X and
+                     the delete character is printed as ^?.
+              s n    Print the addressed characters until a zero character is
+                     reached.
+              S n    Print a string using the ^X escape convention (see C
+                     above).  n is the length of the string including its zero
+                     terminator.
+              Y 4    Print 4 bytes in date format (see ctime(3)).
+              i n    Print as VAX instructions.  n is the number of bytes
+                     occupied by the instruction.  This style of printing
+                     causes variables 0, (1, ...)  to be set to the offset
+                     parts of the first (second, ...)  operand of the
+                     instruction.
+              a 0    Print the value of dot in symbolic form.
+              p 4    Print the addressed value in symbolic form using the same
+                     rules for symbol lookup as a.
+              t 0    When preceded by an integer tabs to the next appropriate
+                     tab stop.  For example, 8t moves to the next 8-space tab
+                     stop.
+              r 0    Print a space.
+              n 0    Print a newline.
+              "..." 0
+                     Print the enclosed string.
+              ^      Dot is decremented by the current increment.  Nothing is
+                     printed.
+              +      Dot is incremented by 1.  Nothing is printed.
+              -      Dot is decremented by 1.  Nothing is printed.
+
+       newline
+              Repeat the previous command with a count of 1.
+
+       [?/]l value mask
+              Words starting at dot are masked with mask and compared with
+              value until a match is found.  If L is used then the match is
+              for 4 bytes at a time instead of 2.  If no match is found then
+              dot is unchanged; otherwise dot is set to the matched location.
+              If mask is omitted then -1 is used.
+
+       [?/]w value ...
+              Write the 2-byte value into the addressed location.  If the
+              command is W, write 4 bytes.
+
+       [?/]m b e f[?/]
+              New values for (b, e, f) in the first map entry are recorded.
+              If less than three expressions are given then the remaining map
+              parameters are left unchanged.  The address type (instruction or
+              data) is unchanged in any case.  If the `?' or `/' is followed
+              by `*' then the second segment of the mapping is changed.  If
+              the list is terminated by `?' or `/' then the file (objfil or
+              corfil respectively) is used for subsequent requests.  (So that,
+              for example, `/m?' will cause `/' to refer to objfil.)
+
+       >name  Dot is assigned to the variable or register named.
+
+       !      A shell is called to read the rest of the line following `!'.
+
+       $modifier
+              Miscellaneous commands.  The available modifiers are:
+
+              <f     Read commands from the file f.  If this command is
+                     executed in a file, further commands in the file are not
+                     seen.  If f is omitted, the current input stream is
+                     terminated.  If a count is given, and is zero, the
+                     command will be ignored.  The value of the count will be
+                     placed in variable 9 before the first command in f is
+                     executed.
+              <<f    Similar to < except it can be used in a file of commands
+                     without causing the file to be closed.  Variable 9 is
+                     saved during the execution of this command, and restored
+                     when it completes.  There is a (small) finite limit to
+                     the number of << files that can be open at once.
+              >f     Append output to the file f, which is created if it does
+                     not exist.  If f is omitted, output is returned to the
+                     terminal.
+              ?      Print process id, the signal which caused stopping or
+                     termination, as well as the registers.  This is the
+                     default if modifier is omitted.
+              r      Print the general registers and the instruction addressed
+                     by pc.  Dot is set to pc.
+              R      Like $r, but include boring registers like the kernel
+                     stack pointer.
+              b      Print all breakpoints and their associated counts and
+                     commands.
+              c      C stack backtrace.  If address is given then it is taken
+                     as the address of the current frame (instead of fp).  If
+                     C is used then the names and (32 bit) values of all
+                     parameters, automatic and static variables are printed
+                     for each active function.  If count is given then only
+                     the first count frames are printed.
+              d      Set the default radix to address and report the new
+                     value.  Address is interpreted in the (old) current
+                     radix; `10$d' never changes the default radix.  To make
+                     decimal the default radix, use `0t10$d'.  A radix of zero
+                     is a special case: input with a leading zero is octal,
+                     that with a leading sharp-sign `#' is hexadecimal, other
+                     numbers are decimal; output is hexadecimal by default;
+                     hex and octal numbers are printed with a leading # and 0
+                     respectively.
+              e      The names and values of external variables are printed.
+              w      Set the page width for output to address (default 80).
+              s      Set the limit for symbol matches to address (default
+                     255).
+              q      Exit from adb.
+              v      Print all non zero variables in the current radix.
+              m      Print the address maps.
+              k      Simulated VAX memory management: set the system base
+                     register pointer to address.  System space addresses will
+                     hereafter be mapped according to the system page table.
+                     If address is zero, mapping is turned off.
+              p      Set the PCB base pointer to address, which may be either
+                     the physical address of a process control block (as found
+                     in the PCBB register) or the system space address of a
+                     page table entry which points to a PCB (as found in
+                     p_addr).  User space addresses will hereafter be
+                     translated according to the user page tables pointed to
+                     by the PCB.  Kernel mapping ($k) must already be in
+                     effect.  If address is zero, user mapping is turned off;
+                     addresses less than 0x80000000 will be treated as
+                     physical addresses.
+                     $k and $p are useful for system debugging.
+
+       :modifier
+              Manage a subprocess.  Available modifiers are:
+
+              bc     Set breakpoint at address.  The breakpoint is executed
+                     count-1 times before causing a stop.  Each time the
+                     breakpoint is encountered the command c is executed.  If
+                     this command is omitted or sets dot to zero then the
+                     breakpoint causes a stop.
+              d      Delete breakpoint at address.
+              r      Run objfil as a subprocess.  If address is given
+                     explicitly then the program is entered at this point;
+                     otherwise the program is entered at its standard entry
+                     point.  count specifies how many breakpoints are to be
+                     ignored before stopping.  Arguments to the subprocess may
+                     be supplied on the same line as the command.  An argument
+                     starting with < or > causes the standard input or output
+                     to be established for the command.  All signals are
+                     turned on on entry to the subprocess.
+              cs     The subprocess is continued.  If s is omitted or nonzero,
+                     the subprocess is sent the signal that caused it to stop;
+                     if 0 is specified, no signal is sent.  Breakpoints and
+                     single-stepping don't count as signals.  Breakpoint
+                     skipping is the same as for r.
+              ss     As for c except that the subprocess is single stepped
+                     count times.  If a signal is sent, it is received before
+                     the first instruction is executed.  If there is no
+                     current subprocess then objfil is run as a subprocess as
+                     for r.  In this case no signal can be sent; the remainder
+                     of the line is treated as arguments to the subprocess.
+              k      The current subprocess, if any, is terminated.
+
+VARIABLES
+       Adb provides a number of variables.  Named variables are set initially
+       by adb but are not used subsequently.  Numbered variables are reserved
+       for communication as follows.
+
+       0, 1, ...
+              The offset parts of the first, second, ...  operands of the last
+              instruction printed.  Meaningless if the operand was a register.
+       9      The count on the last $< or $<< command.
+
+       On entry the following are set from the system header in the corfil.
+       If corfil does not appear to be a core file then these values are set
+       from objfil.
+
+       b      The base address of the data segment.
+       d      The data segment size.
+       e      The entry point.
+       m      The `magic' number (0407, 0410 or 0413).
+       s      The stack segment size.
+       t      The text segment size.
+
+ADDRESSES
+       The address in a file associated with a written address is determined
+       by a mapping associated with that file.  Each mapping is represented by
+       one or more quadruples (t, b, e, f), each mapping addresses of type t
+       (instruction, data, user block) in the range b through e to the part of
+       the file beginning at address f.  An address a of type t is mapped to a
+       file address by finding a quadruple of type t, for which b≤a<e; the
+       file address is address+f−b.  As a special case, if an instruction
+       space address is not found, a second search is made for the same
+       address in data space.
+
+       Typically, the text segment of a program is mapped as instruction
+       space, the data and bss segments as data space.  If objfil is an a.out,
+       or if corfil is a core image or process file, maps are set accordingly.
+       Otherwise, a single `data space' map is set up, with b and f set to
+       zero, and e set to a huge number; thus the entire file can be examined
+       without address translation.
+
+       The ?  and / commands attempt to examine instruction and data space
+       respectively.  ?*  tries for data space (in objfil); /* accesses
+       instruction space (in corfil).
+
+       Registers in process and core images are a special case; they live in a
+       special `register' address space.  The contents of register 0 are
+       located at address %0; register 1 at %4 (registers are 4 bytes long);
+       and so on.  % addresses are mapped to the registers for the `current
+       frame,' set by local variable references, and reset to the outermost
+       frame (the `real' registers) whenever a process runs or a stack trace
+       is requested.
+
+       Simulated memory management translations (the $k and $p commands) are
+       done before the mapping described above.
+
+       So that adb may be used on large files all appropriate values are kept
+       as signed 32 bit integers.
+
+FILES
+       a.out
+       core
+       /usr/lib/adb/*  parameter files
+
+SEE ALSO
+       pi(9.1), sdb(1), proc(4), a.out(5), core(5)
+
+DIAGNOSTICS
+       `Adb' when there is no current command or format.  Comments about
+       inaccessible files, syntax errors, abnormal termination of commands,
+       etc.  Exit status is 0, unless last command failed or returned nonzero
+       status.
+
+BUGS
+       Either the explanation or the implementation of register variables is
+       too complex and arcane.
+
+       0$d should probably be the default.
+
+                                                                        ADB(1)

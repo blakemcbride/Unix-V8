@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>comm.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; comm.1 (<a href="../../../../source/v8/usr/man/man1/comm.1">troff source</a>)</p>
+<pre>
+COMM(1)                     General Commands Manual                    COMM(1)
+
+NAME
+       comm - select or reject lines common to two sorted files
+
+SYNOPSIS
+       comm [ -123 ] file1 file2
+
+DESCRIPTION
+       Comm reads file1 and file2, which should be ordered in ASCII collating
+       sequence, and produces a three column output: lines only in file1;
+       lines only in file2; and lines in both files.  The filename `-' means
+       the standard input.
+
+       Flags 1, 2, or 3 suppress printing of the corresponding column.  Thus
+       comm -12 prints only the lines common to the two files; comm -23 prints
+       only lines in the first file but not in the second; comm -123 is a no-
+       op.
+
+SEE ALSO
+       <a href="../man1/cmp.1.html">cmp(1)</a>, <a href="../man1/diff.1.html">diff(1)</a>, <a href="../man1/uniq.1.html">uniq(1)</a>
+
+                                                                       COMM(1)
+</pre>
+</body></html>

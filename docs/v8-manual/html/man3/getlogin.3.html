@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>getlogin.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; getlogin.3 (<a href="../../../../source/v8/usr/man/man3/getlogin.3">troff source</a>)</p>
+<pre>
+GETLOGIN(3)                Library Functions Manual                GETLOGIN(3)
+
+NAME
+       getlogin - get login name
+
+SYNOPSIS
+       char *getlogin()
+
+DESCRIPTION
+       Getlogin returns a pointer to the login name as found in /etc/utmp.  It
+       may be used in conjunction with getpwnam to locate the correct password
+       file entry when the same userid is shared by several login names.
+
+       If getlogin is called within a process that is not attached to a
+       typewriter, it returns NULL.  The correct procedure for determining the
+       login name is to first call getlogin and if it fails, to call getpwuid.
+
+FILES
+       /etc/utmp
+
+SEE ALSO
+       <a href="../man3/getpwent.3.html">getpwent(3)</a>, <a href="../man3/getgrent.3.html">getgrent(3)</a>, <a href="../man5/utmp.5.html">utmp(5)</a>, <a href="../man2/getuid.2.html">getuid(2)</a>
+
+DIAGNOSTICS
+       Returns NULL (0) if name not found.
+
+BUGS
+       The return values point to static data whose content is overwritten by
+       each call.
+
+                                                                   GETLOGIN(3)
+</pre>
+</body></html>

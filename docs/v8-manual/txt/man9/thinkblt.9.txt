@@ -1,0 +1,60 @@
+THINKBLT(9.1)                                                    THINKBLT(9.1)
+
+NAME
+       thinkblt, think - print on ThinkJet
+
+SYNOPSIS
+       thinkblt [ stream ]
+
+       think [ -o stream ] [ files... ]
+
+       nroff -Tthink ... | think [ -o stream ]
+
+DESCRIPTION
+       Thinkblt downloads an interrupt driver for the printer, provides a menu
+       of operations for printing various data residing in the terminal, and
+       sets up a stream ($HOME/.THINK by default) on which think can print
+       data from the host.  It is intended to be down-loaded once per terminal
+       session.  Most of the menu items are identical to those of
+       blitblt(9.1).  The remaining ones are:
+
+       print bitmap      prints whatever bitmap is currently selected, in
+                         analogy to blitblt(9.1).  The widest printable bitmap
+                         is 640 pixels across.
+
+       print mux buffer  prints the mux `snarf' buffer.
+
+       reset printer     sends `<esc>E'.
+
+       While the printer is operating, a different menu allows one to abort or
+       pause the print operation.  The printer has a fairly large internal
+       buffer, so response may be slow.
+
+       Files on the host may be printed by giving them as arguments or
+       standard input to think.  When used with nroff, names like \(′e may be
+       used to access the special characters provided by the hardware; see the
+       nroff(1) terminal driving file for a complete list.  Both nroff(1) and
+       pr(1) will paginate properly if top-of-form is set so that the paper
+       tear is aligned flush with the top of the metal clip which holds the
+       absorber.
+
+FILES
+       /usr/jerq/mbin/thinkblt.m - terminal program
+       /usr/lib/term/tab.think - nroff descriptor file
+
+SEE ALSO
+       troff(1), pr(1), blitblt(9.1)
+
+BUGS
+       The 5620 ROM program is unable to cope with interrupts from the
+       printer; it is therefore necessary to download mux(9.1) before powering
+       on the printer.
+
+       Thinkblt substitutes its own interrupt routine for the (trivial) one
+       provided by mux(9.1).  The latter is restored upon exit, but havoc may
+       result if the thinkblt layer is simply deleted.
+
+       The special nroff(1) character names are not currently supported by any
+       other device.
+
+                                                                 THINKBLT(9.1)

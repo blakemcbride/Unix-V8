@@ -1,0 +1,42 @@
+UUCICO(8)                   System Manager's Manual                  UUCICO(8)
+
+NAME
+       uucico  - file transport program for the uucp system
+
+SYNOPSIS
+       /usr/lib/uucp/uucico [ -r1 -s system_name ] [ -x debug_level ] [ -d
+       spool_directory ]
+       /usr/lib/uucp/kick system
+       /usr/lib/uucp/debug system
+
+DESCRIPTION
+       Uucico transfers files between systems for uucp(1).  It is normally
+       invoked by login for an incoming connection (a slave), or by uusched(8)
+       to call out to another system (a master).
+
+       The -r1 option causes it to act as a master.  In this case, -s must be
+       given to name the system to be called.  If -r1 is not present, uucico
+       goes into slave mode, and assumes that a master will talk to it on
+       standard input and output.
+
+       -x turns on debugging output; debug_level is a single digit.  Larger
+       numbers request greater loquaciousness.
+
+       Kick invokes uucico in the background to call out to the specified
+       system.  Debug causes a call with a moderate amount of debugging output
+       (-x4).  Both attempt to remove existing system status information for
+       system, so that a call will be attempted regardless of recent failures.
+
+FILES
+       /usr/lib/uucp/Systems
+       /usr/lib/uucp/Permissions
+       /usr/lib/uucp/Devices
+       /usr/lib/uucp/Maxuuxqts
+       /usr/lib/uucp/Maxuuscheds
+       /usr/spool/uucp/∗
+       /usr/spool/uucppublic/∗
+
+SEE ALSO
+       uucp(1), uustat(1), uusched(8)
+
+                                                                     UUCICO(8)

@@ -1,0 +1,22 @@
+SHIP(1)                     General Commands Manual                    SHIP(1)
+
+NAME
+       ship - automatic software distribution
+
+SYNOPSIS
+       ship files
+
+DESCRIPTION
+       Ship distributes the named files to other computers, where they are
+       installed under the same names.  The shipper must be registered in the
+       tables of asd(5).  Ship will ask for a key to confirm the shipper's
+       rights.
+
+       Links among the named files are imitated on the receiving computer.
+       Named files that do not exist on the sending computer are deleted on
+       the receiving computer.
+
+SEE ALSO
+       asd(8), asd(5)
+
+                                                                       SHIP(1)

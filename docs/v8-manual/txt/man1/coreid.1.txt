@@ -1,0 +1,25 @@
+COREID(1)                   General Commands Manual                  COREID(1)
+
+NAME
+       coreid - identify source of core image
+
+SYNOPSIS
+       coreid [ corefile ]
+
+DESCRIPTION
+       Coreid reads the file ``core,'' or the specified corefile if given, and
+       prints on its standard output the argument list of the command which
+       produced the core image.
+
+FILES
+       core
+
+SEE ALSO
+       core(5)
+
+BUGS
+       Only works for core images from C and FORTRAN programs.
+       The arguments shown are those at the time of the dump, not at
+       invocation of the command.
+
+                                                                     COREID(1)

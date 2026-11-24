@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ratfor.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; ratfor.1 (<a href="../../../../source/v8/usr/man/man1/ratfor.1">troff source</a>)</p>
+<pre>
+RATFOR(1)                   General Commands Manual                  RATFOR(1)
+
+NAME
+       ratfor - rational Fortran dialect
+
+SYNOPSIS
+       ratfor [ option ... ] [ filename ... ]
+
+DESCRIPTION
+       Ratfor converts a rational dialect of Fortran into ordinary irrational
+       Fortran.  Ratfor provides control flow constructs essentially identical
+       to those in C:
+
+       statement grouping:
+              { statement; statement; statement }
+
+       decision-making:
+              if (condition) statement [ else statement ]
+              switch (integer value) {
+                   case integer:  statement
+                   ...
+                   [ default: ]   statement
+              }
+
+       loops: while (condition) statement
+              for (expression; condition; expression) statement
+              do limits statement
+              repeat statement [ until (condition) ]
+              break
+              next
+
+       and some syntactic sugar to make programs easier to read and write:
+
+       free form input:
+              multiple statements/line; automatic continuation
+
+       comments:
+              # this is a comment
+
+       translation of relationals:
+              &gt;, &gt;=, etc., become .GT., .GE., etc.
+
+       return (expression)
+              returns expression to caller from function
+
+       define:
+              define name replacement
+
+       include:
+              include filename
+
+       Ratfor is best used with <a href="../man1/f77.1.html">f77(1)</a>.
+
+SEE ALSO
+       <a href="../man1/efl.1.html">efl(1)</a>, <a href="../man1/f77.1.html">f77(1)</a>, <a href="../man1/struct.1.html">struct(1)</a>
+       B. W. Kernighan and P. J. Plauger, Software Tools, Addison-Wesley,
+       1976.
+
+                                                                     RATFOR(1)
+</pre>
+</body></html>

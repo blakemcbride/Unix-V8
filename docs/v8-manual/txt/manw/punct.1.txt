@@ -1,0 +1,25 @@
+PUNCT(1)                    General Commands Manual                   PUNCT(1)
+
+NAME
+       punct - punctuation checker
+
+SYNOPSIS
+       /usr/bin/WWB/punct [ file ... ]
+
+DESCRIPTION
+       Punct scans English text for punctuation errors and doubled words.
+       When it finds an error, it places the error on the standard output
+       together with line number and suggested repunctuation.
+
+FILES
+       /tmp/$$*  temporary files
+
+SEE ALSO
+       style(1), diction(1), wwb(1)
+
+BUGS
+       Punct will consider unfamiliar abbreviations ending with a period
+       (except initials) to be the end of the sentence, consequently, it will
+       capitalize the next word.
+
+                                                                      PUNCT(1)

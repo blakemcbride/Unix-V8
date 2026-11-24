@@ -1,0 +1,35 @@
+WEATHER(7)             Miscellaneous Information Manual             WEATHER(7)
+
+NAME
+       weather - conditions and forecast by town
+
+SYNOPSIS
+       weather [ -h ] [ -m ]
+
+DESCRIPTION
+       Weather reports current weather conditions and a forecast for towns in
+       the contiguous United States.  It reads town names from the standard
+       input, one per line.  Each input line should be of the form
+
+              walla walla, wa
+
+       where the state is given as the 2-letter Post Office abbreviation.
+
+       The information provided is the temperature, humidity, whether or not
+       it is raining or snowing, and an indication of cloudiness and
+       visibility if it is not.  If the wind is above 10 knots the wind speed
+       and direction are given.  Up to three forecasts are given (assuming
+       they can be found within a 4x4 degree latitude-longitude square): a
+       forecast of high and low temperatures plus probability of precipitation
+       taken from some numerical model of the atmosphere, a general area
+       forecast and a marine forecast (if near the coast and if the -m
+       argument is given).
+
+       To just get a local forecast, the command weather -h is equivalent to
+       weather followed by a single input line of Murray Hill, NJ.
+
+BUGS
+       Not all the available information is used yet: we hope cumulative
+       precipitation will be added, and additional forecasts will be included.
+
+                                     alice                          WEATHER(7)

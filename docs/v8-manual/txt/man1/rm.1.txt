@@ -1,0 +1,34 @@
+RM(1)                       General Commands Manual                      RM(1)
+
+NAME
+       rm, rmdir  - remove (unlink) files
+
+SYNOPSIS
+       rm [ -f ] [ -r ] [ -i ] file ...
+
+DESCRIPTION
+       Rm removes the entries for one or more files from a directory.  If an
+       entry was the last link to the file, the file is destroyed.  If an
+       entry is a directory it is removed only if empty.  Removal of a file
+       requires write permission in its directory, but neither read nor write
+       permission on the file itself.
+
+       If a file has no write permission and the standard input is a terminal,
+       its permissions are printed and a line is read from the standard input.
+       If that line begins with `y' the file is deleted, otherwise the file
+       remains.  No questions are asked and no errors are reported when the -f
+       (force) option is given.  Option -r causes rm to recursively delete the
+       entire contents of a directory, and the directory itself.
+
+       If the -i (interactive) option is in effect, rm asks whether to delete
+       each file, and, under -r, whether to examine each directory.
+
+SEE ALSO
+       unlink(2), rmdir(8)
+
+DIAGNOSTICS
+       Generally self-explanatory.  It is forbidden to remove the file `..'
+       merely to avoid the antisocial consequences of inadvertently doing
+       something like `rm -r .*'.
+
+                                                                         RM(1)

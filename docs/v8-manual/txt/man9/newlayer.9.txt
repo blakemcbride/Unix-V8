@@ -1,0 +1,45 @@
+NEWLAYER(9.2)                                                    NEWLAYER(9.2)
+
+NAME
+       newlayer, dellayer, lbitblt, lpoint, lrectf, lsegment, ltexture,
+       upfront - layer control and graphics
+
+SYNOPSIS
+       #include <jerq.h>
+
+       Layer *newlayer(r); Rectangle r;
+
+       void dellayer(l) Layer *l;
+
+       void lbitblt(sl, r, dl, p, f) Layer *sl, *dl; Rectangle r; Point p;
+       Code f;
+
+       void lpoint(l, p, f) Layer *l; Point p; Code f;
+
+       void lrectf(l, r, f) Layer *l; Rectangle r; Code f;
+
+       void segment(l, p, q, f) Layer *l; Point p, q; Code f;
+
+       void ltexture(l, r, t, f) Layer *l; Rectangle r; Texture *t; Code f;
+
+DESCRIPTION
+       Newlayer creates a layer in Rectangle r in the physical display bitmap,
+       and returns its address, or 0 on failure.  Newproc(9.2) explains how to
+       attach a process to a layer.
+
+       Dellayer de-allocates a layer; the associated process must also be
+       freed (see newproc(9.2)).
+
+       The routines lbitblt, lpoint, lsegment and ltexture are equivalent to
+       their bitblt(9.3) counterparts except that they never inhibit the mouse
+       cursor, so they are mainly useful only for implementation of efficient
+       composite graphics operations such as circle-drawing.  Because of the
+       duality of Bitmaps and Layers, arguments of either type may be passed
+       freely to any of the graphics primitives.
+
+SEE ALSO
+       bitblt(9.3), newproc(9.2)
+       Graphics in Overlapping Bitmap Layers, Rob Pike, ACM Trans. on
+       Graphics, April 1983.
+
+                                                                 NEWLAYER(9.2)

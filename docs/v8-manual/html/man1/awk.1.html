@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>awk.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; awk.1 (<a href="../../../../source/v8/usr/man/man1/awk.1">troff source</a>)</p>
+<pre>
+AWK(1)                      General Commands Manual                     AWK(1)
+
+NAME
+       awk - pattern-directed scanning and processing language
+
+SYNOPSIS
+       awk [ -Fs ] [ prog ] [ file ] ...
+
+DESCRIPTION
+       Awk scans each input file for lines that match any of a set of patterns
+       specified literally in prog or in a file specified as -f file.  With
+       each pattern there can be an associated action that will be performed
+       when a line of a file matches the pattern.  Each line is matched
+       against the pattern portion of every pattern-action statement; the
+       associated action is performed for each matched pattern.  The file name
+       `-' means the standard input.
+
+       An input line is made up of fields separated by white space.  (This
+       default can be changed by using FS, vide infra.)  The fields are
+       denoted $1, $2, ... ; $0 refers to the entire line.
+
+       A pattern-action statement has the form
+
+            pattern { action }
+
+       A missing { action } means print the line; a missing pattern always
+       matches.
+
+       An action is a sequence of statements.  A statement can be one of the
+       following:
+
+            if ( conditional ) statement [ else statement ]
+            while ( conditional ) statement
+            for ( expression ; conditional ; expression ) statement
+            for ( var in array ) statement
+            break
+            continue
+            { [ statement ] ... }
+            expression     # commonly variable = expression
+            print [ expression-list ] [ &gt;expression ]
+            printf format [ , expression-list ] [ &gt;expression ]
+            next      # skip remaining patterns on this input line
+            exit [expr]    # skip the rest of the input; exit status is expr
+
+       Statements are terminated by semicolons, newlines or right braces.  An
+       empty expression-list stands for the whole line.  Expressions take on
+       string or numeric values as appropriate, and are built using the
+       operators +, -, *, /, %, ^ (exponentiation), and concatenation
+       (indicated by a blank).  The C operators ++, --, +=, -=, *=, /=, %= and
+       ^= are also available in expressions.  Variables may be scalars, array
+       elements (denoted x[i]) or fields.  Variables are initialized to the
+       null string.  Array subscripts may be any string, not necessarily
+       numeric; this allows for a form of associative memory.  String
+       constants are quoted "...".
+
+       The print statement prints its arguments on the standard output (or on
+       a file if &gt;file is present or on a pipe if |cmd is present), separated
+       by the current output field separator, and terminated by the output
+       record separator.  The printf statement formats its expression list
+       according to the format (see <a href="../man3/printf.3.html">printf(3)</a>).  The function close closes the
+       file or pipe named as its argument.
+
+       The built-in function length returns the length of its argument taken
+       as a string, or of the whole line if no argument.  There are also
+       built-in functions exp, log, sqrt, sin, cos, atan2, rand (returns a
+       random number on (0,1)), srand (sets seed for rand), and int (truncates
+       its argument to an integer).  substr(s, m, n) returns the n-character
+       substring of s that begins at position m.  index(s, t) returns the
+       position in s where t occurs, or 0 if it does not.  The function
+       split(s, a, fs) splits the string s into array elements a[1], a[2],
+       ..., a[n], and returns n.  The separation is done with the regular
+       expression fs or with the field separator FS if fs is not given.
+
+       The function sub(r, t, s) substitutes t for the first occurrence of the
+       regular expression r in the string s.  If s is not given, $0 is used.
+       The function gsub is the same except that all occurrences of the
+       regular expression are replaced.  Sub and gsub return the number of
+       replacements.
+
+       The function sprintf(fmt, expr, expr, ...)  formats the expressions
+       according to the <a href="../man3/printf.3.html">printf(3)</a> format given by fmt and returns the
+       resulting string.
+
+       The function system(cmd) executes cmd and returns its exit status The
+       function getline sets $0 to the next input record from the current
+       input file; getline &lt;file sets $0 to the next record from file.
+       getline x sets variable x instead.  Finally, cmd|getline pipes the
+       input of cmd into getline; each call of getline returns the next line
+       of output from cmd.  In all cases, getline returns 1 for a successful
+       input, 0 for end of file, and -1 for an error.
+
+       Patterns are arbitrary Boolean combinations (!, ||, &amp;&amp;, and
+       parentheses) of regular expressions and relational expressions.
+       Regular expressions are as in egrep(1).  Isolated regular expressions
+       in a pattern apply to the entire line.  Regular expressions may also
+       occur in relational expressions, using the operators ~ and !~.  /re/ is
+       a constant regular expression; in addition, any string (constant or
+       variable) may be used as a regular expression, except in the position
+       of an isolated regular expression in a pattern.
+
+       A pattern may consist of two patterns separated by a comma; in this
+       case, the action is performed for all lines between an occurrence of
+       the first pattern and the next occurrence of the second, inclusive.
+
+       A relational expression is one of the following:
+
+            expression matchop regular-expression
+            expression relop expression
+
+       where a relop is any of the six relational operators in C, and a
+       matchop is either ~ (for contains) or !~ (for does not contain).  A
+       conditional is an arithmetic expression, a relational expression, or a
+       Boolean combination of these.
+
+       The special patterns BEGIN and END may be used to capture control
+       before the first input line is read and after the last.  BEGIN and END
+       do not combine with other patterns.
+
+       A regular expression r may be used to separate fields, by assigning to
+       the variable FS or by means of the -Fs option.
+
+       Other variable names with special meanings include NF, the number of
+       fields in the current record; NR, the ordinal number of the current
+       record; FNR, the ordinal number of the current record in the current
+       file; FILENAME, the name of the current input file; RS, the input
+       record separator (default newline); OFS, the output field separator
+       (default blank); ORS, the output record separator (default newline);
+       OFMT, the output format for numbers (default "%.6g"); ARGC, the
+       argument count; and ARGV, the argument array.  ARGC and the ARGV array
+       may be altered; non-null members are taken as filenames.
+
+       Functions may be defined (at the position of a pattern-action
+       statement) as
+            func foo(a, b, c) {...}
+       Parameters are passed by value if scalar and by reference if array
+       name; functions may be called recursively.  Parameters are local to the
+       function; all other variables are global.  The return statement may be
+       used to return a value.
+
+EXAMPLES
+       Print lines longer than 72 characters:
+
+            length &gt; 72
+
+       Print first two fields in opposite order:
+
+            { print $2, $1 }
+
+       Same, with input fields separated by comma and/or blanks and tabs:
+            BEGIN { FS = ",[ \t]*|[ \t]+" }
+                 { print $2, $1 }
+
+       Add up first column, print sum and average:
+
+                 { s += $1 }
+            END  { print "sum is", s, " average is", s/NR }
+
+       Print all lines between start/stop pairs:
+
+            /start/, /stop/
+
+       Simulate <a href="../man1/echo.1.html">echo(1)</a>:
+
+            BEGIN {
+                 for (i = 1; i &lt; ARGC; i++)
+                      printf "%s ", ARGV[i]
+                 printf "\n"
+                 exit
+            }
+
+SEE ALSO
+       <a href="../man1/lex.1.html">lex(1)</a>, <a href="../man1/sed.1.html">sed(1)</a>, <a href="../man1/sno.1.html">sno(1)</a>
+       A. V. Aho, B. W. Kernighan, P. J. Weinberger, Awk - a pattern scanning
+       and processing language: user's manual
+
+BUGS
+       There are no explicit conversions between numbers and strings.  To
+       force an expression to be treated as a number add 0 to it; to force it
+       to be treated as a string concatenate "" to it.
+
+       The scope rules for variables in functions are a botch.
+
+                                                                        AWK(1)
+</pre>
+</body></html>

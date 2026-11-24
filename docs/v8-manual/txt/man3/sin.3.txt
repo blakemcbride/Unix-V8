@@ -1,0 +1,48 @@
+SIN(3M)                                                                SIN(3M)
+
+NAME
+       sin, cos, tan, asin, acos, atan, atan2 - trigonometric functions
+
+SYNOPSIS
+       #include <math.h>
+
+       double sin(x)
+       double x;
+
+       double cos(x)
+       double x;
+
+       double asin(x)
+       double x;
+
+       double acos(x)
+       double x;
+
+       double atan(x)
+       double x;
+
+       double atan2(x, y)
+       double x, y;
+
+DESCRIPTION
+       Sin, cos and tan return trigonometric functions of radian arguments.
+       The magnitude of the argument should be checked by the caller to make
+       sure the result is meaningful.
+
+       Asin returns the arc sin in the range -π/2 to π/2.
+
+       Acos returns the arc cosine in the range 0 to π.
+
+       Atan returns the arc tangent of x in the range -π/2 to π/2.
+
+       Atan2 returns the arc tangent of x/y in the range -π to π.
+
+DIAGNOSTICS
+       Arguments of magnitude greater than 1 cause asin and acos to return
+       value 0; errno is set to EDOM.  The value of tan at its singular points
+       is a huge number, and errno is set to ERANGE.
+
+BUGS
+       The value of tan for arguments greater than about 2**31 is garbage.
+
+                                                                       SIN(3M)

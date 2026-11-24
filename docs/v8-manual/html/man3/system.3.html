@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>system.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; system.3 (<a href="../../../../source/v8/usr/man/man3/system.3">troff source</a>)</p>
+<pre>
+SYSTEM(3)                  Library Functions Manual                  SYSTEM(3)
+
+NAME
+       system - issue a shell command
+
+SYNOPSIS
+       system(string)
+       char *string;
+
+DESCRIPTION
+       System causes the string to be given to <a href="../man1/sh.1.html">sh(1)</a> as input as if the string
+       had been typed as a command at a terminal.  The current process waits
+       until the shell has completed, then returns the exit status of the
+       shell.
+
+SEE ALSO
+       <a href="../man3/popen.3.html">popen(3)</a>, <a href="../man2/exec.2.html">exec(2)</a>, <a href="../man2/wait.2.html">wait(2)</a>
+
+DIAGNOSTICS
+       Exit status 127 indicates the shell couldn't be executed.
+
+                                                                     SYSTEM(3)
+</pre>
+</body></html>

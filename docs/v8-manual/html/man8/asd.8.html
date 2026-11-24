@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>asd.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; asd.8 (<a href="../../../../source/v8/usr/man/man8/asd.8">troff source</a>)</p>
+<pre>
+ASD(8)                      System Manager's Manual                     ASD(8)
+
+NAME
+       mkpkg, inspkg, seal, unseal - automatic software distribution
+
+SYNOPSIS
+       mkpkg [ options ] files
+
+       inspkg [ options ] files
+
+       seal [ -k ] [ -K keyfile ] [ file ...  ]
+
+       unseal [ -k ] [ -K keyfile ] [ file ...  ]
+
+DESCRIPTION
+       These commands are the basis of automatic software distribution as used
+       in <a href="../man1/ship.1.html">ship(1)</a>.
+
+       Mkpkg collects files and directories into a `package', which is written
+       on the standard output.  It reads the standard input for remarks to
+       include in the package, and will prompt for these if the standard
+       output is a terminal.
+
+       Inspkg opens packages and installs their contents, printing the remarks
+       included in the package.  Since inspkg has no special privileges,
+       installation should be done by the owner of the files being installed
+       or by the super-user.
+
+       The information contained in a package includes the full pathnames of
+       the objects, links among the objects, their owners, groups, file modes,
+       and modification dates.  Owners and groups are stored as their
+       character representations, to avoid problems if systems use different
+       numeric codes for a single owner or group.  Nonexistent objects are
+       noted for deletion by inspkg.
+
+       Options are:
+
+       -v     Verbose mode.
+
+       -n     If packaging, don't ask for remarks.  If installing, skip the
+              actual installation, but do backup if requested.
+
+       -b     Backup mode, meaningful only with inspkg.  Write on the standard
+              output a package that contains everything that was destroyed
+              during installation.
+
+       -Dpath1=path2
+              Pretend that a pathname beginning with path1 really begins with
+              path2.
+
+       A package is an archive (see <a href="../man1/ar.1.html">ar(1)</a>) with a component named
+       `instructions' that contains installation information.
+
+       Seal produces on the standard output a file containing the same
+       information as the concatenation of all its input files, in a form
+       suitable for shipment by mail.  If no input files are specified, seal
+       reads its standard input.
+
+       Unseal reads files produced by seal and produces the original file
+       contents as its output.
+
+       A sealed file includes a checksum; if the -k option is specified, seal
+       prompts for a key to encrypt the data before calculating the checksum.
+
+       If the -K option is specified, the program uses the first line of the
+       given keyfile to supply the key.  Subsequent lines are ignored.
+
+SEE ALSO
+       <a href="../man1/ship.1.html">ship(1)</a>
+
+BUGS
+       File names with embedded white space are mishandled.
+
+                                                                        ASD(8)
+</pre>
+</body></html>

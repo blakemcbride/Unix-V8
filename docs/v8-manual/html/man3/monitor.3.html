@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>monitor.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; monitor.3 (<a href="../../../../source/v8/usr/man/man3/monitor.3">troff source</a>)</p>
+<pre>
+MONITOR(3)                 Library Functions Manual                 MONITOR(3)
+
+NAME
+       monitor - prepare execution profile
+
+SYNOPSIS
+       monitor(lowpc, highpc, buffer, bufsize, nfunc)
+       int (*lowpc)(), (*highpc)();
+       short buffer[];
+
+DESCRIPTION
+       An executable program created by `cc -p' automatically includes calls
+       for monitor with default parameters; monitor needn't be called
+       explicitly except to gain fine control over profiling.
+
+       Monitor is an interface to <a href="../man2/profil.2.html">profil(2)</a>.  Lowpc and highpc are the
+       addresses of two functions; buffer is the address of a (user supplied)
+       array of bufsize short integers.  Monitor arranges to record a
+       histogram of periodically sampled values of the program counter, and of
+       counts of calls of certain functions, in the buffer.  The lowest
+       address sampled is that of lowpc and the highest is just below highpc.
+       At most nfunc call counts can be kept; only calls of functions compiled
+       with the profiling option -p of <a href="../man1/cc.1.html">cc(1)</a> are recorded.  For the results to
+       be significant, especially where there are small, heavily used
+       routines, it is suggested that the buffer be no more than a few times
+       smaller than the range of locations sampled.
+
+       To profile the entire program, it is sufficient to use
+
+            extern etext();
+            . . .
+            monitor((int) 2, etext, buf, bufsize, nfunc);
+
+       Etext lies just above all the program text, see <a href="../man3/end.3.html">end(3)</a>.
+
+       To stop execution monitoring and write the results on the file mon.out,
+       use
+
+            monitor(0);
+
+       then <a href="../man1/prof.1.html">prof(1)</a> can be used to examine the results.
+
+FILES
+       mon.out
+
+SEE ALSO
+       <a href="../man1/prof.1.html">prof(1)</a>, <a href="../man2/profil.2.html">profil(2)</a>, <a href="../man1/cc.1.html">cc(1)</a>
+
+                                                                    MONITOR(3)
+</pre>
+</body></html>

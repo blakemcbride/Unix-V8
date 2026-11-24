@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>font.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; font.9 (<a href="../../../../source/v8/usr/man/man9/font.9">troff source</a>)</p>
+<pre>
+FONT(9.5)                                                            FONT(9.5)
+
+NAME
+       font - jerq font layouts
+
+SYNOPSIS
+       #include &lt;jerq.h&gt;
+       #include &lt;font.h&gt;
+
+       typedef struct Fontchar Fontchar;
+       typedef struct Font Font;
+
+       extern Font defont;
+
+DESCRIPTION
+       A Font is  a character set, stored as a single Bitmap with the
+       characters placed side-by-side.  It is described by the following data
+       structures.
+
+              typedef struct Fontchar {
+                   short x;                     /* left edge of bits */
+                   unsigned char top;           /* first non-zero scan-line */
+                   unsigned char bottom;        /* last non-zero scan-line */
+                   char left;                   /* offset of baseline */
+                   unsigned char width;         /* width of baseline */
+              } Fontchar;
+              typedef struct Font {
+                   short n;                     /* number of chars in font */
+                   char height;                 /* height of bitmap */
+                   char ascent;                 /* top of bitmap to baseline */
+                   long unused;
+                   Bitmap *bits;                /* where the characters are */
+                   Fontchar info[n+1];          /* n+1 character descriptors */
+              } Font;
+
+       Characters in bits abut exactly, so the displayed width of the
+       character c is Font.info[c+1].x-Font.info[c].x.  The first left columns
+       of pixels in a character overlap the previous character.  The upper
+       left corner of the nonempty columns appears at (x,0) in the bitmap.
+       Width is the distance to move horizontally after drawing a character.
+       The font bitmap has a fixed height; parameters top and bottom may be
+       used to optimize the copying of a character in some circumstances.
+
+       A character drawn at point p in an arbitrary Bitmap has its upper-
+       leftmost dot, including empty space above it in the Bitmap, at p.
+
+       To copy character c from font f to point p do
+
+              Fontchar *i = f-&gt;info + c;
+              bitblt(f-&gt;bits, Rect(i-&gt;x, i-&gt;top, (i+1)-&gt;x, i-&gt;bottom), Pt(p.x+i-&gt;left, p.y+i-&gt;top), fc);
+              p.x += i-&gt;width;
+
+       The above example is correct for XOR and OR mode.  For STORE mode, the
+       bitblt call is different because all the scan lines must be drawn:
+
+              bitblt(f-&gt;bits, Rect(i-&gt;x, 0, (i+1)-&gt;x, f-&gt;height), Pt(p.x+left,
+              p.y), fc);
+
+       Fonts are stored on disk in binary with byte order that of the
+       terminal.  First in the file is the first eight bytes (up to unused) of
+       the Font strcture, then the array of Fontchar structures, then the data
+       for the bitmap Font.bits.  The header for the bitmap must be inferred
+       from Font.height and Font.info[Font.n].x.  See <a href="../man9/string.9.html">string(9.3)</a> for a
+       description of how to read and write font files.
+
+SEE ALSO
+       <a href="../man9/jf.9.html">jf(9.1)</a>, <a href="../man9/string.9.html">string(9.3)</a>, infont(9.3)
+
+                                                                     FONT(9.5)
+</pre>
+</body></html>

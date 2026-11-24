@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>map.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; map.5 (<a href="../../../../source/v8/usr/man/man5/map.5">troff source</a>)</p>
+<pre>
+MAP(5)                        File Formats Manual                       MAP(5)
+
+NAME
+       map - digitized map formats
+
+DESCRIPTION
+       Files used by <a href="../man7/map.7.html">map(7)</a> are a sequence of structures of the form:
+
+              struct {
+                   char patchlatitude;
+                   char patchlongitude;
+                   short n;
+                   union {
+                        struct {
+                             short latitude;
+                             short longitude;
+                        } point[n];
+                        struct {
+                             short latitutde;
+                             short longitude;
+                             struct {
+                                  char latdiff;
+                                  char londiff;
+                             } point[-n];
+                        } highres;
+                   } segment;
+              };
+
+       Patchlatitude and patchlongitude tell to what 10-degree by 10-degree
+       patch of the earth's surface a segment belongs.  Their values range
+       from -9 to 8 and from -18 to 17, respectively, and indicate the
+       coordinates of the southeast corner of the patch in units of 10
+       degrees.
+
+       Each segment of abs(n) points is connected; consecutive segments are
+       not necessarily related.  Latitude and longitude are measured in units
+       of 0.0001 radian.  If n is negative, then differences to the first and
+       succeeeding points are measured in units of 0.00001 radian.  Latitude
+       is counted positive to the north and longitude positive to the west.
+
+       The patches are ordered lexicographically by patchlatitude then
+       patchlongitude.  A printable index to the first segment of each patch
+       in a file named map is kept in an associated file named map.x.  Each
+       line of an index file contains patchlatitude, patchlongitude and the
+       byte position of the patch in the map file.
+
+SEE ALSO
+       <a href="../man7/map.7.html">map(7)</a>, <a href="../man3/map.3.html">map(3)</a>
+
+                                                                        MAP(5)
+</pre>
+</body></html>

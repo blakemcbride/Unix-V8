@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>news.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; news.5 (<a href="../../../../source/v8/usr/man/man5/news.5">troff source</a>)</p>
+<pre>
+NEWS(5)                       File Formats Manual                      NEWS(5)
+
+NAME
+       news - USENET network news article, utility files
+
+DESCRIPTION
+       There are two formats of news articles: A and B.  A format is the only
+       format that version 1 netnews systems can read or write.  Systems
+       running the version 2 netnews can read either format and there are
+       provisions for the version 2 netnews to write in A format.  A format
+       looks like this:
+
+       Aarticle-ID
+       newsgroups
+       path
+       date
+       title
+       Body of article
+
+       Only version 2 netnews systems can read and write B format.  B format
+       contains two extra pieces of information:  receival date and expiration
+       date.  The basic structure of a B format file consists of a series of
+       headers and then the body.  A header field is defined as a line with a
+       capital letter in the 1st column and a colon somewhere on the line.
+       Unrecognized header fields are ignored.  News is stored in the same
+       format transmitted, see ``Standard for the Interchange of USENET
+       Messages'' for a full description.  The following fields are among
+       those recognized:
+
+       Header         Information
+
+       From:          user@host.domain[.domain ...] (Full Name)
+
+       Newsgroups:    Newsgroups
+
+       Message-ID:    &lt;Unique Identifier&gt;
+
+       Subject:       descriptive title
+
+       Date:          Date Posted
+
+       Date-Received: Date received on local machine
+
+       Expires:       Expiration Date
+
+       Reply-To:      Address for mail replies
+
+       References:    Article ID of article this is a follow-up to.
+
+       Control:       Text of a control message
+
+       Here is an example of an article:
+
+       Relay-Version: B 2.10    2/13/83 cbosgd.UUCP
+       Posting-Version: B 2.10  2/13/83 eagle.UUCP
+       Path: cbosgd!mhuxj!mhuxt!eagle!jerry
+       From: jerry@eagle.uucp (Jerry Schwarz)
+       Newsgroups: net.general
+       Subject: Usenet Etiquette -- Please Read
+       Message-ID: &lt;642@eagle.UUCP&gt;
+       Date: Friday, 19-Nov-82 16:14:55 EST
+       Followup-To: net.news
+       Expires: Saturday, 1-Jan-83 00:00:00 EST
+       Date-Received: Friday, 19-Nov-82 16:59:30 EST
+       Organization: Bell Labs, Murray Hill
+
+       The body of the article comes here, after a blank line.
+
+       A sys file line has four fields, each seperated by colons:
+
+       system-name:subscriptions:flags:transmission command
+
+       Of these fields, on the system-name and subscriptions need to be
+       present.
+
+       The system name is the name of the system being sent to.  The
+       subscriptions is the list of newsgroups to be transmitted to the
+       system.  The flags are a set of letters describing how the article
+       should be transmitted.  The default is B.  Valid flags include A (send
+       in A format), B (send in B format), N (use ihave/sendme protocol), U
+       (use uux -c and the name of the stored article in a %s string).
+
+       The transmission command is executed by the shell with the article to
+       be transmitted as the standard input.  The default is uux - -z -r
+       sysname!rnews.  Some examples:
+
+       xyz:net.all
+       oldsys:net.all,fa.all,to.oldsys:A
+       berksys:net.all,ucb.all::/usr/lib/news/sendnews -b berksysrnews
+       arpasys:net.all,arpa.all::/usr/lib/news/sendnews -a rnews@arpasys
+       old2:net.all,fa.all:A:/usr/lib/sendnews -o old2rnews
+       user:fa.sf-lovers::mail user
+
+       Somewhere in a sys file, there must be a line for the host system.
+       This line has no flags or commands.  A # as the first character in a
+       line denotes a comment.
+
+       The history, active, and ngfile files have one line per item.
+
+SEE ALSO
+       inews(8), <a href="../man1/postnews.1.html">postnews(1)</a>, sendnews(8), uurec(8), <a href="../man1/readnews.1.html">readnews(1)</a>
+
+                                                                       NEWS(5)
+</pre>
+</body></html>

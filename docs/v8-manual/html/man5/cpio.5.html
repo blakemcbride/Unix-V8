@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>cpio.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; cpio.5 (<a href="../../../../source/v8/usr/man/man5/cpio.5">troff source</a>)</p>
+<pre>
+CPIO(5)                       File Formats Manual                      CPIO(5)
+
+NAME
+       cpio - format of cpio archive
+
+DESCRIPTION
+       The header structure, when the -c option of <a href="../man1/cpio.1.html">cpio(1)</a> is not used, is:
+
+              typdef unsigned short ushort;
+              struct {
+                    short  h_magic,
+                           h_dev;
+                    ushort h_ino,
+                           h_mode,
+                           h_uid,
+                           h_gid;
+                    short  h_nlink,
+                           h_rdev,
+                           h_mtime[2],
+                           h_namesize,
+                           h_filesize[2];
+                    char   h_name[h_namesize rounded to word];
+              } Hdr;
+
+       When the -c option is used, the header information is described by:
+
+              sscanf(Chdr,"%6o%6o%6o%6o%6o%6o%6o%6o%11lo%6o%11lo%s",
+                      &amp;Hdr.h_magic, &amp;Hdr.h_dev, &amp;Hdr.h_ino, &amp;Hdr.h_mode,
+                      &amp;Hdr.h_uid, &amp;Hdr.h_gid, &amp;Hdr.h_nlink, &amp;Hdr.h_rdev,
+                      &amp;Longtime, &amp;Hdr.h_namesize,&amp;Longfile,Hdr.h_name);
+
+       Longtime and Longfile are equivalent to Hdr.h_mtime and Hdr.h_filesize,
+       respectively.  The contents of each file are recorded in an element of
+       the array of varying length structures, archive, together with other
+       items describing the file.  Every instance of h_magic contains the
+       constant 070707 (octal).  The items h_dev through h_mtime have meanings
+       explained in <a href="../man2/stat.2.html">stat(2)</a>.  The length of the null-terminated path name
+       h_name, including the null byte, is given by h_namesize.
+
+       The last record of the archive always contains the name TRAILER!!!.
+       Special files, directories, and the trailer are recorded with
+       h_filesize equal to zero.
+
+SEE ALSO
+       <a href="../man1/cpio.1.html">cpio(1)</a>, <a href="../man1/find.1.html">find(1)</a>, <a href="../man2/stat.2.html">stat(2)</a>.
+
+                                                                       CPIO(5)
+</pre>
+</body></html>

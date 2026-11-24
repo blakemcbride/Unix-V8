@@ -1,0 +1,178 @@
+DB(1)                       General Commands Manual                      DB(1)
+
+NAME
+       DB - database command interface
+
+SYNOPSIS
+       DB [ -D ] [ -c ] -ffilename [ -L ] [ -t | -l ] [ -kkey [ -ddata ] ] [
+       -g | -p | -r | -a | -i ] [ -U ] ...
+
+DESCRIPTION
+       DB provides a command-level interface to the DB(3) routines (q.v.).
+
+       The options and their meanings are:
+
+       -D                                                                      Increment
+                                                                               debugging
+                                                                               level.
+                                                                               Currently
+                                                                               there
+                                                                               are
+                                                                               4
+                                                                               levels
+                                                                               of
+                                                                               debugging,
+                                                                               ranging
+                                                                               from
+                                                                               conditions
+                                                                               that
+                                                                               cause
+                                                                               a
+                                                                               core
+                                                                               dump
+                                                                               to
+                                                                               a
+                                                                               call
+                                                                               trace
+                                                                               of
+                                                                               the
+                                                                               user-
+                                                                               accessible
+                                                                               routines
+                                                                               in
+                                                                               the
+                                                                               DB
+                                                                               library.
+
+       -L                                                                      Set
+                                                                               an
+                                                                               advisory
+                                                                               lock
+                                                                               on
+                                                                               the
+                                                                               database.
+
+       -U                                                                      Clear
+                                                                               an
+                                                                               advisory
+                                                                               lock
+                                                                               on
+                                                                               the
+                                                                               database.
+
+       -c                                                                      Create
+                                                                               (or
+                                                                               truncate)
+                                                                               the
+                                                                               named
+                                                                               database.
+
+       -ffilename                                                              Names
+                                                                               the
+                                                                               database.
+
+       -t                                                                      Produce
+                                                                               a
+                                                                               table
+                                                                               of
+                                                                               contents
+                                                                               of
+                                                                               the
+                                                                               database.
+
+       -l                                                                      Produce
+                                                                               a
+                                                                               listing
+                                                                               of
+                                                                               the
+                                                                               keys
+                                                                               and
+                                                                               records
+                                                                               of
+                                                                               the
+                                                                               database.
+
+       -kkey                                                                   Set
+                                                                               the
+                                                                               value
+                                                                               of
+                                                                               the
+                                                                               current
+                                                                               key.
+
+       -ddata                                                                  Set
+                                                                               the
+                                                                               value
+                                                                               of
+                                                                               the
+                                                                               current
+                                                                               data.
+
+       -p                                                                      Put
+                                                                               the
+                                                                               current
+                                                                               data
+                                                                               at
+                                                                               the
+                                                                               current
+                                                                               key.
+
+       -g                                                                      Get
+                                                                               (and
+                                                                               print)
+                                                                               the
+                                                                               data
+                                                                               at
+                                                                               the
+                                                                               current
+                                                                               key.
+
+       -r                                                                      Remove
+                                                                               (delete)
+                                                                               the
+                                                                               data
+                                                                               at
+                                                                               the
+                                                                               current
+                                                                               key.
+
+       -a                                                                      Append
+                                                                               the
+                                                                               current
+                                                                               data
+                                                                               to
+                                                                               the
+                                                                               data
+                                                                               stored
+                                                                               at
+                                                                               the
+                                                                               current
+                                                                               key.
+
+       -i                                                                      Insert
+                                                                               the
+                                                                               current
+                                                                               data
+                                                                               in
+                                                                               front
+                                                                               of
+                                                                               the
+                                                                               data
+                                                                               stored
+                                                                               at
+                                                                               the
+                                                                               current
+                                                                               key.
+
+SEE ALSO
+       DB(3), DBcp(1), DBcvt(1).
+
+DIAGNOSTICS
+       The diagnostics are intended to be self-explanatory.  Mostly, they're
+       complaints about missing arguments.
+
+BUGS
+       Nonascii characters cannot be passed to DB because the shell strips the
+       8th (most significant) bit.
+
+                                                                         DB(1)

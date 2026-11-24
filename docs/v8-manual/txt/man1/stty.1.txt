@@ -1,0 +1,73 @@
+STTY(1)                     General Commands Manual                    STTY(1)
+
+NAME
+       stty - set terminal options
+
+SYNOPSIS
+       stty [ option ... ]
+
+DESCRIPTION
+       Stty sets certain I/O options for the terminal open on /dev/tty (file
+       descriptor 3).  With no argument, it reports the current settings of
+       the options.  The options are:
+
+       even      allow even parity
+       -even     disallow even parity
+       odd       allow odd parity
+       -odd      disallow odd parity
+       raw       raw mode input (no erase, kill, interrupt, quit, EOT; parity
+                 bit passed back)
+       -raw      negate raw mode
+       cooked    same as `-raw'
+       cbreak    make each character available to read(2) as received; no
+                 erase and kill
+       -cbreak   make characters available to read only when newline is
+                 received
+       -nl       allow carriage return for new-line, and output CR-LF for
+                 carriage return or new-line
+       nl        accept only new-line to end lines
+       echo      echo back every character typed
+       -echo     do not echo characters
+       lcase     map upper case to lower case
+       -lcase    do not map case
+       -tabs     replace tabs by spaces when printing
+       tabs      preserve tabs
+       ek        reset erase and kill characters back to normal # and @
+       erase c   set erase character to c (initially `#') In this and other
+                 character-setting options a `^' may precede c to signify
+                 control-c.
+       kill c    set kill character to c (initially `@')
+       intr c    set interrupt character to c (initially DEL)
+       quit c    set quit character to c (initially `^\')
+       stop c    set stop character to c (initially `^S')
+       start c   set start character to c (initially `^Q')
+       eof c     set `end of file' character to c (initially `^D')
+       brk c     set `line-break' character to c (initially undefined)
+       cr0 cr1 cr2 cr3
+                 select style of delay for carriage return (see ioctl(2))
+       nl0 nl1 nl2 nl3
+                 select style of delay for linefeed
+       tab0 tab1 tab2 tab3
+                 select style of delay for tab
+       ff0 ff1   select style of delay for form feed
+       bs0 bs1   select style of delay for backspace
+       tty33     set all modes suitable for the Teletype Corporation Model 33
+                 terminal.
+       tty37     set all modes suitable for the Teletype Corporation Model 37
+                 terminal.
+       vt05      set all modes suitable for Digital Equipment Corp. VT05
+                 terminal
+       tn300     set all modes suitable for a General Electric TermiNet 300
+       ti700     set all modes suitable for Texas Instruments 700 series
+                 terminal
+       tek       set all modes suitable for Tektronix 4014 terminal
+       hup       hang up dataphone on last close.
+       -hup      do not hang up dataphone on last close.
+       0         hang up phone line immediately
+       50 75 110 134 150 200 300 600 1200 1800 2400 4800 9600 exta extb
+                 Set terminal baud rate to the number given, if possible.
+
+SEE ALSO
+       ttyld(4), ioctl(2), tabs(1)
+
+                                                                       STTY(1)

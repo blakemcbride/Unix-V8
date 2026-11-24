@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>du.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; du.1 (<a href="../../../../source/v8/usr/man/man1/du.1">troff source</a>)</p>
+<pre>
+DU(1)                       General Commands Manual                      DU(1)
+
+NAME
+       du - summarize disk usage
+
+SYNOPSIS
+       du [ -s ] [ -a ] [ name ... ]
+
+DESCRIPTION
+       Du gives the number of kilobytes (kilo=1024) allocated to data blocks
+       of named files and of named directories including (recursively) their
+       contents.  If name is missing, `.'  is used.
+
+       Option -s causes only the grand total to be given.  Option -a causes an
+       entry to be generated for each file.  Absence of either causes an entry
+       to be generated for each directory only.
+
+       A file which has two links to it is counted only once.
+
+SEE ALSO
+       <a href="../man1/df.1.html">df(1)</a>, <a href="../man8/quot.8.html">quot(8)</a>
+
+BUGS
+       In the absence of option -a non-directories given as arguments are not
+       listed.
+       If there are too many distinct linked files, du counts the excess files
+       multiply.
+       Unwritten holes in files count as if real data were present, and
+       indirect blocks are not counted.
+
+                                                                         DU(1)
+</pre>
+</body></html>

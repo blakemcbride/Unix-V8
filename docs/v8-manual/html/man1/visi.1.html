@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>visi.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; visi.1 (<a href="../../../../source/v8/usr/man/man1/visi.1">troff source</a>)</p>
+<pre>
+VISI(1)                     General Commands Manual                    VISI(1)
+
+NAME
+       visi - mathematical spreadsheet
+
+SYNOPSIS
+       visi [ file ]
+
+DESCRIPTION
+       Visi is a tabular mathematical worksheet for data analysis.  If a file
+       is specified, commands are read from that file when visi first starts.
+
+       Visi works only on cursor-controlled terminals such as the HP2621, and
+       requires the environment variable TERM (see environ(7)) to be set
+       appropriately.
+
+       Visi prompts for input at the top of the screen with `&gt;&gt;'.  Input has
+       one of the forms,
+
+              command parameters
+
+              variable = expression
+
+              variable = "string"
+
+       where a variable is a letter and number sequence, for example: `A2,
+       B10, BB23.'  These variables represent locations on the worksheet; A2
+       is column A, row 2.  If you type, in any order,
+
+              A1 = A2 + 5
+              A2 = 10
+
+       the values 15 and 10 will appear on the screen.  If you later type
+
+              A2 = 20
+
+       the values will be updated to 25 and 20.  Visi treats upper and lower
+       case letters as identical.
+
+       Expressions are parsed, and standard mathematical precedence is
+       retained.  The operators +, -, *, /, ** (or ^) can be used in
+       expressions.
+
+   Commands
+       copy  [ file ]
+                 Copy the screen image to the file.  If a file is not
+                 specified, visi will prompt for one.
+
+       debug     Toggle a flag to give <a href="../man1/yacc.1.html">yacc(1)</a> debugging output, very
+                 unreadable.
+
+       duplicate  p1 thru p2 at p3
+                 Duplicate a block of definitions in another portion of the
+                 screen.  P1 and p2 are the upper left corner and the lower
+                 right corner of the block to be duplicated.  P3 is the upper
+                 left corner of the destination.
+
+       edit      Edit the commands list.  If the environment variable `ED' is
+                 set, it is used as the name of the editor.  Otherwise, <a href="../man1/ed.1.html">ed(1)</a>.
+                 is called.
+
+       help      Display a brief synopsis of the commands.
+
+       list      List the current definitions on the terminal.
+
+       quit      Quit the program.
+
+       read  [ file ]
+                 Read input lines from the file.  If a file is not specified,
+                 visi will prompt for one.
+
+       redraw    Redraw the screen in the event the terminal output was
+                 corrupted.
+
+       replicate  p1 at p2 thru p3
+                 Replicate the single definition at p1 throughout the block
+                 from p2 in the upper left corner thru p3 in the lower right.
+
+       scale  [ column ] nnn
+                 Change the scale of the specified column, or of the entire
+                 tableau if a column is not specified.  The scale nnn is the
+                 number of decimal places that are displayed to the right of
+                 the decimal point.  Calculations are done in double precision
+                 regardless of scale.
+
+       shift  direction [ nnn ]
+                 Shift the current screen in any direction.  The screen is
+                 only a window on the tableau.  To see other portions of the
+                 tableau, the screen must be shifted.  Valid directions are:
+                 up, down, left, right.  Nnn is the number of positions to
+                 shift the screen (default 1).
+
+       shell     Invoke /bin/sh as an inferior process to visi.
+
+       ver       Print the current version number of visi.
+
+       width  column nnn
+                 Change the width of a column on the display, or of the entire
+                 tableau if no column is specified.
+
+       write  [ file ]
+                 Write commands to a file.  If a file is not specified, visi
+                 will prompt for one.
+
+   Built-in Functions
+       abs(e)        Absolute value of e.
+       acos(e)       Arc cosine of e.
+       asin(e)       Arc sine of e.
+       atan(e)       Arc tangent of e.
+       atan2(e1,e2)  Arc tangent of e1/e2.
+       cos(e)        Cosine of e.
+       exp(e)        Exponential function of e.
+       gamma(e)      Log of the gamma function of e.
+       hypot(e1,e2)  Square root of the sum of the squares of e1 and e2.
+       int(e)        The integer part of e (truncated toward zero.)
+       log(e)        Natural log of e.
+       pi            The constant 3.14159265358979....
+       pow(e1,e2)    Same as e1^e2.
+       sin(e)        Sine of e.
+       sqrt(e)       Square root of e.
+
+   Other Special Definitions
+       position[e1,e2]
+                 The quantity at row e1, column e2 of the tableau.  Numbering
+                 for the columns is A = 1, B = 2, ..., AA = 27, and so on.
+
+       ROW       The row number of this entry.
+
+       COL       The column number of this entry.
+
+SEE ALSO
+       <a href="../man1/ed.1.html">ed(1)</a>, <a href="../man3/exp.3.html">exp(3)</a>, <a href="../man3/sin.3.html">sin(3)</a>
+
+FILES
+       /usr/lib/visi.help
+
+BUGS
+       A circular list of variable declarations can cause visi to hang in a
+       loop.
+       Scale does truncation, not rounding.
+
+                                                                       VISI(1)
+</pre>
+</body></html>

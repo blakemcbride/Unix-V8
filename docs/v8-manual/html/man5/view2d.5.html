@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>view2d.5 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 5</a> &gt; view2d.5 (<a href="../../../../source/v8/usr/man/man5/view2d.5">troff source</a>)</p>
+<pre>
+VIEW2D(5)                     File Formats Manual                    VIEW2D(5)
+
+NAME
+       view2d - movie of a function f(x, y, t)
+
+DESCRIPTION
+       Files of this format are produced by <a href="../man3/view2d.3.html">view2d(3)</a>, and displayed by
+       commands in <a href="../man1/view2d.1.html">view2d(1)</a>.  A movie file consists of one or more frames,
+       each consisting of a header and a sequence of 16-bit signed integer
+       values for each pixel, scanned left to right and bottom to top.  (Left-
+       to-right is the inner loop.)
+
+       The header consists of the 32-bit magic number 0135246, then eight
+       16-bit integers:
+
+       VER    is the version number, currently 3.
+
+       NX, NY specify the number of pixels in the frame.  These may not vary
+              from frame to frame.
+
+       U, V   relate pixel values p in the file to user function values f by
+
+              p = u + f/2∗∗v.
+
+       FIXUV  normally 0;  1 if U, V, PMIN, PMAX of first frame give a bound
+              on the data in the entire file.
+
+       PMIN, PMAX
+              limits of the data; only used when FIXUV=1.
+
+       and finally a 16-byte ascii representation of a floating point value:
+
+       TIME   is a frame index, typically set to simulated time or to an
+              iteration counter.  This need not be uniformly spaced from frame
+              to frame, but should be nondecreasing.
+
+       Any pixel value less than -32766 is treated as an `out of bounds'
+       marker and is not displayed.  Other pixel values lie in the range
+       [-32765,32765].
+
+SEE ALSO
+       <a href="../man1/view2d.1.html">view2d(1)</a>, <a href="../man3/view2d.3.html">view2d(3)</a>
+
+                                                                     VIEW2D(5)
+</pre>
+</body></html>

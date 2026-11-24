@@ -1,0 +1,33 @@
+MKTEMP(3)                  Library Functions Manual                  MKTEMP(3)
+
+NAME
+       mktemp, tmpnam - make a unique file name
+
+SYNOPSIS
+       char *mktemp(template)
+       char *template;
+
+       #include <stdio.h>
+
+       char *tmpnam(s)
+       char s[L_tmpnam];
+
+DESCRIPTION
+       Mktemp replaces template by a unique file name, and returns the address
+       of the template.  The template should look like a file name with six
+       trailing X's, which will be replaced with the current process id and a
+       unique letter.
+
+       Tmpnam places in the string pointed to by s a unique file name
+       referring to a standard directory for temporary files (/tmp) and
+       returns s.  If s is 0, tmpnam returns the address of a fixed internal
+       buffer that contains the name.  (Note: it is bad form to leave files in
+       the temporary directory.)
+
+SEE ALSO
+       getuid(2) for getpid
+
+BUGS
+       Tmpnam should not be tied to stdio(3).
+
+                                                                     MKTEMP(3)

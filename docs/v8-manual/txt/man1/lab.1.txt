@@ -1,0 +1,28 @@
+LAB(1)                      General Commands Manual                     LAB(1)
+
+NAME
+       lab - label maker
+
+SYNOPSIS
+       lab [ -m ] [ name ... ]
+
+DESCRIPTION
+       Lab causes the named files to be queued for printing as mailing labels.
+       If no files are named, the standard input is read.  The option -m
+       causes notification via mail(1) to be sent when the job completes.
+
+       The last line of each label is identified by ending it with one or more
+       spaces and a hyphen.  The hyphen must be the last character in the
+       line; no white space may follow it.
+
+FILES
+       /usr/spool/lab/*    spool area
+       /usr/lib/lab        printer daemon
+
+SEE ALSO
+       pr(1)
+
+BUGS
+       Queued jobs print in directory (seemingly random) order.
+
+                                     alice                              LAB(1)

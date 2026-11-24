@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uustat.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; uustat.1 (<a href="../../../../source/v8/usr/man/man1/uustat.1">troff source</a>)</p>
+<pre>
+UUSTAT(1)                   General Commands Manual                  UUSTAT(1)
+
+NAME
+       uustat - uucp status inquiry and job control
+
+SYNOPSIS
+       uustat [ option ]
+
+       uustat [ -ssystem ] [ -uuser ]
+
+DESCRIPTION
+       Uustat will display the status of, or cancel, previously specified uucp
+       commands, or provide general status on uucp connections to other
+       systems.  The following options are recognized:
+
+       -a        output all jobs in queue.
+       -kjobid   Kill the uucp request whose job identification is jobid.  The
+                 killed uucp request must belong to the person issuing the
+                 uustat command unless one is the super-user.
+       -m        Report the status of accessibility of all machines.
+       -p        Report on the status of all processes that are in the lock
+                 files.
+       -q        List the jobs queued for each machine.  If a status file
+                 exists for the machine, its date, time and status information
+                 are reported.  A parenthesized number next to the number of C
+                 or X files gives the age in days of the oldest file for that
+                 system.  The Retry field represents the number of hours until
+                 the next possible call.  The Count is the number of failure
+                 attempts.  NOTE: for systems with a moderate number of
+                 outstanding jobs, this could take 30 seconds or more of real-
+                 time to execute.
+       -rjobid   Rejuvenate jobid.  The files associated with jobid are
+                 touched so that their modification time is set to the current
+                 time.  This prevents the cleanup demon from deleting the job
+                 until the jobs modification time reaches the limit imposed by
+                 the demon.
+       -ssys     Report the status of all uucp requests for remote system sys.
+       -uuser    Report the status of all uucp requests issued by user.
+
+       When no options are given, uustat outputs the status of all uucp
+       requests issued by the current user.
+
+FILES
+       /usr/spool/uucp/*
+                      spool directories
+
+SEE ALSO
+       <a href="../man1/uucp.1.html">uucp(1)</a>
+
+                                                                     UUSTAT(1)
+</pre>
+</body></html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ferror.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; ferror.3 (<a href="../../../../source/v8/usr/man/man3/ferror.3">troff source</a>)</p>
+<pre>
+FERROR(3S)                                                          FERROR(3S)
+
+NAME
+       feof, ferror, clearerr, fileno - stream status inquiries
+
+SYNOPSIS
+       #include &lt;stdio.h&gt;
+
+       feof(stream)
+       FILE *stream;
+
+       ferror(stream)
+       FILE *stream
+
+       clearerr(stream)
+       FILE *stream
+
+       fileno(stream)
+       FILE *stream;
+
+DESCRIPTION
+       Feof returns non-zero if end of file has been encountered on the named
+       input stream, otherwise zero.
+
+       Ferror returns non-zero when an error has occurred reading or writing
+       the named stream, otherwise zero.  Unless cleared by clearerr, the
+       error indication lasts until the stream is closed.
+
+       Clearerr resets the error indication on the named stream.
+
+       Fileno returns the integer file descriptor associated with the stream,
+       see <a href="../man2/open.2.html">open(2)</a>.
+
+       These functions are implemented as macros; they cannot be redeclared.
+
+SEE ALSO
+       <a href="../man3/fopen.3.html">fopen(3)</a>, <a href="../man2/open.2.html">open(2)</a>
+
+                                                                    FERROR(3S)
+</pre>
+</body></html>

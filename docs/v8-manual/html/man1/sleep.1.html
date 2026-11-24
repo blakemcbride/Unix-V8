@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>sleep.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; sleep.1 (<a href="../../../../source/v8/usr/man/man1/sleep.1">troff source</a>)</p>
+<pre>
+SLEEP(1)                    General Commands Manual                   SLEEP(1)
+
+NAME
+       sleep - suspend execution for an interval
+
+SYNOPSIS
+       sleep time
+
+DESCRIPTION
+       Sleep suspends execution for time seconds.  It is used to execute a
+       command after a certain amount of time as in:
+
+            (sleep 105; command)&amp;
+
+       or to execute a command every so often, as in:
+
+            while true
+            do
+                 command
+                 sleep 37
+            done
+
+SEE ALSO
+       <a href="../man2/alarm.2.html">alarm(2)</a>, <a href="../man3/sleep.3.html">sleep(3)</a>
+
+BUGS
+       Time must be less than 2147483647 seconds.
+
+                                                                      SLEEP(1)
+</pre>
+</body></html>

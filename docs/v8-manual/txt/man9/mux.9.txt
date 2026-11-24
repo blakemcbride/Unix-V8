@@ -1,0 +1,121 @@
+MUX(9.1)                                                              MUX(9.1)
+
+NAME
+       mux, ismux, invert - layer multiplexer for jerq
+
+SYNOPSIS
+       mux [ -l commands ]
+
+       mux exit
+
+       mux cd directory
+
+       ismux [ - ]
+
+       invert
+
+DESCRIPTION
+       Mux manages asynchronous windows, or layers, on the jerq terminal.
+       Upon invocation, it loads the jerq with a program (default
+       /usr/jerq/lib/muxterm, settable by the environment variable MUXTERM)
+       that is the primary user interface.  Option -l also creates a layer and
+       invokes the shell to run commands in it.  (See windows(9.1)).
+
+       The command `mux exit' leaves mux, destroying all layers; `mux cd'
+       changes the directory of mux, and hence of layers later created, but
+       not of the current layers.
+
+       Each layer is essentially a separate terminal.  Characters typed into
+       the layer are sent to the standard input of a Unix process bound to the
+       layer, and characters written on the standard output of that process
+       appear in the layer.  When a layer is created, a separate shell (the
+       value of the SHELL environment variable, or sh by default) is
+       established, and bound to the layer.
+
+       Layers are created, deleted, and rearranged using the mouse.
+       Depressing mouse button 3 activates a menu of layer operations.
+       Releasing button 3 then selects an operation.  At this point, a
+       gunsight cursor indicates that an operation is pending.  Hitting button
+       3 again activates the operation on the layer pointed to by the cursor.
+       The New operation, to create a layer, requires a rectangle to be swept
+       out, across any diagonal, while button 3 is depressed.  A box outline
+       cursor indicates that a rectangle is to be created.  The Reshape
+       operation, to change the size and location of a layer on the screen,
+       requires first that a layer be indicated (gunsight cursor) and a new
+       rectangle be swept out (box cursor).  The other operations are self-
+       explanatory.
+
+       In a non-current layer, button 1 is a shorthand for Current and Top,
+       which pulls a layer to the front of the screen and makes it the current
+       layer for keyboard and mouse input.  Non-current layers are indicated
+       by a light border.
+
+       There is a point in each layer, called the `Unix point', where the next
+       character from Unix will be inserted.  The Unix point advances whenever
+       characters are received from Unix, but not when echoing typed
+       characters.  When a newline is typed after the Unix point, characters
+       between the Unix point and the newline, inclusive, are sent to Unix and
+       the Unix point advanced to after the newline.  This means that shell
+       prompts and other output will be inserted before characters that have
+       been typed ahead.  No other characters are sent to Unix (but see the
+       discussion of raw mode below).  Therefore partially typed lines or text
+       anywhere before the Unix point may be edited.
+
+       The default terminal program allows any text on the screen to be
+       edited, much as in jim(9.1).  Text may be selected by sweeping it with
+       button 1 depressed.  Typed characters replace selected text.
+
+       All layers share a common `snarf buffer' (distinct from jim's).  The
+       cut operation on button 2 deletes selected text and puts it in the
+       buffer; snarf copies selected text to the buffer; paste replaces
+       selected text (which may be null) from the buffer; and send copies the
+       snarf buffer to after the Unix point.
+
+       Normally the terminal doesn't scroll as text is received, but a button
+       2 menu item selects scrolling.  A scroll bar indicates what portion of
+       all the text stored for a layer is on the screen.  (It measures
+       characters, not lines.)  Releasing button 1 in the scroll bar brings
+       the line at the top of the screen to the cursor; releasing button 3
+       takes the line at the cursor to the top of the screen.  Button 2,
+       treating the scroll bar as a ruler, brings the indicated point in the
+       whole stored text to the top of the screen.
+
+       The NUM LOCK key advances a half page.
+
+       Ismux reports on its standard error whether its standard output is a
+       mux layer, and also generates the appropriate exit status.  With the
+       optional argument, no message is produced.
+
+       Invert reverses the sense of video, from black on white to white on
+       black, or vice versa.
+
+       Independent user-level programs can be loaded into layers, see
+       32ld(9.1).  SHIFT-SETUP freezes mux and complements the video of the
+       layer of the running user-level terminal process.  Hitting button 2 in
+       this state will attempt to kill the process; 1 or 3 will leave it
+       running.
+
+       In raw mode or no-echo mode (see ttyld(4)) the Unix point advances with
+       each character typed after it.
+
+FILES
+       /usr/jerq/lib/muxterm terminal program
+       /tmp/.mux*            temporary file used by -l option
+
+SEE ALSO
+       32ld(9.1), jim(9.1), jx(9.1), term(9.1)
+
+DIAGNOSTICS
+       Mux refuses to create a layer when there is not enough memory.  Space
+       can be recovered by deleting a layer.
+       Error messages from mux are written directly to the layer which caused
+       them.  They are usually meaningful only to system administrators, and
+       indicate system difficulties.
+
+BUGS
+       Reshape only works properly for processes that arrange to see if they
+       have been reshaped, although most programs make this arrangement.
+       The behavior of raw mode prohibits editing partially typed lines when
+       running cu(1).
+
+                                                                      MUX(9.1)

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uucp.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; uucp.1 (<a href="../../../../source/v8/usr/man/man1/uucp.1">troff source</a>)</p>
+<pre>
+UUCP(1)                     General Commands Manual                    UUCP(1)
+
+NAME
+       uucp, uulog, uuname - unix to unix remote file copy
+
+SYNOPSIS
+       uucp [ options ] source ... destination
+
+       uulog [ options ] [ system ]
+
+       or
+
+       uuname [ -l ]
+
+DESCRIPTION
+   Uucp.
+       Uucp copies source files to the destination file or directory.  A file
+       name may be a path name on your machine, or may have the form:
+
+              system-name!path-name
+
+       where system-name is taken from a list of system names that uucp knows
+       about.  System-name may also be a chain of names such as
+
+              system-name!system-name!...!system-name!path-name
+
+       in which case an attempt is made to send via the specified route.  Care
+       should be taken to ensure that intermediate nodes in the route are
+       willing to foward information.
+
+       Quoted shell metacharacters ?, ∗ and [ ] appearing in a remote path-
+       name will be expanded on the appropriate system.
+
+       Path names may be:
+
+              (1)    a full path name;
+
+              (2)    a path name preceded by ~user where user is a login name
+                     on the specified system and is replaced by that user's
+                     login directory;
+
+              (3)    a path name preceded by ~/destination where destination
+                     is appended to `/usr/spool/uucppublic/'; The destination
+                     will be treated as a file name unless more than one file
+                     is being transfered by this request or the destination is
+                     already a directory or the destination ends with `/'.
+                     For example, ~/dan/ as the destination will make the
+                     directory /usr/spool/uucppublic/dan if it does not exist
+                     and put the requested file(s) in that directory.
+
+              (4)    anything else is prefixed by the current directory.
+
+       If the result is an erroneous path name for the remote system the copy
+       will fail.  If the destination is a directory, the last part of the
+       source-file name is used.
+
+       Uucp preserves execute permissions across the transmission and gives
+       0666 read and write permissions (see <a href="../man2/chmod.2.html">chmod(2)</a>).
+
+       The following options are interpreted by uucp:
+
+       -c     Don't copy local file to the spool directory for transfer to the
+              remote machine (default).
+
+       -C     Force the copy of local files to the spool directory for
+              transfer.
+
+       -d     Make all necessary directories for the file copy (default).
+
+       -f     Do not make intermediate directories for the file copy.
+
+       -ggrade
+              Grade is a single letter/number; lower ASCII sequence characters
+              will cause the job to be transmitted earlier during a particular
+              conversation.
+
+       -j     Output the job identification ASCII string on the standard
+              output.  This job identification can be used by uustat to obtain
+              the status or terminate a job.
+
+       -m     Send mail to the requester when the copy is completed.
+
+       -sfile Report status of the transfer to file.
+
+       -nuser Notify user on the remote system that a file was sent.
+
+       -r     Don't start the file transfer, just queue the job.
+
+       -xdebug-level
+              Produce debugging output.  The debug_level is a number between 0
+              and 9; higher numbers give more detailed information.
+
+   Uulog.
+       Uulog queries a log file of uucp or uuxqt transactions, optionally
+       limited to a given system.  Its options are
+
+       -f     Print recent transactions and follow further transactions as
+              they occur.
+
+       -x     Look in the uuxqt log file for the given system.
+
+       -number
+              Print the last number transactions.
+
+   Uuname.
+       Uuname lists the uucp names of known systems.  The -l option returns
+       the local system name.
+
+FILES
+       /usr/spool/uucp                    spool directories
+       /usr/spool/uucppublic              public directory for receiving and
+                                          sending
+       /usr/lib/uucp/∗                    other data and program files
+       /usr/spool/uucp/.Log/uuxqt/system  log of uuxqt transactions with
+                                          system
+       /usr/spool/uucp/.Log/uucico/system log of uucp transactions with system
+
+SEE ALSO
+       <a href="../man1/mail.1.html">mail(1)</a>, <a href="../man1/uux.1.html">uux(1)</a>
+
+WARNING
+       For obvious security reasons, the domain of remotely accessible files
+       may be severely restricted.  You will very likely not be able to fetch
+       files by path name; ask a responsible person on the remote system to
+       send them to you.  For the same reasons you will probably not be able
+       to send files to arbitrary path names.  As distributed, the remotely
+       accessible files are those whose names begin `/usr/spool/uucppublic/'
+       (equivalent to `~/').
+
+       All files received by uucp will be owned by uucp.
+       The -m option will only work sending files or receiving a single file.
+       Receiving multiple files specified by special shell characters ? ∗
+       [...] will not activate the -m option.
+
+       The forwarding of files through other systems is NOT compatible with
+       the previous version of uucp.  If forwarding is used, all systems in
+       the route must have the same version of uucp.
+
+BUGS
+       Protected files and files that are in protected directories that are
+       owned by the requester can be sent by uucp.  However, if the requester
+       is root, and the directory is not searchable by group `other' or the
+       file is not readable by `other', the request will fail due to a bug in
+       <a href="../man2/setuid.2.html">setuid(2)</a>.
+
+                                                                       UUCP(1)
+</pre>
+</body></html>

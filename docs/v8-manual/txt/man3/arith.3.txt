@@ -1,0 +1,47 @@
+ARITH(3)                   Library Functions Manual                   ARITH(3)
+
+NAME
+       abs, sgn, gcd, lcm, min, max - integer arithmetic functions: absolute
+       value, sign, greatest common divisor, least common multiple, minimum,
+       maximum
+
+SYNOPSIS
+       abs(a)
+
+       sgn(a)
+
+       gcd(a, b)
+
+       long lcm(a, b)
+
+       min(a, b)
+
+       max(a, b)
+
+DESCRIPTION
+       Abs returns the absolute value of a.
+
+       Sgn returns -1, 0, 1, according as a<0, a=0, a>0.
+
+       Gcd returns the largest positive integer that divides both a and b,
+       except that gcd(0, 0) = 0.
+
+       Lcm satisfies
+
+              lcm(a, b) = abs(ab/gcd(a, b))
+
+       except that lcm(0, 0) = 0.
+
+       Min (max) returns the minimum (maximum) of a and b.
+
+SEE ALSO
+       floor(3) for fabs
+
+DIAGNOSTICS
+       Abs and gcd return -X, the most negative integer, when the true result
+       is the unrepresentable value X.
+
+BUGS
+       The result of lcm is undefined when it doesn't fit in a long.
+
+                                                                      ARITH(3)

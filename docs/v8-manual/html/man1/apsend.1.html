@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>apsend.1 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 1</a> &gt; apsend.1 (<a href="../../../../source/v8/usr/man/man1/apsend.1">troff source</a>)</p>
+<pre>
+APSEND(1)                   General Commands Manual                  APSEND(1)
+
+NAME
+       apsend - send troff output to aps-5
+
+SYNOPSIS
+       apsend [ options ] [ file ] ...
+
+DESCRIPTION
+       Apsend sends <a href="../man1/troff.1.html">troff(1)</a> output in the named file or in the standard input
+       for typesetting on the Murray Hill Computer Center APS-5 machine.
+
+       The options, which need only be spelled far enough to be unique, are
+
+       account=xx
+              GCOS account number (default from password file).
+
+       bin=xx Computer center bin number (default from password file).
+
+       mailto=xx
+              Mailing instructions, up to 28 characters, instead of comp
+              center bin.
+
+       comment=xx
+              Up to 30 characters, for APSLOG file entry.  Default value is
+              the filename or pipe.end.
+
+       device=imagen
+              Print on comp center laser printer instead of phototypesetter.
+
+FILES
+       /usr/lib/apsend/*
+       APSLOG    record of apsend activity
+
+SEE ALSO
+       <a href="../man1/troff.1.html">troff(1)</a>, <a href="../man1/d202.1.html">d202(1)</a>
+
+                                                                     APSEND(1)
+</pre>
+</body></html>

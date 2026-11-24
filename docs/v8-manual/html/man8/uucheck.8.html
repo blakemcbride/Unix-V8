@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>uucheck.8 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 8</a> &gt; uucheck.8 (<a href="../../../../source/v8/usr/man/man8/uucheck.8">troff source</a>)</p>
+<pre>
+UUCHECK(8)                  System Manager's Manual                 UUCHECK(8)
+
+NAME
+       uucheck  - check uucp directories and permissions file
+
+SYNOPSIS
+       /usr/lib/uucp/uucheck [ -v ] [ -x debug_level ]
+
+DESCRIPTION
+       Uucheck checks for the presence of files and directories used by
+       programs associated with uucp (1).  It also checks for some obvious
+       errors in the Permissions file.  When executed with the -v option, it
+       gives a detailed explanation of how the programs will interpret the
+       Permissions file.
+
+       The -x option requests deugging output.  Debug_level is a single digit;
+       higher numbers give more detail.
+
+FILES
+       /usr/lib/uucp/Systems
+       /usr/lib/uucp/Permissions
+       /usr/lib/uucp/Devices
+       /usr/lib/uucp/Maxuuxqts
+       /usr/lib/uucp/Maxuuscheds
+       /usr/spool/uucp/∗
+       /usr/spool/uucppublic/∗
+
+SEE ALSO
+       <a href="../man1/uucp.1.html">uucp(1)</a>
+
+BUGS
+       The program doesn't check file/directory modes or some errors in the
+       Permissions file such as duplicate login or machine name.
+
+                                                                    UUCHECK(8)
+</pre>
+</body></html>

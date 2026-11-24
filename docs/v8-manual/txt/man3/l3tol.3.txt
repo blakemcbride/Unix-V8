@@ -1,0 +1,28 @@
+L3TOL(3)                   Library Functions Manual                   L3TOL(3)
+
+NAME
+       l3tol, ltol3 - convert between 3-byte integers and long integers
+
+SYNOPSIS
+       l3tol(lp, cp, n)
+       long *lp;
+       char *cp;
+
+       ltol3(cp, lp, n)
+       char *cp;
+       long *lp;
+
+DESCRIPTION
+       L3tol converts a list of n three-byte integers packed into a character
+       string pointed to by cp into a list of long integers pointed to by lp.
+
+       Ltol3 performs the reverse conversion from long integers (lp) to three-
+       byte integers (cp).
+
+       These functions are useful for file-system maintenance where the i-
+       numbers are three bytes long.
+
+SEE ALSO
+       filsys(5)
+
+                                                                      L3TOL(3)

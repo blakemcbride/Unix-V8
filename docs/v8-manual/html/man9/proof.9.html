@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>proof.9 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 9</a> &gt; proof.9 (<a href="../../../../source/v8/usr/man/man9/proof.9">troff source</a>)</p>
+<pre>
+PROOF(9.1)                                                          PROOF(9.1)
+
+NAME
+       proof - troff output interpreter for jerq
+
+SYNOPSIS
+       proof [ -ffonts ] [ file ]
+
+DESCRIPTION
+       Proof reads <a href="../man1/troff.1.html">troff(1)</a> intermediate language output from file and
+       displays a simulation of the resulting pages on the screen.  If no file
+       name is given and the standard input is the terminal, proof terminates
+       immediately leaving a `proof layer', otherwise it reads the standard
+       input.  By invoking proof in a proof layer you can avoid download time.
+
+       Fonts are loaded as required.  The default font is used for unknown
+       fonts.  The font option can be used to preload fonts.  Use the names of
+       the fonts relative to /usr/jerq/font separated by commas.  The most-
+       used fonts are `-fR.10,I.10,S.10'.
+
+       After a layer's worth of text is displayed, proof pauses for a command.
+       Commands may come from the host, the keyboard, or the button 3 menu.
+       The typed versions of commands are:
+
+       &lt;newline&gt;
+              Go on to next portion of text.  (Button 3 equivalent: `more'.)
+
+       q      Quit, leaving a proof layer.
+
+       x      Exit and restart the regular terminal program.  (Equivalent to
+              `q' followed by jterm(9.1).)
+
+       pn     Print page n.  An out-of-bounds page number means the end nearer
+              to that number; a missing number means page 0; a signed number
+              means an offset to the current page.
+
+       Button 1 gets a scroll box, which represents a full page of text.  An
+       interior rectangle shows what part of the page is now visible.  The
+       interior rectangle moves with the mouse, causing the layer to scroll
+       both vertically and horizontally.  Button 2 gets a speedometer.  The
+       bar of the speedometer moves with the mouse to control the rate at
+       which new information is displayed.
+
+FILES
+       /usr/jerq/font/*         fonts
+       /usr/jerq/font/.missing  list of referenced but unconverted fonts
+
+SEE ALSO
+       <a href="../man1/d202.1.html">d202(1)</a>, <a href="../man7/font.7.html">font(7)</a>
+       `A Typesetter-independent Troff,' Brian W. Kernighan
+
+BUGS
+       There is a maximum number of fonts (currently 50) that can be loaded at
+       once.
+       Windowing can get confused if the troff ouput is not approximately
+       sorted in ascending y-order.
+       A proof layer imitates term 33(9.1), not <a href="../man9/mux.9.html">mux(9.1)</a>.
+
+                                                                    PROOF(9.1)
+</pre>
+</body></html>

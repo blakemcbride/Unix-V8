@@ -1,0 +1,161 @@
+STREAM(4)                  Kernel Interfaces Manual                  STREAM(4)
+
+NAME
+       stream - stream I/O control calls
+
+SYNOPSIS
+       #include <sys/ioctl.h>
+       ioctl(fd, code, param)
+       union universe *param;
+
+DESCRIPTION
+       A stream is a connection between two processes, or between a process
+       and a device.  It is referred to by a file descriptor, and ordinary
+       read and write calls apply.  When a write(2) call is given on a stream
+       whose other end has disappeared, for example because the process at
+       other end of a pipe has terminated, or a device has hung up, a SIGPIPE
+       signal is generated; if the signal is ignored, the write call returns
+       error EPIPE.  The first several (currently 64) read(2) calls on such a
+       disconnected streams return 0; subsequent calls generate SIGPIPE
+       signals.
+
+       Processing modules may be inserted into streams.  These ioctl calls
+       insert, delete, inspect, and perform operations for stream IO modules.
+       They apply to the file descriptor of any open stream object: terminal,
+       network connection, pipe.  The param argument is a general pointer
+       which, for these calls, is usually null or a pointer to int.  The codes
+       are
+
+       FIOPUSHLD
+             inserts, at the near end of the stream, the line discipline named
+             by the integer to which param points.  A census of line
+             discipline modules is given below.
+
+       FIOINSLD
+             inserts a named line discipline at a given level in a stack of
+             such modules on the stream.  Param points to a structure
+             containing two short integers respectively naming the line
+             discipline and the level.  A level of 0 could be accomplished by
+             FIOPUSHLD.  This call is under construction and may not be
+             available yet.
+
+       FIOPOPLD
+             pops (removes) the nearest line discipline module, if param is
+             null.  If it points to an integer, the line discipline at that
+             level is removed.  The integer 0 corresponds to a null param, and
+             (as with FIOINSLD) the non-null case may not be handled yet.
+
+       FIOLOOKLD
+             returns the number of the topmost line discipline in the stack.
+             If param is not null but instead points to an integer, the line
+             discipline at that level is returned in the same integer.  As
+             with push and pop, the non-null case may not be handled yet.
+
+       FIOSNDFD
+             sends the integer file descriptor pointed to by param to the
+             process on the other end of the pipe whose file descriptor is fd.
+
+       FIORCVFD
+             delivers a structure pointed to by param:
+
+             struct passfd {
+                    union {
+                           int    fd;
+                    } f;
+                    short  uid;
+                    short  gid;
+                    short  nice;
+                    short  fill;
+             };
+
+             The call blocks until there is something in the stream.  If data
+             is present, it returns EIO.  If the FIOSNDFD call has sent a file
+             descriptor to the other end of the pipe, this call fills in the
+             user and group ID of the sending process, its niceness
+             (priority), and a file descriptor for the file being sent; this
+             file is now open in the calling process.
+
+       FIONREAD
+             stores, in the integer pointed to by param, the number of
+             characters that may be read from this stream without possible
+             blocking.
+
+       TIOCSPGRP
+             with null param makes this process the head of a process group
+             and makes this stream its control stream.  When signals, such as
+             hangup, interrupt, and quit, arrive at a control stream, they are
+             sent to its process group.  Child processes inherit the process
+             group of their parent.  Process groups are created only by
+             explicit use of this call, and not implicitly by opening certain
+             devices.  If param is not null, it points to an integer
+             nominating a process group to receive signals from this stream.
+
+       TIOCGPGRP
+             stores through param an integer naming the process group
+             associated with the stream.
+
+       TIOCEXCL
+             marks this stream as inaccessible except by the super-user or by
+             processes in the group associated with this stream.
+
+       TIOCNXCL
+             removes the inaccessibility of the stream.
+
+       TIOCSBRK
+             generates a message requesting a line break.  The message is
+             understood by devices capable of generating it (such as
+             asynchronous character devices) and ignored otherwise.
+
+       TIOCFLUSH
+             generates a message causing downstream modules to throw away any
+             queued characters, if possible.  It applies to both input and
+             output queues.
+
+       Here is a list of available line discipline modules.  The magic numbers
+       are collected in the standard library, and are accessible under the
+       following names:
+
+       tty_ld
+             Terminal processing according to standard Seventh Edition rules;
+             see ttyld(4).
+
+       ntty_ld
+             Terminal processing according to (modified) Berkeley `new tty'
+             rules; see Berkeley Users Manual.
+
+       cdkp_ld
+             Character-mode Datakit URP protocol.
+
+       dkp_ld
+             Block-mode Datakit URP protocol.
+
+       rdk_ld
+             Special Datakit protocol used in connection setup.
+
+       pk_ld Packet-driver protocol (obsolete).
+
+       buf_ld
+             Buffering mechanism; see bufld(4).
+
+       mesg_ld, rmesg_ld
+             Mesg_ld turns stream control blocks arriving in the read
+             direction into data messages, and written messages into controls.
+             rmesg_ld does the opposite.  See mesg (4).
+
+       trc_ld
+             Helps debug stream line discipline modules.
+
+       conn_ld
+             For making unique connections to servers.  See connld(4).
+
+       ip_ld, tcp_ld, udp_ld, arp_ld
+             Internet protocols; see inet(3).
+
+SEE ALSO
+       ioctl(2)
+       D. M. Ritchie, `A Stream I/O System' BLTJ, October, 1984
+
+DIAGNOSTICS
+       -1 is returned for errors.
+
+                                                                     STREAM(4)

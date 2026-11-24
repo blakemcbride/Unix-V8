@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>pause.2 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 2</a> &gt; pause.2 (<a href="../../../../source/v8/usr/man/man2/pause.2">troff source</a>)</p>
+<pre>
+PAUSE(2)                      System Calls Manual                     PAUSE(2)
+
+NAME
+       pause - stop until signal
+
+SYNOPSIS
+       pause()
+
+DESCRIPTION
+       Pause never returns normally.  It is used to give up control while
+       waiting for a signal from <a href="../man2/kill.2.html">kill(2)</a> or <a href="../man2/alarm.2.html">alarm(2)</a>.  Upon termination of a
+       signal handler started during a pause, the pause call will return.
+
+SEE ALSO
+       <a href="../man1/kill.1.html">kill(1)</a>, <a href="../man2/kill.2.html">kill(2)</a>, <a href="../man2/alarm.2.html">alarm(2)</a>, <a href="../man2/signal.2.html">signal(2)</a>, <a href="../man3/setjmp.3.html">setjmp(3)</a>
+
+                                                                      PAUSE(2)
+</pre>
+</body></html>

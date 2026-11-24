@@ -1,0 +1,34 @@
+BUNDLE(1)                   General Commands Manual                  BUNDLE(1)
+
+NAME
+       bundle -  collect files for distribution
+
+SYNOPSIS
+       bundle files
+
+DESCRIPTION
+       Bundle writes on its standard output a shell (sh(1)) file that, when
+       executed, will recreate the original files.  Its main use is for
+       distributing small numbers of text files by mail(1).
+
+       Although less refined than standard archive from ar(1), cpio(1), or
+       tar(1), a bundle file is self-documenting and complete; little
+       preparation is required on the receiving machine.
+
+EXAMPLES
+       bundle makefile *.[ch] | mail elsewhere!mark
+              Send mark a makefile with related `.c' and `.h' files.  Upon
+              receving the mail, mark may save the file, in `gift/horse' for
+              example, edit out the postmark, then do
+
+       cd gift; sh horse; make
+
+SEE ALSO
+       ar(1), cpio(1), tar(1), mail(1)
+
+BUGS
+       Bundle will not create directories and is unsatisfactory for non-ASCII
+       files.
+       Beware of gift horses.
+
+                                                                     BUNDLE(1)

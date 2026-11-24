@@ -1,0 +1,117 @@
+MAIL(7)                Miscellaneous Information Manual                MAIL(7)
+
+NAME
+       mail - address conventions and rewrite rules
+
+DESCRIPTION
+       Mail(1) accepts and converts among the addressing conventions of
+       several computer networks, according to rules given in the file
+       /usr/lib/upas/rewrite.  Each line of the file is a rule.  Blank lines
+       and lines beginning with ´#´ are ignored.
+
+       Each rewriting rule consists of (up to) 6 strings:
+
+       pattern
+              An ed(1)-like regular expression, with simple parentheses ()
+              playing the role of \(\) and with the + and ? operators of
+              egrep(1).  The pattern is applied to mail addresses.
+
+       command
+              An ed(1) style replacement string to generate a command to
+              deliver messages to the destination matched by the pattern.  The
+              substring `\s', is replaced by the login id of the sender.  The
+              default is no command.
+
+       next hop
+              An ed(1) style replacement string that represents the name of
+              next routing hop.  The default is the empty string.  See the
+              section below on forwarding.
+
+       next address
+              An ed(1) style replacement string that represents the address as
+              it will be seen at the next hop.  The default is the empty
+              string.  See the section below on forwarding.
+
+       conversion
+              The name of the conversion that must be performed before the
+              message is piped to the command.  If this field is empty, no
+              conversion is performed.  The only conversion now known is
+              rfc822, which makes the message conform to the ARPA RFC 822
+              mailer standard.
+
+       system The name to use for the current system.  The default name is
+              found in /etc/whoami.
+
+       Each field, except for pattern, is optional if it and all fields
+       following it are to assume the default values.  Any empty field (e.g.
+       ``'') assumes the default value.
+
+       When delivering a message, mail starts with the first rule and
+       continues down the list until a pattern matches the destination
+       address.  If the rule contains no command, the mail is appended to the
+       user's mailbox in the standard way (see mail(1)).  If the rule does
+       contain a command, upas(8) starts the command and pipes the message to
+       it, performing any requested conversion.
+
+       Forwarding is controlled using the next hop and next address fields and
+       the forwarding files.  Using these fields, the rewriting rules are
+       recursively applied to the source and destination addresses.  If all
+       hops in either source or destination are in the forwarding files,
+       forwarding is allowed.  If the forwarding files do not exist, blanket
+       forwarding is assumed.
+
+EXAMPLES
+       Rewriting rules for major networks are:
+
+       network: UUCP (machine!machine!...!person)
+
+              ^([^!]+)!([^!]+)$  \1 \
+                "uux 2>>/tmp/uuxl - -a \s \1!rmail \\(\2\\)"
+              ^([^!]+)!((.+!)?([^!]+)![^!]+)$ \4 "uux - -a \s \1!rmail
+              \\(\2\\)"
+
+       network: ARPANET (arpa!person@machine)
+
+              ^arpa!(.+)$ csnet "cs-inject \1.csnet-relay" rfc822
+
+       network: CSNET (csnet!person@machine)
+
+              ^csnet!(.+)$ csnet "cs-inject \1.csnet-relay" rfc822
+
+       network: CSNET or ARPANET (person@machine)
+
+              ^.+[@%.][^@%.]+$ csnet "cs-inject &.csnet-relay" rfc822
+
+       network: ACSNET (acsnet!person@machine.acsnet)
+
+              ^acsnet!(.+)$ ACSnet "acs-inject \1" rfc822
+
+       network: BITNET (bitnet!person@machine)
+
+              ^bitnet!(.+)[.@](.+)$ csnet
+                "cs-inject \1%\2.bitnet@wiscvm.arpa.csnet-relay" rfc822
+
+       The address on incoming mail depends largely on the originating mail
+       program.  However, the following can usually be relied upon to reach CS
+       researchers at Bell Labs.
+
+       UUCP:  research!person
+
+       CSNET:  person@btl or person.machine@btl
+
+       ARPANET:  person@btl.csnet or person.btl@csnet-relay
+
+       ACSNET:  person@research or research!person
+
+       BITNET: person%btl.csnet@wiscvm
+
+       If in any of the above addresses, `person' is not on research, use
+       `machine!...!person' in place of `person'.
+
+FILES
+       /usr/lib/upas/rewrite the rewriting rules
+
+SEE ALSO
+       uucp(1), mail(1), upas(8)
+
+                                                                       MAIL(7)

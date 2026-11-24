@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>view2d.3 - V8 manual</title><style>body{font-family:sans-serif;margin:1em 2em}pre{font-size:95%}</style></head><body>
+<p><a href="../index.html">V8 manual</a> &gt; <a href="index.html">Section 3</a> &gt; view2d.3 (<a href="../../../../source/v8/usr/man/man3/view2d.3">troff source</a>)</p>
+<pre>
+VIEW2D(3X)                                                          VIEW2D(3X)
+
+NAME
+       view2d, moviefil - movie of a function f(x, y, t)
+
+SYNOPSIS
+       view2d(fd, nx, ny, time, u, v, fixuv, pmin, pmax, p)
+       short p[];
+       double time;
+
+       moviefil(fd, nx, ny, time, outside, f)
+       float time, outside, f[];
+
+DESCRIPTION
+       View2d writes a frame in the format <a href="../man5/view2d.5.html">view2d(5)</a> onto the file specified
+       by fd, a file descriptor for an open file.  Use <a href="../man1/ld.1.html">ld(1)</a> option -lview2d.
+       Nx, ny give the grid size.  Time is a (nondecreasing) frame index,
+       typically set to simulation time or iteration count.  U and v describe
+       the relation between pixel values and user function values:
+
+              p = u + f/2∗∗v.
+
+       U and v may vary from one frame to the next.  When the global scaling
+       is known beforehand, put fixuv = 1 and set pmin and pmax to the limits
+       of the data.  (Otherwise put fixuv=0; pmin and pmax will be ignored.)
+
+       P is the nx by ny array of pixel values, with the x index running
+       fastest.  There is a threshold for describing nonrectangular regions:
+       any pixel value less than or equal to -32766 is treated as an out of
+       bounds marker and will appear as black.  Other pixel values should lie
+       in the range [-32765,32765].
+
+       Moviefil is an alternate version that is somewhat less flexible but
+       easier to use.  It takes floats and scales automatically to shorts.
+       Any array element f[i][j] less than outside is treated as undefined and
+       will appear as black.
+
+SEE ALSO
+       <a href="../man1/view2d.1.html">view2d(1)</a>, <a href="../man5/view2d.5.html">view2d(5)</a>
+
+                                                                    VIEW2D(3X)
+</pre>
+</body></html>

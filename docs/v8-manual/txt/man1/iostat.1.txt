@@ -1,0 +1,45 @@
+IOSTAT(1)                   General Commands Manual                  IOSTAT(1)
+
+NAME
+       iostat, load, dkstat - report I/O and CPU statistics
+
+SYNOPSIS
+       iostat [ interval [ count ] ]
+
+       load [ interval [ count [ sysfile [ corefile ] ] ] ]
+
+       dkstat [ interval [ count ] ]
+
+DESCRIPTION
+       Iostat periodically reports the number of characters read and written
+       to terminals, and, for each disk, the number of seeks and transfers per
+       second, and average milliseconds per seek.  It also reports the
+       percentage of time the system has spent in user mode, in user mode
+       running low priority (niced) processes, in system mode, and idling.
+       The first report is for all time since a reboot and each subsequent
+       report is for the last interval only.
+
+       Load periodically reports the number of processes ready to run averaged
+       over the preceding 1, 5, and 15 minutes.
+
+       Dkstat periodically reports the number of packets received and sent
+       over the Datakit network, together with error reports if any occurred.
+       The first report is for all time since a reboot and each subsequent
+       report is for the last interval only.
+
+       The optional interval argument causes a report once each interval
+       seconds.
+
+       The optional count argument restricts the number of reports.
+
+       The optional arguments sysfile and corefile cause the named files to be
+       consulted instead of the defaults, `/unix' and `/dev/kmem'.
+
+FILES
+       /dev/kmem
+       /unix
+
+SEE ALSO
+       sysmon(9.1), vmstat(8)
+
+                                                                     IOSTAT(1)

@@ -1,0 +1,85 @@
+MM(1)                       General Commands Manual                      MM(1)
+
+NAME
+       mm - print out documents formatted with the MM macros
+
+SYNOPSIS
+       mm [ options ] [ files ]
+
+DESCRIPTION
+       Mm can be used to type out documents using nroff(1) and the MM text-
+       formatting macro package.  It has options to specify preprocessing by
+       tbl(1) and/or neqn(1) and postprocessing by various terminal-oriented
+       output filters.  The proper pipelines and the required arguments and
+       flags for nroff(1) and MM are generated, depending on the options
+       selected.
+
+       Options for mm are given below.  Any other arguments or flags (e.g.,
+       -rC3) are passed to nroff(1) or to MM, as appropriate.  Such options
+       can occur in any order, but they must appear before the files
+       arguments.  If no arguments are given, mm prints a list of its options.
+
+       -Tterm   Specifies the type of output terminal; for a list of
+                recognized values for term, type help term2.  If this option
+                is not used, mm will use the value of the shell variable $TERM
+                from the environment (see profile(5) and environ(7)) as the
+                value of term, if $TERM is set; otherwise, mm will use 450 as
+                the value of term.  If several terminal types are specified,
+                the last one takes precedence.
+       -12      Indicates that the document is to be produced in 12-pitch.
+                May be used when $TERM is set to one of 300, 300s, 450, and
+                1620.  (The pitch switch on the DASI 300 and 300s terminals
+                must be manually set to 12 if this option is used.)
+       -c       Causes mm to invoke col(1); note that col(1) is invoked
+                automatically by mm unless term is one of 300, 300s, 450, 37,
+                4000A, 382, 4014, tek, 1620, and X.
+       -e       Causes mm to invoke neqn(1); also causes neqn to read the
+                /usr/pub/eqnchar file (see eqnchar(7)).
+       -t       Causes mm to invoke tbl(1).
+       -E       Invokes the -e option of nroff(1).
+       -y       Causes mm to use the non-compacted version of the macros (see
+                mm(7)).
+
+       As an example (assuming that the shell variable $TERM is set in the
+       environment to 450), the two command lines below are equivalent:
+
+              mm -t -rC3 -12 ghh∗
+              tbl ghh∗ ⎪ nroff -cm -T450-12 -h -rC3
+
+       Mm reads the standard input when - is specified instead of any file
+       names.  (Mentioning other files together with - leads to disaster.)
+       This option allows mm to be used as a filter, e.g.:
+
+              cat dws ⎪ mm -
+
+HINTS
+       1.     Mm invokes nroff(1) with the -h flag.  With this flag, nroff(1)
+              assumes that the terminal has tabs set every 8 character
+              positions.
+       2.     Use the -olist option of nroff(1) to specify ranges of pages to
+              be output.  Note, however, that mm, if invoked with one or more
+              of the -e, -t, and - options, together with the -olist option of
+              nroff(1) may cause a harmless ``broken pipe'' diagnostic if the
+              last page of the document is not specified in list.
+       3.     If you use the -s option of nroff(1) (to stop between pages of
+              output), use line-feed (rather than return or new-line) to
+              restart the output.  The -s option of nroff(1) does not work
+              with the -c option of mm, or if mm automatically invokes col(1)
+              (see -c option above).
+       4.     If you lie to mm about the kind of terminal its output will be
+              printed on, you'll get (often subtle) garbage; however, if you
+              are redirecting output into a file, use the -T37 option, and
+              then use the appropriate terminal filter when you actually print
+              that file.
+
+SEE ALSO
+       col(1), env(1), eqn(1), greek(1), mmt(1), nroff(1), tbl(1), profile(5),
+       mm(7), term(7).
+       MM-Memorandum Macros by D. W. Smith and J. R. Mashey.
+       Typing Documents with MM by D. W. Smith and E. M. Piskorik.
+
+DIAGNOSTICS
+       ``mm: no input file'' if none of the arguments is a readable file and
+       mm is not used as a filter.
+
+                                                                         MM(1)
